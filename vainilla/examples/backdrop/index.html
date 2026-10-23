@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backdrop · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Feedback</span>
+        <h1>Backdrop</h1>
+        <p class="demo-lead">Full-screen layer that dims the page and centers an indicator while an operation runs; it does not replace a dialog.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#with-content">With content</a>
+      <a href="#closing">Closing</a>
+      <a href="#states">States</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>data-mtx="backdrop"</code> with the content you want to center and a <code>data-mtx-backdrop-open="id"</code> trigger. With <code>data-close-on-click</code>, a click on the layer closes it. The content color is white by default, so a CircularProgress with <code>data-color="inherit"</code> stands out in both themes.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-backdrop-open="backdrop-basic">Show backdrop</button>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-basic" data-close-on-click data-close-on-escape>
+        <div data-mtx="circular-progress" data-color="inherit" data-label="Loading"></div>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-backdrop-open="backdrop-basic"&gt;Show backdrop&lt;/button&gt;
+&lt;div data-mtx="backdrop" id="backdrop-basic" data-close-on-click data-close-on-escape&gt;
+  &lt;div data-mtx="circular-progress" data-color="inherit" data-label="Loading"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>By default the layer is <code>rgba(0, 0, 0, 0.5)</code> (token <code>--mtx-backdrop-bg</code>). <code>data-invisible</code> makes it transparent: it still captures clicks, which is useful to close your own surfaces when clicking outside.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-backdrop-open="backdrop-invisible">Invisible backdrop</button>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-invisible" data-invisible data-close-on-click data-close-on-escape>
+        <div data-mtx="paper" data-elevation="8" class="mtx-p-3 mtx-color-text-primary">
+          <p class="mtx-typography--body1">Invisible layer: click anywhere to close.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-content">
+      <h2>With content</h2>
+      <p>The content is centered with flexbox. Pair the indicator with a text that explains what is happening.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-backdrop-open="backdrop-text">Spinner with text</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-backdrop-open="backdrop-linear">Progress bar</button>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-text" data-close-on-click data-close-on-escape>
+        <div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-gap-2">
+          <div data-mtx="circular-progress" data-color="inherit" data-size="56" data-decorative></div>
+          <span class="mtx-typography--subtitle1">Syncing 24 files…</span>
+        </div>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-linear" data-close-on-click data-close-on-escape>
+        <div class="mtx-d-flex mtx-flex-column mtx-gap-1 mtx-w-50">
+          <span class="mtx-typography--subtitle1">Importing contacts</span>
+          <div data-mtx="linear-progress" data-color="inherit" data-value="64" data-show-label></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="closing">
+      <h2>Closing</h2>
+      <p>Three optional mechanisms that can be combined: <code>data-close-on-click</code> (click on the layer or on non-interactive content), <code>data-close-on-escape</code> and any inner element with <code>data-mtx-backdrop-close</code>. Without any of them, it only closes from code.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-backdrop-open="backdrop-cancel">With cancel button</button>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-cancel" data-close-on-escape>
+        <div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-gap-2">
+          <div data-mtx="circular-progress" data-color="inherit" data-label="Uploading"></div>
+          <span class="mtx-typography--subtitle1">Uploading photo.jpg</span>
+          <button class="mtx-button mtx-button--outlined mtx-button--inherit" data-mtx="button" data-mtx-backdrop-close>Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p><code>data-lock-scroll</code> locks <code>body</code> scrolling (modal manager shared with Dialog) and <code>data-inert</code> marks the rest of the page as <code>inert</code> while it is open, so Tab and screen readers cannot reach the covered content. <code>data-open</code> shows it on load.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-backdrop-open="backdrop-lock">Lock scroll and inert (3 s)</button>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-lock" data-lock-scroll data-inert>
+        <div data-mtx="circular-progress" data-color="inherit" data-label="Processing payment"></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>Saving a form: the backdrop covers the page while the request runs and closes by itself when it finishes; then a snackbar confirms the result.</p>
+      <div class="demo-fixed-width demo-stack">
+        <input data-mtx="text-field" data-label="Project name" data-variant="outlined" value="Materix UI" type="text">
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" id="backdrop-save" data-start-icon="save">Save</button>
+        </div>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-saving" data-lock-scroll>
+        <div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-gap-2">
+          <div data-mtx="circular-progress" data-color="inherit" data-decorative></div>
+          <span class="mtx-typography--subtitle1" role="status">Saving changes…</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>The backdrop is fixed to the viewport and does not take part in the layout; here, a grid of triggers opens the same backdrop with different messages.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" data-message="Exporting report…">Export</button>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" data-message="Sending invitations…">Invite</button>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" data-message="Archiving project…">Archive</button>
+        </div>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-grid" data-close-on-click data-close-on-escape>
+        <div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-gap-2">
+          <div data-mtx="circular-progress" data-color="inherit" data-decorative></div>
+          <span class="mtx-typography--subtitle1" id="backdrop-grid-message" role="status"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>open()</code>, <code>close()</code>, <code>toggle()</code> and <code>isOpen</code>, and emits <code>mtx:backdrop:open</code> and <code>mtx:backdrop:close</code> (<code>detail.reason</code>: <code>api</code>, <code>click</code> or <code>escape</code>).</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="backdrop-api-open">open() and close() after 1.5 s</button>
+      </div>
+      <div data-mtx="backdrop" id="backdrop-api" data-close-on-click data-close-on-escape>
+        <div data-mtx="circular-progress" data-color="inherit" data-label="Loading"></div>
+      </div>
+      <pre class="demo-log" id="backdrop-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const backdrop = Materix.getInstance(document.getElementById('backdrop-api'));
+backdrop.open();
+setTimeout(() =&gt; backdrop.close(), 1500);
+
+document.addEventListener('mtx:backdrop:close', (e) =&gt; console.log(e.detail.reason));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Structure for SSR. Initially closed (<code>hidden</code> and <code>aria-hidden</code>); <code>mtx-backdrop--open</code> or <code>data-open</code> show it on initialization.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-backdrop-open="backdrop-bem">Open BEM</button>
+      </div>
+      <div class="mtx-backdrop" id="backdrop-bem" data-mtx="backdrop" data-close-on-click data-close-on-escape hidden aria-hidden="true">
+        <div data-mtx="circular-progress" data-color="inherit" data-label="Loading"></div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-backdrop" id="backdrop-bem" data-mtx="backdrop" data-close-on-click hidden aria-hidden="true"&gt;
+  &lt;div data-mtx="circular-progress" data-color="inherit" data-label="Loading"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var log = document.getElementById('backdrop-log');
+      function write(text) {
+        log.textContent = (text + '\n' + log.textContent).split('\n').slice(0, 6).join('\n');
+      }
+      function inst(id) {
+        return Materix.getInstance(document.getElementById(id));
+      }
+
+      var api = inst('backdrop-api');
+      api.element.addEventListener('mtx:backdrop:open', function () { write('mtx:backdrop:open'); });
+      api.element.addEventListener('mtx:backdrop:close', function (event) { write('mtx:backdrop:close · reason = ' + event.detail.reason); });
+      document.getElementById('backdrop-api-open').addEventListener('click', function () {
+        api.open();
+        setTimeout(function () { api.close(); }, 1500);
+      });
+
+      // Bloqueo de scroll + inert: se cierra solo a los 3 s.
+      document.getElementById('backdrop-lock').addEventListener('mtx:backdrop:open', function () {
+        setTimeout(function () { inst('backdrop-lock').close(); }, 3000);
+      });
+
+      // Ejemplo real: guardar con backdrop y snackbar.
+      var saving = inst('backdrop-saving');
+      document.getElementById('backdrop-save').addEventListener('click', function () {
+        saving.open();
+        setTimeout(function () {
+          saving.close();
+          if (Materix.snackbar) Materix.snackbar.show('Project saved');
+        }, 2000);
+      });
+
+      // Grilla: un backdrop compartido con mensaje variable.
+      var grid = inst('backdrop-grid');
+      var message = document.getElementById('backdrop-grid-message');
+      document.querySelectorAll('[data-message]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          message.textContent = button.getAttribute('data-message');
+          grid.open();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

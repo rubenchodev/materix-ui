@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Native Select · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Native Select</h1>
+        <p class="demo-lead">The browser's &lt;select&gt; with MUI styling: lightweight, accessible by default and with the native touch picker on mobile.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#states">States</a>
+      <a href="#groups">Groups and multiple</a>
+      <a href="#comparison">Select or NativeSelect?</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Just the <code>&lt;select&gt;</code> with <code>data-mtx="native-select"</code> and <code>data-label</code>. As in MUI NativeSelect, the default variant is <code>standard</code>; the generated label is associated through <code>for</code>/<code>id</code>, so the select already has an accessible name. The list is drawn by the operating system.</p>
+      <div class="demo-fixed-width">
+        <select data-mtx="native-select" data-label="Age" name="age">
+          <option value="10">Ten</option>
+          <option value="20">Twenty</option>
+          <option value="30">Thirty</option>
+        </select>
+      </div>
+      <pre class="demo-code"><code>&lt;select data-mtx="native-select" data-label="Age" name="age"&gt;
+  &lt;option value="10"&gt;Ten&lt;/option&gt;
+  &lt;option value="20"&gt;Twenty&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>standard</code> (default), <code>outlined</code> and <code>filled</code> with <code>data-variant</code>, with the same proportions as TextField and Select.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <select data-mtx="native-select" data-variant="outlined" data-label="Country">
+            <option value="co">Colombia</option><option value="mx">Mexico</option><option value="es">Spain</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Filled</span>
+          <select data-mtx="native-select" data-variant="filled" data-label="Country">
+            <option value="co">Colombia</option><option value="mx">Mexico</option><option value="es">Spain</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Standard</span>
+          <select data-mtx="native-select" data-variant="standard" data-label="Country">
+            <option value="co">Colombia</option><option value="mx">Mexico</option><option value="es">Spain</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Medium 56px (default) and small 40px with <code>data-size="small"</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 56px</span>
+        <div class="demo-grid-3">
+          <select data-mtx="native-select" data-variant="outlined" data-label="Outlined"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+          <select data-mtx="native-select" data-variant="filled" data-label="Filled"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+          <select data-mtx="native-select" data-variant="standard" data-label="Standard"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 40px</span>
+        <div class="demo-grid-3">
+          <select data-mtx="native-select" data-variant="outlined" data-label="Outlined" data-size="small"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+          <select data-mtx="native-select" data-variant="filled" data-label="Filled" data-size="small"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+          <select data-mtx="native-select" data-variant="standard" data-label="Standard" data-size="small"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · small NativeSelect 40px + small TextField 40px + medium Button 40px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <select data-mtx="native-select" data-variant="outlined" data-label="Per page" data-size="small">
+              <option value="10">10</option><option value="25">25</option><option value="50">50</option>
+            </select>
+          </div>
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Go to page" data-size="small" inputmode="numeric" type="text" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="button">Go</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · medium NativeSelect 56px + large Button 48px + FAB 56px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <select data-mtx="native-select" data-variant="outlined" data-label="Template">
+              <option value="blank">Blank</option><option value="invoice">Invoice</option>
+            </select>
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="large" type="button">Create</button>
+          <button data-mtx="fab" data-icon="add" aria-label="New template" type="button"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Normal, error (<code>data-error</code>) and disabled (<code>disabled</code>). Use <kbd>Tab</kbd> to see focus: the border and the label switch to the primary color.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Normal</span>
+          <select data-mtx="native-select" data-variant="outlined" data-label="Size"><option value="s">S</option><option value="m">M</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error</span>
+          <select data-mtx="native-select" data-variant="outlined" data-label="Size" data-error><option value="">Not chosen</option><option value="m">M</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled</span>
+          <select data-mtx="native-select" data-variant="outlined" data-label="Plan" disabled><option value="pro">Professional</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Filled error</span>
+          <select data-mtx="native-select" data-variant="filled" data-label="Color" data-error><option value="">Not chosen</option><option value="red">Red</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Standard error</span>
+          <select data-mtx="native-select" data-variant="standard" data-label="Color" data-error><option value="">Not chosen</option><option value="red">Red</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Filled disabled</span>
+          <select data-mtx="native-select" data-variant="filled" data-label="Plan" disabled><option value="pro">Professional</option></select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="groups">
+      <h2>Groups and multiple selection</h2>
+      <p><code>&lt;optgroup&gt;</code> and <code>&lt;option disabled&gt;</code> work natively. With <code>multiple</code> and <code>size</code> the browser's list is shown with its variant's border or background and no chevron (use Ctrl/Cmd + click).</p>
+      <div class="demo-group">
+        <span class="demo-label">Option groups</span>
+        <div class="demo-fixed-width">
+          <select data-mtx="native-select" data-variant="filled" data-label="City">
+            <optgroup label="Colombia">
+              <option value="bog">Bogotá</option>
+              <option value="med">Medellín</option>
+            </optgroup>
+            <optgroup label="Mexico">
+              <option value="cdmx">Mexico City</option>
+              <option value="gdl" disabled>Guadalajara (no coverage)</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Multiple · outlined, filled and standard</span>
+        <div class="demo-grid-3">
+          <select data-mtx="native-select" data-variant="outlined" data-label="Languages" multiple size="4">
+            <option value="js" selected>JavaScript</option><option value="ts">TypeScript</option><option value="py">Python</option><option value="go">Go</option>
+          </select>
+          <select data-mtx="native-select" data-variant="filled" data-label="Languages" multiple size="4">
+            <option value="js">JavaScript</option><option value="ts" selected>TypeScript</option><option value="py">Python</option><option value="go">Go</option>
+          </select>
+          <select data-mtx="native-select" data-label="Languages" multiple size="4">
+            <option value="js">JavaScript</option><option value="ts">TypeScript</option><option value="py" selected>Python</option><option value="go">Go</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="comparison">
+      <h2>Select or NativeSelect?</h2>
+      <p>The same data with both components. NativeSelect opens the system menu; <a href="../select/index.html">Select</a> draws its own menu with search and icons.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">NativeSelect · system menu</span>
+          <select data-mtx="native-select" data-variant="outlined" data-label="Country">
+            <option value="co">Colombia</option><option value="mx">Mexico</option><option value="es">Spain</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Select · MUI menu with search</span>
+          <select data-mtx="select" data-label="Country" data-search>
+            <option value="co" data-image="https://flagcdn.com/w40/co.png">Colombia</option>
+            <option value="mx" data-image="https://flagcdn.com/w40/mx.png">Mexico</option>
+            <option value="es" data-image="https://flagcdn.com/w40/es.png">Spain</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Address form in <code>mtx-grid</code>: one column on mobile and three on desktop.</p>
+      <div class="demo-surface">
+        <form data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <select data-mtx="native-select" data-variant="outlined" data-label="Country" name="country" autocomplete="country">
+              <option value="co">Colombia</option><option value="mx">Mexico</option><option value="es">Spain</option>
+            </select>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <select data-mtx="native-select" data-variant="outlined" data-label="Street type" name="street-type">
+              <option value="street">Street</option><option value="road">Road</option><option value="avenue">Avenue</option>
+            </select>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="4">
+            <input data-mtx="text-field" data-label="Number" type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12">
+            <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Save address</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The buttons call the real API; the console logs the native <code>change</code> and <code>focus</code> events of the <code>&lt;select&gt;</code>.</p>
+      <div class="demo-fixed-width">
+        <select id="ns-api" data-mtx="native-select" data-variant="outlined" data-label="Size">
+          <option value="s">S</option>
+          <option value="m">M</option>
+          <option value="l">L</option>
+        </select>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-ns-action="value">value = 'l'</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-ns-action="toggle">disable() / enable()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-ns-action="focus">focus()</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" data-size="small" type="button" data-ns-action="create">Materix.init(el)</button>
+      </div>
+      <div class="demo-grid-3" id="ns-dynamic"></div>
+      <pre class="demo-log" id="ns-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const ns = Materix.getInstance(document.getElementById('ns-api'));
+ns.value = 'l';                    // does not emit change
+ns.disabled ? ns.enable() : ns.disable();
+ns.input.addEventListener('change', () =&gt; console.log(ns.value));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Full structure with the label associated through <code>for</code>/<code>id</code>. If the markup includes an empty <code>mtx-native-select__chevron</code>, the JavaScript adds the icon to it; if it doesn't exist, it creates it.</p>
+      <div class="demo-fixed-width">
+        <div class="mtx-native-select mtx-native-select--outlined" data-mtx="native-select">
+          <label class="mtx-native-select__label" for="ns-bem">Age</label>
+          <select class="mtx-native-select__input" id="ns-bem">
+            <option value="10">Ten</option>
+            <option value="20">Twenty</option>
+          </select>
+          <span class="mtx-native-select__chevron" aria-hidden="true"></span>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-native-select mtx-native-select--outlined" data-mtx="native-select"&gt;
+  &lt;label class="mtx-native-select__label" for="age"&gt;Age&lt;/label&gt;
+  &lt;select class="mtx-native-select__input" id="age"&gt;
+    &lt;option value="10"&gt;Ten&lt;/option&gt;
+    &lt;option value="20"&gt;Twenty&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;span class="mtx-native-select__chevron" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      /**
+       * Añade una línea a la consola de eventos.
+       * @param {string} text Mensaje.
+       */
+      function log(text) {
+        var out = document.getElementById('ns-log');
+        out.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        out.scrollTop = out.scrollHeight;
+      }
+
+      var ns = Materix.getInstance(document.getElementById('ns-api'));
+      ns.input.addEventListener('change', function () { log('change → value "' + ns.value + '"'); });
+      ns.input.addEventListener('focus', function () { log('focus'); });
+
+      var count = 0;
+      document.querySelectorAll('[data-ns-action]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var action = btn.getAttribute('data-ns-action');
+          if (action === 'value') { ns.value = 'l'; log("value = 'l' → \"" + ns.value + '"'); }
+          if (action === 'toggle') {
+            if (ns.disabled) { ns.enable(); log('enable() → disabled = false'); }
+            else { ns.disable(); log('disable() → disabled = true'); }
+          }
+          if (action === 'focus') { ns.focus(); }
+          if (action === 'create') {
+            var el = document.createElement('select');
+            el.setAttribute('data-mtx', 'native-select');
+            el.setAttribute('data-variant', 'filled');
+            el.setAttribute('data-label', 'Dynamic #' + (++count));
+            el.innerHTML = '<option value="a">Option A</option><option value="b">Option B</option>';
+            document.getElementById('ns-dynamic').appendChild(el);
+            Materix.init(el);
+            log('Materix.init(select) → #' + count);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

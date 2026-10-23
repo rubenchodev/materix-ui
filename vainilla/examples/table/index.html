@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Data display</span>
+        <h1>Table</h1>
+        <p class="demo-lead">Displays data sets in rows and columns on a semantic HTML table, with density, sticky header, sorting, selection and pagination.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#alignment">Numeric alignment</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#states">Row states</a>
+      <a href="#sticky-header">Sticky header</a>
+      <a href="#footer">Footer and caption</a>
+      <a href="#sorting">Sorting</a>
+      <a href="#selection">Selection</a>
+      <a href="#toolbar">Toolbar</a>
+      <a href="#pagination">Pagination</a>
+      <a href="#data-table">Data table</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A standard HTML table with <code>data-mtx="table"</code>: the component styles the sections, rows and cells and adds <code>scope="col"</code>. <code>table-container</code> scrolls horizontally inside its box.</p>
+      <div data-mtx="table-container">
+        <table data-mtx="table" aria-label="Inventory">
+          <thead>
+            <tr><th>Product</th><th>Category</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Laptop Pro 16"</td><td>Computers</td><td>In stock</td></tr>
+            <tr><td>Mechanical keyboard</td><td>Accessories</td><td>In stock</td></tr>
+            <tr><td>4K monitor 27"</td><td>Displays</td><td>Out of stock</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="table-container"&gt;
+  &lt;table data-mtx="table" aria-label="Inventory"&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Product&lt;/th&gt;...&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Laptop Pro 16"&lt;/td&gt;...&lt;/tr&gt;&lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="alignment">
+      <h2>Numeric alignment</h2>
+      <p>Numeric columns are right-aligned with <code>data-align="right"</code> on the header and the cells; there is no need for <code>data-mtx</code> on each cell.</p>
+      <div data-mtx="table-container">
+        <table data-mtx="table" aria-label="Nutrition facts">
+          <thead>
+            <tr>
+              <th>Dessert (100 g serving)</th>
+              <th data-align="right">Calories</th>
+              <th data-align="right">Fat (g)</th>
+              <th data-align="right">Carbs (g)</th>
+              <th data-align="right">Protein (g)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Frozen yoghurt</td><td data-align="right">159</td><td data-align="right">6.0</td><td data-align="right">24</td><td data-align="right">4.0</td></tr>
+            <tr><td>Ice cream sandwich</td><td data-align="right">237</td><td data-align="right">9.0</td><td data-align="right">37</td><td data-align="right">4.3</td></tr>
+            <tr><td>Eclair</td><td data-align="right">262</td><td data-align="right">16.0</td><td data-align="right">24</td><td data-align="right">6.0</td></tr>
+            <tr><td>Cupcake</td><td data-align="right">305</td><td data-align="right">3.7</td><td data-align="right">67</td><td data-align="right">4.3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Normal (16px padding) and <code>data-size="small"</code> (6px vertical) for tables with many rows.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Normal</span>
+          <div data-mtx="table-container">
+            <table data-mtx="table" aria-label="Users (normal)">
+              <thead><tr><th>User</th><th data-align="right">Logins</th></tr></thead>
+              <tbody>
+                <tr><td>Ana García</td><td data-align="right">128</td></tr>
+                <tr><td>Luis Pérez</td><td data-align="right">57</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Small</span>
+          <div data-mtx="table-container">
+            <table data-mtx="table" data-size="small" aria-label="Users (small)">
+              <thead><tr><th>User</th><th data-align="right">Logins</th></tr></thead>
+              <tbody>
+                <tr><td>Ana García</td><td data-align="right">128</td></tr>
+                <tr><td>Luis Pérez</td><td data-align="right">57</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>Row states</h2>
+      <p>Hover over the rows: <code>data-hover</code> highlights them. <code>data-selected</code> on a <code>table-row</code> marks the row as selected with <code>aria-selected="true"</code>.</p>
+      <div data-mtx="table-container">
+        <table data-mtx="table" data-hover aria-label="Recent orders">
+          <thead><tr><th>Order</th><th>Customer</th><th data-align="right">Amount</th></tr></thead>
+          <tbody>
+            <tr><td>#1001</td><td>Ana García</td><td data-align="right">$120.00</td></tr>
+            <tr data-mtx="table-row" data-selected><td>#1002</td><td>Luis Pérez (selected)</td><td data-align="right">$89.50</td></tr>
+            <tr><td>#1003</td><td>María Torres</td><td data-align="right">$42.90</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sticky-header">
+      <h2>Sticky header</h2>
+      <p><code>data-sticky-header</code> keeps the header fixed while scrolling and <code>data-max-height="240"</code> limits the height of the container, which scrolls internally.</p>
+      <div data-mtx="table-container" data-sticky-header data-max-height="240">
+        <table data-mtx="table" data-size="small" aria-label="Cities by population">
+          <thead><tr><th>City</th><th>State</th><th data-align="right">Population</th></tr></thead>
+          <tbody>
+            <tr><td>New York</td><td>New York</td><td data-align="right">8,258,035</td></tr>
+            <tr><td>Los Angeles</td><td>California</td><td data-align="right">3,820,914</td></tr>
+            <tr><td>Chicago</td><td>Illinois</td><td data-align="right">2,664,452</td></tr>
+            <tr><td>Houston</td><td>Texas</td><td data-align="right">2,314,157</td></tr>
+            <tr><td>Phoenix</td><td>Arizona</td><td data-align="right">1,650,070</td></tr>
+            <tr><td>Philadelphia</td><td>Pennsylvania</td><td data-align="right">1,550,542</td></tr>
+            <tr><td>San Antonio</td><td>Texas</td><td data-align="right">1,495,295</td></tr>
+            <tr><td>San Diego</td><td>California</td><td data-align="right">1,388,320</td></tr>
+            <tr><td>Dallas</td><td>Texas</td><td data-align="right">1,302,868</td></tr>
+            <tr><td>Jacksonville</td><td>Florida</td><td data-align="right">985,843</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="demo-section" id="footer">
+      <h2>Footer and caption</h2>
+      <p>The <code>&lt;tfoot&gt;</code> gets totals styling and a <code>&lt;caption&gt;</code> is shown as a caption below the table (it receives <code>mtx-table-caption</code> automatically).</p>
+      <div data-mtx="table-container">
+        <table data-mtx="table">
+          <caption>First-quarter sales, in thousands of dollars.</caption>
+          <thead><tr><th>Month</th><th data-align="right">Sales</th><th data-align="right">Orders</th></tr></thead>
+          <tbody>
+            <tr><td>January</td><td data-align="right">42.1</td><td data-align="right">310</td></tr>
+            <tr><td>February</td><td data-align="right">38.7</td><td data-align="right">284</td></tr>
+            <tr><td>March</td><td data-align="right">51.3</td><td data-align="right">402</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td>Total</td><td data-align="right">132.1</td><td data-align="right">996</td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sorting">
+      <h2>Sorting</h2>
+      <p><code>table-sort-label</code> toggles the direction, keeps a single column active, updates <code>aria-sort</code> and emits <code>mtx:table:sort</code>; the page reorders the rows when it receives the event. In right-aligned columns the arrow goes on the left. Use Tab and Enter to sort with the keyboard.</p>
+      <div data-mtx="table-container">
+        <table id="sort-table" data-mtx="table" aria-label="Sortable desserts">
+          <thead>
+            <tr>
+              <th><button data-mtx="table-sort-label" data-key="name" data-active>Dessert</button></th>
+              <th data-align="right"><button data-mtx="table-sort-label" data-key="kcal">Calories</button></th>
+              <th data-align="right"><button data-mtx="table-sort-label" data-key="fat" data-disabled>Fat (disabled)</button></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Donut</td><td data-align="right">452</td><td data-align="right">25.0</td></tr>
+            <tr><td>Eclair</td><td data-align="right">262</td><td data-align="right">16.0</td></tr>
+            <tr><td>Cupcake</td><td data-align="right">305</td><td data-align="right">3.7</td></tr>
+            <tr><td>Gingerbread</td><td data-align="right">356</td><td data-align="right">16.0</td></tr>
+            <tr><td>Frozen yoghurt</td><td data-align="right">159</td><td data-align="right">6.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="demo-section" id="selection">
+      <h2>Selection</h2>
+      <p><code>data-selectable</code> adds the checkbox column: the header checkbox selects everything and turns indeterminate with a partial selection. Each row is identified by <code>data-id</code> and the table emits <code>mtx:table:selection-change</code>. With <code>data-select-on-click</code> a row is also selected by clicking it.</p>
+      <div class="demo-stack">
+        <div data-mtx="table-container">
+          <table id="select-table" data-mtx="table" data-selectable data-select-on-click data-hover aria-label="Team">
+            <thead>
+              <tr><th>Name</th><th>Role</th><th data-align="right">Age</th></tr>
+            </thead>
+            <tbody>
+              <tr data-id="ana"><td>Ana García</td><td>Design</td><td data-align="right">32</td></tr>
+              <tr data-id="luis" data-selected><td>Luis Pérez</td><td>Engineering</td><td data-align="right">41</td></tr>
+              <tr data-id="maria"><td>María Torres</td><td>Product</td><td data-align="right">27</td></tr>
+              <tr data-id="system" data-no-select><td>System account (data-no-select)</td><td>Service</td><td data-align="right">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p id="select-status" class="demo-status" aria-live="polite">selected: ["luis"]</p>
+      </div>
+      <pre class="demo-code"><code>&lt;table data-mtx="table" data-selectable data-select-on-click data-hover aria-label="Team"&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th data-align="right"&gt;Age&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr data-id="ana"&gt;&lt;td&gt;Ana García&lt;/td&gt;...&lt;/tr&gt;
+    &lt;tr data-id="luis" data-selected&gt;&lt;td&gt;Luis Pérez&lt;/td&gt;...&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="toolbar">
+      <h2>Toolbar</h2>
+      <p><code>data-mtx="table-toolbar"</code> with <code>data-table</code> follows the table's selection: with nothing selected it shows the title and the <code>data-show="default"</code> group; with a selection it is highlighted (<code>--highlight</code>), announces the count (<code>aria-live</code>) and shows the <code>data-show="selected"</code> group.</p>
+      <div data-mtx="paper" data-variant="outlined">
+        <div data-mtx="table-toolbar" data-table="#toolbar-table" data-title="Nutrition">
+          <div class="mtx-table-toolbar__actions" data-show="default">
+            <button data-mtx="icon-button" data-icon="filter_list" aria-label="Filter list"></button>
+          </div>
+          <div class="mtx-table-toolbar__actions" data-show="selected">
+            <button data-mtx="icon-button" data-icon="file_download" aria-label="Export selected"></button>
+            <button data-mtx="icon-button" data-icon="delete" aria-label="Delete selected"></button>
+          </div>
+        </div>
+        <div data-mtx="table-container">
+          <table id="toolbar-table" data-mtx="table" data-selectable data-select-on-click data-hover aria-label="Nutrition">
+            <thead>
+              <tr><th>Dessert (100 g serving)</th><th data-align="right">Calories</th><th data-align="right">Fat (g)</th></tr>
+            </thead>
+            <tbody>
+              <tr data-id="cupcake"><td>Cupcake</td><td data-align="right">305</td><td data-align="right">3.7</td></tr>
+              <tr data-id="donut" data-selected><td>Donut</td><td data-align="right">452</td><td data-align="right">25.0</td></tr>
+              <tr data-id="eclair" data-selected><td>Eclair</td><td data-align="right">262</td><td data-align="right">16.0</td></tr>
+              <tr data-id="yogurt"><td>Frozen yoghurt</td><td data-align="right">159</td><td data-align="right">6.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="table-toolbar" data-table="#toolbar-table" data-title="Nutrition"&gt;
+  &lt;div class="mtx-table-toolbar__actions" data-show="default"&gt;
+    &lt;button data-mtx="icon-button" data-icon="filter_list" aria-label="Filter list"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="mtx-table-toolbar__actions" data-show="selected"&gt;
+    &lt;button data-mtx="icon-button" data-icon="delete" aria-label="Delete selected"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div data-mtx="table-container"&gt;
+  &lt;table id="toolbar-table" data-mtx="table" data-selectable&gt;...&lt;/table&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="pagination">
+      <h2>Pagination</h2>
+      <p><code>table-pagination</code> with <code>data-table</code> paginates the rows of the given table on its own. Its texts follow the active language (try the EN/ES selector in the top bar).</p>
+      <div data-mtx="table-container">
+        <table id="paged-table" data-mtx="table" data-size="small" aria-label="Countries">
+          <thead><tr><th>Code</th><th>Country</th><th>Capital</th></tr></thead>
+          <tbody>
+            <tr><td>AR</td><td>Argentina</td><td>Buenos Aires</td></tr>
+            <tr><td>BO</td><td>Bolivia</td><td>Sucre</td></tr>
+            <tr><td>CL</td><td>Chile</td><td>Santiago</td></tr>
+            <tr><td>CO</td><td>Colombia</td><td>Bogotá</td></tr>
+            <tr><td>CR</td><td>Costa Rica</td><td>San José</td></tr>
+            <tr><td>EC</td><td>Ecuador</td><td>Quito</td></tr>
+            <tr><td>ES</td><td>Spain</td><td>Madrid</td></tr>
+            <tr><td>MX</td><td>Mexico</td><td>Mexico City</td></tr>
+            <tr><td>PE</td><td>Peru</td><td>Lima</td></tr>
+            <tr><td>UY</td><td>Uruguay</td><td>Montevideo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div data-mtx="table-pagination" data-table="#paged-table" data-rows-per-page="4" data-rows-per-page-options="4,8,-1" data-show-first-button data-show-last-button></div>
+      <div class="demo-group">
+        <span class="demo-label">Disabled · unknown total (data-count="-1")</span>
+        <div data-mtx="table-pagination" data-count="-1" data-rows-per-page="10" data-disabled></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="data-table">
+      <h2>Data table</h2>
+      <p>A complete recipe with minimal JavaScript: a toolbar with search and bulk actions, selection by <code>data-id</code>, sorting, status chips and local pagination. The rows are rendered from an array; the table styles them and adds the checkboxes to new rows by itself, and keeps the selection when reordering or filtering.</p>
+      <div data-mtx="paper" data-variant="outlined">
+        <div data-mtx="table-toolbar" data-table="#orders-table" data-title="Orders">
+          <div class="mtx-table-toolbar__actions" data-show="default">
+            <input id="orders-search" data-mtx="text-field" data-label="Search customer" data-size="small" data-start-icon="search" type="search" autocomplete="off">
+          </div>
+          <div class="mtx-table-toolbar__actions" data-show="selected">
+            <button id="orders-delete" class="mtx-button mtx-button--text mtx-button--error" data-mtx="button" type="button">
+              <span class="mtx-button__icon material-icons" aria-hidden="true">delete</span>
+              Delete
+            </button>
+          </div>
+        </div>
+        <div data-mtx="table-container">
+          <table id="orders-table" data-mtx="table" data-selectable data-hover aria-label="Orders">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th><button data-mtx="table-sort-label" data-key="client" data-active>Customer</button></th>
+                <th>Status</th>
+                <th data-align="right"><button data-mtx="table-sort-label" data-key="total">Amount</button></th>
+              </tr>
+            </thead>
+            <tbody id="orders-body"></tbody>
+          </table>
+        </div>
+        <div id="orders-pagination" data-mtx="table-pagination" data-table="#orders-table" data-rows-per-page="5" data-rows-per-page-options="5,10,-1"></div>
+      </div>
+      <pre class="demo-code"><code>// Own state: data, order and filter. Selection and pagination are handled by Materix.
+const render = () =&gt; {
+  body.innerHTML = visibleOrders().map((o) =&gt; `&lt;tr data-id="${o.id}"&gt;...&lt;/tr&gt;`).join('');
+  Materix.initAll(body);          // status chips of the new rows
+  pager.page = 0; pager.update(); // recalculates the local pagination
+};
+table.addEventListener('mtx:table:sort', (e) =&gt; { sort = e.detail; render(); });
+deleteButton.addEventListener('click', () =&gt; {
+  orders = orders.filter((o) =&gt; !tableApi.isSelected(o.id));
+  tableApi.clearSelection();
+  render();
+});</code></pre>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Two tables in <code>mtx-grid</code>: stacked on mobile and side by side from <code>md</code>. Each one scrolls horizontally inside its container if it does not fit.</p>
+      <div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <div data-mtx="paper" data-variant="outlined">
+              <div data-mtx="table-container">
+                <table data-mtx="table" data-size="small" aria-label="Best sellers">
+                  <thead><tr><th>Best sellers</th><th data-align="right">Units</th></tr></thead>
+                  <tbody>
+                    <tr><td>Mechanical keyboard</td><td data-align="right">1,204</td></tr>
+                    <tr><td>Wireless mouse</td><td data-align="right">986</td></tr>
+                    <tr><td>4K monitor 27"</td><td data-align="right">412</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <div data-mtx="paper" data-variant="outlined">
+              <div data-mtx="table-container">
+                <table data-mtx="table" data-size="small" aria-label="Returns">
+                  <thead><tr><th>Returns</th><th>Reason</th><th data-align="right">Cases</th></tr></thead>
+                  <tbody>
+                    <tr><td>Headphones</td><td>Factory defect</td><td data-align="right">23</td></tr>
+                    <tr><td>HD webcam</td><td>Not compatible</td><td data-align="right">11</td></tr>
+                    <tr><td>USB-C hub</td><td>Arrived damaged</td><td data-align="right">7</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Selection (the table in the Selection section) and remote pagination with <code>data-count="48"</code> (no <code>data-table</code>): the buttons call the API and the log shows the real <code>mtx:table:selection-change</code>, <code>mtx:table:page-change</code> and <code>mtx:table:rows-per-page-change</code> events.</p>
+      <div class="demo-stack">
+        <div class="demo-row">
+          <button id="api-select-all" class="mtx-button mtx-button--outlined" data-mtx="button">selectAll()</button>
+          <button id="api-clear" class="mtx-button mtx-button--outlined" data-mtx="button">clearSelection()</button>
+          <button id="api-toggle-row" class="mtx-button mtx-button--outlined" data-mtx="button">toggleRow('maria')</button>
+          <button id="api-set" class="mtx-button mtx-button--outlined" data-mtx="button">selected = ['ana']</button>
+        </div>
+        <div id="api-pagination" data-mtx="table-pagination" data-count="48" data-rows-per-page="10" data-show-first-button data-show-last-button></div>
+        <div class="demo-row">
+          <button id="api-first" class="mtx-button mtx-button--outlined" data-mtx="button">firstPage()</button>
+          <button id="api-next" class="mtx-button mtx-button--outlined" data-mtx="button">nextPage()</button>
+          <button id="api-last" class="mtx-button mtx-button--outlined" data-mtx="button">lastPage()</button>
+          <button id="api-page" class="mtx-button mtx-button--outlined" data-mtx="button">page = 2</button>
+          <button id="api-count" class="mtx-button mtx-button--outlined" data-mtx="button">count = 120</button>
+          <button id="api-toggle" class="mtx-button mtx-button--outlined" data-mtx="button">disable() / enable()</button>
+        </div>
+        <pre id="table-log" class="demo-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Each part with its own <code>data-mtx</code> and class, for server-rendered tables.</p>
+      <div class="mtx-table-toolbar mtx-table-toolbar--highlight" role="toolbar" aria-label="Order actions">
+        <div class="mtx-table-toolbar__count">2 selected</div>
+        <div class="mtx-table-toolbar__actions">
+          <button data-mtx="icon-button" data-icon="delete" aria-label="Delete selected"></button>
+        </div>
+      </div>
+      <div class="mtx-table-container" data-mtx="table-container">
+        <table class="mtx-table mtx-table--small" data-mtx="table" aria-label="BEM table">
+          <thead class="mtx-table-head" data-mtx="table-head">
+            <tr class="mtx-table-row" data-mtx="table-row">
+              <th class="mtx-table-cell" data-mtx="table-cell" scope="col">Dessert</th>
+              <th class="mtx-table-cell mtx-table-cell--right" data-mtx="table-cell" scope="col">Calories</th>
+            </tr>
+          </thead>
+          <tbody class="mtx-table-body" data-mtx="table-body">
+            <tr class="mtx-table-row mtx-table-row--selected" data-mtx="table-row" aria-selected="true">
+              <td class="mtx-table-cell" data-mtx="table-cell">Cupcake</td>
+              <td class="mtx-table-cell mtx-table-cell--right" data-mtx="table-cell">305</td>
+            </tr>
+            <tr class="mtx-table-row" data-mtx="table-row">
+              <td class="mtx-table-cell" data-mtx="table-cell">Donut</td>
+              <td class="mtx-table-cell mtx-table-cell--right" data-mtx="table-cell">452</td>
+            </tr>
+          </tbody>
+          <tfoot class="mtx-table-footer" data-mtx="table-footer">
+            <tr class="mtx-table-row" data-mtx="table-row">
+              <td class="mtx-table-cell" data-mtx="table-cell">Total</td>
+              <td class="mtx-table-cell mtx-table-cell--right" data-mtx="table-cell">757</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-table-toolbar mtx-table-toolbar--highlight" role="toolbar" aria-label="Order actions"&gt;
+  &lt;div class="mtx-table-toolbar__count"&gt;2 selected&lt;/div&gt;
+  &lt;div class="mtx-table-toolbar__actions"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="mtx-table-container" data-mtx="table-container"&gt;
+  &lt;table class="mtx-table mtx-table--small" data-mtx="table"&gt;
+    &lt;thead class="mtx-table-head" data-mtx="table-head"&gt;
+      &lt;tr class="mtx-table-row" data-mtx="table-row"&gt;
+        &lt;th class="mtx-table-cell" data-mtx="table-cell" scope="col"&gt;Dessert&lt;/th&gt;
+        &lt;th class="mtx-table-cell mtx-table-cell--right" data-mtx="table-cell" scope="col"&gt;Calories&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody class="mtx-table-body" data-mtx="table-body"&gt;...&lt;/tbody&gt;
+    &lt;tfoot class="mtx-table-footer" data-mtx="table-footer"&gt;...&lt;/tfoot&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const get = (id) => Materix.getInstance(document.getElementById(id));
+
+      // Ordenación simple: la etiqueta ya mantiene una sola columna activa.
+      const sortTable = document.getElementById('sort-table');
+      sortTable.addEventListener('mtx:table:sort', (event) => {
+        const column = { name: 0, kcal: 1, fat: 2 }[event.detail.key];
+        const factor = event.detail.direction === 'asc' ? 1 : -1;
+        const value = (row) => (column === 0 ? row.cells[0].textContent : Number(row.cells[column].textContent.replace(',', '')));
+        const body = sortTable.tBodies[0];
+        body.append(...[...body.rows].sort((a, b) => {
+          const x = value(a); const y = value(b);
+          return factor * (typeof x === 'number' ? x - y : x.localeCompare(y, 'en'));
+        }));
+      });
+
+      // Selección integrada.
+      const selectTable = document.getElementById('select-table');
+      const selectStatus = document.getElementById('select-status');
+      selectTable.addEventListener('mtx:table:selection-change', (event) => {
+        selectStatus.textContent = `selected: ${JSON.stringify(event.detail.selected)}`;
+      });
+
+      // Tabla de datos: datos en memoria pintados con JS mínimo.
+      const STATUS = { paid: ['Paid', 'success'], pending: ['Pending', 'warning'], shipped: ['Shipped', 'info'], cancelled: ['Cancelled', 'error'] };
+      let orders = [
+        ['1001', 'Ana García', 'paid', 120], ['1002', 'Luis Pérez', 'pending', 89.5], ['1003', 'María Torres', 'shipped', 42.9],
+        ['1004', 'James Parker', 'paid', 310], ['1005', 'Emily Clark', 'cancelled', 15.75], ['1006', 'Carlos Ruiz', 'shipped', 230.4],
+        ['1007', 'Rose Davis', 'paid', 64], ['1008', 'Andrew Lopez', 'pending', 512.2], ['1009', 'Grace Miller', 'shipped', 98.1],
+        ['1010', 'Oscar Nash', 'paid', 27.3], ['1011', 'Ellen Reed', 'pending', 145], ['1012', 'Paul Gilbert', 'shipped', 76.6],
+      ].map(([id, client, status, total]) => ({ id, client, status, total }));
+      const ordersTable = document.getElementById('orders-table');
+      const ordersBody = document.getElementById('orders-body');
+      const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+      const escapeHtml = (text) => text.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      let sort = { key: 'client', direction: 'asc' };
+      let query = '';
+
+      const render = () => {
+        const factor = sort.direction === 'asc' ? 1 : -1;
+        const list = orders
+          .filter((o) => o.client.toLowerCase().includes(query))
+          .sort((a, b) => factor * (sort.key === 'total' ? a.total - b.total : a.client.localeCompare(b.client, 'en')));
+        ordersBody.innerHTML = list.map((o) => `<tr data-id="${o.id}">
+          <td>#${o.id}</td><td>${escapeHtml(o.client)}</td>
+          <td><span data-mtx="chip" data-label="${STATUS[o.status][0]}" data-size="small" data-color="${STATUS[o.status][1]}" data-variant="outlined"></span></td>
+          <td data-align="right">${money.format(o.total)}</td></tr>`).join('');
+        Materix.initAll(ordersBody);
+        const pager = get('orders-pagination');
+        if (pager) { pager.page = 0; pager.update(); }
+      };
+      ordersTable.addEventListener('mtx:table:sort', (event) => { sort = event.detail; render(); });
+      document.getElementById('orders-search').addEventListener('input', (event) => {
+        query = event.target.value.trim().toLowerCase();
+        render();
+      });
+      document.getElementById('orders-delete').addEventListener('click', () => {
+        const table = get('orders-table');
+        orders = orders.filter((o) => !table.isSelected(o.id));
+        table.clearSelection();
+        render();
+      });
+      render();
+
+      // Uso programático.
+      const apiEl = document.getElementById('api-pagination');
+      const api = () => Materix.getInstance(apiEl);
+      const log = document.getElementById('table-log');
+      const write = (text) => { log.textContent += `${text}\n`; log.scrollTop = log.scrollHeight; };
+      selectTable.addEventListener('mtx:table:selection-change', (e) => write(`mtx:table:selection-change ${JSON.stringify({ selected: e.detail.selected, count: e.detail.count, reason: e.detail.reason })}`));
+      document.getElementById('api-select-all').addEventListener('click', () => get('select-table').selectAll());
+      document.getElementById('api-clear').addEventListener('click', () => get('select-table').clearSelection());
+      document.getElementById('api-toggle-row').addEventListener('click', () => get('select-table').toggleRow('maria'));
+      document.getElementById('api-set').addEventListener('click', () => { get('select-table').selected = ['ana']; });
+      apiEl.addEventListener('mtx:table:page-change', (e) => write(`mtx:table:page-change ${JSON.stringify(e.detail)}`));
+      apiEl.addEventListener('mtx:table:rows-per-page-change', (e) => write(`mtx:table:rows-per-page-change ${JSON.stringify(e.detail)}`));
+      document.getElementById('api-first').addEventListener('click', () => api().firstPage());
+      document.getElementById('api-next').addEventListener('click', () => api().nextPage());
+      document.getElementById('api-last').addEventListener('click', () => api().lastPage());
+      document.getElementById('api-page').addEventListener('click', () => { api().page = 2; write(`pagination.page = 2 → page: ${api().page} (no event)`); });
+      document.getElementById('api-count').addEventListener('click', () => { api().count = 120; write(`pagination.count = 120 → count: ${api().count}`); });
+      document.getElementById('api-toggle').addEventListener('click', () => {
+        if (api().disabled) api().enable(); else api().disable();
+        write(`pagination.${api().disabled ? 'disable' : 'enable'}() → disabled: ${api().disabled}`);
+      });
+    });
+  </script>
+</body>
+</html>

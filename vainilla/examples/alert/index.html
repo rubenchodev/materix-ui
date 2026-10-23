@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alert · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Feedback</span>
+        <h1>Alert</h1>
+        <p class="demo-lead">A short, prominent message that reports the outcome of an action or the state of the system without interrupting the user.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#with-icons">With and without icons</a>
+      <a href="#severities">Severities</a>
+      <a href="#title">Title</a>
+      <a href="#actions">Actions</a>
+      <a href="#dismissible">Dismissible</a>
+      <a href="#forms">In forms</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;div data-mtx="alert"&gt;</code> is enough: the component adds the severity icon, the message container and the optional title.</p>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="alert" data-severity="success">Your changes were saved successfully.</div>
+        <div data-mtx="alert" data-severity="error" data-title="Error">Could not connect to the server.</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="alert" data-severity="success"&gt;Your changes were saved successfully.&lt;/div&gt;
+&lt;div data-mtx="alert" data-severity="error" data-title="Error"&gt;Could not connect to the server.&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>Three variants, as in MUI: <code>standard</code> (soft background, default), <code>filled</code> (solid background) and <code>outlined</code> (border only). They are chosen with <code>data-variant</code>. As in MUI, <code>standard</code> and <code>outlined</code> use the severity color darkened in the light theme and lightened in the dark theme, so the text keeps its contrast.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Standard</span>
+          <div class="demo-stack">
+            <div data-mtx="alert" data-severity="success">Success: order confirmed.</div>
+            <div data-mtx="alert" data-severity="info">Info: a new version is available.</div>
+            <div data-mtx="alert" data-severity="warning">Warning: your plan expires soon.</div>
+            <div data-mtx="alert" data-severity="error">Error: payment declined.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Filled</span>
+          <div class="demo-stack">
+            <div data-mtx="alert" data-severity="success" data-variant="filled">Success: order confirmed.</div>
+            <div data-mtx="alert" data-severity="info" data-variant="filled">Info: a new version is available.</div>
+            <div data-mtx="alert" data-severity="warning" data-variant="filled">Warning: your plan expires soon.</div>
+            <div data-mtx="alert" data-severity="error" data-variant="filled">Error: payment declined.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <div class="demo-stack">
+            <div data-mtx="alert" data-severity="success" data-variant="outlined">Success: order confirmed.</div>
+            <div data-mtx="alert" data-severity="info" data-variant="outlined">Info: a new version is available.</div>
+            <div data-mtx="alert" data-severity="warning" data-variant="outlined">Warning: your plan expires soon.</div>
+            <div data-mtx="alert" data-severity="error" data-variant="outlined">Error: payment declined.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p>By default the severity SVG icon is generated at 22px, as in MUI. You can replace it with a <code>.mtx-alert__icon</code> child (a <code>.material-icons</code> keeps its 24px grid) or remove it with <code>data-icon="false"</code>.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Automatic icon</span>
+          <div data-mtx="alert" data-severity="info">Icon generated from the severity.</div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Custom icon</span>
+          <div data-mtx="alert" data-severity="success">
+            <span class="mtx-alert__icon"><span class="material-icons" aria-hidden="true">cloud_done</span></span>
+            Backup completed.
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">No icon</span>
+          <div data-mtx="alert" data-severity="warning" data-icon="false">Alert without an icon.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="severities">
+      <h2>Severities</h2>
+      <p>The severity (<code>data-severity</code>) sets the color and the icon. Use <code>success</code>, <code>info</code>, <code>warning</code> or <code>error</code> according to the meaning of the message; without the attribute, <code>success</code> is applied.</p>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="alert" data-severity="success" data-variant="filled">success — the operation completed successfully.</div>
+        <div data-mtx="alert" data-severity="info" data-variant="filled">info — neutral or contextual information.</div>
+        <div data-mtx="alert" data-severity="warning" data-variant="filled">warning — something needs attention soon.</div>
+        <div data-mtx="alert" data-severity="error" data-variant="filled">error — the operation failed and action is required.</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="title">
+      <h2>Title</h2>
+      <p><code>data-title</code> generates a bold <code>.mtx-alert__title</code> above the message, equivalent to MUI's <code>AlertTitle</code>.</p>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="alert" data-severity="info" data-title="Scheduled maintenance">The service will be paused on Sunday from 2:00 to 4:00 AM.</div>
+        <div data-mtx="alert" data-severity="warning" data-variant="outlined" data-title="Verify your email">Confirm your address to keep receiving notifications.</div>
+        <div data-mtx="alert" data-severity="error" data-variant="filled" data-title="Session expired">Sign in again to continue.</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="actions">
+      <h2>Actions</h2>
+      <p>To place buttons on the right, write the text inside <code>.mtx-alert__message</code> and leave the button as a sibling: the component does not move it into the message.</p>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="alert" data-severity="success">
+          <div class="mtx-alert__message">1 conversation was deleted.</div>
+          <button class="mtx-button mtx-button--text mtx-button--small mtx-button--success" data-mtx="button">Undo</button>
+        </div>
+        <div data-mtx="alert" data-severity="warning" data-variant="outlined" data-title="Storage almost full">
+          <div class="mtx-alert__message">You have used 92% of your space.</div>
+          <button class="mtx-button mtx-button--text mtx-button--small mtx-button--warning" data-mtx="button">Upgrade</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="dismissible">
+      <h2>Dismissible</h2>
+      <p><code>data-dismissible</code> adds an accessible close button; <code>data-close-label</code> changes its label for screen readers. When closed, the alert fades out, receives <code>hidden</code> (it leaves the flow: no gap is left) and emits <code>mtx:alert:close</code>. Without <code>data-close-label</code>, the label comes from the i18n dictionary (<code>Close</code> / <code>Cerrar</code>).</p>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="alert" data-severity="info" data-dismissible data-close-label="Dismiss notice">You can dismiss this notice.</div>
+        <div data-mtx="alert" data-severity="error" data-variant="filled" data-title="Critical error" data-dismissible>Synchronization has stopped.</div>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="alert-restore">Restore closed alerts</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="forms">
+      <h2>In forms</h2>
+      <p>Put <code>hidden</code> directly on the alert and remove it on validation: <code>.mtx-alert[hidden]</code> is hidden and takes no space. Submit the empty form to see the error and fill it in to see the success message.</p>
+      <form class="demo-stack demo-fixed-width" id="alert-form" novalidate>
+        <div data-mtx="alert" data-severity="error" data-title="Check the form" id="alert-form-error" hidden>Email and password are required.</div>
+        <div data-mtx="alert" data-severity="success" id="alert-form-success" hidden>Signed in successfully.</div>
+        <input data-mtx="text-field" data-label="Email" data-variant="outlined" type="email" name="email" id="alert-form-email" />
+        <input data-mtx="text-field" data-label="Password" data-variant="outlined" type="password" name="password" id="alert-form-password" />
+        <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Sign in</button>
+      </form>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>Alerts take the width of their container, so they fit any <code>mtx-grid</code> column.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="alert" data-severity="success" data-title="Sales">+12% compared to last month.</div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="alert" data-severity="warning" data-title="Inventory">3 products are low on stock.</div>
+        </div>
+        <div data-mtx="grid" data-xs="12">
+          <div data-mtx="alert" data-severity="info" data-variant="outlined">Reports are updated every hour.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Get the instance with <code>Materix.getInstance(el)</code> and use <code>close()</code> and <code>open()</code>, or create new alerts with <code>Materix.init(el)</code>.</p>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="alert" data-severity="info" data-dismissible id="alert-api">Controlled from JavaScript.</div>
+        <div class="demo-stack" id="alert-api-container"></div>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="alert-api-close">close()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="alert-api-open">open()</button>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" id="alert-api-create">Create alert</button>
+      </div>
+      <pre class="demo-log" id="alert-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const alert = Materix.getInstance(document.getElementById('alert-api'));
+alert.close();
+alert.open();
+
+const el = document.createElement('div');
+el.setAttribute('data-severity', 'success');
+el.textContent = 'Created dynamically';
+container.append(el);
+Materix.init(el, 'alert');</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR or fine-grained control, write the full structure. The component respects the existing icon and message and does not duplicate them.</p>
+      <div class="mtx-alert mtx-alert--warning mtx-alert--outlined demo-wide" data-mtx="alert" data-severity="warning" data-variant="outlined" role="alert">
+        <span class="mtx-alert__icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" focusable="false" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        </span>
+        <div class="mtx-alert__message">
+          <div class="mtx-alert__title">BEM structure</div>
+          Rendered on the server; no auto-scaffolding required.
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-alert mtx-alert--warning mtx-alert--outlined" data-mtx="alert"
+     data-severity="warning" data-variant="outlined" role="alert"&gt;
+  &lt;span class="mtx-alert__icon"&gt;&lt;svg aria-hidden="true" ...&gt;...&lt;/svg&gt;&lt;/span&gt;
+  &lt;div class="mtx-alert__message"&gt;
+    &lt;div class="mtx-alert__title"&gt;BEM structure&lt;/div&gt;
+    Rendered on the server; no auto-scaffolding required.
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var log = document.getElementById('alert-log');
+      var write = function (text) {
+        log.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        log.scrollTop = log.scrollHeight;
+      };
+
+      // Registro de eventos de todas las alertas de la página.
+      document.addEventListener('mtx:alert:close', function (event) {
+        write('mtx:alert:close  ← ' + (event.target.id || event.target.textContent.trim().slice(0, 32)));
+      });
+      document.addEventListener('mtx:alert:open', function (event) {
+        write('mtx:alert:open   ← ' + (event.target.id || event.target.textContent.trim().slice(0, 32)));
+      });
+
+      // Restaura las alertas descartables.
+      document.getElementById('alert-restore').addEventListener('click', function () {
+        document.querySelectorAll('#dismissible [data-mtx="alert"]').forEach(function (el) {
+          Materix.getInstance(el).open();
+        });
+      });
+
+      // API
+      var api = function () { return Materix.getInstance(document.getElementById('alert-api')); };
+      document.getElementById('alert-api-close').addEventListener('click', function () { api().close(); });
+      document.getElementById('alert-api-open').addEventListener('click', function () { api().open(); });
+      var count = 0;
+      document.getElementById('alert-api-create').addEventListener('click', function () {
+        count += 1;
+        var el = document.createElement('div');
+        el.id = 'alert-dyn-' + count;
+        el.setAttribute('data-severity', ['success', 'info', 'warning', 'error'][count % 4]);
+        el.setAttribute('data-dismissible', '');
+        el.textContent = 'Dynamic alert #' + count;
+        document.getElementById('alert-api-container').appendChild(el);
+        Materix.init(el, 'alert');
+        write('Materix.init(el, "alert") → #' + el.id);
+      });
+
+      // Formulario
+      var form = document.getElementById('alert-form');
+      var errorBox = document.getElementById('alert-form-error');
+      var okBox = document.getElementById('alert-form-success');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var valid = form.elements.email.value.trim() !== '' && form.elements.password.value.trim() !== '';
+        errorBox.hidden = valid;
+        okBox.hidden = !valid;
+      });
+    });
+  </script>
+</body>
+</html>

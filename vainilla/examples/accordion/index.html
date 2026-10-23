@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    .demo-accordion-plus { --mtx-accordion-expand-icon-rotation: 45deg; }
+    .demo-accordion-brand {
+      --mtx-accordion-summary-font-weight: 700;
+      --mtx-accordion-summary-expanded-bg: color-mix(in srgb, var(--mtx-color-primary) 12%, transparent);
+      --mtx-accordion-summary-expanded-divider: var(--mtx-color-primary);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Surfaces</span>
+        <h1>Accordion</h1>
+        <p class="demo-lead">Panels that show and hide related sections of content behind a clickable summary, ideal for FAQs and grouped settings.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#details">From details</a>
+      <a href="#variants">Variants</a>
+      <a href="#summary">Summary style</a>
+      <a href="#gutters">Gutters</a>
+      <a href="#with-icons">Icons</a>
+      <a href="#states">States</a>
+      <a href="#exclusive-group">Exclusive group</a>
+      <a href="#actions">Actions</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>&lt;div data-mtx="accordion"&gt;</code> with <code>data-summary</code> generates the <code>&lt;h3&gt;</code> heading, the button with <code>aria-expanded</code>, the <code>expand_more</code> icon and the collapsible region. The content of the div becomes the details. The summary is bold (weight 500) and, when expanded, gets its own background with a divider that separates it from the content. Adjacent panels are grouped visually: only the first and last have rounded corners.</p>
+      <div class="demo-wide">
+        <div data-mtx="accordion" data-summary="Accordion 1">Adjacent panels share 1px separators, as in MUI.</div>
+        <div data-mtx="accordion" data-summary="Accordion 2">Content of the second panel. When expanded it moves 16px away from its neighbors.</div>
+        <div data-mtx="accordion" data-summary="Accordion 3" data-expanded>This panel starts expanded with <code>data-expanded</code>.</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="accordion" data-summary="Accordion 1"&gt;Content of panel one.&lt;/div&gt;
+&lt;div data-mtx="accordion" data-summary="Accordion 2"&gt;Content of panel two.&lt;/div&gt;
+&lt;div data-mtx="accordion" data-summary="Accordion 3" data-expanded&gt;Starts expanded.&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="details">
+      <h2>From details</h2>
+      <p>Progressive enhancement: a <code>&lt;details data-mtx="accordion"&gt;</code> works without JavaScript; once initialized it gets the MUI style, the height animation and the icon. The <code>open</code> attribute sets the initial state.</p>
+      <div class="demo-wide">
+        <details data-mtx="accordion" open>
+          <summary>Does it work without JavaScript?</summary>
+          <p>Yes. The native element opens and closes on its own; Materix adds the look, the transition and the group keyboard navigation.</p>
+        </details>
+        <details data-mtx="accordion">
+          <summary>Does the browser's find feature reach hidden text?</summary>
+          <p>Yes: closed panels open automatically when Ctrl+F finds a match inside them.</p>
+        </details>
+      </div>
+      <pre class="demo-code"><code>&lt;details data-mtx="accordion" open&gt;
+  &lt;summary&gt;Does it work without JavaScript?&lt;/summary&gt;
+  &lt;p&gt;Yes. The native element opens and closes on its own.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>By default the accordion is a Paper with elevation 1. <code>data-variant="outlined"</code> uses a 1px border; <code>data-elevation="0"</code> makes it flat and <code>data-square</code> removes the rounded corners.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Elevation (default)</span>
+          <div>
+            <div data-mtx="accordion" data-summary="Shipping">We deliver within 24-48 business hours.</div>
+            <div data-mtx="accordion" data-summary="Returns">You have 30 days to return your order.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <div>
+            <div data-mtx="accordion" data-variant="outlined" data-summary="Shipping">We deliver within 24-48 business hours.</div>
+            <div data-mtx="accordion" data-variant="outlined" data-summary="Returns">You have 30 days to return your order.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Elevation 0</span>
+          <div>
+            <div data-mtx="accordion" data-elevation="0" data-summary="Shipping">We deliver within 24-48 business hours.</div>
+            <div data-mtx="accordion" data-elevation="0" data-summary="Returns">You have 30 days to return your order.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Square</span>
+          <div>
+            <div data-mtx="accordion" data-square data-summary="Shipping">We deliver within 24-48 business hours.</div>
+            <div data-mtx="accordion" data-square data-summary="Returns">You have 30 days to return your order.</div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="accordion" data-variant="outlined" data-summary="Shipping"&gt;…&lt;/div&gt;
+&lt;div data-mtx="accordion" data-elevation="0" data-summary="Shipping"&gt;…&lt;/div&gt;
+&lt;div data-mtx="accordion" data-square data-summary="Shipping"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="summary">
+      <h2>Summary style</h2>
+      <p>By default the summary uses medium weight (500) and, when the panel is expanded, a <code>--mtx-color-action-hover</code> background and a bottom divider to set it apart from the content in light and dark themes. <code>data-summary-style="plain"</code> (on the panel or on the group) restores the flat MUI look. Customize the result with the <code>--mtx-accordion-summary-font-weight</code>, <code>--mtx-accordion-summary-expanded-bg</code> and <code>--mtx-accordion-summary-expanded-divider</code> variables.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Highlighted (default)</span>
+          <div>
+            <div data-mtx="accordion" data-summary="Billing" data-expanded>Invoices are issued on the 1st of every month.</div>
+            <div data-mtx="accordion" data-summary="Payment methods">Card, bank transfer and direct debit.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-summary-style="plain"</span>
+          <div data-mtx="accordion-group" data-summary-style="plain" data-exclusive="false">
+            <div data-mtx="accordion" data-summary="Billing" data-expanded>Invoices are issued on the 1st of every month.</div>
+            <div data-mtx="accordion" data-summary="Payment methods">Card, bank transfer and direct debit.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Highlighted outlined</span>
+          <div>
+            <div data-mtx="accordion" data-variant="outlined" data-summary="Billing" data-expanded>Invoices are issued on the 1st of every month.</div>
+            <div data-mtx="accordion" data-variant="outlined" data-summary="Payment methods">Card, bank transfer and direct debit.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Custom variables</span>
+          <div class="demo-accordion-brand">
+            <div data-mtx="accordion" data-summary="Billing" data-expanded>Invoices are issued on the 1st of every month.</div>
+            <div data-mtx="accordion" data-summary="Payment methods">Card, bank transfer and direct debit.</div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="accordion" data-summary="Billing"&gt;…&lt;/div&gt;
+&lt;div data-mtx="accordion" data-summary="Billing" data-summary-style="plain"&gt;…&lt;/div&gt;
+
+/* Customization with variables */
+.demo-accordion-brand {
+  --mtx-accordion-summary-font-weight: 700;
+  --mtx-accordion-summary-expanded-bg: color-mix(in srgb, var(--mtx-color-primary) 12%, transparent);
+  --mtx-accordion-summary-expanded-divider: var(--mtx-color-primary);
+}</code></pre>
+    </section>
+
+    <section class="demo-section" id="gutters">
+      <h2>Gutters</h2>
+      <p>When expanded, the panel gains a 16px vertical margin and the summary grows from 48px to 64px. <code>data-disable-gutters</code> keeps the 48px height and removes the margin, useful in dense lists.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">With gutters (48 → 64px)</span>
+          <div>
+            <div data-mtx="accordion" data-summary="First">Closed panel.</div>
+            <div data-mtx="accordion" data-summary="Second (expanded)" data-expanded>Moves 16px away above and below.</div>
+            <div data-mtx="accordion" data-summary="Third">Closed panel.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-disable-gutters (fixed 48px)</span>
+          <div>
+            <div data-mtx="accordion" data-disable-gutters data-summary="First">Closed panel.</div>
+            <div data-mtx="accordion" data-disable-gutters data-summary="Second (expanded)" data-expanded>No margin and no height change.</div>
+            <div data-mtx="accordion" data-disable-gutters data-summary="Third">Closed panel.</div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="accordion" data-disable-gutters data-summary="Second" data-expanded&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>Icons</h2>
+      <p>The expand icon is <code>expand_more</code> and rotates 180° when opened. <code>data-expand-icon</code> accepts any Material Icon and <code>data-expand-icon="false"</code> omits it. The rotation angle is set with the <code>--mtx-accordion-expand-icon-rotation</code> variable.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">expand_more (default) · arrow_drop_down</span>
+          <div>
+            <div data-mtx="accordion" data-summary="Default icon">Content.</div>
+            <div data-mtx="accordion" data-expand-icon="arrow_drop_down" data-summary="arrow_drop_down">Content.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">add (rotates 45°) · no icon</span>
+          <div>
+            <div data-mtx="accordion" data-expand-icon="add" class="demo-accordion-plus" data-summary="add icon">Content.</div>
+            <div data-mtx="accordion" data-expand-icon="false" data-summary="No icon">Content.</div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="accordion" data-expand-icon="arrow_drop_down" data-summary="…"&gt;…&lt;/div&gt;
+&lt;div data-mtx="accordion" data-expand-icon="add" style="--mtx-accordion-expand-icon-rotation: 45deg" data-summary="…"&gt;…&lt;/div&gt;
+&lt;div data-mtx="accordion" data-expand-icon="false" data-summary="…"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover over a summary or press Tab to see the focus (<code>action.focus</code> background, as in MUI). <code>data-disabled</code> dims the summary to 38%, applies the disabled background and blocks interaction. <code>data-ripple</code> adds the optional ripple effect on press.</p>
+      <div class="demo-wide">
+        <div data-mtx="accordion" data-summary="Normal">Enabled panel.</div>
+        <div data-mtx="accordion" data-summary="Expanded" data-expanded>Panel initially expanded.</div>
+        <div data-mtx="accordion" data-summary="With ripple (data-ripple)" data-ripple>The summary shows the ripple on press.</div>
+        <div data-mtx="accordion" data-summary="Disabled" data-disabled>It cannot be opened.</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="accordion" data-summary="Disabled" data-disabled&gt;…&lt;/div&gt;
+&lt;div data-mtx="accordion" data-summary="With ripple" data-ripple&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="exclusive-group">
+      <h2>Exclusive group</h2>
+      <p><code>data-mtx="accordion-group"</code> keeps a single panel open (MUI's "Controlled accordion" pattern) and enables arrow, Home and End navigation between summaries. With <code>data-exclusive="false"</code> several can be open. The group propagates <code>data-variant</code>, <code>data-square</code>, <code>data-elevation</code> and <code>data-disable-gutters</code> to its panels.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Exclusive (default)</span>
+          <div data-mtx="accordion-group">
+            <div data-mtx="accordion" data-summary="General settings" data-expanded>Language, time zone and date format.</div>
+            <div data-mtx="accordion" data-summary="Users">Manage members and permissions.</div>
+            <div data-mtx="accordion" data-summary="Advanced settings">Integrations, webhooks and API keys.</div>
+            <div data-mtx="accordion" data-summary="Personal data">Data export and deletion.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-exclusive="false" · outlined</span>
+          <div data-mtx="accordion-group" data-exclusive="false" data-variant="outlined">
+            <div data-mtx="accordion" data-summary="Email notifications" data-expanded>Weekly digest and security alerts.</div>
+            <div data-mtx="accordion" data-summary="Push notifications" data-expanded>Mentions and direct messages.</div>
+            <div data-mtx="accordion" data-summary="SMS">Sign-in verifications only.</div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="accordion-group"&gt;
+  &lt;div data-mtx="accordion" data-summary="General settings" data-expanded&gt;…&lt;/div&gt;
+  &lt;div data-mtx="accordion" data-summary="Users"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div data-mtx="accordion-group" data-exclusive="false" data-variant="outlined"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="actions">
+      <h2>Actions</h2>
+      <p>A <code>data-mtx="accordion-actions"</code> child is placed at the bottom of the region, right-aligned with 8px between buttons (AccordionActions).</p>
+      <div class="demo-wide">
+        <div data-mtx="accordion" data-summary="Terms of service" data-expanded>
+          <p>By continuing you accept the current terms of use and privacy policy.</p>
+          <div data-mtx="accordion-actions">
+            <button class="mtx-button mtx-button--text" data-mtx="button">Cancel</button>
+            <button class="mtx-button mtx-button--text" data-mtx="button">Agree</button>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="accordion" data-summary="Terms of service"&gt;
+  &lt;p&gt;By continuing you accept the terms…&lt;/p&gt;
+  &lt;div data-mtx="accordion-actions"&gt;
+    &lt;button class="mtx-button mtx-button--text" data-mtx="button"&gt;Cancel&lt;/button&gt;
+    &lt;button class="mtx-button mtx-button--text" data-mtx="button"&gt;Agree&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>Frequently asked questions with <code>&lt;details&gt;</code> (they work without JS) and a settings panel with secondary text in the summary.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Billing FAQ</span>
+          <div data-mtx="accordion-group" data-variant="outlined">
+            <details data-mtx="accordion" open>
+              <summary>Can I change my plan later?</summary>
+              <p>Yes. Upgrades apply instantly and are prorated; downgrades take effect at the end of the billing period.</p>
+            </details>
+            <details data-mtx="accordion">
+              <summary>Which payment methods do you accept?</summary>
+              <p>Credit cards, Apple Pay and Google Pay. Annual plans also accept bank transfer.</p>
+            </details>
+            <details data-mtx="accordion">
+              <summary>Can I cancel at any time?</summary>
+              <p>Yes. Monthly plans can be canceled whenever you want; annual plans come with a full refund within 30 days.</p>
+            </details>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Settings with secondary text</span>
+          <div data-mtx="accordion-group">
+            <div class="mtx-accordion" data-mtx="accordion">
+              <h3 class="mtx-accordion__heading">
+                <button class="mtx-accordion__summary">
+                  <span class="mtx-accordion__summary-content">
+                    <span class="mtx-w-50 mtx-flex-shrink-0">Profile</span>
+                    <span class="mtx-accordion__summary-secondary mtx-text-truncate">Laura Green · laura@acme.com</span>
+                  </span>
+                </button>
+              </h3>
+              <div class="mtx-accordion__details">Account name, photo and email address.</div>
+            </div>
+            <div class="mtx-accordion" data-mtx="accordion">
+              <h3 class="mtx-accordion__heading">
+                <button class="mtx-accordion__summary">
+                  <span class="mtx-accordion__summary-content">
+                    <span class="mtx-w-50 mtx-flex-shrink-0">Security</span>
+                    <span class="mtx-accordion__summary-secondary mtx-text-truncate">2FA enabled</span>
+                  </span>
+                </button>
+              </h3>
+              <div class="mtx-accordion__details">Password, two-step verification and active sessions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>Each <code>mtx-grid</code> column can hold its own block of accordions; they take the full available width.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="accordion-group">
+            <div data-mtx="accordion" data-summary="Orders">Tracking and status of your orders.</div>
+            <div data-mtx="accordion" data-summary="Payments">Invoices and payment methods.</div>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="accordion-group" data-variant="outlined">
+            <div data-mtx="accordion" data-summary="Account">Sign-in details and profile.</div>
+            <div data-mtx="accordion" data-summary="Privacy">Cookies and data preferences.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>expand()</code>, <code>collapse()</code>, <code>toggle()</code>, the <code>expanded</code> getter/setter, <code>disable()</code> / <code>enable()</code> and emits <code>mtx:accordion:change</code> with <code>{ expanded }</code>.</p>
+      <div class="demo-wide">
+        <div data-mtx="accordion" id="accordion-api" data-summary="Panel controlled by the API">Content managed from JavaScript.</div>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="accordion-api-expand">expand()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="accordion-api-collapse">collapse()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="accordion-api-toggle">toggle()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="accordion-api-disable">disable() / enable()</button>
+      </div>
+      <pre class="demo-log" id="accordion-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const accordion = Materix.getInstance(document.getElementById('accordion-api'));
+accordion.expand();
+accordion.expanded = false;
+accordion.element.addEventListener('mtx:accordion:change', (e) =&gt; {
+  console.log(e.detail.expanded);
+});
+
+// Create a new one
+const el = document.createElement('div');
+el.dataset.summary = 'New panel';
+el.textContent = 'Content';
+container.append(el);
+new Materix.Accordion(el);</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR, render the full structure; the component reuses it without duplicating nodes and only wires up the ARIA attributes and the state. <code>AccordionDetails</code> can sit directly in the root: it is wrapped in the region if missing.</p>
+      <div class="demo-wide">
+        <div class="mtx-accordion" data-mtx="accordion">
+          <h3 class="mtx-accordion__heading">
+            <button class="mtx-accordion__summary" type="button" aria-expanded="true">
+              <span class="mtx-accordion__summary-content">Full structure</span>
+              <span class="mtx-accordion__expand-icon" aria-hidden="true"><span class="material-icons">expand_more</span></span>
+            </button>
+          </h3>
+          <div class="mtx-accordion__region">
+            <div class="mtx-accordion__details">Heading, summary, region, details and actions written by hand.</div>
+            <div class="mtx-accordion-actions">
+              <button class="mtx-button mtx-button--text" data-mtx="button">Agree</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-accordion" data-mtx="accordion"&gt;
+  &lt;h3 class="mtx-accordion__heading"&gt;
+    &lt;button class="mtx-accordion__summary" type="button" aria-expanded="true"&gt;
+      &lt;span class="mtx-accordion__summary-content"&gt;Full structure&lt;/span&gt;
+      &lt;span class="mtx-accordion__expand-icon" aria-hidden="true"&gt;&lt;span class="material-icons"&gt;expand_more&lt;/span&gt;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/h3&gt;
+  &lt;div class="mtx-accordion__region"&gt;
+    &lt;div class="mtx-accordion__details"&gt;…&lt;/div&gt;
+    &lt;div class="mtx-accordion-actions"&gt;…&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var el = document.getElementById('accordion-api');
+      var log = document.getElementById('accordion-log');
+      var accordion = Materix.getInstance(el);
+      if (!accordion) return;
+      var write = function (text) {
+        log.textContent = text + '\n' + log.textContent;
+      };
+      el.addEventListener('mtx:accordion:change', function (e) {
+        write('mtx:accordion:change → expanded = ' + e.detail.expanded);
+      });
+      document.getElementById('accordion-api-expand').addEventListener('click', function () { accordion.expand(); });
+      document.getElementById('accordion-api-collapse').addEventListener('click', function () { accordion.collapse(); });
+      document.getElementById('accordion-api-toggle').addEventListener('click', function () { accordion.toggle(); });
+      document.getElementById('accordion-api-disable').addEventListener('click', function () {
+        if (accordion.disabled) accordion.enable(); else accordion.disable();
+        write('disabled = ' + accordion.disabled);
+      });
+    });
+  </script>
+</body>
+</html>

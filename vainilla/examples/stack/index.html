@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stack · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Sample boxes to visualize the stack's children */
+    .demo-stack-item {
+      padding: var(--mtx-spacing-1) var(--mtx-spacing-2);
+      border: 1px solid color-mix(in srgb, var(--mtx-color-primary) 45%, transparent);
+      border-radius: var(--mtx-shape-radius);
+      background-color: color-mix(in srgb, var(--mtx-color-primary) 10%, transparent);
+      color: var(--mtx-color-text-primary);
+      font: var(--mtx-type-body2);
+      text-align: center;
+    }
+    .demo-stack-item--tall { padding-block: var(--mtx-spacing-3); }
+    .demo-stack-frame {
+      padding: var(--mtx-spacing-1);
+      border: 1px dashed var(--mtx-color-divider);
+      border-radius: var(--mtx-shape-radius);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Layout</span>
+        <h1>Stack</h1>
+        <p class="demo-lead">Stacks elements in one direction (column or row) with even spacing, alignment, wrapping, dividers and per-breakpoint changes.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#direction">Direction</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#responsive">Responsive</a>
+      <a href="#alignment">Alignment</a>
+      <a href="#dividers">Dividers</a>
+      <a href="#wrap">Wrap</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>data-mtx="stack"</code> element. As in MUI, the default direction is column; <code>data-spacing</code> sets the gap in multiples of 8px.</p>
+      <div data-mtx="stack" data-spacing="2">
+        <div class="demo-stack-item">Item 1</div>
+        <div class="demo-stack-item">Item 2</div>
+        <div class="demo-stack-item">Item 3</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="stack" data-spacing="2"&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+  &lt;div&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="direction">
+      <h2>Direction</h2>
+      <p><code>data-direction</code>: <code>column</code> (default), <code>row</code>, <code>column-reverse</code> or <code>row-reverse</code>. Reading and tab order still follow the HTML.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">data-direction="row"</span>
+          <div data-mtx="stack" data-direction="row" data-spacing="1">
+            <div class="demo-stack-item">1</div><div class="demo-stack-item">2</div><div class="demo-stack-item">3</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-direction="row-reverse"</span>
+          <div data-mtx="stack" data-direction="row-reverse" data-spacing="1">
+            <div class="demo-stack-item">1</div><div class="demo-stack-item">2</div><div class="demo-stack-item">3</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-direction="column"</span>
+          <div data-mtx="stack" data-direction="column" data-spacing="1">
+            <div class="demo-stack-item">1</div><div class="demo-stack-item">2</div><div class="demo-stack-item">3</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-direction="column-reverse"</span>
+          <div data-mtx="stack" data-direction="column-reverse" data-spacing="1">
+            <div class="demo-stack-item">1</div><div class="demo-stack-item">2</div><div class="demo-stack-item">3</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="spacing">
+      <h2>Spacing</h2>
+      <p>Scale <code>0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10</code> (× 8px) applied with <code>gap</code>: no margins on the children.</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">data-spacing="0.5" · 4px</span>
+          <div data-mtx="stack" data-direction="row" data-spacing="0.5"><div class="demo-stack-item">A</div><div class="demo-stack-item">B</div><div class="demo-stack-item">C</div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-spacing="1" · 8px</span>
+          <div data-mtx="stack" data-direction="row" data-spacing="1"><div class="demo-stack-item">A</div><div class="demo-stack-item">B</div><div class="demo-stack-item">C</div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-spacing="2" · 16px</span>
+          <div data-mtx="stack" data-direction="row" data-spacing="2"><div class="demo-stack-item">A</div><div class="demo-stack-item">B</div><div class="demo-stack-item">C</div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-spacing="4" · 32px</span>
+          <div data-mtx="stack" data-direction="row" data-spacing="4"><div class="demo-stack-item">A</div><div class="demo-stack-item">B</div><div class="demo-stack-item">C</div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-spacing="8" · 64px</span>
+          <div data-mtx="stack" data-direction="row" data-spacing="8"><div class="demo-stack-item">A</div><div class="demo-stack-item">B</div><div class="demo-stack-item">C</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="responsive">
+      <h2>Responsive</h2>
+      <p><code>data-direction-{bp}</code> and <code>data-spacing-{bp}</code> (<code>sm</code> 600px, <code>md</code> 900px, <code>lg</code> 1200px, <code>xl</code> 1536px) change the direction and spacing from that width up. Here: a column with 8px on mobile, a row with 16px from 600px and 32px from 900px.</p>
+      <div data-mtx="stack" data-spacing="1" data-direction-sm="row" data-spacing-sm="2" data-spacing-md="4">
+        <div class="demo-stack-item">One</div>
+        <div class="demo-stack-item">Two</div>
+        <div class="demo-stack-item">Three</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="stack" data-spacing="1"
+     data-direction-sm="row" data-spacing-sm="2" data-spacing-md="4"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="alignment">
+      <h2>Alignment</h2>
+      <p><code>data-align</code> aligns on the cross axis (<code>start</code>, <code>center</code>, <code>end</code>, <code>stretch</code>, <code>baseline</code>) and <code>data-justify</code> distributes along the main axis (<code>start</code>, <code>center</code>, <code>end</code>, <code>between</code>, <code>around</code>, <code>evenly</code>). CSS values are accepted too (<code>flex-start</code>, <code>space-between</code>…).</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">data-align="center"</span>
+          <div class="demo-stack-frame" data-mtx="stack" data-direction="row" data-spacing="2" data-align="center">
+            <div class="demo-stack-item">short</div><div class="demo-stack-item demo-stack-item--tall">tall</div><div class="demo-stack-item">short</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-align="end"</span>
+          <div class="demo-stack-frame" data-mtx="stack" data-direction="row" data-spacing="2" data-align="end">
+            <div class="demo-stack-item">short</div><div class="demo-stack-item demo-stack-item--tall">tall</div><div class="demo-stack-item">short</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-justify="between"</span>
+          <div class="demo-stack-frame" data-mtx="stack" data-direction="row" data-justify="between">
+            <div class="demo-stack-item">start</div><div class="demo-stack-item">center</div><div class="demo-stack-item">end</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-justify="center"</span>
+          <div class="demo-stack-frame" data-mtx="stack" data-direction="row" data-spacing="1" data-justify="center">
+            <div class="demo-stack-item">A</div><div class="demo-stack-item">B</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Column · data-align="center"</span>
+          <div class="demo-stack-frame" data-mtx="stack" data-spacing="1" data-align="center">
+            <div class="demo-stack-item">Narrow item</div><div class="demo-stack-item">Somewhat wider item</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="dividers">
+      <h2>Dividers</h2>
+      <p><code>data-divider</code> inserts a <code>Divider</code> between each pair of children: horizontal in a column and vertical in a row (also when the direction changes per breakpoint). They are decorative (<code>aria-hidden="true"</code>).</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Row with dividers</span>
+          <div data-mtx="stack" data-direction="row" data-spacing="2" data-divider>
+            <div class="demo-stack-item">Inbox</div><div class="demo-stack-item">Sent</div><div class="demo-stack-item">Spam</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Column with dividers</span>
+          <div data-mtx="stack" data-spacing="1" data-divider>
+            <div class="demo-stack-item">Inbox</div><div class="demo-stack-item">Sent</div><div class="demo-stack-item">Spam</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="wrap">
+      <h2>Wrap</h2>
+      <p>With <code>data-wrap</code> the children move to the next line when they do not fit (useful for groups of chips or buttons). The <code>gap</code> also separates the lines.</p>
+      <div data-mtx="stack" data-direction="row" data-spacing="1" data-wrap>
+        <div data-mtx="chip" data-label="JavaScript"></div>
+        <div data-mtx="chip" data-label="CSS"></div>
+        <div data-mtx="chip" data-label="HTML"></div>
+        <div data-mtx="chip" data-label="Accessibility"></div>
+        <div data-mtx="chip" data-label="Material UI"></div>
+        <div data-mtx="chip" data-label="Responsive design"></div>
+        <div data-mtx="chip" data-label="Vanilla"></div>
+        <div data-mtx="chip" data-label="Design tokens"></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>A Stack inside each <code>mtx-grid</code> item: the grid splits the columns and the stack arranges the content of each one.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="stack" data-spacing="1"><div class="demo-stack-item">Column A · 1</div><div class="demo-stack-item">Column A · 2</div></div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="stack" data-spacing="1"><div class="demo-stack-item">Column B · 1</div><div class="demo-stack-item">Column B · 2</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>A form action bar and a profile card built only with Stack and components.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Form</span>
+          <form data-mtx="stack" data-spacing="2" onsubmit="event.preventDefault();">
+            <input data-mtx="text-field" data-label="Name" data-variant="outlined" type="text" name="name">
+            <input data-mtx="text-field" data-label="Email" data-variant="outlined" type="email" name="email">
+            <div data-mtx="stack" data-direction="row" data-spacing="1" data-justify="end">
+              <button class="mtx-button mtx-button--text" data-mtx="button" type="reset">Cancel</button>
+              <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Save</button>
+            </div>
+          </form>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Profile</span>
+          <div class="mtx-paper mtx-paper--outlined mtx-p-2" data-mtx="stack" data-direction="row" data-spacing="2" data-align="center">
+            <div data-mtx="avatar" data-alt="Lucy Harper">LH</div>
+            <div data-mtx="stack" class="mtx-flex-1 mtx-min-w-0">
+              <span class="mtx-typography--subtitle1 mtx-text-truncate">Lucy Harper</span>
+              <span class="mtx-typography--body2 mtx-color-text-secondary mtx-text-truncate">Product designer · London</span>
+            </div>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button">Follow</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>setDirection()</code>, <code>setSpacing()</code>, <code>setAlign()</code>, <code>setJustify()</code>, <code>setWrap()</code>, <code>setDivider()</code> and <code>refresh()</code> (regenerates the dividers after adding children). Stack emits no events.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="stack-toggle-dir">Toggle direction</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-stack-spacing="0.5">spacing 0.5</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-stack-spacing="3">spacing 3</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="stack-toggle-divider">Toggle dividers</button>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" type="button" id="stack-add">Add child</button>
+      </div>
+      <div id="stack-api" data-mtx="stack" data-direction="row" data-spacing="2">
+        <div class="demo-stack-item">1</div>
+        <div class="demo-stack-item">2</div>
+        <div class="demo-stack-item">3</div>
+      </div>
+      <pre class="demo-log" id="stack-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const stack = Materix.getInstance(document.getElementById('stack-api'));
+stack.setDirection('column');
+stack.setDirection('row', 'md');   // from 900px
+stack.setSpacing(3);
+stack.setDivider(true);
+stack.element.append(newChild);
+stack.refresh();
+
+// ES modules
+import { Stack } from 'materix-ui';
+new Stack(document.querySelector('#actions'));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The classes work without JavaScript (automatic dividers do need JS; without it, add <code>&lt;hr class="mtx-divider mtx-stack__divider"&gt;</code> by hand).</p>
+      <div class="mtx-stack mtx-stack--column mtx-stack--sm-row mtx-stack--spacing-1 mtx-stack--sm-spacing-3 mtx-stack--align-center">
+        <div class="demo-stack-item">mtx-stack--column</div>
+        <hr class="mtx-divider mtx-stack__divider" aria-hidden="true">
+        <div class="demo-stack-item">mtx-stack--sm-row</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-stack mtx-stack--column mtx-stack--sm-row mtx-stack--spacing-1 mtx-stack--sm-spacing-3 mtx-stack--align-center"&gt;
+  &lt;div&gt;…&lt;/div&gt;
+  &lt;hr class="mtx-divider mtx-stack__divider" aria-hidden="true"&gt;
+  &lt;div&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var el = document.getElementById('stack-api');
+      var stack = Materix.getInstance(el);
+      var log = document.getElementById('stack-log');
+      var row = true;
+      var divider = false;
+      var count = 3;
+
+      /**
+       * Escribe la operación y las clases resultantes en el registro.
+       * @param {string} op Operación ejecutada.
+       */
+      function write(op) {
+        log.textContent += op + ' → ' + el.className + '\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.getElementById('stack-toggle-dir').addEventListener('click', function () {
+        row = !row;
+        stack.setDirection(row ? 'row' : 'column');
+        write("setDirection('" + (row ? 'row' : 'column') + "')");
+      });
+      document.querySelectorAll('[data-stack-spacing]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          stack.setSpacing(btn.getAttribute('data-stack-spacing'));
+          write('setSpacing(' + btn.getAttribute('data-stack-spacing') + ')');
+        });
+      });
+      document.getElementById('stack-toggle-divider').addEventListener('click', function () {
+        divider = !divider;
+        stack.setDivider(divider);
+        write('setDivider(' + divider + ')');
+      });
+      document.getElementById('stack-add').addEventListener('click', function () {
+        var item = document.createElement('div');
+        count += 1;
+        item.className = 'demo-stack-item';
+        item.textContent = String(count);
+        el.appendChild(item);
+        stack.refresh();
+        write('append + refresh()');
+      });
+    });
+  </script>
+</body>
+</html>

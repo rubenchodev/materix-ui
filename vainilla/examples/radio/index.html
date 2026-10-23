@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Group legend (equivalent to MUI's FormLabel) */
+    .demo-radio-legend {
+      display: block;
+      margin: 0 0 var(--mtx-spacing-1);
+      padding: 0;
+      color: var(--mtx-color-text-secondary);
+      font: var(--mtx-type-body2);
+    }
+
+    .demo-radio-fieldset {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Radio</h1>
+        <p class="demo-lead">Radio button to choose exactly one option from a visible group; RadioGroup reads and sets the group's value.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#orientation">Orientation</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#helper-error">Helper and error</a>
+      <a href="#accessible-grouping">Accessible grouping</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Each option is a single <code>&lt;input type="radio"&gt;</code> with <code>data-mtx="radio"</code> and <code>data-label</code>; sharing the same <code>name</code> makes them mutually exclusive. The <code>data-mtx="radio-group"</code> container adds <code>role="radiogroup"</code>, turns <code>data-label</code> into its label (FormLabel) and exposes the selected value.</p>
+      <div data-mtx="radio-group" data-name="plan-basic" data-label="Plan">
+        <input type="radio" data-mtx="radio" name="plan-basic" value="basic" data-label="Basic" checked />
+        <input type="radio" data-mtx="radio" name="plan-basic" value="pro" data-label="Professional" />
+        <input type="radio" data-mtx="radio" name="plan-basic" value="enterprise" data-label="Enterprise" />
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="radio-group" data-name="plan" data-label="Plan"&gt;
+  &lt;input type="radio" data-mtx="radio" name="plan" value="basic" data-label="Basic" checked /&gt;
+  &lt;input type="radio" data-mtx="radio" name="plan" value="pro" data-label="Professional" /&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Two sizes: <strong>medium</strong> (20px circle, default) and <strong>small</strong> (16px with body2 text) via <code>data-size="small"</code>.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Medium · 20px circle (default)</span>
+          <div data-mtx="radio-group" data-name="size-medium" data-row="true" role="radiogroup" aria-label="Medium size">
+            <input type="radio" data-mtx="radio" name="size-medium" value="a" data-label="Option A" checked />
+            <input type="radio" data-mtx="radio" name="size-medium" value="b" data-label="Option B" />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Small · 16px circle</span>
+          <div data-mtx="radio-group" data-name="size-small" data-row="true" role="radiogroup" aria-label="Small size">
+            <input type="radio" data-mtx="radio" name="size-small" value="a" data-label="Option A" data-size="small" checked />
+            <input type="radio" data-mtx="radio" name="size-small" value="b" data-label="Option B" data-size="small" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="orientation">
+      <h2>Orientation</h2>
+      <p>By default the group is vertical, the easiest layout to scan. With <code>data-row="true"</code> the options sit in a row (and wrap when they don't fit); use it only with a few short options.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Vertical (default)</span>
+          <div data-mtx="radio-group" data-name="orientation-col" role="radiogroup" aria-label="Frequency">
+            <input type="radio" data-mtx="radio" name="orientation-col" value="daily" data-label="Daily" checked />
+            <input type="radio" data-mtx="radio" name="orientation-col" value="weekly" data-label="Weekly" />
+            <input type="radio" data-mtx="radio" name="orientation-col" value="monthly" data-label="Monthly" />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Row · data-row="true"</span>
+          <div data-mtx="radio-group" data-name="orientation-row" data-row="true" role="radiogroup" aria-label="Size">
+            <input type="radio" data-mtx="radio" name="orientation-row" value="s" data-label="S" />
+            <input type="radio" data-mtx="radio" name="orientation-row" value="m" data-label="M" checked />
+            <input type="radio" data-mtx="radio" name="orientation-row" value="l" data-label="L" />
+            <input type="radio" data-mtx="radio" name="orientation-row" value="xl" data-label="XL" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p>Primary is the default. Use <code>data-color</code> on the input (or the <code>mtx-radio--{color}</code> class, which is moved to the generated wrapper).</p>
+      <div data-mtx="radio-group" data-name="colors" data-row="true" role="radiogroup" aria-label="Colors">
+        <input type="radio" data-mtx="radio" name="colors" value="primary" data-label="Primary" checked />
+        <input type="radio" data-color="secondary" data-mtx="radio" name="colors" value="secondary" data-label="Secondary" />
+        <input type="radio" data-color="success" data-mtx="radio" name="colors" value="success" data-label="Success" />
+        <input type="radio" data-color="error" data-mtx="radio" name="colors" value="error" data-label="Error" />
+        <input type="radio" data-color="warning" data-mtx="radio" name="colors" value="warning" data-label="Warning" />
+        <input type="radio" data-color="info" data-mtx="radio" name="colors" value="info" data-label="Info" />
+      </div>
+      <p>Select each option to see its color in the checked state.</p>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover to see the colored border, press to see the ripple, and use <kbd>Tab</kbd> to enter the group and the <kbd>arrow keys</kbd> to change the option. The native radio does not support <code>readonly</code>: use <code>disabled</code> to lock it.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Enabled</span>
+          <div data-mtx="radio-group" data-name="state-enabled" role="radiogroup" aria-label="Enabled">
+            <input type="radio" data-mtx="radio" name="state-enabled" value="on" data-label="Selected" checked />
+            <input type="radio" data-mtx="radio" name="state-enabled" value="off" data-label="Unselected" />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled · disabled</span>
+          <div data-mtx="radio-group" data-name="state-disabled" role="radiogroup" aria-label="Disabled">
+            <input type="radio" data-mtx="radio" name="state-disabled" value="on" data-label="Selected" checked disabled />
+            <input type="radio" data-mtx="radio" name="state-disabled" value="off" data-label="Unselected" disabled />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error · data-error</span>
+          <div data-mtx="radio-group" data-name="state-error" data-label="How did you hear about us?" data-error="Select an option.">
+            <input type="radio" data-mtx="radio" name="state-error" value="search" data-label="Search engine" required />
+            <input type="radio" data-mtx="radio" name="state-error" value="friend" data-label="Recommendation" required />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="helper-error">
+      <h2>Helper and error (FormHelperText)</h2>
+      <p><code>data-helper-text</code> creates a <code>.mtx-form-helper-text</code> below the group and links it with <code>aria-describedby</code>. An empty <code>data-error</code> flags the error (helper text in red, <code>aria-invalid</code> on the radiogroup); with text, that message replaces the helper. The form validates on submit with <code>setError()</code> and clears with <code>clearError()</code>.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Helper text</span>
+          <div data-mtx="radio-group" data-name="helper-billing" data-label="Billing" data-helper-text="You can change it at any time.">
+            <input type="radio" data-mtx="radio" name="helper-billing" value="monthly" data-label="Monthly" checked />
+            <input type="radio" data-mtx="radio" name="helper-billing" value="yearly" data-label="Yearly (2 months free)" />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Validation on submit</span>
+          <form id="radio-validate-form" class="demo-stack" novalidate>
+            <div id="radio-validate-group" data-mtx="radio-group" data-name="validate-size" data-label="Size" data-row data-helper-text="Check the size guide.">
+              <input type="radio" data-mtx="radio" name="validate-size" value="s" data-label="S" />
+              <input type="radio" data-mtx="radio" name="validate-size" value="m" data-label="M" />
+              <input type="radio" data-mtx="radio" name="validate-size" value="l" data-label="L" />
+            </div>
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Add to cart</button>
+              <button class="mtx-button mtx-button--text" data-mtx="button" type="reset">Reset</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="radio-group" data-name="size" data-label="Size" data-helper-text="Check the size guide." data-error&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="accessible-grouping">
+      <h2>Accessible grouping</h2>
+      <p>Every group needs an accessible name. The simplest option is <code>data-label</code> (it generates the label and <code>aria-labelledby</code>). A <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code> or your own <code>aria-labelledby</code> also work; the group always gets <code>role="radiogroup"</code> unless you declare another <code>role</code>.</p>
+      <div class="demo-grid-2">
+        <fieldset class="demo-radio-fieldset">
+          <legend class="demo-radio-legend">Payment method (fieldset + legend)</legend>
+          <div data-mtx="radio-group" data-name="payment">
+            <input type="radio" data-mtx="radio" name="payment" value="card" data-label="Card" checked />
+            <input type="radio" data-mtx="radio" name="payment" value="transfer" data-label="Bank transfer" />
+            <input type="radio" data-mtx="radio" name="payment" value="cash" data-label="Cash on delivery" />
+          </div>
+        </fieldset>
+        <div>
+          <span class="demo-radio-legend" id="radio-theme-label">Theme (custom aria-labelledby)</span>
+          <div data-mtx="radio-group" data-name="theme-choice" aria-labelledby="radio-theme-label">
+            <input type="radio" data-mtx="radio" name="theme-choice" value="system" data-label="System default" checked />
+            <input type="radio" data-mtx="radio" name="theme-choice" value="light" data-label="Light" />
+            <input type="radio" data-mtx="radio" name="theme-choice" value="dark" data-label="Dark" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>Choosing the shipping method at checkout: a few options, all visible and mutually exclusive. With more than 5–7 options, a Select would take up less space.</p>
+      <div class="demo-panel demo-wide">
+        <fieldset class="demo-radio-fieldset">
+          <legend class="demo-radio-legend">Shipping method</legend>
+          <div data-mtx="radio-group" data-name="shipping" id="radio-shipping-group">
+            <input type="radio" data-mtx="radio" name="shipping" value="standard" data-label="Standard (3–5 days) · Free" checked />
+            <input type="radio" data-mtx="radio" name="shipping" value="express" data-label="Express (24 h) · $6.90" />
+            <input type="radio" data-mtx="radio" name="shipping" value="pickup" data-label="In-store pickup · Free" />
+          </div>
+        </fieldset>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" id="radio-shipping-submit">Continue</button>
+          <span class="demo-status" id="radio-shipping-status" aria-live="polite"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>With <code>mtx-grid</code> the options of a single group are spread across responsive columns; they share the <code>name</code>, so they remain mutually exclusive and navigable with the arrow keys.</p>
+      <div data-mtx="grid" data-spacing="1" role="radiogroup" aria-label="Time slot">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"><input type="radio" data-mtx="radio" name="slot" value="08" data-label="08:00 – 10:00" /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"><input type="radio" data-mtx="radio" name="slot" value="10" data-label="10:00 – 12:00" checked /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"><input type="radio" data-mtx="radio" name="slot" value="16" data-label="16:00 – 18:00" /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"><input type="radio" data-mtx="radio" name="slot" value="18" data-label="18:00 – 20:00" /></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The RadioGroup instance exposes the <code>value</code> property (read and write) and emits <code>mtx:radio-group:change</code> with <code>detail.value</code> when the user changes the selection. Each Radio exposes <code>checked</code>, <code>disable()</code>, <code>enable()</code> and <code>focus()</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Controlled group</span>
+        <div data-mtx="radio-group" data-name="programmatic" data-row="true" role="radiogroup" aria-label="Priority" id="radio-group-target">
+          <input type="radio" data-mtx="radio" name="programmatic" value="low" data-label="Low" />
+          <input type="radio" data-mtx="radio" name="programmatic" value="medium" data-label="Medium" checked />
+          <input type="radio" data-mtx="radio" name="programmatic" value="high" data-label="High" id="radio-high" />
+        </div>
+        <span class="demo-status" id="radio-status">value: "medium"</span>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="value-low">group.value = 'low'</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="check-high">radio(High).checked = true</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="disable-high">radio(High).disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="enable-high">radio(High).enable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="focus-high">radio(High).focus()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="group-error">group.setError()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="group-clear">group.clearError()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="group-disable">group.disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-radio-action="group-enable">group.enable()</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="radio-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The full structure declares each <code>&lt;label class="mtx-radio"&gt;</code> with its input, the visual circle and the label. The library reuses the existing nodes.</p>
+      <div class="mtx-radio-group mtx-radio-group--row" data-mtx="radio-group" data-name="bem" role="radiogroup" aria-label="BEM example">
+        <label class="mtx-radio" data-mtx="radio">
+          <input type="radio" name="bem" value="one" checked />
+          <span class="mtx-radio__box"></span>
+          <span class="mtx-radio__label">Option one</span>
+        </label>
+        <label class="mtx-radio mtx-radio--secondary" data-mtx="radio">
+          <input type="radio" name="bem" value="two" />
+          <span class="mtx-radio__box"></span>
+          <span class="mtx-radio__label">Option two</span>
+        </label>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-radio-group" data-mtx="radio-group" data-name="bem" role="radiogroup" aria-label="Example"&gt;
+  &lt;label class="mtx-radio" data-mtx="radio"&gt;
+    &lt;input type="radio" name="bem" value="one" checked /&gt;
+    &lt;span class="mtx-radio__box"&gt;&lt;/span&gt;
+    &lt;span class="mtx-radio__label"&gt;Option one&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Caso de uso: método de envío.
+      var shippingGroup = Materix.getInstance(document.getElementById('radio-shipping-group'));
+      var shippingStatus = document.getElementById('radio-shipping-status');
+      document.getElementById('radio-shipping-submit').addEventListener('click', function () {
+        shippingStatus.textContent = 'Selected method: ' + shippingGroup.value;
+      });
+
+      // Validación con FormHelperText.
+      var validateForm = document.getElementById('radio-validate-form');
+      var validateGroup = Materix.getInstance(document.getElementById('radio-validate-group'));
+      validateForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (validateGroup.value) validateGroup.clearError();
+        else validateGroup.setError('Choose a size to continue.');
+      });
+      validateForm.addEventListener('reset', function () { validateGroup.clearError(); });
+      document.getElementById('radio-validate-group').addEventListener('mtx:radio-group:change', function () {
+        validateGroup.clearError();
+      });
+
+      // Uso programático.
+      var groupEl = document.getElementById('radio-group-target');
+      var group = Materix.getInstance(groupEl);
+      var high = Materix.getInstance(document.getElementById('radio-high'));
+      var logEl = document.getElementById('radio-log');
+      var statusEl = document.getElementById('radio-status');
+
+      /** Añade una línea al registro de eventos. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      /** Refleja el valor actual del grupo. */
+      function syncStatus() {
+        statusEl.textContent = 'value: "' + group.value + '" · High disabled: ' + high.disabled;
+      }
+
+      groupEl.addEventListener('mtx:radio-group:change', function (event) {
+        log('mtx:radio-group:change → detail.value: "' + event.detail.value + '"');
+        syncStatus();
+      });
+
+      var actions = {
+        'value-low': function () { group.value = 'low'; return "group.value = 'low'"; },
+        'check-high': function () { high.checked = true; return 'radio(High).checked = true'; },
+        'disable-high': function () { high.disable(); return 'radio(High).disable()'; },
+        'enable-high': function () { high.enable(); return 'radio(High).enable()'; },
+        'focus-high': function () { high.focus(); return 'radio(High).focus()'; },
+        'group-error': function () { group.setError('Choose a priority.'); return 'group.setError(...) → aria-invalid: ' + groupEl.getAttribute('aria-invalid'); },
+        'group-clear': function () { group.clearError(); return 'group.clearError()'; },
+        'group-disable': function () { group.disable(); return 'group.disable()'; },
+        'group-enable': function () { group.enable(); return 'group.enable()'; }
+      };
+
+      document.querySelectorAll('[data-radio-action]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          log(actions[btn.getAttribute('data-radio-action')]());
+          syncStatus();
+        });
+      });
+      syncStatus();
+    });
+  </script>
+</body>
+</html>

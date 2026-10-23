@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autocomplete · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Autocomplete</h1>
+        <p class="demo-lead">Text field with filterable suggestions: single or multiple selection with chips, free values, groups and asynchronous loading.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With and without icons</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#groups">Groups</a>
+      <a href="#multiple">Multiple</a>
+      <a href="#free-solo">Free solo</a>
+      <a href="#behavior">Behavior</a>
+      <a href="#async">Asynchronous loading</a>
+      <a href="#form">Form</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <!-- Shared option sources -->
+    <datalist id="ac-countries">
+      <option value="ar">Argentina</option>
+      <option value="bo">Bolivia</option>
+      <option value="br">Brazil</option>
+      <option value="cl">Chile</option>
+      <option value="co">Colombia</option>
+      <option value="cr">Costa Rica</option>
+      <option value="cu">Cuba</option>
+      <option value="ec">Ecuador</option>
+      <option value="sv">El Salvador</option>
+      <option value="es">Spain</option>
+      <option value="gt">Guatemala</option>
+      <option value="hn">Honduras</option>
+      <option value="mx">Mexico</option>
+      <option value="ni">Nicaragua</option>
+      <option value="pa">Panama</option>
+      <option value="py">Paraguay</option>
+      <option value="pe">Peru</option>
+      <option value="pr">Puerto Rico</option>
+      <option value="do">Dominican Republic</option>
+      <option value="uy">Uruguay</option>
+      <option value="ve">Venezuela</option>
+    </datalist>
+    <datalist id="ac-films">
+      <option value="godfather" data-description="1972">The Godfather</option>
+      <option value="dark-knight" data-description="2008">The Dark Knight</option>
+      <option value="12-angry-men" data-description="1957">12 Angry Men</option>
+      <option value="schindler" data-description="1993">Schindler's List</option>
+      <option value="pulp-fiction" data-description="1994">Pulp Fiction</option>
+      <option value="lotr" data-description="2003">The Lord of the Rings: The Return of the King</option>
+      <option value="fight-club" data-description="1999">Fight Club</option>
+      <option value="inception" data-description="2010">Inception</option>
+      <option value="matrix" data-description="1999">The Matrix</option>
+      <option value="spirited-away" data-description="2001">Spirited Away</option>
+    </datalist>
+    <datalist id="ac-skills">
+      <option value="html" data-group="Frontend">HTML</option>
+      <option value="css" data-group="Frontend">CSS</option>
+      <option value="js" data-group="Frontend">JavaScript</option>
+      <option value="ts" data-group="Frontend">TypeScript</option>
+      <option value="node" data-group="Backend">Node.js</option>
+      <option value="python" data-group="Backend">Python</option>
+      <option value="php" data-group="Backend">PHP</option>
+      <option value="cobol" data-group="Backend" disabled>COBOL (unavailable)</option>
+      <option value="pg" data-group="Data">PostgreSQL</option>
+      <option value="mongo" data-group="Data">MongoDB</option>
+    </datalist>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;input&gt;</code> with <code>data-mtx="autocomplete"</code>, <code>data-label</code> and <code>data-options</code> pointing to a <code>&lt;datalist&gt;</code>. Type to filter (case- and accent-insensitive: try "peru"). The value (the option's <code>value</code>) is submitted in a hidden input with the <code>name</code>.</p>
+      <div class="demo-fixed-width">
+        <input data-mtx="autocomplete" data-label="Country" data-options="#ac-countries" name="country" />
+      </div>
+      <pre class="demo-code"><code>&lt;input data-mtx="autocomplete" data-label="Country" data-options="#ac-countries" name="country" /&gt;
+&lt;datalist id="ac-countries"&gt;
+  &lt;option value="co"&gt;Colombia&lt;/option&gt;
+  &lt;option value="mx"&gt;Mexico&lt;/option&gt;
+&lt;/datalist&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>The same as TextField with <code>data-variant</code>: <code>outlined</code> (default), <code>filled</code> and <code>standard</code>.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <input data-mtx="autocomplete" data-label="Movie" data-options="#ac-films" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Filled</span>
+          <input data-mtx="autocomplete" data-label="Movie" data-variant="filled" data-options="#ac-films" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Standard</span>
+          <input data-mtx="autocomplete" data-label="Movie" data-variant="standard" data-options="#ac-films" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Medium 56px (default) and small 40px with <code>data-size="small"</code>, aligned with a TextField and Button of the same height.</p>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 56px</span>
+        <div class="demo-grid-3">
+          <input data-mtx="autocomplete" data-label="Outlined" data-options="#ac-countries" data-value="co" />
+          <input data-mtx="autocomplete" data-label="Filled" data-variant="filled" data-options="#ac-countries" data-value="mx" />
+          <input data-mtx="autocomplete" data-label="Standard" data-variant="standard" data-options="#ac-countries" data-value="pe" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 40px</span>
+        <div class="demo-grid-3">
+          <input data-mtx="autocomplete" data-label="Outlined" data-size="small" data-options="#ac-countries" data-value="co" />
+          <input data-mtx="autocomplete" data-label="Filled" data-variant="filled" data-size="small" data-options="#ac-countries" data-value="mx" />
+          <input data-mtx="autocomplete" data-label="Standard" data-variant="standard" data-size="small" data-options="#ac-countries" data-value="pe" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · Autocomplete small 40px + TextField small 40px + Button medium 40px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="autocomplete" data-label="Destination" data-size="small" data-options="#ac-countries" />
+          </div>
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Passengers" data-size="small" type="number" min="1" value="2" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="button">Search flights</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Multiple small · 24px chips</span>
+        <div class="demo-wide">
+          <input data-mtx="autocomplete" data-label="Skills" data-size="small" data-multiple data-options="#ac-skills" data-value="js,css" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p><code>data-start-icon</code> adds a start icon (the label lines up with the text). On each option, <code>data-icon</code> shows an icon and <code>data-description</code> a secondary text. The trailing button is the popup indicator (no configuration needed).</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">No icon</span>
+          <input data-mtx="autocomplete" data-label="City" data-options='["New York","Los Angeles","Chicago","Houston","San Francisco"]' />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">With start icon</span>
+          <input data-mtx="autocomplete" data-label="Search movies" data-start-icon="search" data-options="#ac-films" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Options with icon and description</span>
+          <select data-mtx="autocomplete" data-label="Action">
+            <option value="edit" data-icon="edit" data-description="Modifies the document">Edit</option>
+            <option value="share" data-icon="share" data-description="Sends a link">Share</option>
+            <option value="archive" data-icon="archive" data-description="Hides it from the inbox">Archive</option>
+            <option value="delete" data-icon="delete" data-description="Cannot be undone">Delete</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> changes the focus color of the field and the background of selected options: <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>warning</code>, <code>info</code>.</p>
+      <div class="demo-grid-3">
+        <input data-mtx="autocomplete" data-label="Primary" data-options="#ac-countries" data-value="co" />
+        <input data-mtx="autocomplete" data-label="Secondary" data-color="secondary" data-options="#ac-countries" data-value="co" />
+        <input data-mtx="autocomplete" data-label="Success" data-color="success" data-options="#ac-countries" data-value="co" />
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover to see the clear button; press Tab for focus. <code>disabled</code>, <code>readonly</code>, <code>required</code>, <code>data-error</code> with <code>data-helper-text</code> and <code>data-loading</code>.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Normal with helper</span>
+          <input data-mtx="autocomplete" data-label="Country" data-options="#ac-countries" data-helper-text="Type to filter" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled</span>
+          <input data-mtx="autocomplete" data-label="Country" data-options="#ac-countries" data-value="co" disabled />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Read-only</span>
+          <input data-mtx="autocomplete" data-label="Country" data-options="#ac-countries" data-value="mx" readonly />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error + helper</span>
+          <input data-mtx="autocomplete" data-label="Country" data-options="#ac-countries" data-error="Select a country from the list" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Required</span>
+          <input data-mtx="autocomplete" data-label="Country" data-options="#ac-countries" required />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Loading</span>
+          <input data-mtx="autocomplete" data-label="Users" data-loading />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Multiple disabled</span>
+          <input data-mtx="autocomplete" data-label="Skills" data-multiple data-options="#ac-skills" data-value="js,python" disabled />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Multiple read-only</span>
+          <input data-mtx="autocomplete" data-label="Skills" data-multiple data-options="#ac-skills" data-value="ts,pg" readonly />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">No options</span>
+          <input data-mtx="autocomplete" data-label="Empty" data-options="[]" data-no-options-text="No items" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="groups">
+      <h2>Groups and disabled options</h2>
+      <p>With a <code>&lt;select&gt;</code> as the source, each <code>&lt;optgroup&gt;</code> is a group with a sticky subheader. In a <code>&lt;datalist&gt;</code> use <code>data-group</code> on each option (it groups consecutive options, as in MUI). <code>disabled</code> options are skipped with the keyboard.</p>
+      <div class="demo-grid-2">
+        <select data-mtx="autocomplete" data-label="Time zone" name="tz">
+          <optgroup label="Americas">
+            <option value="America/Bogota">Bogota (GMT-5)</option>
+            <option value="America/Mexico_City">Mexico City (GMT-6)</option>
+            <option value="America/Lima">Lima (GMT-5)</option>
+            <option value="America/Santiago">Santiago (GMT-4)</option>
+          </optgroup>
+          <optgroup label="Europe">
+            <option value="Europe/Madrid">Madrid (GMT+1)</option>
+            <option value="Europe/Lisbon">Lisbon (GMT+0)</option>
+            <option value="Europe/Paris" disabled>Paris (unavailable)</option>
+          </optgroup>
+          <optgroup label="Asia">
+            <option value="Asia/Tokyo">Tokyo (GMT+9)</option>
+            <option value="Asia/Seoul">Seoul (GMT+9)</option>
+          </optgroup>
+        </select>
+        <input data-mtx="autocomplete" data-label="Technology" data-options="#ac-skills" />
+      </div>
+    </section>
+
+    <section class="demo-section" id="multiple">
+      <h2>Multiple with chips</h2>
+      <p><code>data-multiple</code> shows each value as a deletable Chip (button, or Backspace with empty text; ← and → move between chips). <code>data-limit-tags</code> limits the chips visible without focus; <code>data-disable-close-on-select</code> keeps the list open; <code>data-filter-selected-options</code> hides those already chosen.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Basic</span>
+          <input data-mtx="autocomplete" data-label="Skills" data-multiple data-options="#ac-skills" data-value="js,node" name="skills" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-limit-tags="2"</span>
+          <input data-mtx="autocomplete" data-label="Countries" data-multiple data-limit-tags="2" data-options="#ac-countries" data-value="co,mx,pe,cl,ar" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Keep open on select</span>
+          <input data-mtx="autocomplete" data-label="Movies" data-multiple data-disable-close-on-select data-options="#ac-films" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Hide selected · filled</span>
+          <input data-mtx="autocomplete" data-label="Tags" data-variant="filled" data-multiple data-filter-selected-options data-options="#ac-skills" data-value="css" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="free-solo">
+      <h2>Free solo</h2>
+      <p><code>data-free-solo</code> accepts values that are not in the list: Enter confirms the text (in single selection also when leaving the field). With no matching options, neither the popup nor the open button is shown.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Free search</span>
+          <input data-mtx="autocomplete" data-label="Search" data-free-solo data-start-icon="search" data-options="#ac-films" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Free tags (multiple)</span>
+          <input data-mtx="autocomplete" data-label="Keywords" data-free-solo data-multiple data-options='["materix","mui","vanilla"]' data-value="materix" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="behavior">
+      <h2>Behavior and keyboard</h2>
+      <p>↓/↑ open and move, Page Up/Page Down jump 5, Home/End go to the ends, Enter selects, Escape closes. Options: <code>data-auto-highlight</code> (highlights the first one), <code>data-auto-select</code> (Tab/blur accepts the active one), <code>data-clear-on-escape</code>, <code>data-open-on-focus</code>, <code>data-disable-clearable</code> and <code>data-match-from="start"</code>.</p>
+      <div class="demo-grid-3">
+        <input data-mtx="autocomplete" data-label="auto-highlight + auto-select" data-auto-highlight data-auto-select data-options="#ac-countries" />
+        <input data-mtx="autocomplete" data-label="clear-on-escape" data-clear-on-escape data-options="#ac-countries" data-value="uy" />
+        <input data-mtx="autocomplete" data-label="open-on-focus" data-open-on-focus data-options="#ac-countries" />
+        <input data-mtx="autocomplete" data-label="disable-clearable" data-disable-clearable data-options="#ac-countries" data-value="ec" />
+        <input data-mtx="autocomplete" data-label="match-from start" data-match-from="start" data-options="#ac-countries" />
+      </div>
+    </section>
+
+    <section class="demo-section" id="async">
+      <h2>Asynchronous loading</h2>
+      <p>Listen to <code>mtx:autocomplete:input</code> (with <code>data-debounce="300"</code> the event waits until the user stops typing), turn on <code>loading</code>, fetch the data and call <code>setOptions()</code>. <code>data-filter="false"</code> leaves filtering to the server. The response is simulated with 800 ms of latency.</p>
+      <div class="demo-fixed-width">
+        <input id="ac-async" data-mtx="autocomplete" data-label="Repository" data-debounce="300" data-filter="false" data-start-icon="search" name="repo" />
+      </div>
+      <pre class="demo-code"><code>field.addEventListener('mtx:autocomplete:input', async (event) =&gt; {
+  if (event.detail.reason !== 'input') return;
+  ac.loading = true;
+  const results = await searchRepos(event.detail.inputValue);
+  ac.setOptions(results);   // [{ value, label, description }]
+  ac.loading = false;
+});</code></pre>
+    </section>
+
+    <section class="demo-section" id="form">
+      <h2>Form</h2>
+      <p>The <code>name</code> moves to hidden inputs: one with the value in single selection; one per value in multiple selection (like <code>&lt;select multiple&gt;</code>) or a single field with <code>data-value-format="csv"</code>. <code>required</code> uses native validation; the Reset button restores the initial values.</p>
+      <form id="ac-form" class="demo-stack demo-wide" novalidate>
+        <input data-mtx="autocomplete" data-label="Country of residence" data-options="#ac-countries" name="country" required />
+        <input data-mtx="autocomplete" data-label="Languages" data-multiple name="languages" data-options='[{"value":"en","label":"English"},{"value":"es","label":"Spanish"},{"value":"pt","label":"Portuguese"},{"value":"fr","label":"French"}]' data-value="en" />
+        <input data-mtx="autocomplete" data-label="Interests (CSV)" data-multiple data-free-solo name="interests" data-value-format="csv" data-options='["design","music","travel"]' />
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Submit</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" type="reset">Reset</button>
+        </div>
+        <pre class="demo-log" id="ac-form-log" aria-live="polite"></pre>
+      </form>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>It takes 100% of its column in <code>mtx-grid</code>.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="4">
+          <input data-mtx="autocomplete" data-label="Country" data-options="#ac-countries" />
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="8">
+          <input data-mtx="autocomplete" data-label="Skills" data-multiple data-options="#ac-skills" data-value="html,css,js" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>Materix.getInstance(input)</code> or <code>new Materix.Autocomplete(input)</code>; the <code>open()</code>, <code>close()</code>, <code>clear()</code>, <code>setOptions()</code> methods and the <code>value</code> property.</p>
+      <div class="demo-fixed-width">
+        <input id="ac-api" data-mtx="autocomplete" data-label="Movie" data-options="#ac-films" />
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-ac-action="value">value = 'matrix'</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-ac-action="open">open()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-ac-action="clear">clear()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-ac-action="options">setOptions()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-ac-action="toggle">disable() / enable()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-ac-action="create">new Materix.Autocomplete()</button>
+      </div>
+      <div id="ac-dynamic" class="demo-stack demo-fixed-width"></div>
+      <pre class="demo-log" id="ac-log" aria-live="polite"></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR or fine-grained control: a <code>.mtx-autocomplete</code> container with the TextField already rendered and an inner <code>&lt;datalist&gt;</code>. The component reuses the existing nodes.</p>
+      <div class="demo-fixed-width">
+        <div class="mtx-autocomplete" data-mtx="autocomplete">
+          <div class="mtx-text-field mtx-text-field--outlined">
+            <label class="mtx-text-field__label" for="ac-bem">City</label>
+            <div class="mtx-text-field__container">
+              <input class="mtx-text-field__input" id="ac-bem" name="city" />
+            </div>
+          </div>
+          <datalist>
+            <option value="nyc">New York</option>
+            <option value="la">Los Angeles</option>
+            <option value="cdmx">Mexico City</option>
+            <option value="lon">London</option>
+          </datalist>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-autocomplete" data-mtx="autocomplete"&gt;
+  &lt;div class="mtx-text-field mtx-text-field--outlined"&gt;
+    &lt;label class="mtx-text-field__label" for="ac-bem"&gt;City&lt;/label&gt;
+    &lt;div class="mtx-text-field__container"&gt;
+      &lt;input class="mtx-text-field__input" id="ac-bem" name="city" /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;datalist&gt;
+    &lt;option value="nyc"&gt;New York&lt;/option&gt;
+    &lt;option value="la"&gt;Los Angeles&lt;/option&gt;
+  &lt;/datalist&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      /**
+       * Escribe una línea en una consola de eventos.
+       * @param {string} id Id del elemento de registro.
+       * @param {string} text Texto.
+       */
+      function log(id, text) {
+        var out = document.getElementById(id);
+        out.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        out.scrollTop = out.scrollHeight;
+      }
+
+      // --- Carga asíncrona simulada -----------------------------------
+      var REPOS = [
+        'materix-ui', 'material-ui', 'mui-x', 'vite', 'vitest', 'hugo', 'react', 'vue', 'svelte',
+        'angular', 'bootstrap', 'tailwindcss', 'lit', 'preact', 'solid', 'alpine', 'htmx', 'jquery'
+      ];
+      /**
+       * Simula una búsqueda remota con latencia.
+       * @param {string} query Texto de búsqueda.
+       * @returns {Promise<Object[]>} Resultados.
+       */
+      function searchRepos(query) {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            var q = query.toLowerCase();
+            resolve(REPOS.filter(function (name) { return name.indexOf(q) !== -1; }).map(function (name, i) {
+              return { value: name, label: name, description: (1200 - i * 57) + ' stars' };
+            }));
+          }, 800);
+        });
+      }
+      var asyncInput = document.getElementById('ac-async');
+      var asyncAc = Materix.getInstance(asyncInput);
+      var lastQuery = '';
+      asyncAc.element.addEventListener('mtx:autocomplete:input', function (event) {
+        if (event.detail.reason !== 'input') return;
+        var query = event.detail.inputValue.trim();
+        lastQuery = query;
+        if (!query) { asyncAc.setOptions([]); asyncAc.loading = false; return; }
+        asyncAc.loading = true;
+        searchRepos(query).then(function (results) {
+          if (query !== lastQuery) return; // respuesta obsoleta
+          asyncAc.setOptions(results);
+          asyncAc.loading = false;
+        });
+      });
+
+      // --- Formulario --------------------------------------------------------
+      var form = document.getElementById('ac-form');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          log('ac-form-log', 'Invalid form');
+          return;
+        }
+        var pairs = [];
+        new FormData(form).forEach(function (value, key) { pairs.push(key + '=' + value); });
+        log('ac-form-log', 'submit → ' + pairs.join('&'));
+      });
+      form.addEventListener('reset', function () { log('ac-form-log', 'reset'); });
+
+      // --- API -------------------------------------------------------------
+      var api = Materix.getInstance(document.getElementById('ac-api'));
+      ['change', 'input', 'open', 'close'].forEach(function (name) {
+        api.element.addEventListener('mtx:autocomplete:' + name, function (event) {
+          log('ac-log', 'mtx:autocomplete:' + name + ' → ' + JSON.stringify({
+            value: event.detail.value,
+            inputValue: event.detail.inputValue,
+            reason: event.detail.reason
+          }));
+        });
+      });
+      var count = 0;
+      document.querySelectorAll('[data-ac-action]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var action = btn.getAttribute('data-ac-action');
+          if (action === 'value') { api.value = 'matrix'; log('ac-log', "value = 'matrix' → " + JSON.stringify(api.value)); }
+          if (action === 'open') { api.focus(); api.open(); }
+          if (action === 'clear') { api.clear(); }
+          if (action === 'options') {
+            api.setOptions([
+              { value: 'alien', label: 'Alien', description: '1979', group: 'Science fiction' },
+              { value: 'blade-runner', label: 'Blade Runner', description: '1982', group: 'Science fiction' },
+              { value: 'amelie', label: 'Amélie', description: '2001', group: 'Comedy' }
+            ]);
+            log('ac-log', 'setOptions([...3 grouped options])');
+          }
+          if (action === 'toggle') {
+            if (api.disabled) { api.enable(); log('ac-log', 'enable()'); } else { api.disable(); log('ac-log', 'disable()'); }
+          }
+          if (action === 'create') {
+            var input = document.createElement('input');
+            input.setAttribute('data-label', 'Dynamic #' + (++count));
+            input.setAttribute('data-options', '#ac-countries');
+            document.getElementById('ac-dynamic').appendChild(input);
+            new Materix.Autocomplete(input);
+            log('ac-log', 'new Materix.Autocomplete(input) → #' + count);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

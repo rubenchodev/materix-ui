@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabs · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Vertical tabs next to their panel */
+    .demo-tabs-vertical {
+      display: flex;
+      align-items: stretch;
+      min-height: 192px;
+    }
+    .demo-tabs-vertical > .mtx-tab-panel {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Navigation</span>
+        <h1>Tabs</h1>
+        <p class="demo-lead">Tabs to switch between views at the same level, with an animated indicator, icons, vertical orientation and full keyboard navigation.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#scrollable">Scrollable</a>
+      <a href="#vertical">Vertical</a>
+      <a href="#activation">Activation</a>
+      <a href="#real-world">Real-world</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#groups-without-id">Groups without id</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>data-mtx="tabs"</code> container with <code>data-mtx="tab"</code> buttons; <code>data-panel</code> links each tab to its panel. Give each group an id: the tab ids are derived from it.</p>
+      <div class="mtx-tabs-container">
+        <div id="tabs-basic" data-mtx="tabs">
+          <button data-mtx="tab" data-panel="#tabs-basic-1" data-active>Overview</button>
+          <button data-mtx="tab" data-panel="#tabs-basic-2">Activity</button>
+          <button data-mtx="tab" data-panel="#tabs-basic-3">Settings</button>
+        </div>
+        <div class="mtx-tab-panel" id="tabs-basic-1">Project overview: 12 open tasks and 3 pending reviews.</div>
+        <div class="mtx-tab-panel" id="tabs-basic-2" hidden>Last activity 5 minutes ago.</div>
+        <div class="mtx-tab-panel" id="tabs-basic-3" hidden>Project preferences.</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div id="project" data-mtx="tabs"&gt;
+  &lt;button data-mtx="tab" data-panel="#overview" data-active&gt;Overview&lt;/button&gt;
+  &lt;button data-mtx="tab" data-panel="#activity"&gt;Activity&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="mtx-tab-panel" id="overview"&gt;…&lt;/div&gt;
+&lt;div class="mtx-tab-panel" id="activity" hidden&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>By default tabs are left-aligned with their natural width. <code>data-full</code> spreads them across the full width and <code>data-centered</code> centers them. The <code>mtx-tabs-container</code> wrapper is optional.</p>
+      <div class="demo-group">
+        <span class="demo-label">Standard · no container</span>
+        <div id="tabs-standard" data-mtx="tabs">
+          <button data-mtx="tab" data-active>One</button>
+          <button data-mtx="tab">Two</button>
+          <button data-mtx="tab">Three</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-full · full width</span>
+        <div id="tabs-full" data-mtx="tabs" data-full>
+          <button data-mtx="tab" data-active>Inventory</button>
+          <button data-mtx="tab">Sales</button>
+          <button data-mtx="tab">Customers</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-centered</span>
+        <div id="tabs-centered" data-mtx="tabs" data-centered>
+          <button data-mtx="tab">Yesterday</button>
+          <button data-mtx="tab" data-active>Today</button>
+          <button data-mtx="tab">Tomorrow</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">mtx-tabs-container · mtx-tabs-container--borderless</span>
+        <div class="demo-grid-2">
+          <div class="mtx-tabs-container">
+            <div id="tabs-boxed" data-mtx="tabs">
+              <button data-mtx="tab" data-panel="#tabs-boxed-1" data-active>Bordered</button>
+              <button data-mtx="tab" data-panel="#tabs-boxed-2">Other</button>
+            </div>
+            <div class="mtx-tab-panel" id="tabs-boxed-1">Surface with a border and paper background.</div>
+            <div class="mtx-tab-panel" id="tabs-boxed-2" hidden>Second panel.</div>
+          </div>
+          <div class="mtx-tabs-container mtx-tabs-container--borderless">
+            <div id="tabs-borderless" data-mtx="tabs">
+              <button data-mtx="tab" data-panel="#tabs-borderless-1" data-active>Borderless</button>
+              <button data-mtx="tab" data-panel="#tabs-borderless-2">Other</button>
+            </div>
+            <div class="mtx-tab-panel" id="tabs-borderless-1">No border or background.</div>
+            <div class="mtx-tab-panel" id="tabs-borderless-2" hidden>Second panel.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p><code>data-icon</code> inserts the icon before the text. Without text, the tab is icon-only and needs an <code>aria-label</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Text only</span>
+        <div id="tabs-text" data-mtx="tabs">
+          <button data-mtx="tab" data-active>Calls</button>
+          <button data-mtx="tab">Favorites</button>
+          <button data-mtx="tab">Contacts</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon + text</span>
+        <div id="tabs-icon-text" data-mtx="tabs">
+          <button data-mtx="tab" data-icon="phone" data-active>Calls</button>
+          <button data-mtx="tab" data-icon="favorite">Favorites</button>
+          <button data-mtx="tab" data-icon="person_pin">Contacts</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon only</span>
+        <div id="tabs-icon-only" data-mtx="tabs">
+          <button data-mtx="tab" data-icon="phone" aria-label="Calls" data-active></button>
+          <button data-mtx="tab" data-icon="favorite" aria-label="Favorites"></button>
+          <button data-mtx="tab" data-icon="person_pin" aria-label="Contacts"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p>The active tab and the indicator use <code>--mtx-color-primary</code>. There are no color attributes; for another hue, redefine the token on the container (here, with the <code>secondary</code> value).</p>
+      <div class="demo-group">
+        <span class="demo-label">primary · default</span>
+        <div id="tabs-color-primary" data-mtx="tabs">
+          <button data-mtx="tab" data-active>Item one</button>
+          <button data-mtx="tab">Item two</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">--mtx-color-primary: var(--mtx-color-secondary)</span>
+        <div style="--mtx-color-primary: var(--mtx-color-secondary);">
+          <div id="tabs-color-secondary" data-mtx="tabs">
+            <button data-mtx="tab" data-active>Item one</button>
+            <button data-mtx="tab">Item two</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Normal, active, disabled (<code>data-disabled</code> + <code>disabled</code>). Hover to see the hover background and use <kbd>Tab</kbd> and the arrow keys to see focus: the disabled tab is skipped.</p>
+      <div class="demo-group">
+        <span class="demo-label">Active · disabled · available</span>
+        <div id="tabs-states" data-mtx="tabs">
+          <button data-mtx="tab" data-active>Active</button>
+          <button data-mtx="tab" data-disabled disabled>Disabled</button>
+          <button data-mtx="tab">Available</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="scrollable">
+      <h2>Scrollable</h2>
+      <p>When the tabs don't fit, the bar scrolls horizontally (hidden scrollbar, no arrow buttons). The indicator follows the active tab.</p>
+      <div id="tabs-scroll" data-mtx="tabs">
+        <button data-mtx="tab">January</button>
+        <button data-mtx="tab">February</button>
+        <button data-mtx="tab">March</button>
+        <button data-mtx="tab">April</button>
+        <button data-mtx="tab">May</button>
+        <button data-mtx="tab" data-active>June</button>
+        <button data-mtx="tab">July</button>
+        <button data-mtx="tab">August</button>
+        <button data-mtx="tab">September</button>
+        <button data-mtx="tab">October</button>
+        <button data-mtx="tab">November</button>
+        <button data-mtx="tab">December</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="vertical">
+      <h2>Vertical</h2>
+      <p><code>data-orientation="vertical"</code> stacks the tabs with the indicator on the right; navigate with <kbd>↑</kbd> and <kbd>↓</kbd>.</p>
+      <div class="mtx-tabs-container demo-tabs-vertical">
+        <div id="tabs-vertical" data-mtx="tabs" data-orientation="vertical">
+          <button data-mtx="tab" data-icon="person" data-panel="#tabs-vertical-1" data-active>Account</button>
+          <button data-mtx="tab" data-icon="lock" data-panel="#tabs-vertical-2">Security</button>
+          <button data-mtx="tab" data-icon="notifications" data-panel="#tabs-vertical-3">Notifications</button>
+          <button data-mtx="tab" data-icon="credit_card" data-panel="#tabs-vertical-4" data-disabled disabled>Billing</button>
+        </div>
+        <div class="mtx-tab-panel" id="tabs-vertical-1">Account details and contact email.</div>
+        <div class="mtx-tab-panel" id="tabs-vertical-2" hidden>Password and two-step verification.</div>
+        <div class="mtx-tab-panel" id="tabs-vertical-3" hidden>Email, push and weekly digest.</div>
+        <div class="mtx-tab-panel" id="tabs-vertical-4" hidden>Not available.</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="activation">
+      <h2>Manual and automatic activation</h2>
+      <p>By default the arrow keys only move focus and <kbd>Enter</kbd>/<kbd>Space</kbd> activate. With <code>data-selection-follows-focus</code> the tab is activated as soon as it receives focus. Try both with the keyboard.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Manual · default</span>
+          <div class="mtx-tabs-container">
+            <div id="tabs-manual" data-mtx="tabs">
+              <button data-mtx="tab" data-panel="#tabs-manual-1" data-active>Day</button>
+              <button data-mtx="tab" data-panel="#tabs-manual-2">Week</button>
+              <button data-mtx="tab" data-panel="#tabs-manual-3">Month</button>
+            </div>
+            <div class="mtx-tab-panel" id="tabs-manual-1">Daily view.</div>
+            <div class="mtx-tab-panel" id="tabs-manual-2" hidden>Weekly view.</div>
+            <div class="mtx-tab-panel" id="tabs-manual-3" hidden>Monthly view.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Automatic · data-selection-follows-focus</span>
+          <div class="mtx-tabs-container">
+            <div id="tabs-auto" data-mtx="tabs" data-selection-follows-focus>
+              <button data-mtx="tab" data-panel="#tabs-auto-1" data-active>Day</button>
+              <button data-mtx="tab" data-panel="#tabs-auto-2">Week</button>
+              <button data-mtx="tab" data-panel="#tabs-auto-3">Month</button>
+            </div>
+            <div class="mtx-tab-panel" id="tabs-auto-1">Daily view.</div>
+            <div class="mtx-tab-panel" id="tabs-auto-2" hidden>Weekly view.</div>
+            <div class="mtx-tab-panel" id="tabs-auto-3" hidden>Monthly view.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world use cases</h2>
+      <p>Account settings with full-width tabs, icons and a form in each panel.</p>
+      <div class="mtx-tabs-container demo-wide">
+        <div id="tabs-account" data-mtx="tabs" data-full>
+          <button data-mtx="tab" data-icon="person" data-panel="#tabs-account-1" data-active>Profile</button>
+          <button data-mtx="tab" data-icon="lock" data-panel="#tabs-account-2">Security</button>
+          <button data-mtx="tab" data-icon="notifications" data-panel="#tabs-account-3">Notifications</button>
+        </div>
+        <div class="mtx-tab-panel" id="tabs-account-1">
+          <div class="demo-stack">
+            <input data-mtx="text-field" data-label="Display name" data-variant="outlined" type="text" value="Jane Smith">
+            <input data-mtx="text-field" data-label="Email" data-variant="outlined" type="email" value="jane@example.com">
+          </div>
+        </div>
+        <div class="mtx-tab-panel" id="tabs-account-2" hidden>
+          <div class="demo-stack">
+            <input data-mtx="text-field" data-label="Current password" data-variant="outlined" type="password">
+            <input data-mtx="text-field" data-label="New password" data-variant="outlined" type="password">
+          </div>
+        </div>
+        <div class="mtx-tab-panel" id="tabs-account-3" hidden>
+          <div class="demo-stack">
+            <input type="checkbox" data-mtx="switch" data-label="Weekly email digest" checked>
+            <input type="checkbox" data-mtx="switch" data-label="Push notifications">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>In a grid</h2>
+      <p>Two independent tab groups inside <code>mtx-grid</code>: one column on mobile and two from 900px. The indicator is recalculated when the width changes.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div class="mtx-tabs-container">
+            <div id="tabs-grid-a" data-mtx="tabs" data-full>
+              <button data-mtx="tab" data-panel="#tabs-grid-a-1" data-active>Sales</button>
+              <button data-mtx="tab" data-panel="#tabs-grid-a-2">Expenses</button>
+            </div>
+            <div class="mtx-tab-panel" id="tabs-grid-a-1">Sales this month: $24,300.</div>
+            <div class="mtx-tab-panel" id="tabs-grid-a-2" hidden>Expenses this month: $9,120.</div>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div class="mtx-tabs-container">
+            <div id="tabs-grid-b" data-mtx="tabs" data-full>
+              <button data-mtx="tab" data-icon="inbox" data-panel="#tabs-grid-b-1" data-active>Inbox</button>
+              <button data-mtx="tab" data-icon="send" data-panel="#tabs-grid-b-2">Sent</button>
+            </div>
+            <div class="mtx-tab-panel" id="tabs-grid-b-1">4 unread messages.</div>
+            <div class="mtx-tab-panel" id="tabs-grid-b-2" hidden>Last sent: yesterday.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="groups-without-id">
+      <h2>Several groups without an id</h2>
+      <p>Without an <code>id</code> on the container, each group gets a unique prefix (<code>mtx-tabs-1</code>, <code>mtx-tabs-2</code>…): tab ids are never repeated and <code>aria-labelledby</code> / <code>aria-controls</code> always point to the right element.</p>
+      <div class="demo-group">
+        <span class="demo-label">Group A</span>
+        <div class="demo-tabs-anon" data-mtx="tabs">
+          <button data-mtx="tab" data-active>One</button>
+          <button data-mtx="tab">Two</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Group B</span>
+        <div class="demo-tabs-anon" data-mtx="tabs">
+          <button data-mtx="tab" data-active>One</button>
+          <button data-mtx="tab">Two</button>
+        </div>
+      </div>
+      <pre class="demo-log" id="tabs-ids-log" aria-live="polite"></pre>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>select()</code> activates by <code>data-value</code>, id or index; <code>value</code> returns the active one. <code>mtx:tabs:before-change</code> is cancelable: here the switch to “Locked” is canceled.</p>
+      <div class="mtx-tabs-container">
+        <div id="tabs-api" data-mtx="tabs">
+          <button data-mtx="tab" data-value="general" data-panel="#tabs-api-1" data-active>General</button>
+          <button data-mtx="tab" data-value="advanced" data-panel="#tabs-api-2">Advanced</button>
+          <button data-mtx="tab" data-value="locked" data-panel="#tabs-api-3">Locked</button>
+        </div>
+        <div class="mtx-tab-panel" id="tabs-api-1">General settings.</div>
+        <div class="mtx-tab-panel" id="tabs-api-2" hidden>Advanced settings.</div>
+        <div class="mtx-tab-panel" id="tabs-api-3" hidden>Should never be visible.</div>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-tabs-select="general">select('general')</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-tabs-select="advanced">select('advanced')</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-tabs-select="2">select(2)</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="tabs-api-value">Read value</button>
+      </div>
+      <pre class="demo-log" id="tabs-log" aria-live="polite"></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>With the full structure, the component reuses the indicator and respects <code>mtx-tab--active</code>.</p>
+      <div class="mtx-tabs-container">
+        <div class="mtx-tabs" id="tabs-bem" data-mtx="tabs">
+          <button class="mtx-tab mtx-tab--active" data-mtx="tab" data-panel="#tabs-bem-1">
+            <span class="material-icons mtx-tab__icon" aria-hidden="true">home</span>One
+          </button>
+          <button class="mtx-tab" data-mtx="tab" data-panel="#tabs-bem-2">Two</button>
+          <button class="mtx-tab" data-mtx="tab" data-panel="#tabs-bem-3">Three</button>
+          <span class="mtx-tabs__indicator"></span>
+        </div>
+        <div class="mtx-tab-panel" id="tabs-bem-1">Panel 1 content.</div>
+        <div class="mtx-tab-panel" id="tabs-bem-2" hidden>Panel 2 content.</div>
+        <div class="mtx-tab-panel" id="tabs-bem-3" hidden>Panel 3 content.</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-tabs" id="tabs-bem" data-mtx="tabs"&gt;
+  &lt;button class="mtx-tab mtx-tab--active" data-mtx="tab" data-panel="#tabs-bem-1"&gt;
+    &lt;span class="material-icons mtx-tab__icon" aria-hidden="true"&gt;home&lt;/span&gt;One
+  &lt;/button&gt;
+  &lt;button class="mtx-tab" data-mtx="tab" data-panel="#tabs-bem-2"&gt;Two&lt;/button&gt;
+  &lt;span class="mtx-tabs__indicator"&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="mtx-tab-panel" id="tabs-bem-1"&gt;…&lt;/div&gt;
+&lt;div class="mtx-tab-panel" id="tabs-bem-2" hidden&gt;…&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var idsLog = document.getElementById('tabs-ids-log');
+      var anonIds = [];
+      document.querySelectorAll('.demo-tabs-anon .mtx-tab').forEach(function (tab) { anonIds.push(tab.id); });
+      var unique = anonIds.filter(function (id, i) { return anonIds.indexOf(id) === i; });
+      idsLog.textContent = 'ids: ' + anonIds.join(', ') + '\n' + (unique.length === anonIds.length ? 'No duplicates ✓' : 'Duplicate ids ✗');
+
+      var el = document.getElementById('tabs-api');
+      var tabs = Materix.getInstance(el);
+      var log = document.getElementById('tabs-log');
+
+      /**
+       * Añade una línea al registro.
+       * @param {string} text Línea a registrar.
+       */
+      function write(text) {
+        log.textContent += text + '\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.querySelectorAll('[data-tabs-select]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var raw = btn.getAttribute('data-tabs-select');
+          var value = /^\d+$/.test(raw) ? Number(raw) : raw;
+          write('select(' + JSON.stringify(value) + ')');
+          tabs.select(value);
+        });
+      });
+      document.getElementById('tabs-api-value').addEventListener('click', function () {
+        write('value → ' + JSON.stringify(tabs.value));
+      });
+
+      el.addEventListener('mtx:tabs:before-change', function (event) {
+        var next = event.detail.tab.getAttribute('data-value');
+        if (next === 'locked') {
+          event.preventDefault();
+          write('mtx:tabs:before-change → "' + next + '" canceled with preventDefault()');
+        } else {
+          write('mtx:tabs:before-change → "' + next + '"');
+        }
+      });
+      el.addEventListener('mtx:tabs:change', function (event) {
+        write('mtx:tabs:change → tab="' + event.detail.tab.getAttribute('data-value') + '" previousTab="' + event.detail.previousTab.getAttribute('data-value') + '" panel=#' + event.detail.panel.id);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skeleton · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Feedback</span>
+        <h1>Skeleton</h1>
+        <p class="demo-lead">Content-shaped placeholders shown while data loads, with a pulse or wave animation.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#animations">Animations</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#paragraphs">Paragraphs</a>
+      <a href="#with-children">With children</a>
+      <a href="#states">States</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single element with <code>data-mtx="skeleton"</code>. Without a variant it is a line of text that fills the available width and takes the height of the typography; <code>data-width</code> and <code>data-height</code> accept numbers (px) or any CSS unit.</p>
+      <div class="demo-stack demo-wide">
+        <span data-mtx="skeleton"></span>
+        <span data-mtx="skeleton" data-variant="circular" data-width="40" data-height="40"></span>
+        <span data-mtx="skeleton" data-variant="rectangular" data-width="210" data-height="60"></span>
+        <span data-mtx="skeleton" data-variant="rounded" data-width="210" data-height="60"></span>
+      </div>
+      <pre class="demo-code"><code>&lt;span data-mtx="skeleton"&gt;&lt;/span&gt;
+&lt;span data-mtx="skeleton" data-variant="circular" data-width="40" data-height="40"&gt;&lt;/span&gt;
+&lt;span data-mtx="skeleton" data-variant="rectangular" data-width="210" data-height="60"&gt;&lt;/span&gt;
+&lt;span data-mtx="skeleton" data-variant="rounded" data-width="210" data-height="60"&gt;&lt;/span&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>Four shapes, as in MUI: <code>text</code> (default, scaled down to 60% of the line height), <code>circular</code>, <code>rectangular</code> (no radius) and <code>rounded</code> (4px radius).</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">text</span>
+          <span data-mtx="skeleton" data-variant="text"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">circular</span>
+          <span data-mtx="skeleton" data-variant="circular" data-width="56" data-height="56"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">rectangular</span>
+          <span data-mtx="skeleton" data-variant="rectangular" data-height="56"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">rounded</span>
+          <span data-mtx="skeleton" data-variant="rounded" data-height="56"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="animations">
+      <h2>Animations</h2>
+      <p><code>data-animation="pulse"</code> (default, the opacity oscillates), <code>"wave"</code> (a band sweeps across the block) or <code>"false"</code> (static). With <code>prefers-reduced-motion: reduce</code> the animation is turned off automatically.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">pulse</span>
+          <span data-mtx="skeleton" data-variant="rounded" data-height="80"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">wave</span>
+          <span data-mtx="skeleton" data-variant="rounded" data-height="80" data-animation="wave"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">false</span>
+          <span data-mtx="skeleton" data-variant="rounded" data-height="80" data-animation="false"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>The <code>text</code> variant inherits the size of the typography it sits in: just place it inside the same element that will hold the real text.</p>
+      <div class="demo-stack demo-wide">
+        <div class="demo-group">
+          <span class="demo-label">h3</span>
+          <div class="mtx-typography--h3"><span data-mtx="skeleton"></span></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">h5</span>
+          <div class="mtx-typography--h5"><span data-mtx="skeleton"></span></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">body1</span>
+          <div class="mtx-typography--body1"><span data-mtx="skeleton"></span></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">caption</span>
+          <div class="mtx-typography--caption"><span data-mtx="skeleton" data-width="40%"></span></div>
+        </div>
+      </div>
+      <p>Circular shapes follow Avatar's canonical sizes (24, 40 and 56px):</p>
+      <div class="demo-row">
+        <span data-mtx="skeleton" data-variant="circular" data-width="24" data-height="24"></span>
+        <span data-mtx="skeleton" data-variant="circular" data-width="40" data-height="40"></span>
+        <span data-mtx="skeleton" data-variant="circular" data-width="56" data-height="56"></span>
+      </div>
+    </section>
+
+    <section class="demo-section" id="paragraphs">
+      <h2>Paragraphs</h2>
+      <p><code>data-lines="3"</code> generates several lines of text; the last one is shorter (60% by default, configurable with <code>data-last-width</code>).</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">3 lines</span>
+          <div data-mtx="skeleton" data-lines="3"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">5 lines · wave · last one at 30%</span>
+          <div data-mtx="skeleton" data-lines="5" data-animation="wave" data-last-width="30%"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-children">
+      <h2>With children</h2>
+      <p>When the skeleton wraps content, it takes its exact size and hides it (<code>visibility: hidden</code>). Useful to avoid repeating dimensions: an Avatar or a Button inside becomes its own placeholder.</p>
+      <div class="demo-row">
+        <div data-mtx="skeleton" data-variant="circular">
+          <div data-mtx="avatar" data-icon="person"></div>
+        </div>
+        <div data-mtx="skeleton" data-variant="rounded">
+          <button class="mtx-button mtx-button--contained" data-mtx="button">Save changes</button>
+        </div>
+        <div class="mtx-typography--h5" data-mtx="skeleton">A title of real length</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>A region with <code>data-loading</code> shows its <code>[data-skeleton-placeholder]</code> children and hides the <code>[data-skeleton-content]</code> ones. <code>Materix.skeleton.set(region, bool)</code> toggles the state and syncs <code>aria-busy</code>; with <code>aria-live="polite"</code> the content is announced when loading finishes.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="skeleton-toggle" aria-controls="skeleton-region">Toggle loading</button>
+      </div>
+      <div class="demo-fixed-width" id="skeleton-region" aria-live="polite" data-loading aria-busy="true">
+        <div data-skeleton-placeholder class="mtx-d-flex mtx-align-items-center mtx-gap-2">
+          <span data-mtx="skeleton" data-variant="circular" data-width="40" data-height="40"></span>
+          <div class="mtx-flex-1">
+            <span data-mtx="skeleton" data-width="60%"></span>
+            <span data-mtx="skeleton" data-width="40%"></span>
+          </div>
+        </div>
+        <div data-skeleton-content class="mtx-d-flex mtx-align-items-center mtx-gap-2">
+          <div data-mtx="avatar" data-color="secondary">LM</div>
+          <div>
+            <div class="mtx-typography--body1">Lucy Martin</div>
+            <div class="mtx-typography--body2 mtx-color-text-secondary">Product designer</div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div id="profile" aria-live="polite" data-loading aria-busy="true"&gt;
+  &lt;div data-skeleton-placeholder&gt;…skeletons…&lt;/div&gt;
+  &lt;div data-skeleton-content&gt;…real content…&lt;/div&gt;
+&lt;/div&gt;
+
+Materix.skeleton.set('#profile', false); // shows the content</code></pre>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>A video card and a message list while loading (patterns from the MUI documentation).</p>
+      <div class="demo-grid-2">
+        <div data-mtx="card" data-elevation="1">
+          <span data-mtx="skeleton" data-variant="rectangular" data-height="160" data-animation="wave"></span>
+          <div class="mtx-p-2 mtx-d-flex mtx-gap-2">
+            <span data-mtx="skeleton" data-variant="circular" data-width="40" data-height="40" data-animation="wave"></span>
+            <div class="mtx-flex-1">
+              <span data-mtx="skeleton" data-animation="wave"></span>
+              <span data-mtx="skeleton" data-width="60%" data-animation="wave"></span>
+            </div>
+          </div>
+        </div>
+        <div data-mtx="paper" data-variant="outlined" class="mtx-p-2">
+          <div class="mtx-d-flex mtx-flex-column mtx-gap-2">
+            <div class="mtx-d-flex mtx-align-items-center mtx-gap-2">
+              <span data-mtx="skeleton" data-variant="circular" data-width="40" data-height="40"></span>
+              <div class="mtx-flex-1" data-mtx="skeleton" data-lines="2"></div>
+            </div>
+            <div class="mtx-d-flex mtx-align-items-center mtx-gap-2">
+              <span data-mtx="skeleton" data-variant="circular" data-width="40" data-height="40"></span>
+              <div class="mtx-flex-1" data-mtx="skeleton" data-lines="2"></div>
+            </div>
+            <div class="mtx-d-flex mtx-align-items-center mtx-gap-2">
+              <span data-mtx="skeleton" data-variant="circular" data-width="40" data-height="40"></span>
+              <div class="mtx-flex-1" data-mtx="skeleton" data-lines="2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Blocks without a fixed width fill their column: the same placeholder works in 1, 2 or 3 columns.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <span data-mtx="skeleton" data-variant="rounded" data-height="120"></span>
+          <span data-mtx="skeleton"></span>
+          <span data-mtx="skeleton" data-width="70%"></span>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <span data-mtx="skeleton" data-variant="rounded" data-height="120"></span>
+          <span data-mtx="skeleton"></span>
+          <span data-mtx="skeleton" data-width="70%"></span>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="12" data-md="4">
+          <span data-mtx="skeleton" data-variant="rounded" data-height="120"></span>
+          <span data-mtx="skeleton"></span>
+          <span data-mtx="skeleton" data-width="70%"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>setVariant(v)</code>, <code>setAnimation(a)</code>, <code>variant</code> and <code>animation</code>. The <code>Materix.skeleton</code> helper provides <code>set()</code>, <code>toggle()</code> and <code>isLoading()</code> and emits <code>mtx:skeleton:change</code>.</p>
+      <div class="demo-row">
+        <span data-mtx="skeleton" id="skeleton-api" data-variant="rounded" data-width="120" data-height="120"></span>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="skeleton-api-variant">Change variant</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="skeleton-api-animation">Change animation</button>
+      </div>
+      <pre class="demo-log" id="skeleton-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const block = Materix.getInstance(document.getElementById('skeleton-api'));
+block.setVariant('circular').setAnimation('wave');
+
+document.addEventListener('mtx:skeleton:change', (e) =&gt; console.log(e.detail.loading));
+Materix.skeleton.set('#skeleton-region', false);</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR: the <code>mtx-skeleton--{variant}</code> and <code>mtx-skeleton--{pulse|wave|no-animation}</code> classes are respected on initialization. They also render without JavaScript (add <code>aria-hidden="true"</code> yourself).</p>
+      <div class="demo-stack demo-wide">
+        <span class="mtx-skeleton mtx-skeleton--text mtx-skeleton--wave" data-mtx="skeleton" aria-hidden="true"></span>
+        <span class="mtx-skeleton mtx-skeleton--rounded mtx-skeleton--pulse" data-mtx="skeleton" data-height="48" aria-hidden="true"></span>
+        <div class="mtx-skeleton-lines" data-mtx="skeleton" data-lines="2" aria-hidden="true">
+          <span class="mtx-skeleton mtx-skeleton--text mtx-skeleton--pulse"></span>
+          <span class="mtx-skeleton mtx-skeleton--text mtx-skeleton--pulse" style="width: 60%"></span>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;span class="mtx-skeleton mtx-skeleton--text mtx-skeleton--wave" data-mtx="skeleton" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;div class="mtx-skeleton-lines" data-mtx="skeleton" data-lines="2" aria-hidden="true"&gt;
+  &lt;span class="mtx-skeleton mtx-skeleton--text mtx-skeleton--pulse"&gt;&lt;/span&gt;
+  &lt;span class="mtx-skeleton mtx-skeleton--text mtx-skeleton--pulse"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var log = document.getElementById('skeleton-log');
+      function write(text) {
+        log.textContent = (text + '\n' + log.textContent).split('\n').slice(0, 6).join('\n');
+      }
+
+      var region = document.getElementById('skeleton-region');
+      region.addEventListener('mtx:skeleton:change', function (event) {
+        write('mtx:skeleton:change → loading = ' + event.detail.loading);
+      });
+      document.getElementById('skeleton-toggle').addEventListener('click', function () {
+        Materix.skeleton.toggle(region);
+      });
+
+      var block = Materix.getInstance(document.getElementById('skeleton-api'));
+      var variants = ['rounded', 'circular', 'rectangular', 'text'];
+      var animations = ['pulse', 'wave', 'false'];
+      var v = 0;
+      var a = 0;
+      document.getElementById('skeleton-api-variant').addEventListener('click', function () {
+        v = (v + 1) % variants.length;
+        block.setVariant(variants[v]);
+        write('setVariant("' + variants[v] + '")');
+      });
+      document.getElementById('skeleton-api-animation').addEventListener('click', function () {
+        a = (a + 1) % animations.length;
+        block.setAnimation(animations[a]);
+        write('setAnimation("' + animations[a] + '")');
+      });
+    });
+  </script>
+</body>
+</html>

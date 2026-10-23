@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avatar · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Data display</span>
+        <h1>Avatar</h1>
+        <p class="demo-lead">Represents a person or entity with an image, initials or an icon; AvatarGroup stacks several and summarizes the overflow.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">Image, letters and icon</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#grouping">Grouping</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single element with <code>data-mtx="avatar"</code>: initials go as content, <code>data-src</code> generates the image and <code>data-icon</code> inserts an icon.</p>
+      <div class="demo-row">
+        <div data-mtx="avatar" data-color="primary">RD</div>
+        <div data-mtx="avatar" data-icon="folder" data-color="secondary" role="img" aria-label="Folder"></div>
+        <div data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=47" data-alt="Anna Grant"></div>
+        <div data-mtx="avatar" data-icon="assignment" data-variant="rounded" data-color="success" role="img" aria-label="Tasks"></div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="avatar" data-color="primary"&gt;RD&lt;/div&gt;
+&lt;div data-mtx="avatar" data-icon="folder" data-color="secondary" role="img" aria-label="Folder"&gt;&lt;/div&gt;
+&lt;div data-mtx="avatar" data-src="/users/anna.jpg" data-alt="Anna Grant"&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>data-variant</code> sets the shape: <code>circular</code> (default), <code>rounded</code> (4px radius) or <code>square</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Initials</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-color="primary">CI</div>
+          <div data-mtx="avatar" data-variant="rounded" data-color="primary">RO</div>
+          <div data-mtx="avatar" data-variant="square" data-color="primary">SQ</div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Image</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=12" data-alt="Chris Reed"></div>
+          <div data-mtx="avatar" data-variant="rounded" data-src="https://i.pravatar.cc/120?img=12" data-alt="Chris Reed"></div>
+          <div data-mtx="avatar" data-variant="square" data-src="https://i.pravatar.cc/120?img=12" data-alt="Chris Reed"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Canonical sizes of 24, 40 and 56px with <code>data-size="small|medium|large"</code>. A number in <code>data-size</code> sets a custom size in pixels.</p>
+      <div class="demo-group">
+        <span class="demo-label">Small · 24px</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-size="small" data-color="primary">S</div>
+          <div data-mtx="avatar" data-size="small" data-src="https://i.pravatar.cc/120?img=5" data-alt="Anna Grant"></div>
+          <div data-mtx="avatar" data-size="small" data-variant="rounded" data-color="secondary">AB</div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 40px (default)</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-size="medium" data-color="primary">M</div>
+          <div data-mtx="avatar" data-size="medium" data-src="https://i.pravatar.cc/120?img=5" data-alt="Anna Grant"></div>
+          <div data-mtx="avatar" data-size="medium" data-icon="person" role="img" aria-label="User"></div>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button">40px button</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Large · 56px</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-size="large" data-color="primary">L</div>
+          <div data-mtx="avatar" data-size="large" data-src="https://i.pravatar.cc/120?img=5" data-alt="Anna Grant"></div>
+          <div data-mtx="avatar" data-size="large" data-icon="person" role="img" aria-label="User"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Custom · data-size="72"</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-size="72" data-color="secondary">72</div>
+          <div data-mtx="avatar" data-size="96" data-src="https://i.pravatar.cc/200?img=5" data-alt="Anna Grant"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>Image, letters and icon</h2>
+      <p>Content is resolved in order: a child <code>&lt;img&gt;</code>, <code>data-src</code>, <code>data-icon</code> and, if there is nothing, the element text. Icons keep their native 24px grid.</p>
+      <div class="demo-group">
+        <span class="demo-label">Image (data-src and child &lt;img&gt;)</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=32" data-alt="Lucy Miller"></div>
+          <div data-mtx="avatar"><img src="https://i.pravatar.cc/120?img=15" alt="George Park"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Letters</span>
+        <div class="demo-row">
+          <div data-mtx="avatar">A</div>
+          <div data-mtx="avatar" data-color="primary">JM</div>
+          <div data-mtx="avatar" data-color="warning">OP</div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-icon="person" role="img" aria-label="User"></div>
+          <div data-mtx="avatar" data-icon="pageview" data-color="info" role="img" aria-label="Preview"></div>
+          <div data-mtx="avatar" data-icon="assignment" data-variant="rounded" data-color="success" role="img" aria-label="Tasks"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p>Without <code>data-color</code>, grey 600 with white text is used (<code>--mtx-avatar-default-bg</code> / <code>--mtx-avatar-default-color</code>, 4.6:1 AA contrast; MUI uses grey 400 at 1.8:1). <code>data-color</code> applies any palette color with its contrast text.</p>
+      <div class="demo-row">
+        <div data-mtx="avatar">DF</div>
+        <div data-mtx="avatar" data-color="primary">PR</div>
+        <div data-mtx="avatar" data-color="secondary">SE</div>
+        <div data-mtx="avatar" data-color="error">ER</div>
+        <div data-mtx="avatar" data-color="warning">WA</div>
+        <div data-mtx="avatar" data-color="info">IN</div>
+        <div data-mtx="avatar" data-color="success">SU</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Avatar is not interactive: its states are about content. With an image it shows the photo; without an image or icon it switches to fallback mode (<code>mtx-avatar--fallback</code>) and shows the initials or the element text.</p>
+      <div class="demo-group">
+        <span class="demo-label">With image</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=47" data-alt="Anna Grant"></div>
+          <div data-mtx="avatar" data-variant="rounded" data-src="https://i.pravatar.cc/120?img=15" data-alt="George Park"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Without image (initials or icon fallback)</span>
+        <div class="demo-row">
+          <div data-mtx="avatar">AG</div>
+          <div data-mtx="avatar" data-color="primary">JP</div>
+          <div data-mtx="avatar" data-icon="person" role="img" aria-label="User without a photo"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Broken image: the &lt;img&gt; is hidden and the alt initial is shown</span>
+        <div class="demo-row">
+          <div data-mtx="avatar" data-src="./missing.png" data-alt="Rose Davis"></div>
+          <div data-mtx="avatar" data-variant="rounded" data-src="./missing.png" data-alt="Mark Lewis"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grouping">
+      <h2>Grouping</h2>
+      <p><code>data-mtx="avatar-group"</code> overlaps avatars. <code>data-max</code> also counts the <code>+N</code> indicator, and <code>data-total</code> indicates users that are not mounted in the DOM.</p>
+      <div class="demo-group">
+        <span class="demo-label">data-max="4" with 6 children</span>
+        <div class="demo-row">
+          <div data-mtx="avatar-group" data-max="4" data-label="Participants">
+            <div class="mtx-avatar" data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=5" data-alt="Anna Grant"></div>
+            <div class="mtx-avatar" data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=12" data-alt="Chris Reed"></div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="primary">LM</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="secondary">JP</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="success">OT</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="warning">AS</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Simplified syntax: children with data-mtx="avatar" only (data-max="3")</span>
+        <div class="demo-row">
+          <div data-mtx="avatar-group" data-max="3" data-label="Reviewers">
+            <span data-mtx="avatar" data-color="primary">AB</span>
+            <span data-mtx="avatar" data-color="secondary">CD</span>
+            <span data-mtx="avatar" data-color="success">EF</span>
+            <span data-mtx="avatar">GH</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-total="24" with 3 children</span>
+        <div class="demo-row">
+          <div data-mtx="avatar-group" data-max="3" data-total="24" data-label="Design team" data-surplus-label="{count} more people">
+            <div class="mtx-avatar" data-mtx="avatar" data-color="info">RD</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="error">JM</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="primary">LC</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Spacing: medium · small · 0</span>
+        <div class="demo-row">
+          <div data-mtx="avatar-group" data-spacing="medium" data-label="Medium spacing">
+            <div class="mtx-avatar" data-mtx="avatar" data-color="primary">A</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="secondary">B</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="success">C</div>
+          </div>
+          <div data-mtx="avatar-group" data-spacing="small" data-label="Small spacing">
+            <div class="mtx-avatar" data-mtx="avatar" data-color="primary">A</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="secondary">B</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="success">C</div>
+          </div>
+          <div data-mtx="avatar-group" data-spacing="0" data-label="No overlap">
+            <div class="mtx-avatar" data-mtx="avatar" data-color="primary">A</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="secondary">B</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-color="success">C</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small size in a group</span>
+        <div class="demo-row">
+          <div data-mtx="avatar-group" data-max="4" data-label="Reviewers">
+            <div class="mtx-avatar" data-mtx="avatar" data-size="small" data-color="primary">A</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-size="small" data-color="secondary">B</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-size="small" data-color="success">C</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-size="small" data-color="info">D</div>
+            <div class="mtx-avatar" data-mtx="avatar" data-size="small" data-color="error">E</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>Online status indicator with Badge and a list of authors with List.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Online status</span>
+          <div class="demo-row">
+            <div data-mtx="badge" data-variant="dot" data-color="success" data-overlap="circular" data-anchor="bottom-right">
+              <div data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=47" data-alt="Anna Grant (online)"></div>
+            </div>
+            <div data-mtx="badge" data-variant="dot" data-color="default" data-overlap="circular" data-anchor="bottom-right">
+              <div data-mtx="avatar" data-color="primary" role="img" aria-label="George Park (offline)">JP</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Comment authors</span>
+          <ul data-mtx="list" class="demo-fixed-width" aria-label="Recent comments">
+            <li data-mtx="list-item" data-secondary="Commented 5 minutes ago">
+              <span class="mtx-list-item-icon"><span data-mtx="avatar" data-color="secondary">CR</span></span>
+              Chris Reed
+            </li>
+            <li data-mtx="list-item" data-secondary="Commented 1 hour ago">
+              <span class="mtx-list-item-icon"><span data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=32" data-alt=""></span></span>
+              Lucy Miller
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>Team directory in <code>mtx-grid</code>: 1 column on mobile, 2 at <code>sm</code> and 3 at <code>md</code>.</p>
+      <div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <div class="demo-panel">
+              <div class="demo-row">
+                <div data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=5" data-alt=""></div>
+                <span>Anna Grant</span>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <div class="demo-panel">
+              <div class="demo-row">
+                <div data-mtx="avatar" data-color="primary" data-alt="">CR</div>
+                <span>Chris Reed</span>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <div class="demo-panel">
+              <div class="demo-row">
+                <div data-mtx="avatar" data-variant="rounded" data-color="success" data-alt="">LM</div>
+                <span>Lucy Miller</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>AvatarGroup exposes <code>max</code>, <code>total</code> and <code>refresh()</code>. Avatar and AvatarGroup emit no events; the log shows each call and the resulting state.</p>
+      <div class="demo-row">
+        <div id="programmatic-group" data-mtx="avatar-group" data-max="5" data-label="Team">
+          <div class="mtx-avatar" data-mtx="avatar" data-color="primary">A</div>
+          <div class="mtx-avatar" data-mtx="avatar" data-color="secondary">B</div>
+          <div class="mtx-avatar" data-mtx="avatar" data-color="success">C</div>
+          <div class="mtx-avatar" data-mtx="avatar" data-color="info">D</div>
+          <div class="mtx-avatar" data-mtx="avatar" data-color="warning">E</div>
+          <div class="mtx-avatar" data-mtx="avatar" data-color="error">F</div>
+        </div>
+      </div>
+      <div class="demo-stack">
+      <div class="demo-row">
+        <button id="avatar-max-3" class="mtx-button mtx-button--outlined" data-mtx="button">max = 3</button>
+        <button id="avatar-max-5" class="mtx-button mtx-button--outlined" data-mtx="button">max = 5</button>
+        <button id="avatar-total" class="mtx-button mtx-button--outlined" data-mtx="button">total = 20</button>
+        <button id="avatar-total-reset" class="mtx-button mtx-button--outlined" data-mtx="button">total = null</button>
+        <button id="avatar-add" class="mtx-button mtx-button--outlined" data-mtx="button">Add + refresh()</button>
+      </div>
+      <pre id="avatar-log" class="demo-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Full structure for SSR: the component reuses the existing <code>&lt;img&gt;</code> and does not duplicate nodes.</p>
+      <div class="demo-row">
+        <div class="mtx-avatar mtx-avatar--primary mtx-avatar--large" data-mtx="avatar">RD</div>
+        <div class="mtx-avatar mtx-avatar--rounded" data-mtx="avatar"><img src="https://i.pravatar.cc/120?img=15" alt="George Park"></div>
+        <div class="mtx-avatar-group" data-mtx="avatar-group" data-max="3" data-total="8" aria-label="Participants">
+          <div class="mtx-avatar" data-mtx="avatar">RD</div>
+          <div class="mtx-avatar mtx-avatar--primary" data-mtx="avatar">JM</div>
+          <div class="mtx-avatar mtx-avatar--secondary" data-mtx="avatar">LC</div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-avatar mtx-avatar--primary mtx-avatar--large" data-mtx="avatar"&gt;RD&lt;/div&gt;
+&lt;div class="mtx-avatar mtx-avatar--rounded" data-mtx="avatar"&gt;&lt;img src="/george.jpg" alt="George Park"&gt;&lt;/div&gt;
+&lt;div class="mtx-avatar-group" data-mtx="avatar-group" data-max="3" data-total="8" aria-label="Participants"&gt;
+  &lt;div class="mtx-avatar" data-mtx="avatar"&gt;RD&lt;/div&gt;
+  ...
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const groupEl = document.getElementById('programmatic-group');
+      const log = document.getElementById('avatar-log');
+      const group = () => Materix.getInstance(groupEl);
+      const colors = ['primary', 'secondary', 'success', 'info', 'warning', 'error'];
+      const write = (call) => {
+        const visible = groupEl.querySelectorAll('.mtx-avatar:not([hidden])').length;
+        log.textContent += `${call} → max: ${group().max}, total: ${group().total}, visible: ${visible}\n`;
+        log.scrollTop = log.scrollHeight;
+      };
+      document.getElementById('avatar-max-3').addEventListener('click', () => { group().max = 3; write('group.max = 3'); });
+      document.getElementById('avatar-max-5').addEventListener('click', () => { group().max = 5; write('group.max = 5'); });
+      document.getElementById('avatar-total').addEventListener('click', () => { group().total = 20; write('group.total = 20'); });
+      document.getElementById('avatar-total-reset').addEventListener('click', () => { group().total = null; write('group.total = null'); });
+      document.getElementById('avatar-add').addEventListener('click', () => {
+        const count = group().total;
+        const avatar = document.createElement('div');
+        avatar.className = 'mtx-avatar';
+        avatar.setAttribute('data-mtx', 'avatar');
+        avatar.setAttribute('data-color', colors[count % colors.length]);
+        avatar.textContent = String.fromCharCode(65 + (count % 26));
+        groupEl.insertBefore(avatar, groupEl.querySelector('.mtx-avatar--surplus'));
+        Materix.init(avatar);
+        group().refresh();
+        write('Materix.init(newAvatar) + group.refresh()');
+      });
+    });
+  </script>
+</body>
+</html>

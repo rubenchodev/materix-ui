@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog · Materix UI Templates</title>
+  <meta name="description" content="Blog home with featured post, category tabs, article cards and newsletter signup.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="../shared/template.js"></script>
+  <style>
+    /* Marca: logotipo con gradiente */
+    .tpl-bl-logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--mtx-color-primary), var(--mtx-color-secondary)); color: var(--mtx-color-primary-contrast); }
+
+    /* Portadas generadas (gradiente por categoría + SVG decorativo) */
+    .tpl-bl-cover { position: relative; overflow: hidden; height: 168px; background: linear-gradient(135deg, var(--tpl-c1), var(--tpl-c2)); color: var(--mtx-color-primary-contrast); }
+    .tpl-bl-cover svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .tpl-bl-cover--featured { height: 100%; min-height: 240px; }
+    .tpl-bl-cover--engineering { --tpl-c1: var(--mtx-color-primary-dark); --tpl-c2: var(--mtx-color-info); }
+    .tpl-bl-cover--design { --tpl-c1: var(--mtx-color-secondary-dark); --tpl-c2: var(--mtx-color-error-light); }
+    .tpl-bl-cover--product { --tpl-c1: var(--mtx-color-success-dark); --tpl-c2: var(--mtx-color-info-light); }
+    .tpl-bl-cover--company { --tpl-c1: var(--mtx-color-warning-dark); --tpl-c2: var(--mtx-color-secondary); }
+    .tpl-bl-cover--tutorials { --tpl-c1: var(--mtx-color-info-dark); --tpl-c2: var(--mtx-color-success); }
+
+    /* Tarjetas: elevación y subrayado del título al pasar el puntero (decisión de diseño) */
+    .tpl-bl-post:hover { box-shadow: var(--mtx-elevation-6); }
+    .tpl-bl-post:hover h3, .tpl-bl-featured:hover h2 { text-decoration: underline; }
+    @media (prefers-reduced-motion: no-preference) {
+      .tpl-bl-post { transition: box-shadow var(--mtx-duration-shorter) var(--mtx-easing-standard), transform var(--mtx-duration-shorter) var(--mtx-easing-standard); }
+      .tpl-bl-post:hover { transform: translateY(-2px); }
+    }
+
+    /* Boletín con gradiente de marca */
+    .tpl-bl-news { background: linear-gradient(160deg, var(--mtx-color-primary-dark), var(--mtx-color-primary)); color: var(--mtx-color-primary-contrast); }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-bl-main">Skip to content</a>
+
+  <header data-mtx="app-bar" data-position="sticky" data-color="default" data-elevate-on-scroll class="mtx-border-bottom">
+    <div class="mtx-container">
+      <div class="mtx-toolbar mtx-toolbar--disable-gutters mtx-gap-1">
+        <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1 mtx-flex-shrink-0 mtx-color-text-primary mtx-text-decoration-none mtx-typography--h6 mtx-fw-bold" href="#" aria-label="Lumen Blog home">
+          <span class="tpl-bl-logo mtx-d-inline-flex mtx-align-items-center mtx-justify-content-center"><span class="material-icons" aria-hidden="true">insights</span></span>
+          <span class="mtx-d-none mtx-d-sm-inline">Lumen <small class="mtx-fw-regular mtx-color-text-secondary">Blog</small></span>
+        </a>
+        <div class="mtx-app-bar-search mtx-app-bar-search--grow mtx-ms-auto" role="search">
+          <span class="material-icons" aria-hidden="true">search</span>
+          <input type="search" id="tpl-bl-search" placeholder="Search articles" aria-label="Search articles" autocomplete="off">
+        </div>
+        <button type="button" data-mtx="icon-button" data-mtx-theme-toggle aria-label="Toggle theme"><span class="material-icons" aria-hidden="true">dark_mode</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="tpl-bl-main" tabindex="-1" data-mtx="container" class="mtx-pb-8">
+    <section class="mtx-pt-5 mtx-pb-3" aria-labelledby="tpl-bl-title">
+      <div data-mtx="grid" data-spacing="0">
+        <div data-mtx="grid" data-xs="12" data-md="7">
+          <h1 id="tpl-bl-title" class="mtx-typography--h4 mtx-typography--sm-h3 mtx-fw-bold mtx-mb-1">Stories from the Lumen team</h1>
+          <p class="mtx-typography--subtitle1 mtx-color-text-secondary">Engineering deep dives, design notes and lessons from building product analytics for 4,000+ teams.</p>
+        </div>
+      </div>
+    </section>
+
+    <article data-mtx="card" data-variant="outlined" class="tpl-bl-featured mtx-rounded-3 mtx-mb-6" id="tpl-bl-featured" aria-labelledby="tpl-bl-featured-title"></article>
+
+    <div data-mtx="grid" data-spacing="5">
+      <section data-mtx="grid" data-xs="12" data-lg="8" aria-labelledby="tpl-bl-latest-title">
+        <h2 id="tpl-bl-latest-title" class="mtx-visually-hidden">Latest articles</h2>
+        <div id="tpl-bl-tabs" data-mtx="tabs" class="mtx-mb-3" aria-label="Categories">
+          <button data-mtx="tab" data-value="all" data-active aria-controls="tpl-bl-panel">All</button>
+          <button data-mtx="tab" data-value="engineering" aria-controls="tpl-bl-panel">Engineering</button>
+          <button data-mtx="tab" data-value="design" aria-controls="tpl-bl-panel">Design</button>
+          <button data-mtx="tab" data-value="product" aria-controls="tpl-bl-panel">Product</button>
+          <button data-mtx="tab" data-value="tutorials" aria-controls="tpl-bl-panel">Tutorials</button>
+          <button data-mtx="tab" data-value="company" aria-controls="tpl-bl-panel">Company</button>
+        </div>
+        <div id="tpl-bl-panel" role="tabpanel">
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-2" id="tpl-bl-results" aria-live="polite"></p>
+          <div data-mtx="grid" data-spacing="3" id="tpl-bl-grid"></div>
+          <div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-text-center mtx-gap-1 mtx-py-6 mtx-px-2" id="tpl-bl-empty" hidden>
+            <span data-mtx="avatar" data-size="large" data-icon="article" aria-hidden="true"></span>
+            <h3 class="mtx-typography--subtitle1 mtx-fw-medium">No articles found</h3>
+            <p class="mtx-typography--body2 mtx-color-text-secondary">No articles match your search. Try another keyword or category.</p>
+            <button type="button" class="mtx-button mtx-button--outlined mtx-mt-1" data-mtx="button" id="tpl-bl-reset">Clear filters</button>
+          </div>
+          <nav data-mtx="pagination" data-count="1" data-color="primary" class="mtx-d-flex mtx-justify-content-center mtx-mt-5" id="tpl-bl-pagination" aria-label="Articles pagination"></nav>
+        </div>
+      </section>
+
+      <aside data-mtx="grid" data-xs="12" data-lg="4" aria-label="Sidebar">
+        <div data-mtx="grid" data-spacing="3">
+          <section data-mtx="grid" data-xs="12" data-sm="6" data-lg="12" aria-labelledby="tpl-bl-popular-title">
+            <div data-mtx="paper" data-variant="outlined" class="mtx-rounded-3 mtx-p-2_5 mtx-h-100">
+              <h2 id="tpl-bl-popular-title" class="mtx-typography--subtitle1 mtx-fw-medium mtx-mb-1">Popular this month</h2>
+              <ol data-mtx="list" class="mtx-p-0" id="tpl-bl-popular" data-selectable="false"></ol>
+            </div>
+          </section>
+          <section data-mtx="grid" data-xs="12" data-sm="6" data-lg="12" aria-labelledby="tpl-bl-topics-title">
+            <div data-mtx="paper" data-variant="outlined" class="mtx-rounded-3 mtx-p-2_5 mtx-h-100">
+              <h2 id="tpl-bl-topics-title" class="mtx-typography--subtitle1 mtx-fw-medium mtx-mb-1">Topics</h2>
+              <div class="mtx-d-flex mtx-flex-wrap mtx-gap-1" id="tpl-bl-topics"></div>
+            </div>
+          </section>
+          <section data-mtx="grid" data-xs="12" data-sm="6" data-lg="12" aria-labelledby="tpl-bl-news-title">
+            <div class="tpl-bl-news mtx-rounded-3 mtx-p-2_5 mtx-h-100">
+              <h2 id="tpl-bl-news-title" class="mtx-typography--subtitle1 mtx-fw-medium mtx-mb-1">The Lumen Letter</h2>
+              <p class="mtx-typography--body2 mtx-mb-2">One email a month with our best articles, product updates and invitations to live sessions. No spam.</p>
+              <form class="mtx-bg-paper mtx-color-text-primary mtx-rounded-3 mtx-p-2" data-mtx="stack" data-spacing="1.5" id="tpl-bl-news" novalidate>
+                <input data-mtx="text-field" data-label="Email address" data-size="small" class="mtx-text-field--full-width" type="email" id="tpl-bl-email" autocomplete="email" required>
+                <button class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" type="submit">Subscribe</button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="mtx-border-top mtx-bg-paper mtx-py-5 mtx-typography--body2 mtx-color-text-secondary">
+    <div class="mtx-container mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-justify-content-between mtx-gap-2">
+      <span>© 2026 Lumen Analytics, Inc. · <a data-mtx="link" data-color="text-secondary" href="#">RSS feed</a></span>
+      <nav class="mtx-d-flex mtx-flex-wrap mtx-column-gap-3 mtx-row-gap-1" aria-label="Footer">
+        <a data-mtx="link" data-color="text-secondary" href="../landing-page/index.html">Product</a>
+        <a data-mtx="link" data-color="text-secondary" href="../pricing/index.html">Pricing</a>
+        <a data-mtx="link" data-color="text-secondary" href="#">Careers</a>
+        <a data-mtx="link" data-color="text-secondary" href="#">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      'use strict';
+
+      var $ = function (sel, root) { return (root || document).querySelector(sel); };
+      var esc = function (str) { return String(str).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+      var PAGE_SIZE = 6;
+      var CATS = { engineering: 'Engineering', design: 'Design', product: 'Product', tutorials: 'Tutorials', company: 'Company' };
+      var AUTHORS = {
+        maya: { name: 'Maya Robinson', color: 'secondary' },
+        ethan: { name: 'Ethan Walker', color: 'primary' },
+        priya: { name: 'Priya Sharma', color: 'success' },
+        lucas: { name: 'Lucas Fernández', color: 'info' },
+        hannah: { name: 'Hannah Tanaka', color: 'warning' }
+      };
+      var POSTS = [
+        { id: 1, cat: 'engineering', title: 'How we ingest 2 billion events a day on a modest Kafka cluster', excerpt: 'Partitioning by account, compacting hot topics and the three alerts that saved us during Black Friday traffic.', author: 'ethan', date: '2026-10-15', read: 12, tags: ['Kafka', 'Scaling'], views: 18400, featured: true },
+        { id: 2, cat: 'design', title: 'Designing dashboards people actually open on Monday mornings', excerpt: 'We interviewed 40 product managers about their weekly rituals. Here is what changed in our default dashboard layout.', author: 'maya', date: '2026-10-13', read: 8, tags: ['Dashboards', 'Research'], views: 9600 },
+        { id: 3, cat: 'product', title: 'Introducing AI insights: ask your data anything', excerpt: 'Natural-language questions now return charts, summaries and suggested experiments — with sources you can audit.', author: 'priya', date: '2026-10-09', read: 5, tags: ['Launch', 'AI'], views: 22100 },
+        { id: 4, cat: 'tutorials', title: 'Build a retention cohort in five minutes', excerpt: 'A step-by-step guide to weekly cohorts, how to read the triangle and which actions predict long-term retention.', author: 'lucas', date: '2026-10-06', read: 6, tags: ['Retention', 'Guide'], views: 7300 },
+        { id: 5, cat: 'engineering', title: 'Privacy by default: masking session replays in the browser', excerpt: 'Why we moved masking from the server to the SDK, and how a 4 KB tree walker keeps sensitive inputs off our wire.', author: 'ethan', date: '2026-10-02', read: 10, tags: ['Privacy', 'SDK'], views: 11800 },
+        { id: 6, cat: 'company', title: 'We are opening an office in Lisbon', excerpt: 'Our second hub brings us closer to European customers. We are hiring across engineering, design and support.', author: 'hannah', date: '2026-09-29', read: 3, tags: ['Hiring', 'Culture'], views: 5200 },
+        { id: 7, cat: 'design', title: 'A color system that survives dark mode', excerpt: 'Tokens, contrast checks and the surprising reason our charts looked muddy at night — plus the fix.', author: 'maya', date: '2026-09-24', read: 9, tags: ['Design system', 'Accessibility'], views: 14300 },
+        { id: 8, cat: 'product', title: 'Funnels 2.0: conversion windows, holdouts and more', excerpt: 'Our most requested funnel features are here, including per-step conversion windows and experiment holdouts.', author: 'priya', date: '2026-09-18', read: 4, tags: ['Funnels', 'Launch'], views: 8900 },
+        { id: 9, cat: 'tutorials', title: 'Instrumenting a React Native app without a tracking plan', excerpt: 'Use autocapture to get started on day one, then promote the events that matter to your verified catalog.', author: 'lucas', date: '2026-09-11', read: 7, tags: ['React Native', 'Guide'], views: 6100 },
+        { id: 10, cat: 'engineering', title: 'Cutting p95 query latency by 63% with ClickHouse projections', excerpt: 'A tale of materialized views, projections and one very expensive DISTINCT that was hiding in plain sight.', author: 'ethan', date: '2026-09-04', read: 11, tags: ['ClickHouse', 'Performance'], views: 16700 },
+        { id: 11, cat: 'company', title: 'What we learned from our first 1,000 customers', excerpt: 'Pricing mistakes, the onboarding email that doubled activation and why we stopped doing custom contracts.', author: 'hannah', date: '2026-08-28', read: 8, tags: ['Startups', 'Growth'], views: 19800 },
+        { id: 12, cat: 'design', title: 'Accessible charts: beyond color', excerpt: 'Patterns, direct labels and keyboard navigation make data visualizations usable for everyone.', author: 'maya', date: '2026-08-21', read: 6, tags: ['Accessibility', 'Charts'], views: 7700 },
+        { id: 13, cat: 'tutorials', title: 'Sending survey answers to Jira automatically', excerpt: 'Create issues from negative NPS responses with the full session replay attached, using our webhook recipe.', author: 'lucas', date: '2026-08-14', read: 5, tags: ['Integrations', 'Guide'], views: 4800 }
+      ];
+      var state = { cat: 'all', query: '', page: 1 };
+      var fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      var initials = function (n) { return n.split(' ').map(function (p) { return p[0]; }).join('').slice(0, 2); };
+      var searchInput = $('#tpl-bl-search');
+      var tabs = Materix.getInstance($('#tpl-bl-tabs'));
+      var pager = Materix.getInstance($('#tpl-bl-pagination'));
+
+      /**
+       * Genera la portada SVG decorativa de un artículo.
+       * @param {Object} post Artículo.
+       * @param {string} [modifier] Modificador extra de la portada.
+       * @returns {string} HTML de la portada.
+       */
+      var cover = function (post, modifier) {
+        var s = post.id * 37;
+        var shapes = '<circle cx="' + (60 + s % 240) + '" cy="' + (40 + s % 90) + '" r="' + (60 + s % 50) + '" fill="currentColor" opacity=".14"/>' +
+          '<circle cx="' + (300 - s % 120) + '" cy="' + (150 - s % 60) + '" r="' + (30 + s % 40) + '" fill="currentColor" opacity=".2"/>' +
+          '<rect x="' + (20 + s % 180) + '" y="' + (110 + s % 40) + '" width="120" height="120" rx="24" transform="rotate(' + (s % 45) + ' 200 140)" fill="none" stroke="currentColor" stroke-width="2" opacity=".35"/>' +
+          '<path d="M0 ' + (150 + s % 30) + ' C80 ' + (110 + s % 50) + ' 160 ' + (190 - s % 40) + ' 400 ' + (120 + s % 60) + '" fill="none" stroke="currentColor" stroke-width="3" opacity=".45"/>';
+        return '<div class="tpl-bl-cover tpl-bl-cover--' + post.cat + (modifier ? ' ' + modifier : '') + '" aria-hidden="true"><svg viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" focusable="false">' + shapes + '</svg></div>';
+      };
+
+      /**
+       * Bloque de autor, fecha y tiempo de lectura.
+       * @param {Object} post Artículo.
+       * @returns {string} HTML del bloque.
+       */
+      var meta = function (post) {
+        var a = AUTHORS[post.author];
+        return '<div class="mtx-d-flex mtx-align-items-center mtx-gap-1_5 mtx-typography--body2"><span data-mtx="avatar" data-size="32" data-color="' + a.color + '" aria-hidden="true">' + initials(a.name) + '</span>' +
+          '<div><div class="mtx-fw-medium mtx-color-text-primary">' + a.name + '</div><div class="mtx-color-text-secondary"><time datetime="' + post.date + '">' + fmt.format(new Date(post.date + 'T12:00:00')) + '</time> · ' + post.read + ' min read</div></div></div>';
+      };
+
+      // Destacado
+      var featured = POSTS.filter(function (p) { return p.featured; })[0];
+      var featuredEl = $('#tpl-bl-featured');
+      featuredEl.innerHTML = '<div data-mtx="grid" data-spacing="0">' +
+        '<div data-mtx="grid" data-xs="12" data-md="6">' + cover(featured, 'tpl-bl-cover--featured') + '</div>' +
+        '<div data-mtx="grid" data-xs="12" data-md="6"><div class="mtx-d-flex mtx-flex-column mtx-justify-content-center mtx-gap-2 mtx-h-100 mtx-p-3 mtx-p-sm-5">' +
+        '<div class="mtx-d-flex mtx-flex-wrap mtx-gap-1"><span data-mtx="chip" data-size="small" data-color="primary" data-label="Featured"></span><span data-mtx="chip" data-size="small" data-variant="outlined" data-label="' + CATS[featured.cat] + '"></span></div>' +
+        '<h2 id="tpl-bl-featured-title" class="mtx-typography--h5 mtx-typography--sm-h4 mtx-fw-bold"><a class="mtx-stretched-link mtx-color-inherit mtx-text-decoration-none" href="#post-' + featured.id + '">' + esc(featured.title) + '</a></h2>' +
+        '<p class="mtx-typography--body1 mtx-color-text-secondary">' + esc(featured.excerpt) + '</p>' + meta(featured) + '</div></div></div>';
+      Materix.initAll(featuredEl);
+
+      /**
+       * Artículos filtrados por categoría y búsqueda.
+       * @returns {Object[]} Artículos.
+       */
+      var filtered = function () {
+        var q = state.query.trim().toLowerCase();
+        return POSTS.filter(function (p) {
+          return !p.featured && (state.cat === 'all' || p.cat === state.cat) &&
+            (!q || (p.title + ' ' + p.excerpt + ' ' + p.tags.join(' ') + ' ' + AUTHORS[p.author].name).toLowerCase().indexOf(q) !== -1);
+        });
+      };
+
+      /** Pinta la cuadrícula, el estado vacío y sincroniza la paginación. */
+      var render = function () {
+        var list = filtered();
+        var pages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+        state.page = Math.min(state.page, pages);
+        var slice = list.slice((state.page - 1) * PAGE_SIZE, state.page * PAGE_SIZE);
+        var grid = $('#tpl-bl-grid');
+        grid.innerHTML = slice.map(function (p) {
+          return '<div data-mtx="grid" data-xs="12" data-sm="6"><article data-mtx="card" data-variant="outlined" class="tpl-bl-post mtx-rounded-3 mtx-h-100" aria-labelledby="tpl-bl-post-' + p.id + '">' + cover(p) +
+            '<div data-mtx="card-content" class="mtx-flex-1 mtx-d-flex mtx-flex-column mtx-gap-1 mtx-p-2_5">' +
+            '<div class="mtx-d-flex mtx-flex-wrap mtx-gap-0_5"><span data-mtx="chip" data-size="small" data-color="primary" data-variant="outlined" data-label="' + CATS[p.cat] + '"></span>' +
+            p.tags.map(function (t) { return '<span data-mtx="chip" class="mtx-stretched-link-above" data-size="small" data-label="' + esc(t) + '" data-clickable data-tag="' + esc(t) + '"></span>'; }).join('') + '</div>' +
+            '<h3 id="tpl-bl-post-' + p.id + '" class="mtx-typography--h6 mtx-color-text-primary mtx-my-0"><a class="mtx-stretched-link mtx-color-inherit mtx-text-decoration-none" href="#post-' + p.id + '">' + esc(p.title) + '</a></h3>' +
+            '<p class="mtx-typography--body2 mtx-line-clamp-3">' + esc(p.excerpt) + '</p></div>' +
+            '<div data-mtx="card-actions" data-align="start" class="mtx-px-2_5 mtx-pt-1_5 mtx-pb-2_5">' + meta(p) + '</div></article></div>';
+        }).join('');
+        Materix.initAll(grid);
+        $('#tpl-bl-empty').hidden = list.length > 0;
+        var label = state.cat === 'all' ? 'all categories' : CATS[state.cat];
+        $('#tpl-bl-results').textContent = list.length + (list.length === 1 ? ' article' : ' articles') + ' in ' + label + (state.query ? ' matching “' + state.query + '”' : '') + (pages > 1 ? ' · page ' + state.page + ' of ' + pages : '');
+        pager.count = pages;
+        pager.page = state.page;
+        pager.element.hidden = pages <= 1;
+      };
+
+      // Pestañas de categorías
+      $('#tpl-bl-tabs').addEventListener('mtx:tabs:change', function (e) {
+        state.cat = e.detail.tab.getAttribute('data-value');
+        state.page = 1;
+        $('#tpl-bl-panel').setAttribute('aria-labelledby', e.detail.tab.id);
+        render();
+      });
+      var activeTab = $('#tpl-bl-tabs [aria-selected="true"]');
+      if (activeTab) $('#tpl-bl-panel').setAttribute('aria-labelledby', activeTab.id);
+
+      // Paginación
+      pager.element.addEventListener('mtx:pagination:change', function (e) {
+        state.page = e.detail.page;
+        render();
+        $('#tpl-bl-latest-title').scrollIntoView({ block: 'start' });
+      });
+
+      // Búsqueda con espera breve
+      var timer;
+      searchInput.addEventListener('input', function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () { state.query = searchInput.value; state.page = 1; render(); }, 150);
+      });
+
+      /**
+       * Aplica una búsqueda y vuelve a la categoría "All".
+       * @param {string} query Texto a buscar.
+       */
+      var applyQuery = function (query) {
+        searchInput.value = query;
+        state.query = query;
+        state.page = 1;
+        if (state.cat !== 'all') tabs.select('all'); else render();
+      };
+
+      // Etiquetas: filtran por búsqueda
+      document.addEventListener('mtx:chip:click', function (e) {
+        var tag = e.target.closest('[data-tag]');
+        if (!tag) return;
+        applyQuery(tag.getAttribute('data-tag'));
+        $('#tpl-bl-latest-title').scrollIntoView({ block: 'start' });
+      });
+      $('#tpl-bl-reset').addEventListener('click', function () {
+        applyQuery('');
+        searchInput.focus();
+      });
+
+      // Populares
+      var popular = POSTS.slice().sort(function (a, b) { return b.views - a.views; }).slice(0, 5);
+      $('#tpl-bl-popular').innerHTML = popular.map(function (p, i) {
+        return '<li><a data-mtx="list-item-button" data-align-start class="mtx-rounded-2 mtx-px-1" href="#post-' + p.id + '" data-primary="' + esc(p.title) + '" data-secondary="' + esc(AUTHORS[p.author].name) + ' · ' + (p.views / 1000).toFixed(1) + 'k reads">' +
+          '<span class="mtx-list-item-icon mtx-typography--h5 mtx-fw-bold mtx-color-text-secondary" aria-hidden="true">0' + (i + 1) + '</span></a></li>';
+      }).join('');
+      Materix.initAll($('#tpl-bl-popular'));
+
+      var tagCounts = {};
+      POSTS.forEach(function (p) { p.tags.forEach(function (t) { tagCounts[t] = (tagCounts[t] || 0) + 1; }); });
+      $('#tpl-bl-topics').innerHTML = Object.keys(tagCounts).sort(function (a, b) { return tagCounts[b] - tagCounts[a]; }).slice(0, 10).map(function (t) {
+        return '<span data-mtx="chip" data-variant="outlined" data-clickable data-tag="' + esc(t) + '" data-label="' + esc(t) + ' (' + tagCounts[t] + ')"></span>';
+      }).join('');
+      Materix.initAll($('#tpl-bl-topics'));
+
+      // Boletín
+      var email = Materix.getInstance($('#tpl-bl-email').closest('.mtx-text-field'));
+      email.input.addEventListener('input', function () { email.clearError(); });
+      $('#tpl-bl-news').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var v = email.value.trim();
+        if (!v) { email.setError('Enter your email address.'); email.focus(); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { email.setError('Enter a valid email address.'); email.focus(); return; }
+        Materix.snackbar.show({ message: 'You’re subscribed! Check ' + v + ' to confirm.', duration: 5000 });
+        email.value = '';
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>

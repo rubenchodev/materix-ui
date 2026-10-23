@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Field · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Text Field</h1>
+        <p class="demo-lead">Text field with a floating label, MUI variants, icons, counters, input masks and validation, declared with a single element.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#interactive-adornments">Interactive adornments</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#label">Label and border</a>
+      <a href="#multiline">Multiline</a>
+      <a href="#counters">Counters</a>
+      <a href="#masks">Masks</a>
+      <a href="#validation">Validation</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code> with <code>data-mtx="text-field"</code> and <code>data-label</code>. The JavaScript generates the floating label, the border notch and the helper text; if <code>data-label</code> is missing, the <code>placeholder</code> is used.</p>
+      <div class="demo-grid-3">
+        <input data-mtx="text-field" data-label="Full name" type="text" />
+        <input data-mtx="input" placeholder="Email (label from placeholder)" type="email" />
+        <textarea data-mtx="textarea" data-label="Comment" rows="1"></textarea>
+      </div>
+      <pre class="demo-code"><code>&lt;input data-mtx="text-field" data-label="Full name" type="text" /&gt;
+&lt;input data-mtx="input" placeholder="Email" type="email" /&gt;
+&lt;textarea data-mtx="textarea" data-label="Comment"&gt;&lt;/textarea&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>data-variant</code>: <code>outlined</code> (default), <code>filled</code>, <code>standard</code> and <code>no-label</code> (full border without a label, for search boxes).</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <input data-mtx="text-field" data-label="Outlined" data-variant="outlined" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Filled</span>
+          <input data-mtx="text-field" data-label="Filled" data-variant="filled" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Standard</span>
+          <input data-mtx="text-field" data-label="Standard" data-variant="standard" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">No label</span>
+          <input data-mtx="text-field" data-variant="no-label" data-start-icon="search" placeholder="Search…" aria-label="Search" type="search" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Native select · a single chevron in all three variants</span>
+        <div class="demo-grid-3">
+          <select data-mtx="text-field" data-label="Country">
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+          </select>
+          <select data-mtx="text-field" data-label="Country" data-variant="filled">
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+          </select>
+          <select data-mtx="text-field" data-label="Country" data-variant="standard">
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Large 48px with <code>data-size="large"</code>, medium 56px (default) and small 40px with <code>data-size="small"</code>. The alignment rows show the field next to components of the same height.</p>
+      <div class="demo-group">
+        <span class="demo-label">Large · 48px</span>
+        <div class="demo-grid-3">
+          <input data-mtx="text-field" data-label="Outlined" data-size="large" type="text" />
+          <input data-mtx="text-field" data-label="Filled" data-variant="filled" data-size="large" type="text" />
+          <input data-mtx="text-field" data-label="Standard" data-variant="standard" data-size="large" type="text" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 56px</span>
+        <div class="demo-grid-3">
+          <input data-mtx="text-field" data-label="Outlined" type="text" />
+          <input data-mtx="text-field" data-label="Filled" data-variant="filled" type="text" />
+          <input data-mtx="text-field" data-label="Standard" data-variant="standard" type="text" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 40px</span>
+        <div class="demo-grid-3">
+          <input data-mtx="text-field" data-label="Outlined" data-size="small" type="text" />
+          <input data-mtx="text-field" data-label="Filled" data-variant="filled" data-size="small" type="text" />
+          <input data-mtx="text-field" data-label="Standard" data-variant="standard" data-size="small" type="text" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · TextField small 40px + Button medium 40px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Discount code" data-size="small" type="text" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="button">Apply</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button">Remove</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · TextField large 48px + Button large 48px + IconButton large 48px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Newsletter email" data-size="large" type="email" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="large" type="button">Subscribe</button>
+          <button class="mtx-icon-button" data-mtx="icon-button" data-size="large" aria-label="More options" type="button"><span class="material-icons" aria-hidden="true">more_vert</span></button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · TextField medium 56px + Button large 48px + FAB 56px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Search products" data-start-icon="search" type="search" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="large" type="button">Search</button>
+          <button data-mtx="fab" data-icon="add" aria-label="Add product" type="button"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p><code>data-start-icon</code> and <code>data-end-icon</code> accept a Material Icons name or an image URL. With a start icon, the label lines up with the typed text.</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">No icon</span>
+          <input data-mtx="text-field" data-label="Username" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Start icon</span>
+          <input data-mtx="text-field" data-label="Username" data-start-icon="account_circle" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">End icon</span>
+          <input data-mtx="text-field" data-label="API key" data-end-icon="lock" type="password" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Start image</span>
+          <input data-mtx="text-field" data-label="Phone" data-start-icon="https://flagcdn.com/w20/co.png" type="tel" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icons in filled and standard, medium and small</span>
+        <div class="demo-grid-4">
+          <input data-mtx="text-field" data-label="Email" data-variant="filled" data-start-icon="email" type="email" />
+          <input data-mtx="text-field" data-label="Website" data-variant="standard" data-start-icon="language" data-end-icon="open_in_new" type="url" />
+          <input data-mtx="text-field" data-label="Email" data-variant="filled" data-size="small" data-start-icon="email" type="email" />
+          <input data-mtx="text-field" data-label="Username" data-size="small" data-start-icon="person" type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="interactive-adornments">
+      <h2>Interactive adornments</h2>
+      <p>The equivalent of MUI's <code>InputAdornment</code> + <code>IconButton</code>. <code>data-password-toggle</code> (only on <code>type="password"</code>) adds the show/hide button with <code>aria-pressed</code> and a translated name; <code>data-start-action</code> and <code>data-end-action</code> create an IconButton with the given icon and emit <code>mtx:text-field:adornment-click</code>. The icon sits in the same position as a static icon, so the label stays aligned.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Password · outlined</span>
+          <input data-mtx="text-field" data-label="Password" type="password" data-password-toggle autocomplete="new-password" data-helper-text="At least 8 characters" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Password · filled + start icon</span>
+          <input data-mtx="text-field" data-label="Password" data-variant="filled" data-start-icon="lock" type="password" data-password-toggle autocomplete="new-password" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Password · small + counter</span>
+          <input data-mtx="text-field" data-label="PIN" data-size="small" type="password" data-password-toggle maxlength="6" inputmode="numeric" autocomplete="off" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">End action · clear</span>
+          <input id="tf-clear" data-mtx="text-field" data-label="Search" data-start-icon="search" data-end-action="close" data-end-action-label="Clear search" value="Materix" type="search" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Start action · standard</span>
+          <input id="tf-locate" data-mtx="text-field" data-label="Location" data-variant="standard" data-start-action="my_location" data-start-action-label="Use my location" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled</span>
+          <input data-mtx="text-field" data-label="Password" type="password" data-password-toggle value="secret" disabled />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="tf-adornment-log" aria-live="polite"></pre>
+      </div>
+      <pre class="demo-code"><code>&lt;input data-mtx="text-field" data-label="Password" type="password" data-password-toggle /&gt;
+&lt;input data-mtx="text-field" data-label="Search" data-end-action="close" data-end-action-label="Clear search" type="search" /&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> changes the focus color (label, border and underline). Click or use <kbd>Tab</kbd> on each field.</p>
+      <div class="demo-grid-3">
+        <input data-mtx="text-field" data-label="Primary (default)" type="text" />
+        <input data-mtx="text-field" data-label="Secondary" data-color="secondary" type="text" />
+        <input data-mtx="text-field" data-label="Success" data-color="success" data-variant="filled" type="text" />
+        <input data-mtx="text-field" data-label="Warning" data-color="warning" type="text" />
+        <input data-mtx="text-field" data-label="Info" data-color="info" data-variant="standard" type="text" />
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Normal, helper text, error with a message (<code>data-error</code>), required, disabled and read-only. Hover to see the <em>hover</em> state and use <kbd>Tab</kbd> to see focus.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Normal</span>
+          <input data-mtx="text-field" data-label="City" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Helper text</span>
+          <input data-mtx="text-field" data-label="ID number" data-helper-text="No dots or dashes" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error + message</span>
+          <input data-mtx="text-field" data-label="Email" data-error="Enter a valid email" value="jane@" type="email" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error without message · empty data-error</span>
+          <input data-mtx="text-field" data-label="Phone" data-helper-text="The helper text turns red" data-error value="12" type="tel" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Required</span>
+          <input data-mtx="text-field" data-label="Name" required type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled</span>
+          <input data-mtx="text-field" data-label="Code" value="Not editable" disabled type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Read-only</span>
+          <input data-mtx="text-field" data-label="Reference" value="ID-2026-0042" readonly type="text" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Error and disabled in filled and standard</span>
+        <div class="demo-grid-4">
+          <input data-mtx="text-field" data-label="Filled error" data-variant="filled" data-error="This field is required" type="text" />
+          <input data-mtx="text-field" data-label="Standard error" data-variant="standard" data-error="This field is required" type="text" />
+          <input data-mtx="text-field" data-label="Filled disabled" data-variant="filled" value="Locked" disabled type="text" />
+          <input data-mtx="text-field" data-label="Standard disabled" data-variant="standard" value="Locked" disabled type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="label">
+      <h2>Static, hidden and borderless label</h2>
+      <p>BEM modifiers written as a class on the <code>&lt;input&gt;</code> itself: <code>mtx-text-field--static-label</code> (label always on top and placeholder visible), <code>mtx-text-field--hidden-label</code> and <code>mtx-text-field--borderless</code>.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Static label</span>
+          <input class="mtx-text-field--static-label" data-mtx="text-field" data-label="Nickname" placeholder="What should we call you?" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Hidden label</span>
+          <input class="mtx-text-field--hidden-label" data-mtx="text-field" data-label="City" placeholder="City" aria-label="City" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Borderless</span>
+          <input class="mtx-text-field--borderless" data-mtx="text-field" data-variant="no-label" data-start-icon="search" placeholder="Borderless search" aria-label="Search" type="search" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="multiline">
+      <h2>Multiline and auto-resize</h2>
+      <p><code>&lt;textarea&gt;</code> or <code>data-multiline</code>. <code>data-auto-resize</code> grows the field as you type and <code>data-max-rows</code> caps the growth before showing a scrollbar.</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">rows="3"</span>
+          <textarea data-mtx="text-field" data-label="Fixed rows" rows="3"></textarea>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Auto-resize</span>
+          <textarea data-mtx="text-field" data-label="Grows as you type" data-auto-resize rows="2" data-helper-text="Type several lines"></textarea>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Max. 4 rows</span>
+          <textarea data-mtx="text-field" data-label="Filled" data-variant="filled" data-auto-resize data-max-rows="4" rows="2"></textarea>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-multiline</span>
+          <input data-mtx="text-field" data-label="From an input" data-variant="standard" data-multiline data-rows="2" type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="counters">
+      <h2>Counters and limits</h2>
+      <p><code>data-counter="characters|words|both"</code> with <code>data-max-characters</code> (or <code>maxlength</code>) and <code>data-max-words</code>. When the limit is exceeded the field switches to the error state.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Characters · max. 25</span>
+          <input data-mtx="text-field" data-label="Title" data-counter="characters" data-max-characters="25" data-helper-text="Short and descriptive" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Words · max. 15</span>
+          <textarea data-mtx="text-field" data-label="Summary" data-max-words="15" data-helper-text="Keywords" rows="3"></textarea>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Both · 30 words / 150 characters</span>
+          <textarea data-mtx="text-field" data-label="Comment" data-counter="both" data-max-words="30" data-max-characters="150" rows="3"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="masks">
+      <h2>Input masks</h2>
+      <p><code>data-mask</code> accepts a pattern (<code>0</code> digit, <code>a</code> lowercase letter, <code>A</code> uppercase letter, <code>*</code> alphanumeric), a preset or <code>currency</code>. Type in any field to see its clean value below.</p>
+      <div class="demo-grid-3" id="tf-masks">
+        <div class="demo-group">
+          <span class="demo-label">Pattern · (000) 000-0000</span>
+          <input data-mtx="text-field" data-label="Phone" data-mask="(000) 000-0000" data-start-icon="phone" type="tel" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Preset · credit-card</span>
+          <input data-mtx="text-field" data-label="Card" data-mask="credit-card" data-start-icon="credit_card" inputmode="numeric" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Preset · date</span>
+          <input data-mtx="text-field" data-label="Date" data-mask="date" data-start-icon="calendar_today" inputmode="numeric" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Pattern · AAA-000</span>
+          <input data-mtx="text-field" data-label="License plate" data-mask="AAA-000" data-start-icon="directions_car" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Currency · $ 1,250.00</span>
+          <input data-mtx="text-field" data-label="Price" data-mask="currency" data-start-icon="payments" inputmode="numeric" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Currency · 1.250,00 €</span>
+          <input data-mtx="text-field" data-label="Amount" data-mask="currency" data-currency-prefix="" data-currency-suffix=" €" data-thousands="." data-decimal="," inputmode="numeric" type="text" />
+        </div>
+      </div>
+      <p class="demo-status" id="tf-mask-status" aria-live="polite">value · unmaskedValue · isMaskComplete will appear here.</p>
+    </section>
+
+    <section class="demo-section" id="validation">
+      <h2>Validation</h2>
+      <p>Combine native validation (<code>required</code>, <code>type</code>, <code>checkValidity()</code>) with <code>setError()</code> and <code>clearError()</code>.</p>
+      <form class="demo-stack demo-wide" id="tf-validate-form" novalidate>
+        <input id="tf-validate-email" data-mtx="text-field" data-label="Email" data-start-icon="email" data-helper-text="We'll send you the confirmation" required type="email" />
+        <div class="mtx-d-flex mtx-justify-content-end mtx-gap-1">
+          <button class="mtx-button mtx-button--text" data-mtx="button" type="reset">Clear</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Validate</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Sign-up form with <code>mtx-grid</code> declared with <code>data-spacing</code> and <code>data-xs/sm/md</code>: one column on mobile and two or three on desktop.</p>
+      <div class="demo-surface">
+        <form data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <input data-mtx="text-field" data-label="First name" data-start-icon="person" autocomplete="given-name" required type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <input data-mtx="text-field" data-label="Last name" autocomplete="family-name" required type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="4">
+            <input data-mtx="text-field" data-label="Email" data-start-icon="email" autocomplete="email" required type="email" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <input data-mtx="text-field" data-label="Phone" data-mask="phone" data-start-icon="phone" autocomplete="tel" type="tel" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <input data-mtx="text-field" data-label="ZIP code" data-mask="zip" autocomplete="postal-code" type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12">
+            <textarea data-mtx="text-field" data-label="About you" data-max-characters="200" data-auto-resize rows="2"></textarea>
+          </div>
+          <div data-mtx="grid" data-xs="12">
+            <div class="mtx-d-flex mtx-justify-content-end mtx-gap-1">
+              <button class="mtx-button mtx-button--text" data-mtx="button" type="reset">Cancel</button>
+              <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Create account</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The buttons call the instance's real API (<code>Materix.getInstance(el)</code>); the console logs the field's native events.</p>
+      <div class="demo-group">
+        <span class="demo-label">Existing instance</span>
+        <div class="demo-fixed-width">
+          <input id="tf-api" data-mtx="text-field" data-label="Controlled field" data-mask="currency" data-helper-text="Type or use the buttons" type="text" />
+        </div>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-tf-action="value">unmaskedValue = 125000</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-tf-action="error">setError()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-tf-action="clear">clearError()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-tf-action="toggle">disable() / enable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-tf-action="focus">focus()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-tf-action="read">Read values</button>
+        </div>
+        <pre class="demo-log" id="tf-log" aria-live="polite"></pre>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Create and initialize dynamically</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="tf-create-init">Materix.init(el)</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="tf-create-class">new Materix.TextField(el)</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="tf-create-all">Materix.initAll(container)</button>
+        </div>
+        <div class="demo-grid-3" id="tf-dynamic"></div>
+      </div>
+      <pre class="demo-code"><code>const field = Materix.getInstance(document.getElementById('tf-api'));
+field.unmaskedValue = '125000';     // "$ 1,250.00"
+field.setError('Amount out of range');
+field.clearError();
+field.disabled ? field.enable() : field.disable();
+field.input.addEventListener('input', () =&gt; console.log(field.value, field.unmaskedValue));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Full structure for SSR or fine-grained control. The component reuses the existing nodes and only adds the notch <code>fieldset</code> and whatever is missing.</p>
+      <div class="demo-grid-2">
+        <div class="mtx-text-field mtx-text-field--outlined mtx-text-field--adorned-start" data-mtx="text-field">
+          <label class="mtx-text-field__label" for="tf-bem-1">Email address</label>
+          <div class="mtx-text-field__container">
+            <span class="mtx-text-field__adornment mtx-text-field__adornment--start material-icons" aria-hidden="true">email</span>
+            <input class="mtx-text-field__input" id="tf-bem-1" type="email" placeholder=" " />
+          </div>
+          <div class="mtx-text-field__supporting-text">
+            <span class="mtx-text-field__helper-text">We'll never share your email</span>
+          </div>
+        </div>
+        <div class="mtx-text-field mtx-text-field--filled" data-mtx="text-field">
+          <label class="mtx-text-field__label" for="tf-bem-2">Manual filled</label>
+          <div class="mtx-text-field__container">
+            <input class="mtx-text-field__input" id="tf-bem-2" type="text" placeholder=" " />
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-text-field mtx-text-field--outlined mtx-text-field--adorned-start" data-mtx="text-field"&gt;
+  &lt;label class="mtx-text-field__label" for="email"&gt;Email address&lt;/label&gt;
+  &lt;div class="mtx-text-field__container"&gt;
+    &lt;span class="mtx-text-field__adornment mtx-text-field__adornment--start material-icons" aria-hidden="true"&gt;email&lt;/span&gt;
+    &lt;input class="mtx-text-field__input" id="email" type="email" placeholder=" " /&gt;
+  &lt;/div&gt;
+  &lt;div class="mtx-text-field__supporting-text"&gt;
+    &lt;span class="mtx-text-field__helper-text"&gt;We'll never share your email&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      /**
+       * Añade una línea a la consola de eventos.
+       * @param {string} text Mensaje.
+       */
+      function log(text) {
+        var out = document.getElementById('tf-log');
+        out.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        out.scrollTop = out.scrollHeight;
+      }
+
+      // Inspector de máscaras
+      var status = document.getElementById('tf-mask-status');
+      document.querySelectorAll('#tf-masks input').forEach(function (el) {
+        var inst = Materix.getInstance(el);
+        if (!inst) return;
+        inst.input.addEventListener('input', function () {
+          status.textContent = 'value: "' + inst.value + '" · unmaskedValue: "' + inst.unmaskedValue + '" · isMaskComplete: ' + inst.isMaskComplete;
+        });
+      });
+
+      // Adornos interactivos
+      var adornmentLog = document.getElementById('tf-adornment-log');
+      function logAdornment(text) {
+        adornmentLog.textContent = new Date().toLocaleTimeString() + '  ' + text + '\n' + adornmentLog.textContent;
+      }
+      document.addEventListener('mtx:text-field:password-visibility', function (event) {
+        logAdornment('mtx:text-field:password-visibility → visible: ' + event.detail.visible);
+      });
+      document.addEventListener('mtx:text-field:adornment-click', function (event) {
+        var input = event.detail.input;
+        if (input.id === 'tf-clear') {
+          Materix.getInstance(input).value = '';
+          input.focus();
+          logAdornment('mtx:text-field:adornment-click (end) → field cleared');
+        } else if (input.id === 'tf-locate') {
+          Materix.getInstance(input).value = 'Seattle, WA';
+          logAdornment('mtx:text-field:adornment-click (start) → approximate location');
+        }
+      });
+
+      // Validación
+      var form = document.getElementById('tf-validate-form');
+      var email = Materix.getInstance(document.getElementById('tf-validate-email'));
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (email.input.checkValidity()) {
+          email.clearError();
+        } else {
+          email.setError(email.value ? 'Invalid email' : 'Email is required');
+        }
+      });
+      form.addEventListener('reset', function () { email.clearError(); });
+
+      // API
+      var field = Materix.getInstance(document.getElementById('tf-api'));
+      ['input', 'change', 'focus', 'blur'].forEach(function (type) {
+        field.input.addEventListener(type, function () {
+          log(type + ' → value "' + field.value + '"');
+        });
+      });
+      document.querySelectorAll('[data-tf-action]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var action = btn.getAttribute('data-tf-action');
+          if (action === 'value') { field.unmaskedValue = '125000'; log('unmaskedValue = "125000" → value "' + field.value + '"'); }
+          if (action === 'error') { field.setError('Amount out of range'); log('setError("Amount out of range")'); }
+          if (action === 'clear') { field.clearError(); log('clearError()'); }
+          if (action === 'toggle') {
+            if (field.disabled) { field.enable(); log('enable() → disabled = false'); }
+            else { field.disable(); log('disable() → disabled = true'); }
+          }
+          if (action === 'focus') { field.focus(); }
+          if (action === 'read') { log('value "' + field.value + '" · unmaskedValue "' + field.unmaskedValue + '" · isMaskComplete ' + field.isMaskComplete); }
+        });
+      });
+
+      // Creación dinámica
+      var dynamic = document.getElementById('tf-dynamic');
+      var count = 0;
+      document.getElementById('tf-create-init').addEventListener('click', function () {
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.setAttribute('data-mtx', 'text-field');
+        input.setAttribute('data-label', 'Materix.init #' + (++count));
+        input.setAttribute('data-start-icon', 'edit');
+        dynamic.appendChild(input);
+        Materix.init(input);
+        log('Materix.init(input) → field #' + count);
+      });
+      document.getElementById('tf-create-class').addEventListener('click', function () {
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.setAttribute('data-label', 'new TextField #' + (++count));
+        input.setAttribute('data-variant', 'filled');
+        dynamic.appendChild(input);
+        new Materix.TextField(input);
+        log('new Materix.TextField(input) → field #' + count);
+      });
+      document.getElementById('tf-create-all').addEventListener('click', function () {
+        var holder = document.createElement('div');
+        holder.innerHTML = '<input data-mtx="text-field" data-label="initAll #' + (++count) + '" data-variant="standard" type="text" />';
+        dynamic.appendChild(holder);
+        Materix.initAll(holder);
+        log('Materix.initAll(container) → field #' + count);
+      });
+    });
+  </script>
+</body>
+</html>

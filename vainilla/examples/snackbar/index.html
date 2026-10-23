@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snackbar · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Snackbar used only as a positioned container for an Alert (MUI pattern). */
+    .demo-snackbar-alert {
+      padding: 0;
+      background-color: transparent;
+    }
+    .demo-snackbar-alert > .mtx-alert {
+      flex: 1;
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Feedback</span>
+        <h1>Snackbar</h1>
+        <p class="demo-lead">Brief, temporary notification at an edge of the screen that confirms an action and can offer to undo it.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#with-action">With action</a>
+      <a href="#position">Position</a>
+      <a href="#duration">Duration</a>
+      <a href="#consecutive">Consecutive</a>
+      <a href="#with-alert">With Alert</a>
+      <a href="#quick-notice">Quick notice</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Declare the snackbar with <code>data-message</code> and open it from JavaScript with <code>open()</code>. It closes with Escape, on a click outside or, if it has <code>data-duration</code>, when the time runs out.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-demo-snackbar="snack-basic">Show snackbar</button>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="snackbar" id="snack-basic" data-message="Message archived" data-duration="4000"&gt;&lt;/div&gt;
+
+Materix.getInstance(document.getElementById('snack-basic')).open();</code></pre>
+    </section>
+
+    <section class="demo-section" id="with-action">
+      <h2>With action</h2>
+      <p><code>data-action</code> generates an action button on the right. Add <code>data-close-on-action</code> so the snackbar closes when it is pressed.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-action">Delete email</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="position">
+      <h2>Position</h2>
+      <p><code>data-anchor</code> accepts six positions combining <code>top</code>/<code>bottom</code> with <code>left</code>/<code>center</code>/<code>right</code>. Below 600px the snackbar spans the full width with an 8px side margin.</p>
+      <div class="demo-group">
+        <span class="demo-label">Top</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-top-left">top-left</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-top-center">top-center</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-top-right">top-right</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Bottom</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-bottom-left">bottom-left</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-bottom-center">bottom-center</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-bottom-right">bottom-right</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="duration">
+      <h2>Duration</h2>
+      <p>Without <code>data-duration</code> (or with <code>data-duration="none"</code>) the snackbar does not close by itself. The timer pauses while the pointer or focus is on it and restarts when they leave.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-short">2 seconds</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-long">8 seconds</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-persistent">No auto-hide</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="consecutive">
+      <h2>Consecutive</h2>
+      <p>The component has no queue of its own: two snackbars in the same position overlap. To show them one at a time, close the current one and open the next with <code>open({ message })</code> when <code>mtx:snackbar:close</code> fires, as in MUI's <em>Consecutive Snackbars</em> example.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="queue-a">Message A</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="queue-b">Message B</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="queue-c">Message C</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-alert">
+      <h2>With Alert</h2>
+      <p>For notifications with a severity, place an <a href="../alert/index.html">Alert</a> inside a snackbar without its own message and override its background and padding with a page class.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-alert-success">Success</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-alert-error">Error</button>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="snackbar" class="demo-snackbar-alert" data-duration="4000" data-anchor="bottom-left"&gt;
+  &lt;div data-mtx="alert" data-severity="success" data-variant="filled"&gt;Profile updated.&lt;/div&gt;
+&lt;/div&gt;
+
+.demo-snackbar-alert { padding: 0; background-color: transparent; }
+.demo-snackbar-alert &gt; .mtx-alert { flex: 1; }</code></pre>
+    </section>
+
+    <section class="demo-section" id="quick-notice">
+      <h2>Quick notice with Materix.snackbar.show()</h2>
+      <p>For one-off confirmations you do not need to declare a snackbar: <code>Materix.snackbar.show({ message, action, onAction, duration, anchor })</code> creates a shared snackbar in <code>&lt;body&gt;</code> the first time (with <code>role="status"</code> and a 4 s duration) and reuses it afterwards. <code>onAction</code> runs when the action is pressed and closes the notice.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" id="snack-show-simple">Copy link</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="snack-show-undo">Archive with undo</button>
+      </div>
+      <p class="demo-status" id="snack-show-status" role="status"></p>
+      <pre class="demo-code"><code>Materix.snackbar.show('Link copied');
+
+Materix.snackbar.show({
+  message: 'Conversation archived',
+  action: 'Undo',
+  onAction: () =&gt; restoreConversation(),
+  duration: 6000,
+  anchor: 'bottom-left',
+});</code></pre>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>A typical case: action cards in an <code>mtx-grid</code> where each action confirms its result with a shared snackbar.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" data-demo-message="File copied">Copy</button>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" data-demo-message="File moved">Move</button>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--contained mtx-button--error mtx-button--full-width" data-mtx="button" data-demo-message="File deleted">Delete</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>open(options?)</code> shows the snackbar (if it is already open it updates the content and restarts the timer); it accepts <code>{ message, action, onAction, duration }</code>. <code>setMessage(text)</code> and <code>setAction(label)</code> change the content without opening it, and <code>close(reason)</code> hides it. Escape only closes the most recent snackbar, and never while a dialog is open on top. The log shows <code>mtx:snackbar:open</code>, <code>mtx:snackbar:action</code> and <code>mtx:snackbar:close</code> for every snackbar on the page.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" id="snack-api-open">open()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="snack-api-options">open({ message, action })</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="snack-api-close">close()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="snack-api-create">Create with Materix.init()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="snack-api-dialog">Snackbar + dialog (Escape)</button>
+      </div>
+      <div data-mtx="dialog" id="snack-escape-dialog" class="mtx-dialog--max-sm" data-title="Escape closes only the dialog" data-description="Press Escape: this dialog closes and the snackbar stays visible. A second press closes the snackbar.">
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Got it</button>
+        </div>
+      </div>
+      <p class="demo-status" id="snack-api-state" role="status">isOpen: false</p>
+      <pre class="demo-log" id="snack-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const snackbar = Materix.getInstance(document.getElementById('snack-api'));
+snackbar.open();
+snackbar.open({ message: 'Draft saved', action: 'View', onAction: () =&gt; openDraft(), duration: 5000 });
+snackbar.setMessage('New text');
+snackbar.close('done');
+
+document.addEventListener('mtx:snackbar:close', (event) =&gt; {
+  console.log(event.detail.reason); // timeout | clickaway | escapeKeyDown | action | programmatic
+});</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>If the HTML already includes <code>.mtx-snackbar__message</code> and <code>.mtx-snackbar__action</code>, the component reuses them and only adds behavior.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-snackbar="snack-bem">Show BEM snackbar</button>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-snackbar mtx-snackbar--bottom-center" id="snack-bem" data-mtx="snackbar"
+     data-duration="5000" data-close-on-action&gt;
+  &lt;div class="mtx-snackbar__message" role="status"&gt;Server-rendered structure&lt;/div&gt;
+  &lt;button class="mtx-snackbar__action" type="button"&gt;Close&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- Page snackbars -->
+    <div data-mtx="snackbar" id="snack-basic" data-message="Message archived" data-duration="4000"></div>
+    <div data-mtx="snackbar" id="snack-action" data-message="Email deleted" data-action="Undo" data-close-on-action data-duration="6000"></div>
+    <div data-mtx="snackbar" id="snack-top-left" data-message="Top left" data-anchor="top-left" data-duration="3000"></div>
+    <div data-mtx="snackbar" id="snack-top-center" data-message="Top center" data-anchor="top-center" data-duration="3000"></div>
+    <div data-mtx="snackbar" id="snack-top-right" data-message="Top right" data-anchor="top-right" data-duration="3000"></div>
+    <div data-mtx="snackbar" id="snack-bottom-left" data-message="Bottom left" data-anchor="bottom-left" data-duration="3000"></div>
+    <div data-mtx="snackbar" id="snack-bottom-center" data-message="Bottom center" data-anchor="bottom-center" data-duration="3000"></div>
+    <div data-mtx="snackbar" id="snack-bottom-right" data-message="Bottom right" data-anchor="bottom-right" data-duration="3000"></div>
+    <div data-mtx="snackbar" id="snack-short" data-message="Closes in 2 seconds" data-duration="2000"></div>
+    <div data-mtx="snackbar" id="snack-long" data-message="Closes in 8 seconds (hover over it to pause)" data-duration="8000"></div>
+    <div data-mtx="snackbar" id="snack-persistent" data-message="Stays until you close it" data-action="Close" data-close-on-action></div>
+    <div data-mtx="snackbar" id="snack-queue" data-message="Message" data-duration="2500"></div>
+    <div data-mtx="snackbar" id="snack-grid" data-message="Done" data-duration="3000" data-anchor="bottom-left"></div>
+    <div data-mtx="snackbar" id="snack-api" data-message="Controlled from JavaScript" data-action="Close" data-close-on-action></div>
+    <div data-mtx="snackbar" class="demo-snackbar-alert" id="snack-alert-success" data-duration="4000" data-anchor="bottom-left">
+      <div data-mtx="alert" data-severity="success" data-variant="filled">Profile updated successfully.</div>
+    </div>
+    <div data-mtx="snackbar" class="demo-snackbar-alert" id="snack-alert-error" data-duration="4000" data-anchor="bottom-left">
+      <div data-mtx="alert" data-severity="error" data-variant="filled">The profile could not be saved.</div>
+    </div>
+    <div class="mtx-snackbar mtx-snackbar--bottom-center" id="snack-bem" data-mtx="snackbar" data-duration="5000" data-close-on-action>
+      <div class="mtx-snackbar__message" role="status">Server-rendered structure</div>
+      <button class="mtx-snackbar__action" type="button">Close</button>
+    </div>
+    <div id="snack-api-container"></div>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var get = function (id) { return Materix.getInstance(document.getElementById(id)); };
+      var openOnly = function (id) {
+        // Cierra los demás snackbars para que no se solapen.
+        document.querySelectorAll('.mtx-snackbar--open').forEach(function (el) {
+          if (el.id !== id) Materix.getInstance(el).close('programmatic');
+        });
+        get(id).open();
+      };
+
+      // Disparadores declarativos de la página: data-demo-snackbar="id".
+      document.querySelectorAll('[data-demo-snackbar]').forEach(function (btn) {
+        btn.addEventListener('click', function () { openOnly(btn.getAttribute('data-demo-snackbar')); });
+      });
+
+      // Registro de eventos
+      var log = document.getElementById('snack-log');
+      var state = document.getElementById('snack-api-state');
+      var write = function (text) {
+        log.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        log.scrollTop = log.scrollHeight;
+      };
+      document.addEventListener('mtx:snackbar:open', function (event) {
+        write('mtx:snackbar:open   #' + (event.target.id || '(shared)'));
+        if (event.target.id === 'snack-api') state.textContent = 'isOpen: true';
+      });
+      document.addEventListener('mtx:snackbar:action', function (event) {
+        write('mtx:snackbar:action #' + (event.target.id || '(shared)'));
+      });
+      document.addEventListener('mtx:snackbar:close', function (event) {
+        write('mtx:snackbar:close  #' + (event.target.id || '(shared)') + '  reason=' + event.detail.reason);
+        if (event.target.id === 'snack-api') state.textContent = 'isOpen: false';
+      });
+
+      // Consecutivos (cola a nivel de página)
+      var queue = [];
+      var queueEl = document.getElementById('snack-queue');
+      var queueSnack = get('snack-queue');
+      var showNext = function () {
+        if (!queue.length || queueSnack.isOpen) return;
+        queueSnack.open({ message: queue.shift() });
+      };
+      queueEl.addEventListener('mtx:snackbar:close', function () { setTimeout(showNext, 200); });
+      ['a', 'b', 'c'].forEach(function (key) {
+        document.getElementById('queue-' + key).addEventListener('click', function () {
+          queue.push('Message ' + key.toUpperCase());
+          if (queueSnack.isOpen) queueSnack.close('programmatic'); else showNext();
+        });
+      });
+
+      // Grilla: snackbar compartido
+      document.querySelectorAll('[data-demo-message]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          get('snack-grid').setMessage(btn.getAttribute('data-demo-message'));
+          openOnly('snack-grid');
+        });
+      });
+
+      // API
+      document.getElementById('snack-api-open').addEventListener('click', function () { openOnly('snack-api'); });
+      document.getElementById('snack-api-close').addEventListener('click', function () { get('snack-api').close(); });
+      var saves = 0;
+      document.getElementById('snack-api-options').addEventListener('click', function () {
+        saves += 1;
+        openOnly('snack-api');
+        get('snack-api').open({
+          message: 'Draft ' + saves + ' saved',
+          action: 'View',
+          onAction: function () { write('onAction() -> open draft ' + saves); },
+          duration: 5000
+        });
+      });
+      document.getElementById('snack-api-dialog').addEventListener('click', function () {
+        openOnly('snack-persistent');
+        get('snack-escape-dialog').open();
+      });
+
+      // Aviso rápido con el helper compartido
+      var showStatus = document.getElementById('snack-show-status');
+      document.getElementById('snack-show-simple').addEventListener('click', function () {
+        Materix.snackbar.show('Link copied to clipboard');
+      });
+      document.getElementById('snack-show-undo').addEventListener('click', function () {
+        showStatus.textContent = 'Conversation archived.';
+        Materix.snackbar.show({
+          message: 'Conversation archived',
+          action: 'Undo',
+          duration: 6000,
+          anchor: 'bottom-left',
+          onAction: function () { showStatus.textContent = 'Archive undone.'; }
+        });
+      });
+      var created = 0;
+      document.getElementById('snack-api-create').addEventListener('click', function () {
+        created += 1;
+        var el = document.createElement('div');
+        el.id = 'snack-dyn-' + created;
+        el.setAttribute('data-message', 'Dynamic snackbar #' + created);
+        el.setAttribute('data-duration', '3000');
+        document.getElementById('snack-api-container').appendChild(el);
+        Materix.init(el, 'snackbar');
+        write('Materix.init(el, "snackbar") → #' + el.id);
+        openOnly(el.id);
+      });
+    });
+  </script>
+</body>
+</html>

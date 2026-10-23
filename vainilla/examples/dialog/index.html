@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dialog · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Feedback</span>
+        <h1>Dialog</h1>
+        <p class="demo-lead">A modal window that interrupts the task to ask for a decision or show critical information, with trapped focus and Escape to close.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#actions">With actions</a>
+      <a href="#actions-alignment">Actions alignment</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#confirmation">Confirmation</a>
+      <a href="#form">Form</a>
+      <a href="#scroll">Scroll</a>
+      <a href="#behavior">Modal behavior</a>
+      <a href="#layers">Stacked layers</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Declare the container with <code>data-mtx="dialog"</code> and <code>data-title</code>: the backdrop, the panel, the title (with an automatic <code>id</code> and <code>aria-labelledby</code>, so the dialog has an accessible name) and the content are generated. Any button with <code>data-mtx-dialog-open="id"</code> opens it; clicking the backdrop or pressing Escape closes it.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-basic">Open dialog</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-basic" data-title="Use the device location">
+        <p>Let apps determine your location to show you nearby results. Press Escape or click outside to close.</p>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-basic"&gt;Open dialog&lt;/button&gt;
+
+&lt;div data-mtx="dialog" id="dlg-basic" data-title="Use the device location"&gt;
+  &lt;p&gt;Let apps determine your location...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="actions">
+      <h2>With actions</h2>
+      <p>Wrap the buttons in <code>.mtx-dialog__actions</code>: the component always places them at the end of the panel, outside the content, even if you do not use <code>.mtx-dialog__content</code>. <code>data-description</code> generates the descriptive text (<code>.mtx-dialog__content-text</code>, equivalent to <code>DialogContentText</code>) and links it with <code>aria-describedby</code>. Elements with <code>data-mtx-dialog-close</code> close the dialog. The main action uses <code>contained</code> and the secondary one <code>text</code>.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-actions">Open with actions</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-description">With data-description</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-description" class="mtx-dialog--max-sm" data-title="Discard draft?" data-description="The message will be deleted and you will not be able to recover it.">
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close data-dialog-autofocus>Cancel</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Discard</button>
+        </div>
+      </div>
+      <div data-mtx="dialog" id="dlg-actions" data-title="Turn on sync?">
+        <div class="mtx-dialog__content">Your documents will be copied to the cloud and available on all your devices.</div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Turn on</button>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="dialog" id="dlg-actions" data-title="Turn on sync?"&gt;
+  &lt;div class="mtx-dialog__content"&gt;Your documents will be copied to the cloud...&lt;/div&gt;
+  &lt;div class="mtx-dialog__actions"&gt;
+    &lt;button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close&gt;Cancel&lt;/button&gt;
+    &lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close&gt;Turn on&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Without .mtx-dialog__content: text from data-description and actions at the end --&gt;
+&lt;div data-mtx="dialog" id="dlg-description" data-title="Discard draft?"
+     data-description="The message will be deleted and you will not be able to recover it."&gt;
+  &lt;div class="mtx-dialog__actions"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="actions-alignment">
+      <h2>Actions alignment</h2>
+      <p>As in MUI, actions go on the right by default (<code>end</code>). Change the alignment with <code>data-align="start|center|end|between"</code> on <code>.mtx-dialog__actions</code> (or <code>data-mtx="dialog-actions"</code>), or set it for the whole dialog with <code>data-actions-align</code>. <code>between</code> separates an auxiliary action on the left from the main ones on the right. <code>data-disable-spacing</code> removes the spacing between buttons.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-align-end">end (default)</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-align-start">start</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-align-center">center</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-align-between">between</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-align-end" class="mtx-dialog--max-sm" data-title="Actions on the right" data-description="Without attributes, the actions are aligned to the end of the panel.">
+        <div data-mtx="dialog-actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>OK</button>
+        </div>
+      </div>
+      <div data-mtx="dialog" id="dlg-align-start" class="mtx-dialog--max-sm" data-title="Actions at the start" data-description="data-actions-align=&quot;start&quot; on the dialog applies to its actions." data-actions-align="start">
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>OK</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+        </div>
+      </div>
+      <div data-mtx="dialog" id="dlg-align-center" class="mtx-dialog--max-sm" data-title="Centered action" data-description="Useful for confirmations with a single action.">
+        <div data-mtx="dialog-actions" data-align="center">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Got it</button>
+        </div>
+      </div>
+      <div data-mtx="dialog" id="dlg-align-between" class="mtx-dialog--max-sm" data-title="Export report" data-description="The auxiliary action stays on the left and the main ones on the right.">
+        <div data-mtx="dialog-actions" data-align="between">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-start-icon="help_outline">Help</button>
+          <div class="mtx-d-flex mtx-gap-1">
+            <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+            <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Export</button>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;!-- Default: on the right --&gt;
+&lt;div data-mtx="dialog" id="d1" data-title="Actions on the right"&gt;
+  &lt;div data-mtx="dialog-actions"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- For the whole dialog --&gt;
+&lt;div data-mtx="dialog" id="d2" data-title="…" data-actions-align="start"&gt;…&lt;/div&gt;
+
+&lt;!-- On a specific container: start | center | end | between --&gt;
+&lt;div class="mtx-dialog__actions" data-align="between"&gt;
+  &lt;button class="mtx-button mtx-button--text" data-mtx="button"&gt;Help&lt;/button&gt;
+  &lt;div class="mtx-d-flex mtx-gap-1"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>The max width is controlled with classes on the container: <code>mtx-dialog--max-sm</code> (24rem), <code>--max-md</code> (32rem, default), <code>--max-lg</code> (48rem), <code>--max-xl</code> (64rem) and <code>mtx-dialog--full</code> (full screen). The panel always takes 100% of the available width up to that maximum.</p>
+      <div class="demo-group">
+        <span class="demo-label">Max width</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-sm">SM · 24rem</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-md">MD · 32rem</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-lg">LG · 48rem</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-xl">XL · 64rem</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Full screen</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-full">Open full screen</button>
+        </div>
+      </div>
+
+      <div data-mtx="dialog" id="dlg-sm" class="mtx-dialog--max-sm" data-title="SM size">
+        <div class="mtx-dialog__content">Max width of 24rem, ideal for short confirmations.</div>
+        <div class="mtx-dialog__actions"><button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Close</button></div>
+      </div>
+      <div data-mtx="dialog" id="dlg-md" class="mtx-dialog--max-md" data-title="MD size">
+        <div class="mtx-dialog__content">Max width of 32rem; this is the default value.</div>
+        <div class="mtx-dialog__actions"><button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Close</button></div>
+      </div>
+      <div data-mtx="dialog" id="dlg-lg" class="mtx-dialog--max-lg" data-title="LG size">
+        <div class="mtx-dialog__content">Max width of 48rem, useful for two-column forms.</div>
+        <div class="mtx-dialog__actions"><button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Close</button></div>
+      </div>
+      <div data-mtx="dialog" id="dlg-xl" class="mtx-dialog--max-xl" data-title="XL size">
+        <div class="mtx-dialog__content">Max width of 64rem, for tables or previews.</div>
+        <div class="mtx-dialog__actions"><button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Close</button></div>
+      </div>
+      <div data-mtx="dialog" id="dlg-full" class="mtx-dialog--full" data-title="Edit post">
+        <div class="mtx-dialog__content">
+          <p>The panel takes the whole window and loses its rounded corners, like the MUI <code>fullScreen</code> dialog. It is the recommended pattern on mobile for long tasks.</p>
+        </div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Discard</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Save</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="confirmation">
+      <h2>Destructive confirmation</h2>
+      <p>For irreversible actions use a title phrased as a question, explain the consequence and color the action with <code>mtx-button--error</code>. With <code>data-dialog-autofocus</code> the initial focus goes to "Cancel", the safe option.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained mtx-button--error" data-mtx="button" data-mtx-dialog-open="dlg-confirm">Delete project</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-confirm" class="mtx-dialog--max-sm" data-title="Delete the project?">
+        <div class="mtx-dialog__content">Its 24 files will be deleted and you will not be able to recover them.</div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close data-dialog-autofocus>Cancel</button>
+          <button class="mtx-button mtx-button--contained mtx-button--error" data-mtx="button" data-mtx-dialog-close>Delete</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="form">
+      <h2>Form inside a dialog</h2>
+      <p>A <code>&lt;form&gt;</code> can hold the content and the actions. The first field gets focus on open (or the one marked with <code>data-dialog-autofocus</code>, which works directly on <code>&lt;input data-mtx="text-field"&gt;</code>: in "Subscribe" focus goes to the email because the name is already filled in) and <code>Tab</code> does not leave the panel. On submit it closes with <code>close()</code>. Use <code>.mtx-dialog__content-text</code> for the explanatory text; if the content starts directly with a field, the component reserves space at the top so the floating label is not clipped.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-form">Subscribe</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-rename">Rename (field first)</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-rename" class="mtx-dialog--max-sm" data-title="Rename file">
+        <input data-mtx="text-field" data-label="File name" data-variant="outlined" type="text" value="quarterly-report.pdf" data-dialog-autofocus />
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Rename</button>
+        </div>
+      </div>
+      <p class="demo-status" id="dlg-form-status" role="status"></p>
+      <div data-mtx="dialog" id="dlg-form" class="mtx-dialog--max-sm" data-title="Subscribe to the newsletter">
+        <div class="mtx-dialog__content">
+          <form class="demo-stack" id="dlg-form-el">
+            <p class="mtx-dialog__content-text">Get the Materix UI news once a month.</p>
+            <input data-mtx="text-field" data-label="Name" data-variant="outlined" type="text" name="name" value="Jane" required />
+            <input data-mtx="text-field" data-label="Email" data-variant="outlined" type="email" name="email" required data-dialog-autofocus />
+          </form>
+        </div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit" form="dlg-form-el">Subscribe</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="scroll">
+      <h2>Scroll: paper and body</h2>
+      <p>With <code>data-scroll="paper"</code> (default) the content scrolls inside the panel; add <code>mtx-dialog__content--dividers</code> to separate areas and <code>mtx-dialog__actions--sticky</code> to pin the actions. With <code>data-scroll="body"</code> the panel grows with its content and the dialog container is what scrolls (like MUI <code>scroll="body"</code>).</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-scroll-paper">scroll = paper</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-scroll-body">scroll = body</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-scroll-paper" data-scroll="paper" data-title="Terms and conditions">
+        <div class="mtx-dialog__content mtx-dialog__content--dividers">
+          <p>1. This long text shows the panel's internal scrolling: the title and the actions stay visible.</p>
+          <p>2. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+          <p>3. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl.</p>
+          <p>4. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>5. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+          <p>6. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl.</p>
+          <p>7. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>8. Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+          <p>9. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl.</p>
+          <p>10. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>11. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>12. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>13. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>14. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>15. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>16. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+          <p>17. End of document.</p>
+        </div>
+        <div class="mtx-dialog__actions mtx-dialog__actions--sticky">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Decline</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Accept</button>
+        </div>
+      </div>
+      <div data-mtx="dialog" id="dlg-scroll-body" data-scroll="body" data-title="Release notes">
+        <div class="mtx-dialog__content">
+          <p>The panel does not limit its height: it grows with the content and the whole dialog scrolls with the wheel or the keyboard.</p>
+          <p>1. Version 1.1: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>2. Version 1.2: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>3. Version 1.3: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>4. Version 1.4: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>5. Version 1.5: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>6. Version 1.6: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>7. Version 1.7: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>8. Version 1.8: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>9. Version 1.9: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>10. Version 1.10: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>11. Version 1.11: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>12. Version 1.12: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>13. Version 1.13: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>14. Version 1.14: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>15. Version 1.15: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>16. Version 1.16: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>17. Version 1.17: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+          <p>18. Version 1.18: performance improvements, accessibility fixes and new theme tokens for the feedback components.</p>
+        </div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Got it</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="behavior">
+      <h2>Modal behavior</h2>
+      <p>By default the dialog closes on a backdrop click and with Escape. <code>data-disable-backdrop-close</code> and <code>data-disable-escape</code> force the user to choose an explicit action. While it is open, page scrolling is locked.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-no-backdrop">No backdrop close</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-dialog-open="dlg-strict">No backdrop or Escape</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-no-backdrop" class="mtx-dialog--max-sm" data-disable-backdrop-close data-title="Unsaved changes">
+        <div class="mtx-dialog__content">Clicking outside the panel does not close it; Escape does.</div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Discard</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Save</button>
+        </div>
+      </div>
+      <div data-mtx="dialog" id="dlg-strict" class="mtx-dialog--max-sm" data-disable-backdrop-close data-disable-escape data-title="Accept to continue">
+        <div class="mtx-dialog__content">Neither the backdrop nor Escape closes this dialog: only the buttons do.</div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Accept</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="layers">
+      <h2>Stacked layers and Escape</h2>
+      <p>A popover, a menu and a tooltip opened inside a dialog join the shared layer stack: each <kbd>Escape</kbd> closes only the top layer (a visible tooltip first), and interacting with them never closes the dialog.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-layers" id="dlg-layers-open">Open dialog</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-layers" class="mtx-dialog--max-sm" data-title="Share report">
+        <div class="mtx-dialog__content">
+          <div class="mtx-d-flex mtx-gap-1 mtx-flex-wrap">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="tune" data-open-popover="#dlg-layers-popover" id="dlg-layers-popover-btn">Options</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-end-icon="arrow_drop_down" data-open-menu="#dlg-layers-menu" id="dlg-layers-menu-btn">Permission</button>
+          </div>
+        </div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Close</button>
+        </div>
+      </div>
+      <div data-mtx="popover" id="dlg-layers-popover" class="mtx-p-2" data-label="Options">
+        <div class="mtx-d-flex mtx-align-items-center mtx-gap-1">
+          <input type="checkbox" data-mtx="checkbox" data-label="Notify people" checked>
+          <button class="mtx-icon-button" data-mtx="icon-button" data-mtx-tooltip="People get an email with the link" id="dlg-layers-tip"><span class="material-icons" aria-hidden="true">info</span></button>
+        </div>
+      </div>
+      <div data-mtx="menu" id="dlg-layers-menu">
+        <div data-mtx="menu-item" role="menuitemradio" data-checked>Can view</div>
+        <div data-mtx="menu-item" role="menuitemradio">Can comment</div>
+        <div data-mtx="menu-item" role="menuitemradio">Can edit</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Inside the content you can use <code>mtx-grid</code> for multi-column forms; combine it with <code>mtx-dialog--max-lg</code> to give the columns room.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-grid">New address</button>
+      </div>
+      <div data-mtx="dialog" id="dlg-grid" class="mtx-dialog--max-lg" data-title="New shipping address">
+        <div class="mtx-dialog__content">
+          <div data-mtx="grid" data-spacing="2">
+            <div data-mtx="grid" data-xs="12" data-sm="6"><input data-mtx="text-field" data-label="First name" type="text" /></div>
+            <div data-mtx="grid" data-xs="12" data-sm="6"><input data-mtx="text-field" data-label="Last name" type="text" /></div>
+            <div data-mtx="grid" data-xs="12"><input data-mtx="text-field" data-label="Address" type="text" /></div>
+            <div data-mtx="grid" data-xs="12" data-sm="4"><input data-mtx="text-field" data-label="ZIP code" type="text" /></div>
+            <div data-mtx="grid" data-xs="12" data-sm="8"><input data-mtx="text-field" data-label="City" type="text" /></div>
+          </div>
+        </div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Save</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Get the instance with <code>Materix.getInstance(el)</code> and call <code>open()</code> or <code>close(reason)</code>. The log shows the <code>mtx:dialog:open</code> and <code>mtx:dialog:close</code> events with their <code>detail.reason</code>; try closing with Escape, the backdrop or the button.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" id="dlg-api-open">open()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="dlg-api-auto">open() and close() after 2 s</button>
+      </div>
+      <pre class="demo-log" id="dlg-log" aria-live="polite"></pre>
+      <div data-mtx="dialog" id="dlg-api" class="mtx-dialog--max-sm" data-title="Programmatic dialog">
+        <div class="mtx-dialog__content">Opened with <code>Materix.getInstance(el).open()</code>.</div>
+        <div class="mtx-dialog__actions">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>Close</button>
+        </div>
+      </div>
+      <pre class="demo-code"><code>const dialog = Materix.getInstance(document.getElementById('dlg-api'));
+dialog.open();
+dialog.close('saved');   // detail.reason === 'saved'
+
+document.addEventListener('mtx:dialog:close', (event) =&gt; {
+  console.log(event.target.id, event.detail.reason);
+});</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The full structure lets you link the title with <code>aria-labelledby</code> and the description with <code>aria-describedby</code>, and pin the title and actions with the <code>--sticky</code> modifiers.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-open="dlg-bem">Open BEM dialog</button>
+      </div>
+      <div class="mtx-dialog mtx-dialog--max-sm" id="dlg-bem" data-mtx="dialog" aria-labelledby="dlg-bem-title" aria-describedby="dlg-bem-desc">
+        <div class="mtx-dialog__backdrop" data-mtx-dialog-close></div>
+        <div class="mtx-dialog__paper" role="dialog" aria-modal="true">
+          <h2 class="mtx-dialog__title mtx-dialog__title--sticky" id="dlg-bem-title">BEM structure</h2>
+          <div class="mtx-dialog__content" id="dlg-bem-desc">Rendered on the server: the component does not duplicate nodes and only adds behavior.</div>
+          <div class="mtx-dialog__actions mtx-dialog__actions--sticky">
+            <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+            <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>OK</button>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-dialog mtx-dialog--max-sm" id="dlg-bem" data-mtx="dialog"
+     aria-labelledby="dlg-bem-title" aria-describedby="dlg-bem-desc"&gt;
+  &lt;div class="mtx-dialog__backdrop" data-mtx-dialog-close&gt;&lt;/div&gt;
+  &lt;div class="mtx-dialog__paper" role="dialog" aria-modal="true"&gt;
+    &lt;h2 class="mtx-dialog__title mtx-dialog__title--sticky" id="dlg-bem-title"&gt;BEM structure&lt;/h2&gt;
+    &lt;div class="mtx-dialog__content" id="dlg-bem-desc"&gt;...&lt;/div&gt;
+    &lt;div class="mtx-dialog__actions mtx-dialog__actions--sticky"&gt;
+      &lt;button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close&gt;Cancel&lt;/button&gt;
+      &lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close&gt;OK&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var log = document.getElementById('dlg-log');
+      var write = function (text) {
+        log.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        log.scrollTop = log.scrollHeight;
+      };
+      document.addEventListener('mtx:dialog:open', function (event) {
+        write('mtx:dialog:open   #' + event.target.id);
+      });
+      document.addEventListener('mtx:dialog:close', function (event) {
+        write('mtx:dialog:close  #' + event.target.id + '  reason=' + event.detail.reason);
+      });
+
+      var api = Materix.getInstance(document.getElementById('dlg-api'));
+      document.getElementById('dlg-api-open').addEventListener('click', function () { api.open(); });
+      document.getElementById('dlg-api-auto').addEventListener('click', function () {
+        api.open();
+        setTimeout(function () { api.close('timeout-demo'); }, 2000);
+      });
+
+      // Formulario dentro del diálogo
+      var form = document.getElementById('dlg-form-el');
+      var formDialog = Materix.getInstance(document.getElementById('dlg-form'));
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        document.getElementById('dlg-form-status').textContent = 'Subscribed: ' + form.elements.email.value;
+        formDialog.close('submit');
+        form.reset();
+      });
+    });
+  </script>
+</body>
+</html>

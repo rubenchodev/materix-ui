@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chip · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Data display</span>
+        <h1>Chip</h1>
+        <p class="demo-lead">A compact element that represents a tag, a filter, an input or an action; it can have an icon, an avatar and a delete button.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With icons and avatar</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#deletable">Deletable</a>
+      <a href="#filters">Filters</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>An empty element with <code>data-mtx="chip"</code> and <code>data-label</code>; the component generates the label, icon and delete button from the attributes.</p>
+      <div class="demo-row">
+        <div data-mtx="chip" data-label="Tag"></div>
+        <div data-mtx="chip" data-label="JavaScript" data-icon="code" data-color="primary"></div>
+        <div data-mtx="chip" data-label="Deletable" data-deletable data-color="secondary"></div>
+        <div data-mtx="chip" data-label="Outlined" data-variant="outlined" data-icon="tag"></div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="chip" data-label="JavaScript" data-icon="code" data-color="primary"&gt;&lt;/div&gt;
+&lt;div data-mtx="chip" data-label="Deletable" data-deletable&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>filled</code> (default) uses a solid background; <code>outlined</code> uses a border and a transparent background.</p>
+      <div class="demo-group">
+        <span class="demo-label">Filled</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Filled"></div>
+          <div data-mtx="chip" data-label="Clickable" data-clickable></div>
+          <div data-mtx="chip" data-label="Deletable" data-deletable></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Outlined</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Outlined" data-variant="outlined"></div>
+          <div data-mtx="chip" data-label="Clickable" data-variant="outlined" data-clickable></div>
+          <div data-mtx="chip" data-label="Deletable" data-variant="outlined" data-deletable></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p><code>medium</code> (32px, default) lines up with the small Button; <code>small</code> (24px) suits tables and dense lists.</p>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 32px</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Medium" data-icon="star"></div>
+          <div data-mtx="chip" data-label="Deletable" data-deletable data-color="primary"></div>
+          <div data-mtx="chip" data-label="Outlined" data-variant="outlined"></div>
+          <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button">Button 32px</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 24px</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Small" data-size="small" data-icon="star"></div>
+          <div data-mtx="chip" data-label="Deletable" data-size="small" data-deletable data-color="primary"></div>
+          <div data-mtx="chip" data-label="Outlined" data-size="small" data-variant="outlined"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With icons and avatar</h2>
+      <p><code>data-icon</code> adds a start icon; a child with <code>mtx-chip__avatar</code> shows an avatar; <code>data-deletable</code> adds the trailing delete icon.</p>
+      <div class="demo-group">
+        <span class="demo-label">No icon · start icon · end icon · both</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="No icon"></div>
+          <div data-mtx="chip" data-label="Start icon" data-icon="face"></div>
+          <div data-mtx="chip" data-label="End icon" data-deletable></div>
+          <div data-mtx="chip" data-label="Both" data-icon="check_circle" data-deletable data-color="success"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Avatar</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Jane Cooper">
+            <span class="mtx-chip__avatar" data-mtx="avatar" data-size="small" data-color="primary">J</span>
+          </div>
+          <div data-mtx="chip" data-label="Robert Fox" data-variant="outlined" data-deletable>
+            <span class="mtx-chip__avatar" data-mtx="avatar" data-size="small" data-src="https://i.pravatar.cc/80?img=12" data-alt=""></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> accepts the whole palette; on <code>outlined</code> the color applies to the text and the border.</p>
+      <div class="demo-group">
+        <span class="demo-label">Filled</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Default"></div>
+          <div data-mtx="chip" data-label="Primary" data-color="primary"></div>
+          <div data-mtx="chip" data-label="Secondary" data-color="secondary"></div>
+          <div data-mtx="chip" data-label="Error" data-color="error"></div>
+          <div data-mtx="chip" data-label="Warning" data-color="warning"></div>
+          <div data-mtx="chip" data-label="Info" data-color="info"></div>
+          <div data-mtx="chip" data-label="Success" data-color="success"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Outlined</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Default" data-variant="outlined"></div>
+          <div data-mtx="chip" data-label="Primary" data-color="primary" data-variant="outlined"></div>
+          <div data-mtx="chip" data-label="Secondary" data-color="secondary" data-variant="outlined"></div>
+          <div data-mtx="chip" data-label="Error" data-color="error" data-variant="outlined"></div>
+          <div data-mtx="chip" data-label="Warning" data-color="warning" data-variant="outlined"></div>
+          <div data-mtx="chip" data-label="Info" data-color="info" data-variant="outlined"></div>
+          <div data-mtx="chip" data-label="Success" data-color="success" data-variant="outlined"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover the clickable chips to see the hover state, use Tab to see focus and hold the pointer down for the pressed state. <code>data-disabled</code> blocks all interaction.</p>
+      <div class="demo-group">
+        <span class="demo-label">Normal · clickable (hover, focus, pressed)</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Static"></div>
+          <div data-mtx="chip" data-label="Clickable" data-clickable></div>
+          <div data-mtx="chip" data-label="Clickable primary" data-clickable data-color="primary"></div>
+          <div data-mtx="chip" data-label="Clickable outlined" data-clickable data-variant="outlined"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">On a native &lt;button&gt; (no browser border or padding)</span>
+        <div class="demo-row">
+          <button type="button" data-mtx="chip" data-label="Button filled" data-clickable></button>
+          <button type="button" data-mtx="chip" data-label="Button outlined" data-variant="outlined" data-clickable></button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Disabled</span>
+        <div class="demo-row">
+          <div data-mtx="chip" data-label="Disabled" data-disabled></div>
+          <div data-mtx="chip" data-label="Outlined" data-variant="outlined" data-disabled></div>
+          <div data-mtx="chip" data-label="Clickable" data-clickable data-color="primary" data-disabled></div>
+          <div data-mtx="chip" data-label="Deletable" data-deletable data-disabled></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="deletable">
+      <h2>Deletable</h2>
+      <p>The chip emits <code>mtx:chip:delete</code> but does not remove itself. Here the page listens for the event and removes the tag; it also works with Delete or Backspace on the focused chip.</p>
+      <div id="chip-tags" class="demo-row">
+        <div data-mtx="chip" data-label="React" data-deletable data-delete-label="Remove React"></div>
+        <div data-mtx="chip" data-label="Vue" data-deletable data-delete-label="Remove Vue"></div>
+        <div data-mtx="chip" data-label="Svelte" data-deletable data-delete-label="Remove Svelte"></div>
+        <div data-mtx="chip" data-label="Angular" data-deletable data-delete-label="Remove Angular"></div>
+      </div>
+      <div class="demo-row">
+        <button id="chip-tags-reset" class="mtx-button mtx-button--text" data-mtx="button">Restore tags</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="filters">
+      <h2>Filters</h2>
+      <p>Clickable chips that toggle between <code>outlined</code> (inactive) and <code>primary</code> (active), with <code>aria-pressed</code> as the accessible state.</p>
+      <div class="demo-stack">
+        <div id="chip-filters" class="demo-row" role="group" aria-label="Filter issues">
+          <div data-mtx="chip" data-label="Open" data-clickable data-color="primary" aria-pressed="true"></div>
+          <div data-mtx="chip" data-label="In review" data-clickable data-variant="outlined" aria-pressed="false"></div>
+          <div data-mtx="chip" data-label="Closed" data-clickable data-variant="outlined" aria-pressed="false"></div>
+          <div data-mtx="chip" data-label="Blocked" data-clickable data-variant="outlined" aria-pressed="false"></div>
+        </div>
+        <p id="chip-filters-status" class="demo-status" aria-live="polite">Active filters: Open</p>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Project cards in an <code>mtx-grid</code> with their tags: 1 column on mobile, 2 at <code>sm</code> and 3 at <code>md</code>.</p>
+      <div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <div class="demo-panel">
+              <strong>Customer portal</strong>
+              <div class="demo-row">
+                <div data-mtx="chip" data-label="Active" data-size="small" data-color="success"></div>
+                <div data-mtx="chip" data-label="Web" data-size="small" data-variant="outlined"></div>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <div class="demo-panel">
+              <strong>Mobile app</strong>
+              <div class="demo-row">
+                <div data-mtx="chip" data-label="At risk" data-size="small" data-color="warning"></div>
+                <div data-mtx="chip" data-label="iOS" data-size="small" data-variant="outlined"></div>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <div class="demo-panel">
+              <strong>ERP migration</strong>
+              <div class="demo-row">
+                <div data-mtx="chip" data-label="Blocked" data-size="small" data-color="error"></div>
+                <div data-mtx="chip" data-label="Backend" data-size="small" data-variant="outlined"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>label</code>, <code>disable()</code> and <code>enable()</code>. The log shows the real <code>mtx:chip:click</code> and <code>mtx:chip:delete</code> events of the test chip.</p>
+      <div class="demo-stack">
+        <div class="demo-row">
+          <div id="chip-api" data-mtx="chip" data-label="Test chip" data-icon="science" data-clickable data-deletable data-color="primary"></div>
+        </div>
+        <div class="demo-row">
+          <button id="chip-label" class="mtx-button mtx-button--outlined" data-mtx="button">Change label</button>
+          <button id="chip-disable" class="mtx-button mtx-button--outlined" data-mtx="button">disable()</button>
+          <button id="chip-enable" class="mtx-button mtx-button--outlined" data-mtx="button">enable()</button>
+        </div>
+        <pre id="chip-log" class="demo-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>If the structure already exists, the component reuses <code>.mtx-chip__label</code>, <code>.mtx-chip__icon</code> and <code>.mtx-chip__delete</code>.</p>
+      <div class="demo-row">
+        <div class="mtx-chip mtx-chip--primary" data-mtx="chip">
+          <span class="mtx-chip__icon material-icons" aria-hidden="true">star</span>
+          <span class="mtx-chip__label">BEM with icon</span>
+        </div>
+        <div class="mtx-chip mtx-chip--outlined mtx-chip--secondary" data-mtx="chip">
+          <span class="mtx-chip__label">BEM outlined</span>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-chip mtx-chip--primary" data-mtx="chip"&gt;
+  &lt;span class="mtx-chip__icon material-icons" aria-hidden="true"&gt;star&lt;/span&gt;
+  &lt;span class="mtx-chip__label"&gt;BEM with icon&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Eliminable: retira el chip con el evento y permite restaurarlo.
+      const tags = document.getElementById('chip-tags');
+      tags.addEventListener('mtx:chip:delete', (event) => event.target.remove());
+      document.getElementById('chip-tags-reset').addEventListener('click', () => {
+        tags.textContent = '';
+        ['React', 'Vue', 'Svelte', 'Angular'].forEach((name) => {
+          const el = document.createElement('div');
+          el.setAttribute('data-mtx', 'chip');
+          el.setAttribute('data-label', name);
+          el.setAttribute('data-deletable', '');
+          el.setAttribute('data-delete-label', `Remove ${name}`);
+          tags.appendChild(el);
+        });
+        Materix.initAll(tags);
+      });
+
+      // Filtros: alterna aria-pressed y la variante.
+      const filters = document.getElementById('chip-filters');
+      const status = document.getElementById('chip-filters-status');
+      filters.addEventListener('mtx:chip:click', (event) => {
+        const chip = event.target;
+        const active = chip.getAttribute('aria-pressed') !== 'true';
+        chip.setAttribute('aria-pressed', String(active));
+        chip.classList.toggle('mtx-chip--primary', active);
+        chip.classList.toggle('mtx-chip--outlined', !active);
+        const names = [...filters.querySelectorAll('[aria-pressed="true"]')].map((el) => Materix.getInstance(el).label);
+        status.textContent = `Active filters: ${names.join(', ') || 'none'}`;
+      });
+
+      // Uso programático.
+      const chipEl = document.getElementById('chip-api');
+      const chip = () => Materix.getInstance(chipEl);
+      const log = document.getElementById('chip-log');
+      const write = (text) => { log.textContent += `${text}\n`; log.scrollTop = log.scrollHeight; };
+      chipEl.addEventListener('mtx:chip:click', (e) => write(`mtx:chip:click  detail=${JSON.stringify(e.detail)}`));
+      chipEl.addEventListener('mtx:chip:delete', (e) => write(`mtx:chip:delete detail=${JSON.stringify(e.detail)}`));
+      let toggle = false;
+      document.getElementById('chip-label').addEventListener('click', () => {
+        toggle = !toggle;
+        chip().label = toggle ? 'Updated label' : 'Test chip';
+        write(`chip.label = "${chip().label}"`);
+      });
+      document.getElementById('chip-disable').addEventListener('click', () => { chip().disable(); write(`chip.disable() → disabled: ${chip().disabled}`); });
+      document.getElementById('chip-enable').addEventListener('click', () => { chip().enable(); write(`chip.enable() → disabled: ${chip().disabled}`); });
+    });
+  </script>
+</body>
+</html>

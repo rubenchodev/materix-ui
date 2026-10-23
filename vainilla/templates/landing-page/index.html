@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en" class="mtx-scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing page · Materix UI Templates</title>
+  <meta name="description" content="Marketing website with hero, features, testimonials, pricing teaser, FAQ and footer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="icon" href="data:,">
+  <script src="../shared/template.js"></script>
+  <style>
+    /* Marca: logotipo con degradado */
+    .tpl-lp-logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--mtx-color-primary), var(--mtx-color-secondary)); color: var(--mtx-color-primary-contrast); }
+
+    /* Hero: halo radial y titular display fluido con texto en degradado */
+    .tpl-lp-hero::before { content: ""; position: absolute; inset: -40% -10% auto; height: 120%; background: radial-gradient(ellipse at 50% 0%, var(--mtx-color-primary-light), transparent 60%); opacity: 0.22; pointer-events: none; }
+    .tpl-lp-display { font-size: clamp(2.25rem, 4.6vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em; }
+    .tpl-lp-display em { font-style: normal; background: linear-gradient(90deg, var(--mtx-color-primary), var(--mtx-color-secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* Maqueta ilustrativa del producto (navegador + KPIs + gráfico) */
+    .tpl-lp-mock__chrome i { width: 10px; height: 10px; border-radius: 50%; background: var(--mtx-color-error); opacity: 0.8; }
+    .tpl-lp-mock__chrome i:nth-child(2) { background: var(--mtx-color-warning); }
+    .tpl-lp-mock__chrome i:nth-child(3) { background: var(--mtx-color-success); }
+    .tpl-lp-mock__url { flex: 1; max-width: 260px; height: 20px; border-radius: 10px; background: var(--mtx-color-action-hover); }
+    .tpl-lp-mock__side { width: 56px; }
+    .tpl-lp-mock__side span { width: 24px; height: 24px; border-radius: 6px; background: var(--mtx-color-action-selected); }
+    .tpl-lp-mock__side span:first-child { background: var(--mtx-color-primary); }
+    .tpl-lp-mock__chart svg { display: block; width: 100%; height: 150px; }
+    .tpl-lp-mock__float { right: -12px; bottom: 28px; }
+    .tpl-lp-demo-stage { aspect-ratio: 16 / 9; background: linear-gradient(135deg, var(--mtx-color-primary-dark), var(--mtx-color-secondary-dark)); }
+
+    /* Logotipos SVG de clientes */
+    .tpl-lp-brands svg { width: 28px; height: 28px; fill: currentColor; }
+
+    /* Tarjetas de marketing: elevación al pasar el puntero (decisión de diseño) */
+    .tpl-lp-feature:hover { box-shadow: var(--mtx-elevation-4); }
+    @media (prefers-reduced-motion: no-preference) {
+      .tpl-lp-feature { transition: box-shadow var(--mtx-duration-shorter) var(--mtx-easing-standard), transform var(--mtx-duration-shorter) var(--mtx-easing-standard); }
+      .tpl-lp-feature:hover { transform: translateY(-2px); }
+    }
+    .tpl-lp-plan--featured { border: 2px solid var(--mtx-color-primary); }
+
+    /* Pasos: línea conectora en degradado detrás de los números (solo con 3 columnas) */
+    .tpl-lp-step-num { box-shadow: 0 0 0 8px var(--mtx-color-background-default); }
+    @media (min-width: 900px) {
+      .tpl-lp-steps::before { content: ""; position: absolute; top: 28px; left: 16%; right: 16%; height: 2px; background: linear-gradient(90deg, var(--mtx-color-primary), var(--mtx-color-secondary)); opacity: 0.35; }
+    }
+
+    /* CTA final con degradado de marca */
+    .tpl-lp-cta { background: linear-gradient(135deg, var(--mtx-color-primary-dark), var(--mtx-color-primary)); color: var(--mtx-color-primary-contrast); }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-lp-main">Skip to content</a>
+
+  <header data-mtx="app-bar" data-position="sticky" data-color="default" data-elevate-on-scroll class="mtx-border-bottom">
+    <div class="mtx-container">
+      <div class="mtx-toolbar mtx-toolbar--disable-gutters mtx-gap-0_5">
+        <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1_5 mtx-me-3 mtx-color-text-primary mtx-text-decoration-none mtx-typography--h6 mtx-fw-bold" href="#top" aria-label="Lumen home">
+          <span class="tpl-lp-logo mtx-d-inline-flex mtx-align-items-center mtx-justify-content-center"><span class="material-icons" aria-hidden="true">insights</span></span>
+          Lumen
+        </a>
+        <nav class="mtx-d-none mtx-d-lg-flex mtx-align-items-center mtx-gap-0_5" id="tpl-lp-nav" aria-label="Main">
+          <a class="mtx-button mtx-button--text mtx-color-text-secondary" data-mtx="button" href="#features">Features</a>
+          <a class="mtx-button mtx-button--text mtx-color-text-secondary" data-mtx="button" href="#how-it-works">How it works</a>
+          <a class="mtx-button mtx-button--text mtx-color-text-secondary" data-mtx="button" href="#testimonials">Customers</a>
+          <a class="mtx-button mtx-button--text mtx-color-text-secondary" data-mtx="button" href="#pricing">Pricing</a>
+          <a class="mtx-button mtx-button--text mtx-color-text-secondary" data-mtx="button" href="#faq">FAQ</a>
+        </nav>
+        <div class="mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-ms-auto">
+          <button type="button" data-mtx="icon-button" data-mtx-theme-toggle aria-label="Toggle theme"><span class="material-icons" aria-hidden="true">dark_mode</span></button>
+          <a class="mtx-button mtx-button--text mtx-d-none mtx-d-lg-inline-flex" data-mtx="button" href="../sign-in/index.html">Sign in</a>
+          <a class="mtx-button mtx-button--contained mtx-d-none mtx-d-sm-inline-flex" data-mtx="button" href="#newsletter">Start free trial</a>
+          <button type="button" class="mtx-d-lg-none" data-mtx="icon-button" data-edge="end" data-icon="menu" aria-label="Open menu" aria-controls="tpl-lp-drawer" data-mtx-drawer-toggle="tpl-lp-drawer"></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div data-mtx="drawer" id="tpl-lp-drawer" data-anchor="right" data-title="Lumen" aria-label="Menu">
+    <nav aria-label="Mobile">
+      <ul data-mtx="list">
+        <li><a data-mtx="list-item-button" data-icon="auto_awesome" href="#features" data-mtx-drawer-close>Features</a></li>
+        <li><a data-mtx="list-item-button" data-icon="route" href="#how-it-works" data-mtx-drawer-close>How it works</a></li>
+        <li><a data-mtx="list-item-button" data-icon="forum" href="#testimonials" data-mtx-drawer-close>Customers</a></li>
+        <li><a data-mtx="list-item-button" data-icon="sell" href="#pricing" data-mtx-drawer-close>Pricing</a></li>
+        <li><a data-mtx="list-item-button" data-icon="help_outline" href="#faq" data-mtx-drawer-close>FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="mtx-d-grid mtx-gap-1_5 mtx-mt-auto mtx-p-2 mtx-border-top">
+      <a class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" href="#newsletter" data-mtx-drawer-close>Start free trial</a>
+      <a class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" href="../sign-in/index.html">Sign in</a>
+    </div>
+  </div>
+
+  <main id="tpl-lp-main" tabindex="-1">
+    <section class="tpl-lp-hero mtx-position-relative mtx-overflow-hidden mtx-pt-6 mtx-pt-md-10" id="top" aria-labelledby="tpl-lp-hero-title">
+      <div data-mtx="container" class="mtx-position-relative">
+        <div data-mtx="grid" data-spacing="6" data-align="center">
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <span data-mtx="chip" data-color="primary" data-variant="outlined" data-icon="auto_awesome" data-label="New: AI-powered insights"></span>
+            <h1 id="tpl-lp-hero-title" class="tpl-lp-display mtx-typography--h2 mtx-fw-bold mtx-my-2_5">Ship better products with <em>real-time customer insight</em></h1>
+            <p class="mtx-typography--subtitle1 mtx-color-text-secondary">Lumen brings product analytics, session replays and user feedback together, so every team can see what customers need and act on it the same day.</p>
+            <div class="mtx-d-flex mtx-flex-column mtx-flex-sm-row mtx-flex-wrap mtx-gap-1_5 mtx-mt-4">
+              <a class="mtx-button mtx-button--contained" data-mtx="button" data-size="large" href="#newsletter">
+                Start free trial
+                <span class="mtx-button__icon material-icons" aria-hidden="true">arrow_forward</span>
+              </a>
+              <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="large" type="button" data-mtx-dialog-open="tpl-lp-demo">
+                <span class="mtx-button__icon material-icons" aria-hidden="true">play_circle</span>
+                Watch 2-min demo
+              </button>
+            </div>
+            <ul class="mtx-d-flex mtx-flex-wrap mtx-row-gap-1 mtx-column-gap-2_5 mtx-mt-2_5 mtx-mb-0 mtx-p-0 mtx-typography--body2 mtx-color-text-secondary">
+              <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-0_5"><span class="material-icons mtx-color-success" aria-hidden="true">check_circle</span>14-day free trial</li>
+              <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-0_5"><span class="material-icons mtx-color-success" aria-hidden="true">check_circle</span>No credit card required</li>
+              <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-0_5"><span class="material-icons mtx-color-success" aria-hidden="true">check_circle</span>SOC 2 Type II</li>
+            </ul>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <div class="mtx-position-relative" role="img" aria-label="Lumen dashboard showing weekly active users, conversion rate and a growing activity chart">
+              <div data-mtx="paper" data-elevation="16" class="mtx-border mtx-rounded-3 mtx-overflow-hidden" aria-hidden="true">
+                <div class="tpl-lp-mock__chrome mtx-d-flex mtx-align-items-center mtx-gap-0_5 mtx-py-1 mtx-px-1_5 mtx-border-bottom mtx-bg-default"><i></i><i></i><i></i><span class="tpl-lp-mock__url mtx-ms-1_5"></span></div>
+                <div class="mtx-d-flex">
+                  <div class="tpl-lp-mock__side mtx-d-none mtx-d-sm-flex mtx-flex-column mtx-align-items-center mtx-gap-1_5 mtx-py-2 mtx-border-end"><span></span><span></span><span></span><span></span><span></span></div>
+                  <div class="mtx-flex-1 mtx-min-w-0 mtx-d-grid mtx-gap-1_5 mtx-p-2">
+                    <div data-mtx="grid" data-spacing="1">
+                      <div data-mtx="grid" data-xs="4"><div class="mtx-p-1 mtx-p-sm-1_5 mtx-border mtx-rounded-2"><small class="mtx-d-block mtx-typography--caption mtx-color-text-secondary mtx-text-truncate">Weekly active</small><strong class="mtx-d-block mtx-typography--h6 mtx-fw-bold">48.2k</strong><b class="mtx-typography--caption mtx-fw-medium mtx-color-success">+12.4%</b></div></div>
+                      <div data-mtx="grid" data-xs="4"><div class="mtx-p-1 mtx-p-sm-1_5 mtx-border mtx-rounded-2"><small class="mtx-d-block mtx-typography--caption mtx-color-text-secondary mtx-text-truncate">Conversion</small><strong class="mtx-d-block mtx-typography--h6 mtx-fw-bold">6.8%</strong><b class="mtx-typography--caption mtx-fw-medium mtx-color-success">+0.9 pts</b></div></div>
+                      <div data-mtx="grid" data-xs="4"><div class="mtx-p-1 mtx-p-sm-1_5 mtx-border mtx-rounded-2"><small class="mtx-d-block mtx-typography--caption mtx-color-text-secondary mtx-text-truncate">NPS</small><strong class="mtx-d-block mtx-typography--h6 mtx-fw-bold">62</strong><b class="mtx-typography--caption mtx-fw-medium mtx-color-success">+5</b></div></div>
+                    </div>
+                    <div class="tpl-lp-mock__chart mtx-p-1_5 mtx-border mtx-rounded-2">
+                      <svg viewBox="0 0 400 150" preserveAspectRatio="none" focusable="false">
+                        <defs>
+                          <linearGradient id="tpl-lp-area" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="var(--mtx-color-primary)" stop-opacity="0.35" />
+                            <stop offset="100%" stop-color="var(--mtx-color-primary)" stop-opacity="0" />
+                          </linearGradient>
+                        </defs>
+                        <g stroke="var(--mtx-color-divider)" stroke-width="1">
+                          <line x1="0" y1="37" x2="400" y2="37" /><line x1="0" y1="75" x2="400" y2="75" /><line x1="0" y1="112" x2="400" y2="112" />
+                        </g>
+                        <path d="M0,118 C30,112 50,96 80,100 C110,104 130,80 160,76 C190,72 210,88 240,70 C270,52 300,60 330,40 C355,26 380,30 400,18 L400,150 L0,150 Z" fill="url(#tpl-lp-area)" />
+                        <path d="M0,118 C30,112 50,96 80,100 C110,104 130,80 160,76 C190,72 210,88 240,70 C270,52 300,60 330,40 C355,26 380,30 400,18" fill="none" stroke="var(--mtx-color-primary)" stroke-width="3" stroke-linecap="round" />
+                        <path d="M0,132 C40,128 70,120 100,124 C140,128 170,110 200,112 C240,114 270,100 300,96 C340,92 370,86 400,80" fill="none" stroke="var(--mtx-color-secondary)" stroke-width="2" stroke-dasharray="6 6" stroke-linecap="round" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div data-mtx="paper" data-elevation="8" class="tpl-lp-mock__float mtx-position-absolute mtx-d-none mtx-d-sm-flex mtx-align-items-center mtx-gap-1_5 mtx-py-1_5 mtx-px-2 mtx-rounded-3 mtx-typography--body2" aria-hidden="true">
+                <span data-mtx="avatar" data-color="success" data-icon="trending_up" data-variant="rounded"></span>
+                <div><strong class="mtx-d-block mtx-typography--subtitle2">+38% activation</strong>after onboarding redesign</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mtx-pt-5 mtx-pb-1 mtx-text-center">
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-3">Trusted by 4,000+ product teams worldwide</p>
+          <ul class="tpl-lp-brands mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-justify-content-center mtx-row-gap-2 mtx-column-gap-6 mtx-m-0 mtx-p-0 mtx-typography--h6 mtx-fw-bold mtx-color-text-secondary" aria-label="Customers">
+            <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5zm0 7.5L4.5 6 12 3l7.5 3L12 9.5zM2 17l10 5 10-5-2.2-1.1L12 19.8 4.2 15.9 2 17zm0-5 10 5 10-5-2.2-1.1L12 14.8 4.2 10.9 2 12z"/></svg>Northwind</li>
+            <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>Globex</li>
+            <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 22 20H2z"/></svg>Acme Labs</li>
+            <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="4"/></svg>Initech</li>
+            <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-9 9h8v6.5a2.5 2.5 0 0 0 5 0V18h-2v.5a.5.5 0 0 1-1 0V12h8a9 9 0 0 0-9-9z"/></svg>Umbrella</li>
+            <li class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 3a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/></svg>Hooli</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mtx-pb-8"></div>
+    </section>
+
+    <section class="mtx-py-8 mtx-py-md-10 mtx-bg-paper mtx-border-top mtx-border-bottom" id="features" aria-labelledby="tpl-lp-features-title">
+      <div data-mtx="container">
+        <div class="mtx-text-center mtx-mb-6">
+          <p class="mtx-typography--overline mtx-color-primary mtx-mb-1_5">Features</p>
+          <h2 class="mtx-typography--h4 mtx-fw-medium mtx-mb-2" id="tpl-lp-features-title">Everything you need to understand your users</h2>
+          <p class="mtx-typography--subtitle1 mtx-color-text-secondary mtx-container mtx-container--sm mtx-container--disable-gutters">From the first click to renewal, Lumen connects behavioral data with what customers tell you — no SQL required.</p>
+        </div>
+        <div data-mtx="grid" data-spacing="3">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-variant="outlined" class="tpl-lp-feature mtx-h-100 mtx-p-4 mtx-rounded-3">
+              <span data-mtx="avatar" data-variant="rounded" data-color="primary" data-icon="query_stats" aria-hidden="true"></span>
+              <h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">Product analytics</h3>
+              <p class="mtx-typography--body1 mtx-color-text-secondary">Funnels, retention and paths that update in real time. Spot drop-offs before they show up in revenue.</p>
+            </article>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-variant="outlined" class="tpl-lp-feature mtx-h-100 mtx-p-4 mtx-rounded-3">
+              <span data-mtx="avatar" data-variant="rounded" data-color="secondary" data-icon="smart_display" aria-hidden="true"></span>
+              <h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">Session replay</h3>
+              <p class="mtx-typography--body1 mtx-color-text-secondary">Watch real journeys with privacy controls built in. Sensitive fields are masked automatically.</p>
+            </article>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-variant="outlined" class="tpl-lp-feature mtx-h-100 mtx-p-4 mtx-rounded-3">
+              <span data-mtx="avatar" data-variant="rounded" data-color="success" data-icon="rate_review" aria-hidden="true"></span>
+              <h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">In-app feedback</h3>
+              <p class="mtx-typography--body1 mtx-color-text-secondary">Launch surveys and NPS in minutes, then tie every answer to the behavior that came before it.</p>
+            </article>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-variant="outlined" class="tpl-lp-feature mtx-h-100 mtx-p-4 mtx-rounded-3">
+              <span data-mtx="avatar" data-variant="rounded" data-color="warning" data-icon="auto_awesome" aria-hidden="true"></span>
+              <h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">AI insights</h3>
+              <p class="mtx-typography--body1 mtx-color-text-secondary">Ask questions in plain English and get charts, summaries and suggested experiments back.</p>
+            </article>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-variant="outlined" class="tpl-lp-feature mtx-h-100 mtx-p-4 mtx-rounded-3">
+              <span data-mtx="avatar" data-variant="rounded" data-color="info" data-icon="hub" aria-hidden="true"></span>
+              <h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">120+ integrations</h3>
+              <p class="mtx-typography--body1 mtx-color-text-secondary">Sync with Segment, Salesforce, Slack, Jira and your data warehouse in a couple of clicks.</p>
+            </article>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-variant="outlined" class="tpl-lp-feature mtx-h-100 mtx-p-4 mtx-rounded-3">
+              <span data-mtx="avatar" data-variant="rounded" data-color="error" data-icon="verified_user" aria-hidden="true"></span>
+              <h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">Enterprise security</h3>
+              <p class="mtx-typography--body1 mtx-color-text-secondary">SSO, SCIM, audit logs and EU data residency. SOC 2 Type II and GDPR compliant.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mtx-py-8 mtx-py-md-10" id="how-it-works" aria-labelledby="tpl-lp-how-title">
+      <div data-mtx="container">
+        <div class="mtx-text-center mtx-mb-6">
+          <p class="mtx-typography--overline mtx-color-primary mtx-mb-1_5">How it works</p>
+          <h2 class="mtx-typography--h4 mtx-fw-medium mtx-mb-2" id="tpl-lp-how-title">From install to insight in under an hour</h2>
+          <p class="mtx-typography--subtitle1 mtx-color-text-secondary mtx-container mtx-container--sm mtx-container--disable-gutters">No tracking plan marathon. Lumen captures events automatically and lets you define what matters later.</p>
+        </div>
+        <ol data-mtx="grid" data-spacing="4" class="tpl-lp-steps mtx-position-relative mtx-m-0 mtx-p-0 mtx-text-center">
+          <li data-mtx="grid" data-xs="12" data-md="4" class="mtx-d-block"><span data-mtx="avatar" data-size="large" data-color="primary" class="tpl-lp-step-num mtx-position-relative mtx-fw-bold" aria-hidden="true">1</span><h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">Add the snippet</h3><p class="mtx-typography--body1 mtx-color-text-secondary">Paste one line of JavaScript or install our SDK for iOS, Android and React Native.</p></li>
+          <li data-mtx="grid" data-xs="12" data-md="4" class="mtx-d-block"><span data-mtx="avatar" data-size="large" data-color="primary" class="tpl-lp-step-num mtx-position-relative mtx-fw-bold" aria-hidden="true">2</span><h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">Connect your stack</h3><p class="mtx-typography--body1 mtx-color-text-secondary">Bring in CRM and billing data so every chart knows which accounts matter most.</p></li>
+          <li data-mtx="grid" data-xs="12" data-md="4" class="mtx-d-block"><span data-mtx="avatar" data-size="large" data-color="primary" class="tpl-lp-step-num mtx-position-relative mtx-fw-bold" aria-hidden="true">3</span><h3 class="mtx-typography--h6 mtx-mt-2_5 mtx-mb-1">Act on insights</h3><p class="mtx-typography--body1 mtx-color-text-secondary">Share dashboards, trigger Slack alerts and send feedback straight to your backlog.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="mtx-py-8 mtx-py-md-10 mtx-bg-paper mtx-border-top mtx-border-bottom" id="testimonials" aria-labelledby="tpl-lp-quotes-title">
+      <div data-mtx="container">
+        <ul data-mtx="grid" data-spacing="3" class="mtx-m-0 mtx-p-0 mtx-mb-8 mtx-text-center" aria-label="Lumen in numbers">
+          <li data-mtx="grid" data-xs="6" data-md="3" class="mtx-d-block"><strong class="mtx-d-block mtx-typography--h4 mtx-fw-bold mtx-color-primary">4,000+</strong><span class="mtx-typography--body2 mtx-color-text-secondary">product teams</span></li>
+          <li data-mtx="grid" data-xs="6" data-md="3" class="mtx-d-block"><strong class="mtx-d-block mtx-typography--h4 mtx-fw-bold mtx-color-primary">2.1B</strong><span class="mtx-typography--body2 mtx-color-text-secondary">events per day</span></li>
+          <li data-mtx="grid" data-xs="6" data-md="3" class="mtx-d-block"><strong class="mtx-d-block mtx-typography--h4 mtx-fw-bold mtx-color-primary">99.99%</strong><span class="mtx-typography--body2 mtx-color-text-secondary">uptime SLA</span></li>
+          <li data-mtx="grid" data-xs="6" data-md="3" class="mtx-d-block"><strong class="mtx-d-block mtx-typography--h4 mtx-fw-bold mtx-color-primary">4.8/5</strong><span class="mtx-typography--body2 mtx-color-text-secondary">on G2 (1,200 reviews)</span></li>
+        </ul>
+        <div class="mtx-text-center mtx-mb-6">
+          <p class="mtx-typography--overline mtx-color-primary mtx-mb-1_5">Customers</p>
+          <h2 class="mtx-typography--h4 mtx-fw-medium" id="tpl-lp-quotes-title">Loved by product teams</h2>
+        </div>
+        <div data-mtx="grid" data-spacing="3">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <figure data-mtx="card" data-variant="outlined" class="mtx-h-100 mtx-d-flex mtx-flex-column mtx-m-0 mtx-rounded-3">
+              <div data-mtx="card-content" class="mtx-flex-1">
+                <span data-mtx="rating" data-value="5" data-read-only class="mtx-mb-1_5"></span>
+                <blockquote class="mtx-m-0 mtx-typography--body1">“We replaced three tools with Lumen. Our activation rate went up 38% in one quarter because we finally saw where new users got stuck.”</blockquote>
+              </div>
+              <figcaption data-mtx="card-actions" data-align="start" class="mtx-gap-0_5 mtx-p-2 mtx-border-top">
+                <span data-mtx="avatar" data-color="primary" aria-hidden="true">SR</span>
+                <div><strong class="mtx-d-block mtx-fw-medium">Sofia Ramírez</strong><span class="mtx-typography--body2 mtx-color-text-secondary">VP Product, Northwind</span></div>
+              </figcaption>
+            </figure>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <figure data-mtx="card" data-variant="outlined" class="mtx-h-100 mtx-d-flex mtx-flex-column mtx-m-0 mtx-rounded-3">
+              <div data-mtx="card-content" class="mtx-flex-1">
+                <span data-mtx="rating" data-value="5" data-read-only class="mtx-mb-1_5"></span>
+                <blockquote class="mtx-m-0 mtx-typography--body1">“Session replay plus feedback in one place is a game changer. Engineering fixes bugs with full context instead of guessing.”</blockquote>
+              </div>
+              <figcaption data-mtx="card-actions" data-align="start" class="mtx-gap-0_5 mtx-p-2 mtx-border-top">
+                <span data-mtx="avatar" data-color="secondary" aria-hidden="true">DO</span>
+                <div><strong class="mtx-d-block mtx-fw-medium">David Okafor</strong><span class="mtx-typography--body2 mtx-color-text-secondary">Engineering Manager, Globex</span></div>
+              </figcaption>
+            </figure>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <figure data-mtx="card" data-variant="outlined" class="mtx-h-100 mtx-d-flex mtx-flex-column mtx-m-0 mtx-rounded-3">
+              <div data-mtx="card-content" class="mtx-flex-1">
+                <span data-mtx="rating" data-value="4" data-read-only class="mtx-mb-1_5"></span>
+                <blockquote class="mtx-m-0 mtx-typography--body1">“The AI summaries save me hours every week. I ask a question on Monday morning and I have a chart for the leadership sync.”</blockquote>
+              </div>
+              <figcaption data-mtx="card-actions" data-align="start" class="mtx-gap-0_5 mtx-p-2 mtx-border-top">
+                <span data-mtx="avatar" data-color="success" aria-hidden="true">HT</span>
+                <div><strong class="mtx-d-block mtx-fw-medium">Hannah Tanaka</strong><span class="mtx-typography--body2 mtx-color-text-secondary">Growth Lead, Acme Labs</span></div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mtx-py-8 mtx-py-md-10" id="pricing" aria-labelledby="tpl-lp-pricing-title">
+      <div data-mtx="container">
+        <div class="mtx-text-center mtx-mb-6">
+          <p class="mtx-typography--overline mtx-color-primary mtx-mb-1_5">Pricing</p>
+          <h2 class="mtx-typography--h4 mtx-fw-medium mtx-mb-2" id="tpl-lp-pricing-title">Simple plans that scale with you</h2>
+          <p class="mtx-typography--subtitle1 mtx-color-text-secondary mtx-container mtx-container--sm mtx-container--disable-gutters">Start free and upgrade when your team is ready. Every plan includes unlimited seats.</p>
+        </div>
+        <div data-mtx="grid" data-spacing="3">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-variant="outlined" class="mtx-h-100 mtx-d-flex mtx-flex-column mtx-p-4 mtx-rounded-3">
+              <h3 class="mtx-typography--h6">Starter</h3>
+              <p class="mtx-typography--h3 mtx-fw-bold mtx-mt-2 mtx-mb-0_5">$0 <small class="mtx-typography--body1 mtx-color-text-secondary">/ month</small></p>
+              <p class="mtx-typography--body1 mtx-color-text-secondary mtx-mb-2_5">For side projects and early-stage startups.</p>
+              <ul class="mtx-flex-1 mtx-d-grid mtx-align-content-start mtx-gap-1_5 mtx-m-0 mtx-mb-3 mtx-p-0 mtx-typography--body2">
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>Up to 10k monthly users</li>
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>Core analytics</li>
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>30-day data history</li>
+              </ul>
+              <a class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" href="#newsletter">Get started</a>
+            </article>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-elevation="8" class="tpl-lp-plan--featured mtx-h-100 mtx-d-flex mtx-flex-column mtx-p-4 mtx-rounded-3">
+              <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-gap-1"><h3 class="mtx-typography--h6">Growth</h3><span data-mtx="chip" data-size="small" data-color="primary" data-label="Most popular"></span></div>
+              <p class="mtx-typography--h3 mtx-fw-bold mtx-mt-2 mtx-mb-0_5">$49 <small class="mtx-typography--body1 mtx-color-text-secondary">/ month</small></p>
+              <p class="mtx-typography--body1 mtx-color-text-secondary mtx-mb-2_5">For teams that make decisions with data every day.</p>
+              <ul class="mtx-flex-1 mtx-d-grid mtx-align-content-start mtx-gap-1_5 mtx-m-0 mtx-mb-3 mtx-p-0 mtx-typography--body2">
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>Up to 100k monthly users</li>
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>Session replay &amp; surveys</li>
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>AI insights</li>
+              </ul>
+              <a class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" href="#newsletter">Start free trial</a>
+            </article>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <article data-mtx="paper" data-variant="outlined" class="mtx-h-100 mtx-d-flex mtx-flex-column mtx-p-4 mtx-rounded-3">
+              <h3 class="mtx-typography--h6">Enterprise</h3>
+              <p class="mtx-typography--h3 mtx-fw-bold mtx-mt-2 mtx-mb-0_5">Custom</p>
+              <p class="mtx-typography--body1 mtx-color-text-secondary mtx-mb-2_5">For organizations with advanced security needs.</p>
+              <ul class="mtx-flex-1 mtx-d-grid mtx-align-content-start mtx-gap-1_5 mtx-m-0 mtx-mb-3 mtx-p-0 mtx-typography--body2">
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>Unlimited monthly users</li>
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>SSO, SCIM &amp; audit logs</li>
+                <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span class="material-icons mtx-color-primary" aria-hidden="true">check</span>Dedicated success manager</li>
+              </ul>
+              <a class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" href="#newsletter">Contact sales</a>
+            </article>
+          </div>
+        </div>
+        <p class="mtx-mt-4 mtx-text-center"><a data-mtx="link" href="../pricing/index.html">Compare all plans and features →</a></p>
+      </div>
+    </section>
+
+    <section class="mtx-py-8 mtx-py-md-10 mtx-bg-paper mtx-border-top mtx-border-bottom" id="faq" aria-labelledby="tpl-lp-faq-title">
+      <div data-mtx="container" data-max-width="md">
+        <div class="mtx-text-center mtx-mb-6">
+          <p class="mtx-typography--overline mtx-color-primary mtx-mb-1_5">FAQ</p>
+          <h2 class="mtx-typography--h4 mtx-fw-medium" id="tpl-lp-faq-title">Frequently asked questions</h2>
+        </div>
+        <div data-mtx="accordion-group" data-variant="outlined">
+          <div data-mtx="accordion" data-summary="How does the free trial work?" data-expanded>You get full access to the Growth plan for 14 days. No credit card is required, and at the end of the trial you can pick a plan or stay on Starter for free.</div>
+          <div data-mtx="accordion" data-summary="Will Lumen slow down my site?">No. The snippet is 18 KB gzipped, loads asynchronously and batches events, so it has no measurable impact on Core Web Vitals.</div>
+          <div data-mtx="accordion" data-summary="Is my data secure and private?">Yes. Data is encrypted in transit and at rest, sensitive inputs are masked by default and you can choose US or EU data residency. We are SOC 2 Type II certified.</div>
+          <div data-mtx="accordion" data-summary="Can I import data from another tool?">You can import historical events from Mixpanel, Amplitude and Google Analytics 4, or backfill from your warehouse through our Snowflake and BigQuery connectors.</div>
+          <div data-mtx="accordion" data-summary="Do you charge per seat?">Never. Every plan includes unlimited seats, so the whole company can explore data without license math.</div>
+          <div data-mtx="accordion" data-summary="What happens if I exceed my monthly users?">We will let you know at 80% and 100% of your limit. Tracking keeps working and you can upgrade at any time — we never drop your data.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mtx-py-8 mtx-py-md-10" id="newsletter" aria-labelledby="tpl-lp-cta-title">
+      <div data-mtx="container">
+        <div class="tpl-lp-cta mtx-p-3 mtx-p-md-6 mtx-rounded-3">
+          <div data-mtx="grid" data-spacing="5" data-align="center">
+            <div data-mtx="grid" data-xs="12" data-md="7">
+              <h2 id="tpl-lp-cta-title" class="mtx-typography--h4 mtx-fw-bold mtx-mb-1_5">Start your 14-day free trial</h2>
+              <p class="mtx-typography--body1 mtx-mb-3">Join 4,000+ teams building better products with Lumen. Get product tips and launch updates once a month — unsubscribe anytime.</p>
+              <button class="mtx-button mtx-button--outlined" data-mtx="button" data-color="inherit" type="button" data-mtx-dialog-open="tpl-lp-demo">
+                <span class="mtx-button__icon material-icons" aria-hidden="true">play_circle</span>
+                Watch the demo first
+              </button>
+            </div>
+            <div data-mtx="grid" data-xs="12" data-md="5">
+              <form data-mtx="paper" data-elevation="4" class="mtx-p-3 mtx-rounded-3" id="tpl-lp-newsletter" novalidate aria-label="Free trial sign-up">
+                <div class="mtx-d-flex mtx-flex-column mtx-flex-sm-row mtx-align-items-stretch mtx-align-items-sm-start mtx-gap-1_5">
+                  <div class="mtx-flex-1 mtx-min-w-0"><input data-mtx="text-field" data-label="Work email" data-size="large" type="email" id="tpl-lp-email" name="email" autocomplete="email" required></div>
+                  <button class="mtx-button mtx-button--contained mtx-flex-shrink-0" data-mtx="button" data-size="large" type="submit">Get started</button>
+                </div>
+                <small class="mtx-d-block mtx-mt-1_5 mtx-typography--caption mtx-color-text-secondary">By signing up you agree to our Terms and Privacy Policy.</small>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mtx-pt-8 mtx-pb-4 mtx-border-top mtx-bg-paper">
+    <div data-mtx="container">
+      <div data-mtx="grid" data-spacing="4">
+        <div data-mtx="grid" data-xs="12" data-md="4">
+          <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1_5 mtx-color-text-primary mtx-text-decoration-none mtx-typography--h6 mtx-fw-bold" href="#top" aria-label="Lumen home">
+            <span class="tpl-lp-logo mtx-d-inline-flex mtx-align-items-center mtx-justify-content-center"><span class="material-icons" aria-hidden="true">insights</span></span>
+            Lumen
+          </a>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-2 mtx-mb-2_5">Product analytics, session replay and feedback for teams that ship fast. Made in San Francisco and Lisbon.</p>
+          <div class="mtx-d-flex mtx-gap-0_5 mtx-color-text-secondary">
+            <a class="mtx-icon-button" data-mtx="icon-button" data-edge="start" href="#" aria-label="Lumen on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg></a>
+            <a class="mtx-icon-button" data-mtx="icon-button" href="#" aria-label="Lumen on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3zm-1.08 16.17h1.7L7.4 4.74H5.58l11.09 14.43z"/></svg></a>
+            <a class="mtx-icon-button" data-mtx="icon-button" href="#" aria-label="Lumen on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+          </div>
+        </div>
+        <nav data-mtx="grid" data-xs="6" data-sm="3" data-md="2" aria-labelledby="tpl-lp-f-product">
+          <h2 id="tpl-lp-f-product" class="mtx-typography--subtitle2 mtx-mb-2">Product</h2>
+          <div class="mtx-d-flex mtx-flex-column mtx-align-items-start mtx-gap-1_5 mtx-typography--body2">
+            <a data-mtx="link" data-color="text-secondary" href="#features">Features</a>
+            <a data-mtx="link" data-color="text-secondary" href="#pricing">Pricing</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Integrations</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Changelog</a>
+          </div>
+        </nav>
+        <nav data-mtx="grid" data-xs="6" data-sm="3" data-md="2" aria-labelledby="tpl-lp-f-company">
+          <h2 id="tpl-lp-f-company" class="mtx-typography--subtitle2 mtx-mb-2">Company</h2>
+          <div class="mtx-d-flex mtx-flex-column mtx-align-items-start mtx-gap-1_5 mtx-typography--body2">
+            <a data-mtx="link" data-color="text-secondary" href="#">About</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Careers</a>
+            <a data-mtx="link" data-color="text-secondary" href="../blog/index.html">Blog</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Press</a>
+          </div>
+        </nav>
+        <nav data-mtx="grid" data-xs="6" data-sm="3" data-md="2" aria-labelledby="tpl-lp-f-resources">
+          <h2 id="tpl-lp-f-resources" class="mtx-typography--subtitle2 mtx-mb-2">Resources</h2>
+          <div class="mtx-d-flex mtx-flex-column mtx-align-items-start mtx-gap-1_5 mtx-typography--body2">
+            <a data-mtx="link" data-color="text-secondary" href="#">Documentation</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">API reference</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Community</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Status</a>
+          </div>
+        </nav>
+        <nav data-mtx="grid" data-xs="6" data-sm="3" data-md="2" aria-labelledby="tpl-lp-f-legal">
+          <h2 id="tpl-lp-f-legal" class="mtx-typography--subtitle2 mtx-mb-2">Legal</h2>
+          <div class="mtx-d-flex mtx-flex-column mtx-align-items-start mtx-gap-1_5 mtx-typography--body2">
+            <a data-mtx="link" data-color="text-secondary" href="#">Privacy</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Terms</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Security</a>
+            <a data-mtx="link" data-color="text-secondary" href="#">Cookies</a>
+          </div>
+        </nav>
+      </div>
+      <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-justify-content-between mtx-gap-2 mtx-mt-6 mtx-pt-3 mtx-border-top mtx-typography--body2 mtx-color-text-secondary">
+        <span>© 2026 Lumen Analytics, Inc. All rights reserved.</span>
+        <a data-mtx="link" data-color="text-secondary" href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <div data-mtx="dialog" id="tpl-lp-demo" class="mtx-dialog--max-lg" data-title="Lumen in 2 minutes">
+    <div class="mtx-dialog__content">
+      <div class="mtx-border mtx-rounded-3 mtx-overflow-hidden" role="img" aria-label="Product tour preview">
+        <div class="tpl-lp-mock__chrome mtx-d-flex mtx-align-items-center mtx-gap-0_5 mtx-py-1 mtx-px-1_5 mtx-border-bottom mtx-bg-default" aria-hidden="true"><i></i><i></i><i></i><span class="tpl-lp-mock__url mtx-ms-1_5"></span></div>
+        <div class="tpl-lp-demo-stage mtx-d-flex mtx-align-items-center mtx-justify-content-center" aria-hidden="true"><span data-mtx="avatar" data-size="large" data-color="primary" data-icon="play_arrow"></span></div>
+      </div>
+    </div>
+    <div class="mtx-dialog__actions">
+      <button class="mtx-button mtx-button--text" data-mtx="button" type="button" data-mtx-dialog-close>Close</button>
+      <a class="mtx-button mtx-button--contained" data-mtx="button" href="#newsletter" data-mtx-dialog-close>Start free trial</a>
+    </div>
+  </div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      'use strict';
+
+      var $ = function (sel, root) { return (root || document).querySelector(sel); };
+      var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+      // Navegación activa según la sección visible (aria-current + utilidades de color)
+      var links = $$('#tpl-lp-nav a');
+      var setActive = function (id) {
+        links.forEach(function (a) {
+          var active = a.getAttribute('href') === '#' + id;
+          if (active) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+          a.classList.toggle('mtx-color-primary', active);
+          a.classList.toggle('mtx-color-text-secondary', !active);
+        });
+      };
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) { if (entry.isIntersecting) setActive(entry.target.id); });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        ['top', 'features', 'how-it-works', 'testimonials', 'pricing', 'faq', 'newsletter'].forEach(function (id) { io.observe(document.getElementById(id)); });
+      }
+
+      // Prueba gratuita: validación del correo de trabajo y confirmación con Snackbar
+      var field = Materix.getInstance($('#tpl-lp-email').closest('.mtx-text-field'));
+      field.input.addEventListener('input', function () { field.clearError(); });
+      $('#tpl-lp-newsletter').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var value = field.value.trim();
+        var error = !value ? 'Enter your work email.'
+          : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value) ? 'Enter a valid email address, like name@company.com.'
+          : /@(gmail|yahoo|hotmail|outlook)\./i.test(value) ? 'Please use your work email address.' : '';
+        if (error) { field.setError(error); field.focus(); return; }
+        Materix.snackbar.show({ message: 'Check ' + value + ' to activate your trial.', duration: 5000 });
+        field.value = '';
+        field.clearError();
+      });
+    });
+  </script>
+</body>
+</html>

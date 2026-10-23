@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgot password · Materix UI Templates</title>
+  <meta name="description" content="Password recovery flow: request link, code verification and new password.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="../shared/template.js"></script>
+  <style>
+    /* D: fondo de marca con halo del color primario (adaptado al tema por tokens) */
+    .tpl-forgot {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--mtx-color-primary) 14%, transparent), transparent),
+        var(--mtx-color-background-default);
+    }
+
+    /* D: código de un solo uso en 6 casillas (MUI no tiene OTP); borde idéntico al TextField outlined */
+    .tpl-forgot-otp { grid-template-columns: repeat(6, minmax(0, 52px)); }
+    .tpl-forgot-otp input {
+      width: 100%; height: 56px; box-sizing: border-box; text-align: center;
+      font: var(--mtx-type-h5); color: var(--mtx-color-text-primary); caret-color: var(--mtx-color-primary);
+      background: transparent; outline: none;
+      border: 1px solid color-mix(in srgb, var(--mtx-color-text-primary) 23%, transparent);
+      border-radius: var(--mtx-shape-radius);
+      transition: border-color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+    }
+    .tpl-forgot-otp input:hover { border-color: var(--mtx-color-text-primary); }
+    .tpl-forgot-otp input:focus { border-color: var(--mtx-color-primary); box-shadow: inset 0 0 0 1px var(--mtx-color-primary); }
+    .tpl-forgot-otp input[aria-invalid='true'] { border-color: var(--mtx-color-error); }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-forgot-main">Skip to password reset</a>
+  <div class="tpl-forgot mtx-d-flex mtx-flex-column mtx-min-vh-100">
+    <header class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-gap-1 mtx-px-2 mtx-py-1_5 mtx-typography--body2">
+      <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-0_5" data-mtx="link" data-underline="hover" href="../index.html">
+        <span class="material-icons" aria-hidden="true">arrow_back</span>
+        All templates
+      </a>
+      <button type="button" data-mtx="icon-button" data-mtx-theme-toggle>
+        <span class="material-icons" aria-hidden="true">dark_mode</span>
+      </button>
+    </header>
+
+    <main id="tpl-forgot-main" class="mtx-flex-1 mtx-d-flex mtx-align-items-start mtx-align-items-sm-center mtx-justify-content-center mtx-px-2 mtx-pb-6" tabindex="-1">
+      <div data-mtx="container" data-max-width="xs" data-disable-gutters>
+        <div class="mtx-p-3 mtx-p-sm-4 mtx-elevation-2" data-mtx="card" data-variant="outlined">
+          <a class="mtx-d-inline-flex mtx-align-items-center mtx-align-self-start mtx-gap-1 mtx-mb-3 mtx-typography--h6 mtx-color-text-primary mtx-text-decoration-none" href="../index.html" aria-label="Lumen home">
+            <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <rect width="32" height="32" rx="8" fill="var(--mtx-color-primary)" />
+              <path d="M9 22.5V9.5h3.2v10.2H22v2.8H9Z" fill="var(--mtx-color-primary-contrast)" />
+              <circle cx="21" cy="12" r="3" fill="var(--mtx-color-primary-contrast)" opacity="0.7" />
+            </svg>
+            Lumen
+          </a>
+
+          <ol id="tpl-forgot-stepper" class="mtx-mb-3" data-mtx="stepper" data-alternative-label data-finished-panel="#tpl-forgot-step-4" aria-label="Password reset progress">
+            <li data-label="Email" data-panel="#tpl-forgot-step-1"></li>
+            <li data-label="Verify code" data-panel="#tpl-forgot-step-2"></li>
+            <li data-label="New password" data-panel="#tpl-forgot-step-3"></li>
+          </ol>
+
+          <!-- Paso 1 -->
+          <section id="tpl-forgot-step-1" aria-labelledby="tpl-forgot-h1">
+            <h1 id="tpl-forgot-h1" class="mtx-typography--h5 mtx-mb-0_5" tabindex="-1">Forgot your password?</h1>
+            <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-3">Enter the email linked to your account and we'll send you a 6-digit verification code.</p>
+            <form id="tpl-forgot-form-1" data-mtx="stack" data-spacing="2.5" novalidate>
+              <input id="tpl-forgot-email" data-mtx="text-field" data-label="Email" data-start-icon="mail_outline" type="email" name="email" autocomplete="email" inputmode="email" required />
+              <div data-mtx="stack" data-spacing="1">
+                <button id="tpl-forgot-send" type="submit" class="mtx-button mtx-button--contained mtx-button--large mtx-button--full-width" data-mtx="button">Send code</button>
+                <a class="mtx-button mtx-button--text mtx-button--full-width" data-mtx="button" href="../sign-in/">Back to sign in</a>
+              </div>
+            </form>
+          </section>
+
+          <!-- Paso 2 -->
+          <section id="tpl-forgot-step-2" aria-labelledby="tpl-forgot-h2" hidden>
+            <h1 id="tpl-forgot-h2" class="mtx-typography--h5 mtx-mb-0_5" tabindex="-1">Check your email</h1>
+            <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-3">We sent a code to <strong id="tpl-forgot-sent-to">your inbox</strong>. It expires in 10 minutes.</p>
+            <div class="mtx-mb-3" data-mtx="alert" data-severity="info" data-variant="outlined">This is a demo: use the code <strong>246810</strong>.</div>
+            <form id="tpl-forgot-form-2" data-mtx="stack" data-spacing="2.5" novalidate>
+              <fieldset id="tpl-forgot-otp-field" class="mtx-form-control mtx-d-flex mtx-w-100">
+                <legend class="mtx-form-label mtx-mb-1_5">Verification code</legend>
+                <div id="tpl-forgot-otp" class="tpl-forgot-otp mtx-d-grid mtx-gap-1 mtx-justify-content-center mtx-w-100">
+                  <input type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="Digit 1 of 6" aria-describedby="tpl-forgot-otp-error" />
+                  <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2 of 6" aria-describedby="tpl-forgot-otp-error" />
+                  <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3 of 6" aria-describedby="tpl-forgot-otp-error" />
+                  <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4 of 6" aria-describedby="tpl-forgot-otp-error" />
+                  <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5 of 6" aria-describedby="tpl-forgot-otp-error" />
+                  <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6 of 6" aria-describedby="tpl-forgot-otp-error" />
+                </div>
+                <p id="tpl-forgot-otp-error" class="mtx-form-helper-text mtx-form-helper-text--error mtx-w-100 mtx-text-center mtx-mt-1" role="alert"></p>
+              </fieldset>
+              <div data-mtx="stack" data-spacing="1">
+                <button id="tpl-forgot-verify" type="submit" class="mtx-button mtx-button--contained mtx-button--large mtx-button--full-width" data-mtx="button">Verify code</button>
+                <button type="button" class="mtx-button mtx-button--text mtx-button--full-width" data-mtx="button" data-mtx-stepper-action="back" data-target="#tpl-forgot-stepper">Use a different email</button>
+              </div>
+              <p class="mtx-typography--body2 mtx-color-text-secondary mtx-text-center">Didn't get it? <button type="button" id="tpl-forgot-resend" data-mtx="link" disabled>Resend in 30s</button></p>
+            </form>
+          </section>
+
+          <!-- Paso 3 -->
+          <section id="tpl-forgot-step-3" aria-labelledby="tpl-forgot-h3" hidden>
+            <h1 id="tpl-forgot-h3" class="mtx-typography--h5 mtx-mb-0_5" tabindex="-1">Set a new password</h1>
+            <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-3">Choose a strong password you don't use anywhere else.</p>
+            <form id="tpl-forgot-form-3" data-mtx="stack" data-spacing="2.5" novalidate>
+              <input id="tpl-forgot-new" data-mtx="text-field" data-label="New password" data-password-toggle data-helper-text="At least 8 characters, with a number and a symbol." type="password" name="password" autocomplete="new-password" required />
+              <input id="tpl-forgot-confirm" data-mtx="text-field" data-label="Confirm new password" data-password-toggle type="password" name="confirm" autocomplete="new-password" required />
+              <input id="tpl-forgot-signout" data-mtx="checkbox" type="checkbox" name="signOutAll" data-label="Sign out of all other devices" checked />
+              <button id="tpl-forgot-save" type="submit" class="mtx-button mtx-button--contained mtx-button--large mtx-button--full-width" data-mtx="button">Reset password</button>
+            </form>
+          </section>
+
+          <!-- Final -->
+          <section id="tpl-forgot-step-4" class="mtx-text-center" aria-labelledby="tpl-forgot-h4" hidden>
+            <div class="mtx-d-flex mtx-justify-content-center mtx-mb-2">
+              <span data-mtx="avatar" data-icon="lock_reset" data-color="success" data-size="56" aria-hidden="true"></span>
+            </div>
+            <h1 id="tpl-forgot-h4" class="mtx-typography--h5 mtx-mb-2" tabindex="-1">Password updated</h1>
+            <div class="mtx-mb-3 mtx-text-start" data-mtx="alert" data-severity="success">Your password was changed. We've emailed you a confirmation for your records.</div>
+            <a class="mtx-button mtx-button--contained mtx-button--large mtx-button--full-width" data-mtx="button" href="../sign-in/">Back to sign in</a>
+          </section>
+
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-text-center mtx-mt-3">Need help? <a data-mtx="link" href="mailto:support@lumen.app">Contact support</a></p>
+          <p id="tpl-forgot-status" class="mtx-visually-hidden" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      var DEMO_CODE = '246810';
+      var $ = function (id) { return document.getElementById(id); };
+      var field = function (id) { return Materix.getInstance($(id)); };
+      var stepperEl = $('tpl-forgot-stepper');
+      var stepper = Materix.getInstance(stepperEl);
+      var boxes = Array.prototype.slice.call($('tpl-forgot-otp').querySelectorAll('input'));
+      var resendBtn = $('tpl-forgot-resend');
+      var newInput = $('tpl-forgot-new');
+      var confirmInput = $('tpl-forgot-confirm');
+      var resendTimer = null;
+      var codeVerified = false;
+
+      /**
+       * Anuncia un estado de carga a lectores de pantalla.
+       * @param {string} text Mensaje (vacío para limpiar).
+       */
+      var announce = function (text) { $('tpl-forgot-status').textContent = text; };
+
+      /**
+       * Simula una petición con el estado de carga nativo del botón.
+       * @param {string} id Id del botón de envío.
+       * @param {string} busyText Texto anunciado durante la carga.
+       * @param {Function} done Callback al terminar.
+       */
+      var withLoading = function (id, busyText, done) {
+        var button = field(id);
+        button.setLoading(true);
+        announce(busyText);
+        window.setTimeout(function () {
+          button.setLoading(false);
+          announce('');
+          done();
+        }, 1100);
+      };
+
+      /**
+       * Valida el correo del paso 1 y pinta el error del TextField.
+       * @param {boolean} [report=true] Si debe mostrar el error.
+       * @returns {boolean} `true` si es válido.
+       */
+      var validateEmail = function (report) {
+        var value = $('tpl-forgot-email').value.trim();
+        var message = !value ? 'Email is required.' : (EMAIL_RE.test(value) ? '' : 'Enter a valid email address.');
+        if (report !== false) field('tpl-forgot-email').setError(message);
+        return !message;
+      };
+
+      /**
+       * Valida la nueva contraseña y su confirmación.
+       * @param {boolean} [report=true] Si debe mostrar los errores.
+       * @returns {HTMLInputElement|null} Primer campo inválido o `null`.
+       */
+      var validatePasswords = function (report) {
+        var pw = newInput.value;
+        var pwError = pw.length < 8 || !/\d/.test(pw) || !/[^A-Za-z0-9]/.test(pw) ? 'Use at least 8 characters, including a number and a symbol.' : '';
+        var confirmError = !confirmInput.value ? 'Please confirm your new password.' : (confirmInput.value !== pw ? 'Passwords don’t match.' : '');
+        if (report !== false) {
+          field('tpl-forgot-new').setError(pwError);
+          field('tpl-forgot-confirm').setError(confirmError);
+        }
+        return pwError ? newInput : (confirmError ? confirmInput : null);
+      };
+
+      // Guardia del Stepper: no se avanza sin validar el paso que se abandona (evento cancelable).
+      var STEP_IS_VALID = [
+        function () { return validateEmail(false); },
+        function () { return codeVerified; },
+        function () { return !validatePasswords(false); }
+      ];
+      stepperEl.addEventListener('mtx:stepper:change', function (event) {
+        var from = event.detail.previousStep;
+        var to = event.detail.activeStep;
+        if (to > from && STEP_IS_VALID[from] && !STEP_IS_VALID[from]()) { event.preventDefault(); return; }
+        if (to === 0) { codeVerified = false; window.clearInterval(resendTimer); }
+        // Tras el cambio, mueve el foco al título del nuevo paso.
+        window.setTimeout(function () {
+          var heading = $('tpl-forgot-h' + (to + 1));
+          if (to === 1) boxes[0].focus(); else if (heading) heading.focus();
+        });
+      });
+
+      /** Inicia la cuenta atrás para reenviar el código. */
+      var startResendCountdown = function () {
+        var seconds = 30;
+        resendBtn.disabled = true;
+        resendBtn.textContent = 'Resend in ' + seconds + 's';
+        window.clearInterval(resendTimer);
+        resendTimer = window.setInterval(function () {
+          seconds--;
+          if (seconds <= 0) {
+            window.clearInterval(resendTimer);
+            resendBtn.disabled = false;
+            resendBtn.textContent = 'Resend code';
+          } else {
+            resendBtn.textContent = 'Resend in ' + seconds + 's';
+          }
+        }, 1000);
+      };
+
+      /**
+       * Muestra u oculta el error del código.
+       * @param {string} message Mensaje o cadena vacía.
+       */
+      var setOtpError = function (message) {
+        $('tpl-forgot-otp-error').textContent = message;
+        $('tpl-forgot-otp-field').classList.toggle('mtx-form-control--error', !!message);
+        boxes.forEach(function (b) { b.setAttribute('aria-invalid', String(!!message)); });
+      };
+
+      // Paso 1: correo
+      $('tpl-forgot-form-1').addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (!validateEmail()) { $('tpl-forgot-email').focus(); return; }
+        var value = $('tpl-forgot-email').value.trim();
+        withLoading('tpl-forgot-send', 'Sending code…', function () {
+          var parts = value.split('@');
+          $('tpl-forgot-sent-to').textContent = parts[0].charAt(0) + '•••@' + parts[1];
+          boxes.forEach(function (b) { b.value = ''; });
+          setOtpError('');
+          codeVerified = false;
+          stepper.next();
+          startResendCountdown();
+          Materix.snackbar.show('Verification code sent to ' + value);
+        });
+      });
+      $('tpl-forgot-email').addEventListener('input', function () { field('tpl-forgot-email').clearError(); });
+
+      // Paso 2: código
+      boxes.forEach(function (box, index) {
+        box.addEventListener('input', function () {
+          box.value = box.value.replace(/\D/g, '').slice(-1);
+          if (box.value && index < boxes.length - 1) boxes[index + 1].focus();
+          if ($('tpl-forgot-otp-error').textContent) setOtpError('');
+        });
+        box.addEventListener('keydown', function (event) {
+          if (event.key === 'Backspace' && !box.value && index > 0) { boxes[index - 1].focus(); boxes[index - 1].value = ''; event.preventDefault(); }
+          if (event.key === 'ArrowLeft' && index > 0) { boxes[index - 1].focus(); event.preventDefault(); }
+          if (event.key === 'ArrowRight' && index < boxes.length - 1) { boxes[index + 1].focus(); event.preventDefault(); }
+        });
+        box.addEventListener('paste', function (event) {
+          var digits = (event.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+          if (!digits) return;
+          event.preventDefault();
+          digits.split('').forEach(function (d, i) { if (boxes[i]) boxes[i].value = d; });
+          boxes[Math.min(digits.length, boxes.length) - 1].focus();
+        });
+        box.addEventListener('focus', function () { box.select(); });
+      });
+
+      $('tpl-forgot-form-2').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var code = boxes.map(function (b) { return b.value; }).join('');
+        if (code.length < 6) { setOtpError('Enter all 6 digits of the code.'); boxes[code.length].focus(); return; }
+        withLoading('tpl-forgot-verify', 'Verifying…', function () {
+          if (code !== DEMO_CODE) { setOtpError('That code is incorrect. Check the latest email and try again.'); boxes[0].focus(); return; }
+          codeVerified = true;
+          window.clearInterval(resendTimer);
+          stepper.next();
+        });
+      });
+
+      resendBtn.addEventListener('click', function () {
+        startResendCountdown();
+        Materix.snackbar.show('A new code is on its way.');
+      });
+
+      // Paso 3: nueva contraseña
+      [newInput, confirmInput].forEach(function (input) {
+        input.addEventListener('input', function () { if (input.getAttribute('aria-invalid') === 'true') validatePasswords(); });
+      });
+
+      $('tpl-forgot-form-3').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var invalid = validatePasswords();
+        if (invalid) { invalid.focus(); return; }
+        withLoading('tpl-forgot-save', 'Saving…', function () { stepper.next(); });
+      });
+    });
+  </script>
+</body>
+</html>

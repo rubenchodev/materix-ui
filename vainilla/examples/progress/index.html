@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Feedback</span>
+        <h1>Progress</h1>
+        <p class="demo-lead">Circular and linear indicators that show an operation is in progress or how much is left before it finishes.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#circular">Circular</a>
+      <a href="#linear">Linear</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-label">With label</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single element with <code>data-mtx="circular-progress"</code> or <code>data-mtx="linear-progress"</code> generates the SVG or the bars, the <code>role="progressbar"</code> and the accessible name. Without <code>data-value</code> it is indeterminate; with <code>data-value</code> it becomes determinate.</p>
+      <div class="demo-row">
+        <div data-mtx="circular-progress"></div>
+        <div data-mtx="circular-progress" data-value="75"></div>
+      </div>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="linear-progress"></div>
+        <div data-mtx="linear-progress" data-value="40"></div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="circular-progress"&gt;&lt;/div&gt;
+&lt;div data-mtx="circular-progress" data-value="75"&gt;&lt;/div&gt;
+&lt;div data-mtx="linear-progress"&gt;&lt;/div&gt;
+&lt;div data-mtx="linear-progress" data-value="40"&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="circular">
+      <h2>Circular</h2>
+      <p>As in MUI: <code>indeterminate</code> (spins with a stroke that grows and shrinks), <code>determinate</code> (an arc proportional to <code>data-value</code>) and <code>data-disable-shrink</code> (spin only, useful when the main thread is very busy). <code>data-track</code> adds the background ring.</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">Indeterminate</span>
+          <div class="demo-row"><div data-mtx="circular-progress"></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disable shrink</span>
+          <div class="demo-row"><div data-mtx="circular-progress" data-disable-shrink></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Determinate · 25 / 50 / 100</span>
+          <div class="demo-row">
+            <div data-mtx="circular-progress" data-value="25"></div>
+            <div data-mtx="circular-progress" data-value="50"></div>
+            <div data-mtx="circular-progress" data-value="100"></div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">With track (data-track)</span>
+          <div class="demo-row">
+            <div data-mtx="circular-progress" data-value="65" data-track></div>
+            <div data-mtx="circular-progress" data-track></div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="circular-progress" data-disable-shrink&gt;&lt;/div&gt;
+&lt;div data-mtx="circular-progress" data-value="50"&gt;&lt;/div&gt;
+&lt;div data-mtx="circular-progress" data-value="65" data-track&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="linear">
+      <h2>Linear</h2>
+      <p>Four variants: <code>indeterminate</code>, <code>determinate</code>, <code>buffer</code> (inferred from <code>data-value-buffer</code>) and <code>query</code> (reversed indeterminate, for the phase before loading starts). 4px high, as in MUI.</p>
+      <div class="demo-stack demo-wide">
+        <div class="demo-group">
+          <span class="demo-label">Indeterminate</span>
+          <div data-mtx="linear-progress"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Determinate · 60</span>
+          <div data-mtx="linear-progress" data-value="60"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Buffer · 30 / 55</span>
+          <div data-mtx="linear-progress" data-value="30" data-value-buffer="55"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Query</span>
+          <div data-mtx="linear-progress" data-variant="query"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Rounded (data-rounded)</span>
+          <div data-mtx="linear-progress" data-value="70" data-rounded></div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="linear-progress" data-value="30" data-value-buffer="55"&gt;&lt;/div&gt;
+&lt;div data-mtx="linear-progress" data-variant="query"&gt;&lt;/div&gt;
+&lt;div data-mtx="linear-progress" data-value="70" data-rounded&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p><code>data-size</code> sets the diameter in px (40 by default) and <code>data-thickness</code> the stroke width (3.6). The height of the linear bar is changed with the <code>--mtx-linear-progress-height</code> variable.</p>
+      <div class="demo-group">
+        <span class="demo-label">Circular · 16 / 24 / 40 / 56 / 80px</span>
+        <div class="demo-row">
+          <div data-mtx="circular-progress" data-size="16"></div>
+          <div data-mtx="circular-progress" data-size="24"></div>
+          <div data-mtx="circular-progress"></div>
+          <div data-mtx="circular-progress" data-size="56"></div>
+          <div data-mtx="circular-progress" data-size="80" data-value="60"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Thickness · 2 / 3.6 / 6</span>
+        <div class="demo-row">
+          <div data-mtx="circular-progress" data-thickness="2" data-value="70"></div>
+          <div data-mtx="circular-progress" data-value="70"></div>
+          <div data-mtx="circular-progress" data-thickness="6" data-value="70"></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Next to a 40px button</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button">Retry</button>
+          <div data-mtx="circular-progress"></div>
+          <div data-mtx="circular-progress" data-size="24"></div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="circular-progress" data-size="24"&gt;&lt;/div&gt;
+&lt;div data-mtx="circular-progress" data-thickness="6" data-value="70"&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="with-label">
+      <h2>With label</h2>
+      <p><code>data-show-label</code> shows the rounded percentage: centered in the circle and to the right of the bar. The visual figure is <code>aria-hidden</code>; screen readers get the value from <code>aria-valuenow</code>.</p>
+      <div class="demo-row">
+        <div data-mtx="circular-progress" data-value="10" data-show-label></div>
+        <div data-mtx="circular-progress" data-value="48" data-show-label data-track></div>
+        <div data-mtx="circular-progress" data-value="100" data-show-label data-color="success"></div>
+      </div>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="linear-progress" data-value="35" data-show-label></div>
+        <div data-mtx="linear-progress" data-value="82" data-show-label data-color="secondary"></div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="circular-progress" data-value="48" data-show-label&gt;&lt;/div&gt;
+&lt;div data-mtx="linear-progress" data-value="35" data-show-label&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> accepts the palette colors and <code>inherit</code> (takes the container's text color). The linear track is lightened in the light theme and darkened in the dark theme.</p>
+      <div class="demo-row">
+        <div data-mtx="circular-progress" data-color="primary"></div>
+        <div data-mtx="circular-progress" data-color="secondary"></div>
+        <div data-mtx="circular-progress" data-color="error"></div>
+        <div data-mtx="circular-progress" data-color="warning"></div>
+        <div data-mtx="circular-progress" data-color="info"></div>
+        <div data-mtx="circular-progress" data-color="success"></div>
+        <div class="mtx-color-text-secondary"><div data-mtx="circular-progress" data-color="inherit"></div></div>
+      </div>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="linear-progress" data-value="50" data-color="primary"></div>
+        <div data-mtx="linear-progress" data-value="50" data-color="secondary"></div>
+        <div data-mtx="linear-progress" data-value="50" data-color="error"></div>
+        <div data-mtx="linear-progress" data-value="50" data-color="warning"></div>
+        <div data-mtx="linear-progress" data-value="50" data-color="info"></div>
+        <div data-mtx="linear-progress" data-color="success"></div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="circular-progress" data-color="secondary"&gt;&lt;/div&gt;
+&lt;div data-mtx="linear-progress" data-value="50" data-color="warning"&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States and accessibility</h2>
+      <p>The default accessible name is "Loading" / "Cargando" depending on the language. Customize it with <code>data-label</code>, <code>aria-label</code> or <code>aria-labelledby</code>. Mark the region being updated with <code>aria-busy="true"</code> while it loads and remove it when done. With <code>prefers-reduced-motion</code> the animations slow down and the stroke stops shrinking.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Custom name (aria-labelledby)</span>
+          <span id="progress-upload-title" class="mtx-typography--body2">Uploading report.pdf</span>
+          <div data-mtx="linear-progress" data-value="64" aria-labelledby="progress-upload-title"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Busy region (aria-busy)</span>
+          <div class="demo-row" id="progress-busy-region" aria-busy="true" aria-live="polite">
+            <div data-mtx="circular-progress" data-size="24" data-label="Loading comments"></div>
+            <span class="mtx-typography--body2">Loading comments…</span>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;section aria-busy="true" aria-live="polite"&gt;
+  &lt;div data-mtx="circular-progress" data-size="24" data-label="Loading comments"&gt;&lt;/div&gt;
+&lt;/section&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>File upload with value and buffer, storage usage on a custom scale (<code>data-max</code>) and a loading button built with the <code>Materix.createCircularProgress()</code> helper.</p>
+      <div class="demo-grid-3">
+        <div class="mtx-card" data-mtx="card">
+          <div class="mtx-card__content">
+            <div data-mtx="stack" data-spacing="1">
+              <span class="mtx-typography--subtitle2">Uploading 3 files</span>
+              <div data-mtx="linear-progress" id="progress-upload" data-value="0" data-value-buffer="10" data-show-label data-label="File upload"></div>
+              <span class="mtx-typography--caption mtx-color-text-secondary" id="progress-upload-status">Preparing…</span>
+            </div>
+          </div>
+        </div>
+        <div class="mtx-card" data-mtx="card">
+          <div class="mtx-card__content">
+            <div data-mtx="stack" data-spacing="1">
+              <span class="mtx-typography--subtitle2" id="progress-seats-title">Team seats · 7 of 10</span>
+              <div data-mtx="linear-progress" data-max="10" data-value="7" data-rounded aria-labelledby="progress-seats-title"></div>
+              <span class="mtx-typography--subtitle2 mtx-mt-2" id="progress-storage-title">Storage · 46 of 50 GB</span>
+              <div data-mtx="linear-progress" data-max="50" data-value="46" data-color="warning" data-rounded aria-labelledby="progress-storage-title"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mtx-card" data-mtx="card">
+          <div class="mtx-card__content">
+            <p class="mtx-typography--subtitle2 mtx-mb-2">Save changes</p>
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--contained" data-mtx="button" id="progress-save">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>The linear bar fills the width of its column; the circular indicator is centered with flex utilities.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="4">
+          <div data-mtx="linear-progress" data-value="25" data-show-label></div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="4">
+          <div data-mtx="linear-progress" data-value="50" data-show-label data-color="secondary"></div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="4">
+          <div class="mtx-d-flex mtx-justify-content-center">
+            <div data-mtx="circular-progress" data-value="75" data-show-label></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>value</code> (getter/setter), <code>setValue(n)</code>, <code>variant</code>, <code>color</code> and, on the linear one, <code>valueBuffer</code> / <code>setBuffer(n)</code>.</p>
+      <div class="demo-row">
+        <div data-mtx="circular-progress" id="progress-api-circular" data-value="30" data-show-label data-size="56"></div>
+      </div>
+      <div class="demo-stack demo-wide">
+        <div data-mtx="linear-progress" id="progress-api-linear" data-value="30" data-show-label></div>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="progress-api-dec">-10</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="progress-api-inc">+10</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="progress-api-color">Change color</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="progress-api-indet">variant = indeterminate</button>
+      </div>
+      <pre class="demo-log" id="progress-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const linear = Materix.getInstance(document.getElementById('progress-api-linear'));
+linear.setValue(linear.value + 10);
+linear.color = 'success';
+linear.variant = 'indeterminate';
+
+// Spinner para un botón en carga (decorativo: el botón lleva aria-busy)
+const spinner = Materix.createCircularProgress({ size: 20, color: 'inherit', decorative: true });
+button.prepend(spinner);</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR you can render the full structure; the component reuses it without duplicating nodes and only computes the radius, the arc and the ARIA attributes.</p>
+      <div class="demo-row">
+        <span class="mtx-circular-progress" data-mtx="circular-progress" data-value="60">
+          <svg class="mtx-circular-progress__svg" viewBox="22 22 44 44" aria-hidden="true" focusable="false">
+            <circle class="mtx-circular-progress__circle"></circle>
+          </svg>
+        </span>
+      </div>
+      <div class="demo-stack demo-wide">
+        <div class="mtx-linear-progress" data-mtx="linear-progress" data-value="60">
+          <span class="mtx-linear-progress__track">
+            <span class="mtx-linear-progress__dashed"></span>
+            <span class="mtx-linear-progress__bar mtx-linear-progress__bar1"></span>
+            <span class="mtx-linear-progress__bar mtx-linear-progress__bar2"></span>
+          </span>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;span class="mtx-circular-progress" data-mtx="circular-progress" data-value="60"&gt;
+  &lt;svg class="mtx-circular-progress__svg" viewBox="22 22 44 44" aria-hidden="true" focusable="false"&gt;
+    &lt;circle class="mtx-circular-progress__circle"&gt;&lt;/circle&gt;
+  &lt;/svg&gt;
+&lt;/span&gt;
+
+&lt;div class="mtx-linear-progress" data-mtx="linear-progress" data-value="60"&gt;
+  &lt;span class="mtx-linear-progress__track"&gt;
+    &lt;span class="mtx-linear-progress__dashed"&gt;&lt;/span&gt;
+    &lt;span class="mtx-linear-progress__bar mtx-linear-progress__bar1"&gt;&lt;/span&gt;
+    &lt;span class="mtx-linear-progress__bar mtx-linear-progress__bar2"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var log = document.getElementById('progress-log');
+      function write(text) { log.textContent = text + '\n' + log.textContent; }
+      function inst(id) { return Materix.getInstance(document.getElementById(id)); }
+
+      // API
+      var colors = ['primary', 'secondary', 'success', 'warning', 'error', 'info'];
+      var colorIndex = 0;
+      function step(delta) {
+        ['progress-api-circular', 'progress-api-linear'].forEach(function (id) {
+          var p = inst(id);
+          p.setValue(p.value + delta);
+        });
+        write('setValue(' + inst('progress-api-linear').value + ')');
+      }
+      document.getElementById('progress-api-dec').addEventListener('click', function () { step(-10); });
+      document.getElementById('progress-api-inc').addEventListener('click', function () { step(10); });
+      document.getElementById('progress-api-color').addEventListener('click', function () {
+        colorIndex = (colorIndex + 1) % colors.length;
+        inst('progress-api-circular').color = colors[colorIndex];
+        inst('progress-api-linear').color = colors[colorIndex];
+        write('color = "' + colors[colorIndex] + '"');
+      });
+      document.getElementById('progress-api-indet').addEventListener('click', function () {
+        inst('progress-api-circular').variant = 'indeterminate';
+        inst('progress-api-linear').variant = 'indeterminate';
+        write('variant = "indeterminate"');
+      });
+
+      // Subida simulada con buffer
+      var upload = inst('progress-upload');
+      var status = document.getElementById('progress-upload-status');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setInterval(function () {
+        var next = upload.value >= 100 ? 0 : upload.value + Math.round(Math.random() * 8);
+        upload.setValue(Math.min(100, next));
+        upload.setBuffer(Math.min(100, upload.value + 10 + Math.round(Math.random() * 10)));
+        status.textContent = upload.value >= 100 ? 'Completed' : Math.round(upload.value) + '% · 3 files';
+      }, reduce ? 1500 : 600);
+
+      // Botón de carga construido con el helper
+      var save = document.getElementById('progress-save');
+      save.addEventListener('click', function () {
+        if (save.getAttribute('aria-busy') === 'true') return;
+        var label = save.textContent;
+        var spinner = Materix.createCircularProgress({ size: 20, color: 'inherit', decorative: true });
+        save.setAttribute('aria-busy', 'true');
+        save.disabled = true;
+        save.textContent = 'Saving…';
+        save.prepend(spinner);
+        setTimeout(function () {
+          save.removeAttribute('aria-busy');
+          save.disabled = false;
+          save.textContent = label;
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>

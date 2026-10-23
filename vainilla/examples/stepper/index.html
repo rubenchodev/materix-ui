@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stepper · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Navigation</span>
+        <h1>Stepper</h1>
+        <p class="demo-lead">Shows progress through a sequence of numbered steps, horizontal or vertical, linear or with clickable steps, plus its compact mobile version.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#linear">Linear with actions</a>
+      <a href="#alternative-label">Alternative label</a>
+      <a href="#non-linear">Non-linear</a>
+      <a href="#vertical">Vertical</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#states">States</a>
+      <a href="#mobile-stepper">Mobile stepper</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>An <code>&lt;ol data-mtx="stepper"&gt;</code> with one <code>&lt;li data-label&gt;</code> per step. The component generates the numbered icon, the connectors and the accessible text ("Step 2 of 3"), and marks the active step with <code>aria-current="step"</code>. <code>data-active-step</code> is the index (starting at 0).</p>
+      <ol data-mtx="stepper" data-active-step="1" aria-label="Reset password">
+        <li data-label="Email"></li>
+        <li data-label="Verify code"></li>
+        <li data-label="New password"></li>
+      </ol>
+      <pre class="demo-code"><code>&lt;ol data-mtx="stepper" data-active-step="1" aria-label="Reset password"&gt;
+  &lt;li data-label="Email"&gt;&lt;/li&gt;
+  &lt;li data-label="Verify code"&gt;&lt;/li&gt;
+  &lt;li data-label="New password"&gt;&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="linear">
+      <h2>Linear with actions</h2>
+      <p>In linear mode the steps before the active one are completed and the following ones disabled. Buttons with <code>data-mtx-stepper-action="back|next|reset"</code> and <code>data-target</code> control the stepper without JavaScript; <code>data-panel</code> shows the active step's panel and <code>data-finished-panel</code> the final panel.</p>
+      <div class="demo-stack">
+        <ol id="demo-linear" data-mtx="stepper" data-finished-panel="#demo-linear-done" aria-label="Create campaign">
+          <li data-label="Settings" data-panel="#demo-linear-1"></li>
+          <li data-label="Ad group" data-optional data-panel="#demo-linear-2"></li>
+          <li data-label="Create ad" data-panel="#demo-linear-3"></li>
+        </ol>
+        <p id="demo-linear-1" class="mtx-typography--body1">Step 1: choose the campaign goal and budget.</p>
+        <p id="demo-linear-2" class="mtx-typography--body1" hidden>Step 2: define audiences and placements (optional).</p>
+        <p id="demo-linear-3" class="mtx-typography--body1" hidden>Step 3: write the ad and check the preview.</p>
+        <p id="demo-linear-done" class="mtx-typography--body1" hidden>All steps completed. The campaign is ready to publish.</p>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-stepper-action="back" data-target="#demo-linear">Back</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-stepper-action="next" data-target="#demo-linear">Next</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-stepper-action="reset" data-target="#demo-linear">Reset</button>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;ol id="wizard" data-mtx="stepper" data-finished-panel="#wizard-done"&gt;
+  &lt;li data-label="Settings" data-panel="#wizard-1"&gt;&lt;/li&gt;
+  &lt;li data-label="Ad group" data-optional data-panel="#wizard-2"&gt;&lt;/li&gt;
+  &lt;li data-label="Create ad" data-panel="#wizard-3"&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;button class="mtx-button mtx-button--text" data-mtx="button"
+        data-mtx-stepper-action="back" data-target="#wizard"&gt;Back&lt;/button&gt;
+&lt;button class="mtx-button mtx-button--contained" data-mtx="button"
+        data-mtx-stepper-action="next" data-target="#wizard"&gt;Next&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="alternative-label">
+      <h2>Alternative label</h2>
+      <p><code>data-alternative-label</code> places the label below the icon and splits the width evenly; it is the most stable option on narrow screens.</p>
+      <ol data-mtx="stepper" data-alternative-label data-active-step="1" aria-label="Order">
+        <li data-label="Cart"></li>
+        <li data-label="Shipping"></li>
+        <li data-label="Payment"></li>
+        <li data-label="Confirmation"></li>
+      </ol>
+    </section>
+
+    <section class="demo-section" id="non-linear">
+      <h2>Non-linear</h2>
+      <p>With <code>data-non-linear</code> each step is a <code>&lt;button&gt;</code> (StepButton) with ripple, visible focus and activation with Enter/Space. Completion is no longer inferred from the order: mark it with <code>data-completed</code> or <code>setCompleted()</code>. Use Tab to move through the steps.</p>
+      <ol data-mtx="stepper" data-non-linear data-active-step="1" aria-label="Profile">
+        <li data-label="Personal details" data-completed></li>
+        <li data-label="Address"></li>
+        <li data-label="Preferences" data-optional></li>
+      </ol>
+      <div class="demo-group">
+        <span class="demo-label">Non-linear with alternative label</span>
+        <ol data-mtx="stepper" data-non-linear data-alternative-label aria-label="Team setup">
+          <li data-label="Team" data-completed></li>
+          <li data-label="Members"></li>
+          <li data-label="Permissions" data-disabled></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="demo-section" id="vertical">
+      <h2>Vertical</h2>
+      <p><code>data-orientation="vertical"</code> stacks the steps. The content of the <code>&lt;li&gt;</code> becomes StepContent, which expands only on the active step (or with <code>data-expanded</code>). The buttons inside use <code>data-mtx-stepper-action</code> without <code>data-target</code>: they act on their own stepper.</p>
+      <div class="demo-wide">
+        <ol data-mtx="stepper" data-orientation="vertical" aria-label="Launch a campaign">
+          <li data-label="Select campaign settings">
+            <p>Choose the campaign type, the country and the daily budget.</p>
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--contained mtx-button--small" data-mtx="button" data-mtx-stepper-action="next">Continue</button>
+            </div>
+          </li>
+          <li data-label="Create an ad group" data-optional>
+            <p>An ad group contains one or more ads that share the same audience.</p>
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--contained mtx-button--small" data-mtx="button" data-mtx-stepper-action="next">Continue</button>
+              <button class="mtx-button mtx-button--text mtx-button--small" data-mtx="button" data-mtx-stepper-action="back">Back</button>
+            </div>
+          </li>
+          <li data-label="Create an ad">
+            <p>Write the headline and the description. Check the preview before publishing.</p>
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--contained mtx-button--small" data-mtx="button" data-mtx-stepper-action="next">Finish</button>
+              <button class="mtx-button mtx-button--text mtx-button--small" data-mtx="button" data-mtx-stepper-action="back">Back</button>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p>By default the icon is the step number (24px StepIcon). <code>data-icon</code> uses a custom Material Icon; completed shows a check and error a warning, in both cases replacing the icon.</p>
+      <div class="demo-group">
+        <span class="demo-label">No custom icon (numbered)</span>
+        <ol data-mtx="stepper" data-active-step="1" aria-label="Numbered">
+          <li data-label="Account"></li>
+          <li data-label="Profile"></li>
+          <li data-label="Done"></li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">With data-icon</span>
+        <ol data-mtx="stepper" data-active-step="1" aria-label="With icons">
+          <li data-label="Account" data-icon="person"></li>
+          <li data-label="Payment" data-icon="credit_card"></li>
+          <li data-label="Shipping" data-icon="local_shipping"></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Active, completed, optional (<code>data-optional</code>, with custom text if given a value), error with a message (<code>data-error="message"</code>) and disabled (<code>data-disabled</code>). The connector turns primary before active or completed steps.</p>
+      <div class="demo-group">
+        <span class="demo-label">Error with message</span>
+        <ol data-mtx="stepper" data-active-step="2" aria-label="Payment">
+          <li data-label="Address"></li>
+          <li data-label="Payment" data-error="Card declined"></li>
+          <li data-label="Review"></li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Optional, explicitly completed and disabled (non-linear)</span>
+        <ol data-mtx="stepper" data-non-linear data-active-step="0" aria-label="States">
+          <li data-label="Active"></li>
+          <li data-label="Completed" data-completed></li>
+          <li data-label="Optional" data-optional="Can be skipped"></li>
+          <li data-label="Disabled" data-disabled></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="demo-section" id="mobile-stepper">
+      <h2>Mobile stepper</h2>
+      <p><code>data-mtx="mobile-stepper"</code> is MUI's compact version: generated Back/Next buttons and a <code>dots</code> (default), <code>text</code> or <code>progress</code> indicator. <code>data-position="bottom|top"</code> pins it to the edge of the viewport.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Dots</span>
+          <div data-mtx="mobile-stepper" data-steps="6" data-active-step="1"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Text</span>
+          <div data-mtx="mobile-stepper" data-variant="text" data-steps="5"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Progress</span>
+          <div data-mtx="mobile-stepper" data-variant="progress" data-steps="6" data-active-step="2"></div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="mobile-stepper" data-steps="6"&gt;&lt;/div&gt;
+&lt;div data-mtx="mobile-stepper" data-variant="text" data-steps="5"&gt;&lt;/div&gt;
+&lt;div data-mtx="mobile-stepper" data-variant="progress" data-steps="6"&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>An account sign-up wizard with validation: the cancelable <code>mtx:stepper:change</code> event prevents moving forward if the field is invalid and marks the step with an error.</p>
+      <div class="demo-surface">
+        <div class="demo-wide" data-mtx="paper" data-variant="outlined">
+          <div class="demo-stack mtx-p-3">
+            <ol id="demo-signup" data-mtx="stepper" data-alternative-label aria-label="Account sign-up">
+              <li data-label="Account" data-panel="#demo-signup-1"></li>
+              <li data-label="Company" data-panel="#demo-signup-2"></li>
+              <li data-label="Plan" data-panel="#demo-signup-3"></li>
+            </ol>
+            <div id="demo-signup-1">
+              <input id="demo-signup-email" data-mtx="text-field" data-label="Work email" data-variant="outlined" type="email" required />
+            </div>
+            <div id="demo-signup-2" hidden>
+              <input data-mtx="text-field" data-label="Company name" data-variant="outlined" type="text" />
+            </div>
+            <div id="demo-signup-3" hidden>
+              <p class="mtx-typography--body2">Team plan · $12 per user per month.</p>
+            </div>
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-stepper-action="back" data-target="#demo-signup">Back</button>
+              <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-stepper-action="next" data-target="#demo-signup">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Inside <code>mtx-grid</code> the stepper takes the width of its column; in narrow columns the alternative label or the vertical orientation work best.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <ol data-mtx="stepper" data-alternative-label data-active-step="2" aria-label="Shipment">
+            <li data-label="Preparing"></li>
+            <li data-label="Shipped"></li>
+            <li data-label="Out for delivery"></li>
+            <li data-label="Delivered"></li>
+          </ol>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <ol data-mtx="stepper" data-orientation="vertical" data-active-step="1" aria-label="Support ticket">
+            <li data-label="Received"></li>
+            <li data-label="Under review"><p>An agent is reviewing your case.</p></li>
+            <li data-label="Resolved"></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>API: <code>next()</code>, <code>back()</code>, <code>goTo(i)</code>, <code>reset()</code>, <code>setCompleted(i, bool)</code>, <code>setError(i, message|false)</code> and the <code>activeStep</code> getter.</p>
+      <div class="demo-stack">
+        <ol id="demo-api" data-mtx="stepper" data-non-linear aria-label="API">
+          <li data-label="One"></li>
+          <li data-label="Two"></li>
+          <li data-label="Three"></li>
+          <li data-label="Four"></li>
+        </ol>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button" id="demo-api-back">back()</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button" id="demo-api-next">next()</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button" id="demo-api-goto">goTo(3)</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button" id="demo-api-complete">setCompleted(active)</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button" id="demo-api-error">setError(active)</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button" id="demo-api-reset">reset()</button>
+        </div>
+        <div class="demo-log" id="demo-api-log" aria-live="polite"></div>
+      </div>
+      <pre class="demo-code"><code>const stepper = Materix.getInstance(document.querySelector('#wizard'));
+stepper.next();
+stepper.setError(1, 'Required field');
+document.querySelector('#wizard').addEventListener('mtx:stepper:change', (event) =&gt; {
+  if (!isValid(event.detail.previousStep)) event.preventDefault();
+});</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR or fine-grained control: if each <code>&lt;li class="mtx-step"&gt;</code> already includes <code>.mtx-step__label-container</code>, the component reuses it and only renders the icon, the accessible texts and the states.</p>
+      <ol class="mtx-stepper" data-mtx="stepper" data-active-step="1" aria-label="BEM">
+        <li class="mtx-step">
+          <span class="mtx-step__label-container">
+            <span class="mtx-step__icon-container"></span>
+            <span class="mtx-step__label-text"><span class="mtx-step__label">Details</span></span>
+          </span>
+        </li>
+        <li class="mtx-step">
+          <span class="mtx-step-connector"><span class="mtx-step-connector__line"></span></span>
+          <span class="mtx-step__label-container">
+            <span class="mtx-step__icon-container"></span>
+            <span class="mtx-step__label-text"><span class="mtx-step__label">Review</span></span>
+          </span>
+        </li>
+      </ol>
+      <pre class="demo-code"><code>&lt;ol class="mtx-stepper" data-mtx="stepper" data-active-step="1"&gt;
+  &lt;li class="mtx-step"&gt;
+    &lt;span class="mtx-step__label-container"&gt;
+      &lt;span class="mtx-step__icon-container"&gt;&lt;/span&gt;
+      &lt;span class="mtx-step__label-text"&gt;&lt;span class="mtx-step__label"&gt;Details&lt;/span&gt;&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/li&gt;
+  &lt;li class="mtx-step"&gt;
+    &lt;span class="mtx-step-connector"&gt;&lt;span class="mtx-step-connector__line"&gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="mtx-step__label-container"&gt;…&lt;/span&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var signup = document.getElementById('demo-signup');
+      var email = document.getElementById('demo-signup-email');
+      signup.addEventListener('mtx:stepper:change', function (event) {
+        var stepper = Materix.getInstance(signup);
+        if (event.detail.previousStep === 0 && event.detail.activeStep > 0) {
+          var valid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value);
+          stepper.setError(0, valid ? false : 'Enter a valid email');
+          if (!valid) event.preventDefault();
+        }
+      });
+
+      var el = document.getElementById('demo-api');
+      var api = Materix.getInstance(el);
+      var log = document.getElementById('demo-api-log');
+      function write(text) {
+        var line = document.createElement('div');
+        line.textContent = text;
+        log.prepend(line);
+      }
+      el.addEventListener('mtx:stepper:change', function (event) {
+        write('mtx:stepper:change → activeStep ' + event.detail.activeStep + ', previousStep ' + event.detail.previousStep);
+      });
+      document.getElementById('demo-api-back').addEventListener('click', function () { api.back(); });
+      document.getElementById('demo-api-next').addEventListener('click', function () { api.next(); });
+      document.getElementById('demo-api-goto').addEventListener('click', function () { api.goTo(3); });
+      document.getElementById('demo-api-complete').addEventListener('click', function () {
+        api.setCompleted(api.activeStep, !api.isCompleted(api.activeStep));
+        write('setCompleted(' + api.activeStep + ')');
+      });
+      document.getElementById('demo-api-error').addEventListener('click', function () {
+        api.setError(api.activeStep, 'Check this step');
+        write('setError(' + api.activeStep + ')');
+      });
+      document.getElementById('demo-api-reset').addEventListener('click', function () { api.reset(); write('reset()'); });
+    });
+  </script>
+</body>
+</html>

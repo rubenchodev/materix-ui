@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rating · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Rating</h1>
+        <p class="demo-lead">Star rating to review a product or display an average score, accessible through native radios and the keyboard.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#precision">Precision</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#icons">Icons</a>
+      <a href="#states">States</a>
+      <a href="#highlight-selected-only">Highlight selected only</a>
+      <a href="#max">Maximum</a>
+      <a href="#hover-feedback">Hover feedback</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;span data-mtx="rating"&gt;</code> generates five stars with hidden native radios and translated labels ("3 stars"). <code>data-name</code> sets the <code>name</code> for forms; clicking the current value clears it.</p>
+      <div class="demo-row">
+        <span data-mtx="rating" data-value="3" data-name="basic-rating" aria-label="Product rating"></span>
+      </div>
+      <pre class="demo-code"><code>&lt;span data-mtx="rating" data-value="3" data-name="basic-rating" aria-label="Product rating"&gt;&lt;/span&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="precision">
+      <h2>Precision</h2>
+      <p><code>data-precision="0.5"</code> allows half stars: each star contains two radios and the left half selects the x.5 value.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Whole · 1 (default)</span>
+          <span data-mtx="rating" data-value="4" aria-label="Whole precision"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Half · 0.5</span>
+          <span data-mtx="rating" data-value="2.5" data-precision="0.5" aria-label="Half-star precision"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Three sizes as in MUI: small 18px, medium 24px and large 30px. The built-in icons are SVG, so they scale crisply without forcing the <code>font-size</code> of Material Icons.</p>
+      <div class="demo-group">
+        <span class="demo-label">Large · 30px</span>
+        <span data-mtx="rating" data-value="4" data-size="large" aria-label="Large size"></span>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 24px (default)</span>
+        <span data-mtx="rating" data-value="4" aria-label="Medium size"></span>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 18px</span>
+        <span data-mtx="rating" data-value="4" data-size="small" aria-label="Small size"></span>
+      </div>
+    </section>
+
+    <section class="demo-section" id="icons">
+      <h2>Icons</h2>
+      <p><code>data-icon</code> and <code>data-empty-icon</code> accept Material Icons names. <code>star</code>, <code>star_border</code>, <code>favorite</code>, <code>favorite_border</code>, <code>thumb_up</code>, <code>circle</code> and similar ones are drawn as scalable SVG; the rest use the font glyph at its native 24px size.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Hearts · favorite / favorite_border</span>
+          <span data-mtx="rating" data-value="3" data-icon="favorite" data-empty-icon="favorite_border" data-precision="0.5" style="--mtx-rating-color: var(--mtx-color-error);" aria-label="Likes"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Gray filled star as empty (data-empty-icon="star")</span>
+          <span data-mtx="rating" data-value="2" data-empty-icon="star" aria-label="Gray stars"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Thumbs · thumb_up</span>
+          <span data-mtx="rating" data-value="3" data-icon="thumb_up" data-empty-icon="thumb_up_off_alt" aria-label="Approval"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Font glyph · pets (24px)</span>
+          <span data-mtx="rating" data-value="2" data-icon="pets" aria-label="Paw prints"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover for the preview (the active star grows 1.2×), and use <kbd>Tab</kbd> and the arrow keys to change the value with a visible focus ring.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Interactive</span>
+          <span data-mtx="rating" data-value="2" aria-label="Interactive"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Read-only · data-read-only</span>
+          <span data-mtx="rating" data-value="3.5" data-precision="0.5" data-read-only></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled · data-disabled</span>
+          <span data-mtx="rating" data-value="2" data-disabled aria-label="Disabled"></span>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">No value</span>
+          <span data-mtx="rating" aria-label="No value"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="highlight-selected-only">
+      <h2>Highlight selected only</h2>
+      <p><code>data-highlight-selected-only</code> highlights only the chosen icon, useful for satisfaction scales.</p>
+      <span data-mtx="rating" data-value="3" data-highlight-selected-only data-icon="circle" data-empty-icon="radio_button_unchecked" aria-label="Satisfaction"></span>
+    </section>
+
+    <section class="demo-section" id="max">
+      <h2>Maximum</h2>
+      <p><code>data-max</code> changes the number of icons (5 by default).</p>
+      <span data-mtx="rating" data-value="7" data-max="10" data-size="small" aria-label="Score out of 10"></span>
+    </section>
+
+    <section class="demo-section" id="hover-feedback">
+      <h2>Hover feedback</h2>
+      <p>The <code>mtx:rating:active</code> event reports the value under the cursor (or <code>null</code> on leave) so you can show a descriptive text, like MUI's <em>hover feedback</em> example.</p>
+      <div class="demo-row">
+        <span data-mtx="rating" data-value="2" data-precision="0.5" id="rating-feedback" aria-label="Quality"></span>
+        <span class="demo-status" id="rating-feedback-text">Poor</span>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <div class="demo-grid-2">
+        <div data-mtx="card" data-elevation="1">
+          <div class="mtx-card__content">
+            <h3 class="mtx-typography--h6">Wireless headphones</h3>
+            <div class="demo-row">
+              <span data-mtx="rating" data-value="4.5" data-precision="0.5" data-size="small" data-read-only></span>
+              <span class="mtx-typography--body2 mtx-color-text-secondary">4.5 · 1,284 reviews</span>
+            </div>
+          </div>
+        </div>
+        <form class="demo-stack" id="rating-review-form" aria-label="Write a review">
+          <span class="mtx-typography--subtitle2" id="rating-review-label">Your rating</span>
+          <span data-mtx="rating" data-name="review-score" id="rating-review" aria-labelledby="rating-review-label"></span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Submit review</button>
+            <span class="demo-status" id="rating-review-status" role="status"></span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Several rating criteria spread across responsive <code>mtx-grid</code> columns.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div class="demo-group"><span class="demo-label" id="grid-clean">Cleanliness</span><span data-mtx="rating" data-value="5" aria-labelledby="grid-clean"></span></div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div class="demo-group"><span class="demo-label" id="grid-location">Location</span><span data-mtx="rating" data-value="4" aria-labelledby="grid-location"></span></div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div class="demo-group"><span class="demo-label" id="grid-value">Value for money</span><span data-mtx="rating" data-value="3" aria-labelledby="grid-value"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>value</code> (read and write without events; <code>null</code> = no rating), <code>disable()</code>, <code>enable()</code> and <code>focus()</code>, and emits <code>mtx:rating:change</code> with <code>detail.value</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Controlled rating</span>
+        <div class="demo-row">
+          <span data-mtx="rating" data-value="3" id="rating-target" aria-label="Controlled rating"></span>
+          <span class="demo-status" id="rating-status">value: 3</span>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-rating-action="five">value = 5</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-rating-action="clear">value = null</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-rating-action="disable">disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-rating-action="enable">enable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-rating-action="focus">focus()</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="rating-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR you can write the generated structure: one <code>.mtx-rating__item</code> per icon with its hidden radio and its <code>&lt;label&gt;</code> (<code>data-rating-value</code>). The library reuses the nodes and adds any missing icons.</p>
+      <span class="mtx-rating" data-mtx="rating" role="radiogroup" aria-label="BEM rating">
+        <span class="mtx-rating__item">
+          <input class="mtx-rating__input" type="radio" name="bem-rating" id="bem-rating-1" value="1" />
+          <label class="mtx-rating__label" for="bem-rating-1" data-rating-value="1"><span class="mtx-rating__visually-hidden">1 star</span></label>
+        </span>
+        <span class="mtx-rating__item">
+          <input class="mtx-rating__input" type="radio" name="bem-rating" id="bem-rating-2" value="2" checked />
+          <label class="mtx-rating__label" for="bem-rating-2" data-rating-value="2"><span class="mtx-rating__visually-hidden">2 stars</span></label>
+        </span>
+        <span class="mtx-rating__item">
+          <input class="mtx-rating__input" type="radio" name="bem-rating" id="bem-rating-3" value="3" />
+          <label class="mtx-rating__label" for="bem-rating-3" data-rating-value="3"><span class="mtx-rating__visually-hidden">3 stars</span></label>
+        </span>
+        <input class="mtx-rating__input mtx-rating__input--empty" type="radio" name="bem-rating" id="bem-rating-empty" value="" />
+        <label class="mtx-rating__visually-hidden" for="bem-rating-empty">No rating</label>
+      </span>
+      <pre class="demo-code"><code>&lt;span class="mtx-rating" data-mtx="rating" role="radiogroup" aria-label="Rating"&gt;
+  &lt;span class="mtx-rating__item"&gt;
+    &lt;input class="mtx-rating__input" type="radio" name="score" id="score-1" value="1" /&gt;
+    &lt;label class="mtx-rating__label" for="score-1" data-rating-value="1"&gt;
+      &lt;span class="mtx-rating__visually-hidden"&gt;1 star&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/span&gt;
+  &lt;!-- …one .mtx-rating__item per star… --&gt;
+  &lt;input class="mtx-rating__input mtx-rating__input--empty" type="radio" name="score" id="score-empty" value="" /&gt;
+  &lt;label class="mtx-rating__visually-hidden" for="score-empty"&gt;No rating&lt;/label&gt;
+&lt;/span&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Respuesta al pasar el ratón.
+      var LABELS = { 0.5: 'Useless', 1: 'Useless+', 1.5: 'Poor', 2: 'Poor+', 2.5: 'Ok', 3: 'Ok+', 3.5: 'Good', 4: 'Good+', 4.5: 'Excellent', 5: 'Excellent+' };
+      var feedbackEl = document.getElementById('rating-feedback');
+      var feedback = Materix.getInstance(feedbackEl);
+      var feedbackText = document.getElementById('rating-feedback-text');
+      function showFeedback(value) { feedbackText.textContent = value === null ? 'No rating' : LABELS[value]; }
+      showFeedback(feedback.value);
+      feedbackEl.addEventListener('mtx:rating:active', function (event) {
+        showFeedback(event.detail.value !== null ? event.detail.value : feedback.value);
+      });
+      feedbackEl.addEventListener('mtx:rating:change', function (event) { showFeedback(event.detail.value); });
+
+      // Formulario de reseña: exige una valoración.
+      var reviewForm = document.getElementById('rating-review-form');
+      var reviewStatus = document.getElementById('rating-review-status');
+      reviewForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var score = new FormData(reviewForm).get('review-score');
+        reviewStatus.textContent = score ? 'Thank you: ' + score + ' stars.' : 'Choose a rating before submitting.';
+      });
+
+      // Uso programático.
+      var targetEl = document.getElementById('rating-target');
+      var rating = Materix.getInstance(targetEl);
+      var logEl = document.getElementById('rating-log');
+      var statusEl = document.getElementById('rating-status');
+
+      /** Añade una línea al registro de eventos. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      /** Refleja el valor actual. */
+      function syncStatus() {
+        statusEl.textContent = 'value: ' + rating.value + (rating.disabled ? ' · disabled' : '');
+      }
+
+      targetEl.addEventListener('mtx:rating:change', function (event) {
+        log('mtx:rating:change → ' + event.detail.value);
+        syncStatus();
+      });
+
+      document.querySelectorAll('[data-rating-action]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var action = button.getAttribute('data-rating-action');
+          if (action === 'five') rating.value = 5;
+          if (action === 'clear') rating.value = null;
+          if (action === 'disable') rating.disable();
+          if (action === 'enable') rating.enable();
+          if (action === 'focus') rating.focus();
+          log(action === 'five' ? 'value = 5' : action === 'clear' ? 'value = null' : action + '()');
+          syncStatus();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

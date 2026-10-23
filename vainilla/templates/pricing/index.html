@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing · Materix UI Templates</title>
+  <meta name="description" content="Pricing plans with monthly/yearly toggle, comparison table and FAQ.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="icon" href="data:,">
+  <script src="../shared/template.js"></script>
+  <style>
+    /* Marca: logotipo con degradado */
+    .tpl-pr-logo { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--mtx-color-primary), var(--mtx-color-secondary)); color: var(--mtx-color-primary-contrast); }
+    /* Hero: halo radial y titular display fluido */
+    .tpl-pr-hero { position: relative; overflow: hidden; }
+    .tpl-pr-hero::before { content: ""; position: absolute; inset: -60% -20% auto; height: 140%; background: radial-gradient(ellipse at 50% 0%, var(--mtx-color-primary-light), transparent 60%); opacity: 0.2; pointer-events: none; }
+    .tpl-pr-hero > * { position: relative; }
+    .tpl-pr-display { font-size: clamp(2rem, 4.4vw, 3rem); letter-spacing: -0.02em; }
+    /* Plan destacado: borde de 2px */
+    .tpl-pr-plan--featured { border-width: 2px; }
+    /* Tabla comparativa: ancho mínimo para que las 4 columnas no se compriman (scroll dentro del contenedor) */
+    .tpl-pr-compare { min-width: 720px; }
+    /* FAQ: el icono "add" gira 45° para formar una "x" */
+    .tpl-pr-faq { --mtx-accordion-expand-icon-rotation: 45deg; }
+    /* CTA final con degradado de marca y texto blanco (≥ 4.8:1 en ambos temas) */
+    .tpl-pr-cta { background: linear-gradient(135deg, var(--mtx-color-primary-dark), var(--mtx-color-secondary-dark)); color: #fff; }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-pr-main">Skip to content</a>
+
+  <header data-mtx="app-bar" data-position="sticky" data-color="default" data-elevate-on-scroll class="mtx-border-bottom">
+    <div class="mtx-toolbar mtx-container mtx-gap-1">
+      <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1_5 mtx-me-auto mtx-color-text-primary mtx-text-decoration-none mtx-typography--h6 mtx-fw-bold" href="../landing-page/index.html" aria-label="Lumen home">
+        <span class="tpl-pr-logo"><span class="material-icons" aria-hidden="true">insights</span></span>
+        Lumen
+      </a>
+      <button data-mtx="icon-button" data-mtx-theme-toggle><span class="material-icons" aria-hidden="true">dark_mode</span></button>
+      <a class="mtx-button mtx-button--text mtx-d-none mtx-d-sm-inline-flex" data-mtx="button" href="../sign-in/index.html">Sign in</a>
+      <a class="mtx-button mtx-button--contained" data-mtx="button" href="../sign-up/index.html">Start free</a>
+    </div>
+  </header>
+
+  <main id="tpl-pr-main" tabindex="-1">
+    <section class="tpl-pr-hero mtx-pt-8 mtx-pb-5 mtx-text-center" aria-labelledby="tpl-pr-title">
+      <div data-mtx="container">
+        <p class="mtx-typography--overline mtx-color-primary mtx-mb-1_5">Pricing</p>
+        <h1 id="tpl-pr-title" class="mtx-typography--h3 tpl-pr-display mtx-fw-bold mtx-mb-2">Plans for teams of every size</h1>
+        <p class="mtx-typography--subtitle1 mtx-fw-regular mtx-color-text-secondary mtx-container mtx-container--sm mtx-container--disable-gutters">Start free, then upgrade as you grow. Every plan includes unlimited seats, unlimited dashboards and our 99.9% uptime guarantee.</p>
+        <div class="mtx-d-inline-flex mtx-flex-wrap mtx-align-items-center mtx-justify-content-center mtx-row-gap-1 mtx-column-gap-2 mtx-mt-4 mtx-py-1 mtx-px-2_5 mtx-border mtx-rounded-pill mtx-bg-paper" role="group" aria-label="Billing period">
+          <span class="mtx-fw-medium mtx-color-text-primary mtx-cursor-pointer" data-billing-label="monthly" aria-hidden="true">Monthly</span>
+          <input type="checkbox" data-mtx="switch" id="tpl-pr-annual" aria-label="Bill annually">
+          <span class="mtx-fw-medium mtx-color-text-secondary mtx-cursor-pointer" data-billing-label="annual" aria-hidden="true">Annually</span>
+          <span data-mtx="chip" data-size="small" data-color="success" data-label="Save 20%"></span>
+        </div>
+      </div>
+    </section>
+
+    <div data-mtx="container">
+      <p class="mtx-visually-hidden" aria-live="polite" id="tpl-pr-live"></p>
+      <div id="tpl-pr-plans" data-mtx="grid" data-spacing="3" data-justify="center" class="mtx-pb-4"></div>
+
+      <div data-mtx="paper" data-variant="outlined" class="mtx-d-flex mtx-flex-column mtx-flex-sm-row mtx-align-items-start mtx-align-items-sm-center mtx-gap-2 mtx-gap-sm-3 mtx-mt-1 mtx-p-3 mtx-rounded-3">
+        <span data-mtx="avatar" data-variant="rounded" data-size="large" data-color="secondary" data-icon="apartment" aria-hidden="true"></span>
+        <div class="mtx-flex-1">
+          <h2 class="mtx-typography--h6 mtx-mb-0_5">Enterprise</h2>
+          <p class="mtx-typography--body1 mtx-color-text-secondary">Custom volume, SSO with SCIM, data residency, a dedicated success manager and a 99.99% SLA.</p>
+        </div>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-tpl-sales>Talk to sales</button>
+      </div>
+
+      <section class="mtx-pt-10" aria-labelledby="tpl-pr-compare-title">
+        <h2 class="mtx-typography--h4 mtx-fw-medium mtx-text-center mtx-mb-1" id="tpl-pr-compare-title">Compare plans</h2>
+        <p class="mtx-typography--body1 mtx-color-text-secondary mtx-text-center mtx-mb-5">A detailed look at everything included in each plan.</p>
+        <div data-mtx="table-container" data-max-height="560" data-sticky-header class="mtx-border mtx-rounded-3" tabindex="0" aria-labelledby="tpl-pr-compare-title">
+          <table data-mtx="table" class="tpl-pr-compare">
+            <caption class="mtx-visually-hidden">Feature comparison between Starter, Growth and Business plans</caption>
+            <thead>
+              <tr>
+                <th scope="col">Features</th>
+                <th scope="col" data-align="center">Starter<span class="mtx-d-block mtx-typography--caption mtx-color-text-secondary" data-compare-price="starter"></span></th>
+                <th scope="col" data-align="center" class="mtx-color-primary">Growth<span class="mtx-d-block mtx-typography--caption mtx-color-text-secondary" data-compare-price="growth"></span></th>
+                <th scope="col" data-align="center">Business<span class="mtx-d-block mtx-typography--caption mtx-color-text-secondary" data-compare-price="business"></span></th>
+              </tr>
+            </thead>
+            <tbody id="tpl-pr-compare-body"></tbody>
+          </table>
+        </div>
+        <p class="mtx-d-md-none mtx-typography--caption mtx-color-text-secondary mtx-text-center mtx-mt-1">Swipe the table horizontally to see all plans.</p>
+      </section>
+
+      <section class="mtx-pt-10" aria-labelledby="tpl-pr-faq-title">
+        <h2 class="mtx-typography--h4 mtx-fw-medium mtx-text-center mtx-mb-1" id="tpl-pr-faq-title">Questions about billing</h2>
+        <p class="mtx-typography--body1 mtx-color-text-secondary mtx-text-center mtx-mb-5">Can’t find what you’re looking for? <a data-mtx="link" href="#" data-tpl-sales>Contact our team</a>.</p>
+        <div data-mtx="container" data-max-width="md" data-disable-gutters>
+          <div class="tpl-pr-faq" data-mtx="accordion-group" data-variant="outlined">
+            <div data-mtx="accordion" data-summary="Can I change plans later?" data-expand-icon="add" data-expanded>Yes. Upgrades take effect immediately and are prorated. Downgrades apply at the end of your current billing period.</div>
+            <div data-mtx="accordion" data-summary="What counts as a monthly tracked user?" data-expand-icon="add">Any unique visitor or signed-in user who triggers at least one event during the calendar month. Bots and internal traffic are excluded automatically.</div>
+            <div data-mtx="accordion" data-summary="Do you offer discounts for startups or nonprofits?" data-expand-icon="add">Startups under two years old with less than $5M in funding get 50% off Growth for the first year. Registered nonprofits get 30% off any plan.</div>
+            <div data-mtx="accordion" data-summary="Which payment methods do you accept?" data-expand-icon="add">All major credit cards, Apple Pay and Google Pay. Annual Business and Enterprise plans can also pay by invoice and bank transfer.</div>
+            <div data-mtx="accordion" data-summary="Is there a free trial of paid plans?" data-expand-icon="add">Every paid plan starts with a 14-day free trial. No credit card is needed until you decide to continue.</div>
+            <div data-mtx="accordion" data-summary="Can I cancel at any time?" data-expand-icon="add">Absolutely. Monthly plans can be canceled anytime; annual plans can be canceled within 30 days for a full refund.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tpl-pr-cta mtx-my-10 mtx-py-6 mtx-px-2_5 mtx-px-sm-4 mtx-rounded-3 mtx-text-center" aria-labelledby="tpl-pr-cta-title">
+        <h2 id="tpl-pr-cta-title" class="mtx-typography--h4 mtx-fw-bold mtx-mb-1_5">Still deciding?</h2>
+        <p class="mtx-typography--body1 mtx-container mtx-container--sm mtx-container--disable-gutters mtx-mb-3">Try Growth free for 14 days. Bring your team, connect your data and see results before you pay a cent.</p>
+        <div class="mtx-d-flex mtx-flex-wrap mtx-justify-content-center mtx-gap-1_5">
+          <a class="mtx-button mtx-button--contained" data-mtx="button" data-surface="primary" data-size="large" href="../sign-up/index.html">Start free trial</a>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-surface="primary" data-size="large" type="button" data-tpl-sales>Book a demo</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="mtx-py-4 mtx-border-top mtx-bg-paper mtx-typography--body2 mtx-color-text-secondary">
+    <div data-mtx="container" class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-justify-content-between mtx-gap-2">
+      <span>© 2026 Lumen Analytics, Inc.</span>
+      <nav class="mtx-d-flex mtx-flex-wrap mtx-row-gap-1 mtx-column-gap-3" aria-label="Footer">
+        <a data-mtx="link" data-color="text-secondary" href="../landing-page/index.html">Product</a>
+        <a data-mtx="link" data-color="text-secondary" href="../blog/index.html">Blog</a>
+        <a data-mtx="link" data-color="text-secondary" href="#">Privacy</a>
+        <a data-mtx="link" data-color="text-secondary" href="#">Terms</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      'use strict';
+
+      var $ = function (sel, root) { return (root || document).querySelector(sel); };
+      var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+      var ANNUAL_DISCOUNT = 0.2;
+      var PLANS = [
+        { key: 'starter', name: 'Starter', monthly: 0, desc: 'For side projects and early-stage startups exploring their first users.', cta: 'Get started free', features: [['Up to 10k monthly tracked users', true], ['Core analytics & funnels', true], ['30-day data history', true], ['Community support', true], ['Session replay', false], ['AI insights', false]] },
+        { key: 'growth', name: 'Growth', monthly: 59, featured: true, desc: 'For product teams that make decisions with data every day.', cta: 'Start 14-day trial', features: [['Up to 100k monthly tracked users', true], ['Everything in Starter', true], ['Session replay & surveys', true], ['AI insights', true], ['12-month data history', true], ['Email support, 24h response', true]] },
+        { key: 'business', name: 'Business', monthly: 149, desc: 'For scaling companies that need governance and advanced controls.', cta: 'Start 14-day trial', features: [['Up to 500k monthly tracked users', true], ['Everything in Growth', true], ['Warehouse sync (Snowflake, BigQuery)', true], ['Roles, permissions & audit log', true], ['Unlimited data history', true], ['Priority support, 4h response', true]] }
+      ];
+      var COMPARE = [
+        { group: 'Usage' },
+        ['Monthly tracked users', '10k', '100k', '500k'],
+        ['Seats', 'Unlimited', 'Unlimited', 'Unlimited'],
+        ['Data history', '30 days', '12 months', 'Unlimited'],
+        { group: 'Analytics' },
+        ['Funnels, retention & paths', true, true, true],
+        ['Session replay', false, true, true],
+        ['In-app surveys', false, true, true],
+        ['AI insights', false, true, true],
+        ['Warehouse sync', false, false, true],
+        { group: 'Security & support' },
+        ['SAML SSO', false, false, true],
+        ['Roles & audit log', false, false, true],
+        ['Support', 'Community', 'Email (24h)', 'Priority (4h)']
+      ];
+      var annual = false;
+      var money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+      /**
+       * Precio mensual efectivo según el periodo de facturación.
+       * @param {Object} plan Plan.
+       * @returns {number} Precio por mes.
+       */
+      var monthlyPrice = function (plan) { return annual ? Math.round(plan.monthly * (1 - ANNUAL_DISCOUNT)) : plan.monthly; };
+
+      /**
+       * Genera el HTML de la lista de características de un plan.
+       * @param {Array<Array>} features Pares [texto, incluido].
+       * @returns {string} Marcado de la lista.
+       */
+      var featuresHtml = function (features) {
+        return '<ul class="mtx-list mtx-d-grid mtx-gap-1_5 mtx-mt-3 mtx-pt-3 mtx-pb-0 mtx-border-top">' + features.map(function (f) {
+          return '<li class="mtx-d-flex mtx-align-items-start mtx-gap-1_5 mtx-typography--body2' + (f[1] ? '' : ' mtx-color-text-secondary') + '">' +
+            '<span class="material-icons ' + (f[1] ? 'mtx-color-success' : 'mtx-color-text-secondary') + '" aria-hidden="true">' + (f[1] ? 'check_circle' : 'remove_circle_outline') + '</span>' +
+            '<span>' + (f[1] ? '' : '<span class="mtx-visually-hidden">Not included: </span>') + f[0] + '</span></li>';
+        }).join('') + '</ul>';
+      };
+
+      /** Pinta las tarjetas de planes y los precios de la tabla. */
+      var renderPlans = function () {
+        $('#tpl-pr-plans').innerHTML = PLANS.map(function (p) {
+          var price = monthlyPrice(p);
+          var note = p.monthly === 0 ? 'Free forever' : annual
+            ? money.format(price * 12) + ' billed yearly · <strong class="mtx-color-success mtx-fw-medium">save ' + money.format((p.monthly - price) * 12) + '</strong>'
+            : 'Billed monthly';
+          return '<div data-mtx="grid" data-xs="12" data-sm="8" data-md="4">' +
+            '<article data-mtx="card" data-variant="outlined" class="mtx-h-100 mtx-rounded-3' + (p.featured ? ' mtx-border-primary mtx-elevation-8 tpl-pr-plan--featured' : '') + '" aria-labelledby="tpl-pr-plan-' + p.key + '">' +
+            '<div data-mtx="card-content" class="mtx-flex-1 mtx-px-2_5 mtx-px-sm-3 mtx-pt-3 mtx-pb-1 mtx-color-text-primary">' +
+            '<div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-gap-1"><h2 class="mtx-typography--h6" id="tpl-pr-plan-' + p.key + '">' + p.name + '</h2>' + (p.featured ? '<span data-mtx="chip" data-size="small" data-color="primary" data-icon="auto_awesome" data-label="Most popular"></span>' : '') + '</div>' +
+            '<p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-1 mtx-mb-3">' + p.desc + '</p>' +
+            '<div class="mtx-d-flex mtx-align-items-baseline mtx-gap-1"><span class="mtx-typography--h3 mtx-fw-bold mtx-tabular-nums">' + money.format(price) + '</span><span class="mtx-typography--body1 mtx-color-text-secondary">/ month</span></div>' +
+            '<p class="mtx-typography--caption mtx-color-text-secondary mtx-mt-0_5">' + note + '</p>' +
+            featuresHtml(p.features) + '</div>' +
+            '<div data-mtx="card-actions" class="mtx-px-2_5 mtx-px-sm-3 mtx-pt-1 mtx-pb-3"><button class="mtx-button mtx-button--full-width mtx-button--' + (p.featured ? 'contained' : 'outlined') + '" data-mtx="button" data-size="large" type="button" data-choose="' + p.key + '">' + p.cta + '</button></div>' +
+            '</article></div>';
+        }).join('');
+        Materix.initAll($('#tpl-pr-plans'));
+        PLANS.forEach(function (p) {
+          $('[data-compare-price="' + p.key + '"]').textContent = p.monthly === 0 ? 'Free' : money.format(monthlyPrice(p)) + ' / mo';
+        });
+        $$('[data-billing-label]').forEach(function (l) {
+          var on = (l.getAttribute('data-billing-label') === 'annual') === annual;
+          l.classList.toggle('mtx-color-text-primary', on);
+          l.classList.toggle('mtx-color-text-secondary', !on);
+        });
+      };
+
+      /** Pinta la tabla comparativa (columna Growth destacada). */
+      var renderCompare = function () {
+        $('#tpl-pr-compare-body').innerHTML = COMPARE.map(function (row) {
+          if (row.group) return '<tr><th class="mtx-bg-action-hover mtx-typography--overline mtx-color-text-secondary mtx-pt-3" scope="colgroup" colspan="4">' + row.group + '</th></tr>';
+          return '<tr><th scope="row">' + row[0] + '</th>' + row.slice(1).map(function (v, i) {
+            var attrs = ' data-align="center"' + (i === 1 ? ' class="mtx-bg-action-hover"' : '');
+            if (v === true) return '<td' + attrs + '><span class="material-icons mtx-color-success" aria-hidden="true">check</span><span class="mtx-visually-hidden">Included</span></td>';
+            if (v === false) return '<td' + attrs + '><span class="material-icons mtx-color-text-secondary" aria-hidden="true">remove</span><span class="mtx-visually-hidden">Not included</span></td>';
+            return '<td' + attrs + '>' + v + '</td>';
+          }).join('') + '</tr>';
+        }).join('');
+      };
+
+      var annualInput = $('#tpl-pr-annual');
+      annualInput.addEventListener('change', function () {
+        annual = annualInput.checked;
+        renderPlans();
+        $('#tpl-pr-live').textContent = annual ? 'Showing annual prices, 20% off.' : 'Showing monthly prices.';
+      });
+      $$('[data-billing-label]').forEach(function (label) {
+        label.addEventListener('click', function () {
+          var want = label.getAttribute('data-billing-label') === 'annual';
+          if (want !== annualInput.checked) { annualInput.checked = want; annualInput.dispatchEvent(new Event('change', { bubbles: true })); }
+        });
+      });
+
+      $('#tpl-pr-plans').addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-choose]');
+        if (!btn) return;
+        var plan = PLANS.filter(function (p) { return p.key === btn.getAttribute('data-choose'); })[0];
+        Materix.snackbar.show(plan.monthly === 0 ? 'Starter selected — create your free account to continue.' : plan.name + ' (' + (annual ? 'annual' : 'monthly') + ', ' + money.format(monthlyPrice(plan)) + '/mo) added to checkout.');
+      });
+      $$('[data-tpl-sales]').forEach(function (b) {
+        b.addEventListener('click', function (e) { e.preventDefault(); Materix.snackbar.show('Thanks! Our sales team will reach out within one business day.'); });
+      });
+
+      renderPlans();
+      renderCompare();
+    });
+  </script>
+</body>
+</html>

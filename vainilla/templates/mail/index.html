@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mail · Materix UI Templates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="icon" href="data:,">
+  <script src="../shared/template.js"></script>
+  <style>
+    /* Marca: logotipo con degradado */
+    .tpl-ml-logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--mtx-color-error), var(--mtx-color-warning)); color: var(--mtx-color-primary-contrast); }
+
+    /* Carpetas en píldora (decisión de diseño estilo Gmail) */
+    .tpl-ml-nav .mtx-list-item-button { width: calc(100% - 12px); border-radius: 0 999px 999px 0; }
+    .tpl-ml-nav .mtx-list-item--selected { font-weight: 700; }
+    .tpl-ml-nav .mtx-list-item--selected .mtx-list-item-icon { color: var(--mtx-color-primary); }
+
+    /* Marca lateral de conversación no leída */
+    .tpl-ml-unread::before { content: ""; position: absolute; inset-block: 0; inset-inline-start: 0; z-index: 1; width: 3px; background: var(--mtx-color-primary); }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-ml-list">Skip to messages</a>
+
+  <header data-mtx="app-bar" data-position="fixed" data-color="default" data-elevation="0" data-start-icon="menu" data-start-icon-label="Open folders" data-drawer="tpl-ml-nav">
+    <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1_5 mtx-flex-shrink-0 mtx-color-text-primary mtx-text-decoration-none mtx-typography--h6" href="#" aria-label="Postbox home">
+      <span class="tpl-ml-logo mtx-d-inline-flex mtx-align-items-center mtx-justify-content-center"><span class="material-icons" aria-hidden="true">mail</span></span>
+      <span class="mtx-d-none mtx-d-sm-inline">Postbox</span>
+    </a>
+    <div class="mtx-app-bar-search mtx-app-bar-search--grow mtx-mx-1 mtx-mx-md-6" role="search">
+      <span class="material-icons" aria-hidden="true">search</span>
+      <input type="search" id="tpl-ml-search" placeholder="Search mail" aria-label="Search mail" autocomplete="off">
+    </div>
+    <div class="mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-ms-auto">
+      <button data-mtx="icon-button" data-mtx-theme-toggle aria-label="Toggle theme"><span class="material-icons" aria-hidden="true">dark_mode</span></button>
+      <div data-mtx="avatar" data-color="info" class="mtx-d-none mtx-d-sm-flex" role="img" aria-label="Signed in as Jordan Blake">JB</div>
+    </div>
+  </header>
+
+  <div class="mtx-d-flex">
+    <div data-mtx="drawer" id="tpl-ml-nav" data-variant="responsive" data-breakpoint="lg" data-clipped data-width="256px" data-title="Postbox" data-header="temporary" aria-label="Mail folders">
+      <div class="mtx-drawer__permanent-only mtx-px-2 mtx-pt-2 mtx-pb-1">
+        <button data-mtx="fab" data-icon="edit" data-label="Compose" data-tpl-compose></button>
+      </div>
+      <nav data-mtx="list" class="tpl-ml-nav" data-dense id="tpl-ml-folders" aria-label="Folders"></nav>
+      <p class="mtx-typography--overline mtx-color-text-secondary mtx-px-3 mtx-mt-1" id="tpl-ml-labels-title">Labels</p>
+      <nav data-mtx="list" class="tpl-ml-nav mtx-pb-2" data-dense id="tpl-ml-labels" aria-labelledby="tpl-ml-labels-title"></nav>
+    </div>
+
+    <main class="mtx-flex-1 mtx-min-w-0 mtx-d-flex mtx-flex-column mtx-vh-100">
+      <div class="mtx-toolbar-offset mtx-flex-shrink-0"></div>
+      <div data-mtx="grid" data-spacing="0" class="mtx-flex-1 mtx-overflow-hidden mtx-border-top">
+        <section data-mtx="grid" data-xs="12" data-md="5" data-lg="4" id="tpl-ml-listpane" class="mtx-d-flex mtx-d-md-flex mtx-flex-column mtx-h-100 mtx-overflow-hidden mtx-border-end mtx-bg-paper" aria-labelledby="tpl-ml-folder-title">
+          <div class="mtx-toolbar mtx-flex-shrink-0 mtx-gap-0_5 mtx-border-bottom">
+            <h1 class="mtx-typography--h6" id="tpl-ml-folder-title">Inbox</h1>
+            <span class="mtx-flex-1 mtx-min-w-0 mtx-text-truncate mtx-ps-1 mtx-typography--body2 mtx-color-text-secondary" id="tpl-ml-folder-meta" aria-live="polite"></span>
+            <button data-mtx="icon-button" data-icon="done_all" aria-label="Mark all as read" id="tpl-ml-read-all"></button>
+            <button data-mtx="icon-button" data-icon="refresh" aria-label="Refresh" data-edge="end" id="tpl-ml-refresh"></button>
+          </div>
+          <div class="mtx-flex-1 mtx-overflow-y-auto mtx-pb-10" id="tpl-ml-list" tabindex="-1">
+            <ul data-mtx="list" data-disable-padding id="tpl-ml-messages" class="mtx-mb-2" aria-label="Messages"></ul>
+            <div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-text-center mtx-gap-1 mtx-py-6 mtx-px-3" id="tpl-ml-list-empty" hidden>
+              <span data-mtx="avatar" data-size="large" data-icon="inbox" aria-hidden="true"></span>
+              <p class="mtx-typography--h6 mtx-mt-1" id="tpl-ml-list-empty-title">Nothing here</p>
+              <p class="mtx-typography--body2 mtx-color-text-secondary" id="tpl-ml-list-empty-text">You’re all caught up.</p>
+            </div>
+          </div>
+        </section>
+
+        <section data-mtx="grid" data-xs="12" data-md="7" data-lg="8" id="tpl-ml-reader" class="mtx-d-none mtx-d-md-flex mtx-flex-column mtx-h-100 mtx-overflow-hidden mtx-bg-paper" aria-label="Reading pane">
+          <div class="mtx-toolbar mtx-flex-shrink-0 mtx-gap-0_5 mtx-border-bottom" id="tpl-ml-reader-bar" role="toolbar" aria-label="Message actions" hidden>
+            <button class="mtx-d-md-none" data-mtx="icon-button" data-icon="arrow_back" data-edge="start" aria-label="Back to messages" id="tpl-ml-back"></button>
+            <button data-mtx="icon-button" data-icon="archive" aria-label="Archive" data-act="archive"></button>
+            <button data-mtx="icon-button" data-icon="delete" aria-label="Delete" data-act="delete"></button>
+            <button data-mtx="icon-button" data-icon="mark_email_unread" aria-label="Mark as unread" data-act="unread"></button>
+            <span class="mtx-toolbar__spacer"></span>
+            <button data-mtx="icon-button" data-icon="star_border" aria-label="Star" aria-pressed="false" data-act="star"></button>
+            <button data-mtx="icon-button" data-icon="reply" aria-label="Reply" data-edge="end" data-act="reply"></button>
+          </div>
+          <article class="mtx-flex-1 mtx-overflow-y-auto mtx-px-2 mtx-px-md-4 mtx-pt-3 mtx-pb-10" id="tpl-ml-reader-content" hidden></article>
+          <div class="mtx-d-flex mtx-flex-1 mtx-flex-column mtx-align-items-center mtx-justify-content-center mtx-text-center mtx-gap-1 mtx-p-4" id="tpl-ml-reader-empty">
+            <span data-mtx="avatar" data-size="large" data-icon="drafts" aria-hidden="true"></span>
+            <p class="mtx-typography--h6 mtx-mt-1">No message selected</p>
+            <p class="mtx-typography--body2 mtx-color-text-secondary">Choose a conversation from the list to read it here.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <button data-mtx="fab" data-icon="edit" class="mtx-fab--fixed-br mtx-d-lg-none" aria-label="Compose" id="tpl-ml-fab" data-tpl-compose></button>
+
+  <div data-mtx="dialog" id="tpl-ml-compose" class="mtx-dialog--max-sm" data-title="New message" data-disable-backdrop-close>
+    <form id="tpl-ml-compose-form" data-mtx="stack" data-spacing="2" novalidate>
+      <input data-mtx="text-field" data-label="To" type="text" id="tpl-ml-to" class="mtx-text-field--full-width" autocomplete="email" data-helper-text="Separate multiple recipients with commas." required>
+      <input data-mtx="text-field" data-label="Subject" type="text" id="tpl-ml-subject" class="mtx-text-field--full-width" maxlength="120" required>
+      <textarea data-mtx="text-field" data-label="Message" id="tpl-ml-message" class="mtx-text-field--full-width" data-rows="8" required></textarea>
+    </form>
+    <div class="mtx-dialog__actions">
+      <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="tpl-ml-discard">Discard</button>
+      <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit" form="tpl-ml-compose-form">
+        Send
+        <span class="mtx-button__icon material-icons" aria-hidden="true">send</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      'use strict';
+
+      var $ = function (sel, root) { return (root || document).querySelector(sel); };
+      var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+      var esc = function (str) { return String(str).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+      var inst = function (el) { return Materix.getInstance(typeof el === 'string' ? document.getElementById(el) : el); };
+
+      var ME = { name: 'Jordan Blake', email: 'jordan.blake@postbox.dev' };
+      var NOW = new Date('2026-10-19T12:00:00');
+      var FOLDERS = [
+        { key: 'inbox', label: 'Inbox', icon: 'inbox' },
+        { key: 'starred', label: 'Starred', icon: 'star_border' },
+        { key: 'sent', label: 'Sent', icon: 'send' },
+        { key: 'drafts', label: 'Drafts', icon: 'drafts' },
+        { key: 'archive', label: 'Archive', icon: 'archive' },
+        { key: 'spam', label: 'Spam', icon: 'report_gmailerrorred' },
+        { key: 'trash', label: 'Trash', icon: 'delete_outline' }
+      ];
+      var LABELS = [
+        { key: 'work', label: 'Work', color: 'info' },
+        { key: 'personal', label: 'Personal', color: 'success' },
+        { key: 'travel', label: 'Travel', color: 'warning' }
+      ];
+      var COLORS = ['primary', 'secondary', 'success', 'info', 'warning', 'error'];
+
+      var id = 0;
+      /**
+       * Crea un mensaje de ejemplo.
+       * @param {Object} d Datos parciales.
+       * @returns {Object} Mensaje.
+       */
+      var msg = function (d) {
+        return Object.assign({ id: 'm' + (++id), folder: 'inbox', read: true, starred: false, labels: [], to: ME.name, attachment: null }, d);
+      };
+      var messages = [
+        msg({ from: { name: 'Maya Robinson', email: 'maya@lumenstudio.co' }, subject: 'Final homepage designs for review', date: '2026-10-19T10:42:00', read: false, labels: ['work'], attachment: { name: 'Homepage-v4.pdf', size: '3.2 MB' },
+          body: ['Hi Jordan,', 'I’ve attached the final round of homepage designs, including the updated hero section and the new pricing cards we discussed on Thursday.', 'The main changes are a simplified navigation, larger customer logos and a dark variant for the feature grid. Could you take a look before Wednesday so we can hand everything over to engineering?', 'Thanks,\nMaya'] }),
+        msg({ from: { name: 'GitHub', email: 'noreply@github.com' }, subject: '[materix-ui] Pull request #482 was merged', date: '2026-10-19T09:15:00', read: false, labels: ['work'],
+          body: ['Merged #482 into main.', 'feat(table): add controlled pagination and sortable headers — 14 files changed, 612 additions and 97 deletions.', 'You are receiving this because you were requested for review.'] }),
+        msg({ from: { name: 'Lucas Fernández', email: 'lucas.fernandez@northwind.io' }, subject: 'Q4 planning: agenda and pre-reads', date: '2026-10-19T08:03:00', read: false, starred: true, labels: ['work'],
+          body: ['Morning team,', 'Ahead of Tuesday’s Q4 planning session, please review the attached pre-reads. We will cover the roadmap, hiring plan and the budget reallocation for the design system initiative.', 'Agenda: 10:00 roadmap review, 11:00 hiring, 11:45 budget, 12:15 open questions.', 'See you there,\nLucas'] }),
+        msg({ from: { name: 'Skyway Airlines', email: 'bookings@skyway.travel' }, subject: 'Your trip to Lisbon is confirmed', date: '2026-10-18T19:20:00', labels: ['travel'],
+          body: ['Booking reference: QX7P2L', 'Outbound: Fri, Nov 6 · SFO 07:40 → LIS 07:10 (+1)\nReturn: Mon, Nov 16 · LIS 12:25 → SFO 16:05', 'Online check-in opens 24 hours before departure. Have a great trip!'] }),
+        msg({ from: { name: 'Priya Sharma', email: 'priya.sharma@gmail.com' }, subject: 'Dinner on Saturday?', date: '2026-10-18T14:11:00', read: false, labels: ['personal'],
+          body: ['Hey!', 'A few of us are going to that new Peruvian place on Valencia Street on Saturday around 7:30. Want to join? I can book a table for six.', 'Priya'] }),
+        msg({ from: { name: 'Stripe', email: 'receipts@stripe.com' }, subject: 'Your receipt from Cloudbox Inc. #2291-4471', date: '2026-10-17T16:45:00',
+          body: ['Amount paid: $29.00', 'Date paid: October 17, 2026\nPayment method: Visa ending in 4242', 'Cloudbox Pro — monthly subscription. If you have any questions, reply to this email.'] }),
+        msg({ from: { name: 'Ethan Walker', email: 'ethan.walker@northwind.io' }, subject: 'Re: Accessibility audit results', date: '2026-10-17T11:30:00', starred: true, labels: ['work'],
+          body: ['Thanks for the quick turnaround on the audit.', 'All critical issues are fixed in the staging build: focus order in the checkout flow, missing labels on the icon buttons and the color contrast of disabled text. The remaining two items are cosmetic and scheduled for next sprint.', 'Ethan'] }),
+        msg({ from: { name: 'Figma', email: 'no-reply@figma.com' }, subject: 'Sofia Rossi commented on “Design System v3”', date: '2026-10-16T15:02:00',
+          body: ['Sofia Rossi commented: “Can we align the chip height with the small button? 24px feels a bit tight next to the 32px inputs.”', 'Reply in Figma to continue the conversation.'] }),
+        msg({ from: { name: 'Amelia Chen', email: 'amelia@chenlaw.com' }, subject: 'Lease renewal documents', date: '2026-10-15T09:48:00', labels: ['personal'], attachment: { name: 'Lease-renewal-2027.pdf', size: '640 KB' },
+          body: ['Hi Jordan,', 'Please find the lease renewal documents attached. The only change from last year is the updated maintenance clause in section 7. Let me know if you would like to go through it on a quick call.', 'Best regards,\nAmelia Chen'] }),
+        msg({ from: { name: 'Notion', email: 'team@notion.so' }, subject: 'Your weekly workspace digest', date: '2026-10-13T08:00:00',
+          body: ['12 pages were updated in Northwind Product this week.', 'Most active: Launch checklist, Q4 OKRs and Customer interview notes.'] }),
+        msg({ folder: 'sent', from: ME, to: 'Maya Robinson', subject: 'Re: Moodboard feedback', date: '2026-10-16T17:30:00',
+          body: ['Looks great, Maya. Let’s go with option B and push the gradient a bit warmer.', 'Jordan'] }),
+        msg({ folder: 'sent', from: ME, to: 'Lucas Fernández', subject: 'Budget proposal for design system', date: '2026-10-14T10:12:00',
+          body: ['Hi Lucas, attached is the budget proposal for the design system initiative. Happy to walk through it before planning.', 'Jordan'] }),
+        msg({ folder: 'drafts', from: ME, to: 'Ethan Walker', subject: 'Retro notes', date: '2026-10-18T22:05:00',
+          body: ['What went well: shipping the table component two days early…'] }),
+        msg({ folder: 'archive', from: { name: 'Noah Kim', email: 'noah.kim@northwind.io' }, subject: 'Offsite photos', date: '2026-09-29T13:20:00', labels: ['personal'],
+          body: ['Uploaded all the offsite photos to the shared drive. The sunset ones came out great!'] }),
+        msg({ folder: 'spam', from: { name: 'Prize Center', email: 'win@prize-center.biz' }, subject: 'You have been selected!!!', date: '2026-10-12T03:14:00', read: false,
+          body: ['Claim your reward now by confirming your bank details.'] })
+      ];
+
+      var state = { folder: 'inbox', label: null, query: '', openId: null };
+      var listPane = $('#tpl-ml-listpane');
+      var reader = $('#tpl-ml-reader');
+      var fab = $('#tpl-ml-fab');
+      var compose = inst('tpl-ml-compose');
+      var composeTitle = $('#tpl-ml-compose .mtx-dialog__title');
+      var mq = window.matchMedia('(max-width: 899.98px)');
+
+      var fmtTime = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' });
+      var fmtDay = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+      var fmtFull = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+      /**
+       * Hora corta para la lista.
+       * @param {string} iso Fecha ISO.
+       * @returns {string} Texto.
+       */
+      var shortDate = function (iso) {
+        var d = new Date(iso);
+        return d.toDateString() === NOW.toDateString() ? fmtTime.format(d) : fmtDay.format(d);
+      };
+      var initials = function (name) { return name.split(/\s+/).map(function (p) { return p[0]; }).join('').slice(0, 2).toUpperCase(); };
+      var colorFor = function (s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 997; return COLORS[h % COLORS.length]; };
+      var findMsg = function (mid) { return messages.filter(function (x) { return x.id === mid; })[0]; };
+      var labelOf = function (key) { return LABELS.filter(function (l) { return l.key === key; })[0]; };
+
+      /**
+       * Muestra una notificación con deshacer opcional.
+       * @param {string} text Mensaje.
+       * @param {Function} [undo] Deshacer.
+       */
+      var notify = function (text, undo) {
+        Materix.snackbar.show({ message: text, action: undo ? 'Undo' : null, onAction: undo || null, duration: 5000, anchor: 'bottom-left' });
+      };
+
+      /**
+       * Alterna la vista móvil lista → detalle (en md+ ambos paneles son visibles).
+       * @param {boolean} on Mostrar el detalle.
+       */
+      var setDetail = function (on) {
+        listPane.classList.toggle('mtx-d-none', on);
+        listPane.classList.toggle('mtx-d-flex', !on);
+        reader.classList.toggle('mtx-d-flex', on);
+        reader.classList.toggle('mtx-d-none', !on);
+        fab.classList.toggle('mtx-d-none', on);
+        fab.classList.toggle('mtx-d-md-inline-flex', on);
+      };
+
+      var inFolder = function (m, key) {
+        if (key === 'starred') return m.starred && m.folder !== 'trash' && m.folder !== 'spam';
+        return m.folder === key;
+      };
+      /**
+       * Mensajes visibles según carpeta, etiqueta y búsqueda.
+       * @returns {Object[]} Mensajes.
+       */
+      var visible = function () {
+        var q = state.query.trim().toLowerCase();
+        return messages.filter(function (m) {
+          var scope = state.label ? (m.labels.indexOf(state.label) !== -1 && m.folder !== 'trash' && m.folder !== 'spam') : inFolder(m, state.folder);
+          if (!scope) return false;
+          if (!q) return true;
+          return (m.from.name + ' ' + m.subject + ' ' + m.body.join(' ')).toLowerCase().indexOf(q) !== -1;
+        }).sort(function (a, b) { return b.date.localeCompare(a.date); });
+      };
+      var unreadIn = function (key) { return messages.filter(function (m) { return inFolder(m, key) && !m.read; }).length; };
+
+      /** Pinta carpetas y etiquetas conservando el foco del teclado. */
+      var renderNav = function () {
+        var active = document.activeElement;
+        var focusKey = active && (active.getAttribute('data-folder') || active.getAttribute('data-label-key'));
+        $('#tpl-ml-folders').innerHTML = FOLDERS.map(function (f) {
+          var unread = f.key === 'inbox' || f.key === 'spam' ? unreadIn(f.key) : 0;
+          var drafts = f.key === 'drafts' ? messages.filter(function (m) { return m.folder === 'drafts'; }).length : 0;
+          var badge = unread ? '<span data-mtx="badge" data-standalone data-content="' + unread + '" data-color="primary" data-label="{0} unread"></span>'
+            : drafts ? '<span data-mtx="badge" data-standalone data-content="' + drafts + '" data-label="{0} drafts"></span>' : '';
+          return '<button type="button" data-mtx="list-item-button" data-icon="' + f.icon + '" data-folder="' + f.key + '" data-mtx-drawer-close' +
+            (!state.label && state.folder === f.key ? ' data-selected' : '') + '>' + f.label + badge + '</button>';
+        }).join('');
+        $('#tpl-ml-labels').innerHTML = LABELS.map(function (l) {
+          return '<button type="button" data-mtx="list-item-button" data-label-key="' + l.key + '" data-mtx-drawer-close' + (state.label === l.key ? ' data-selected' : '') + '>' +
+            '<span class="mtx-list-item-icon"><span class="material-icons mtx-color-' + l.color + '" aria-hidden="true">label</span></span>' + l.label + '</button>';
+        }).join('');
+        Materix.initAll($('#tpl-ml-nav'));
+        if (focusKey) {
+          var again = $('#tpl-ml-nav [data-folder="' + focusKey + '"], #tpl-ml-nav [data-label-key="' + focusKey + '"]');
+          if (again) again.focus();
+        }
+      };
+
+      /** Pinta la lista de mensajes. */
+      var renderList = function () {
+        var list = visible();
+        var title = state.label ? labelOf(state.label).label : FOLDERS.filter(function (f) { return f.key === state.folder; })[0].label;
+        $('#tpl-ml-folder-title').textContent = state.query ? 'Search results' : title;
+        var unread = list.filter(function (m) { return !m.read; }).length;
+        $('#tpl-ml-folder-meta').textContent = list.length + (list.length === 1 ? ' message' : ' messages') + (unread ? ' · ' + unread + ' unread' : '');
+        var ul = $('#tpl-ml-messages');
+        ul.innerHTML = list.map(function (m) {
+          var outgoing = m.folder === 'sent' || m.folder === 'drafts';
+          var person = outgoing ? (m.folder === 'drafts' ? 'Draft · ' : 'To: ') + m.to : m.from.name;
+          var avatarName = outgoing ? m.to : m.from.name;
+          var strong = m.read ? '' : ' mtx-fw-bold mtx-color-text-primary';
+          var current = state.openId === m.id;
+          var labels = m.labels.map(function (k) { var l = labelOf(k); return '<span data-mtx="chip" data-size="small" data-variant="outlined" data-color="' + l.color + '" data-label="' + l.label + '"></span>'; }).join('');
+          return '<li data-mtx="list-item" data-disable-padding data-divider class="mtx-position-relative' + (m.read ? '' : ' tpl-ml-unread') + (current ? ' mtx-bg-action-selected' : '') + '">' +
+            '<button type="button" data-mtx="list-item-button" data-no-select data-align-start data-open="' + m.id + '"' + (current ? ' aria-current="true"' : '') + '>' +
+            '<span data-mtx="avatar" data-color="' + colorFor(avatarName) + '" aria-hidden="true">' + esc(initials(avatarName)) + '</span>' +
+            '<span class="mtx-d-flex mtx-flex-1 mtx-flex-column mtx-min-w-0 mtx-typography--body2">' +
+            '<span class="mtx-d-flex mtx-align-items-baseline mtx-gap-1">' +
+            '<span class="mtx-flex-1 mtx-min-w-0 mtx-text-truncate mtx-typography--body1' + strong + '">' + (m.read ? '' : '<span class="mtx-visually-hidden">Unread. </span>') + esc(person) + '</span>' +
+            '<span class="mtx-flex-shrink-0 mtx-typography--caption mtx-color-text-secondary' + strong + '">' + shortDate(m.date) + '</span></span>' +
+            '<span class="mtx-text-truncate' + strong + '">' + esc(m.subject) + '</span>' +
+            '<span class="mtx-text-truncate mtx-color-text-secondary">' + esc(m.body.join(' ').replace(/\n/g, ' ')) + '</span>' +
+            (labels ? '<span class="mtx-d-flex mtx-gap-0_5 mtx-mt-0_5">' + labels + '</span>' : '') +
+            '</span></button>' +
+            '<span class="mtx-list-item-secondary-action mtx-align-self-end mtx-pb-1">' +
+            '<button data-mtx="icon-button" data-size="small" data-star="' + m.id + '" data-icon="' + (m.starred ? 'star' : 'star_border') + '"' + (m.starred ? ' data-color="warning"' : '') +
+            ' aria-pressed="' + m.starred + '" aria-label="Star message from ' + esc(m.from.name) + '"></button></span>' +
+            '</li>';
+        }).join('');
+        Materix.initAll(ul);
+        $('#tpl-ml-list-empty').hidden = list.length > 0;
+        if (!list.length) {
+          $('#tpl-ml-list-empty-title').textContent = state.query ? 'No messages match your search' : 'Nothing in ' + title;
+          $('#tpl-ml-list-empty-text').textContent = state.query ? 'Try different keywords.' : 'You’re all caught up.';
+        }
+        $('#tpl-ml-read-all').disabled = unread === 0;
+      };
+
+      /** Pinta el panel de lectura. */
+      var renderReader = function () {
+        var m = findMsg(state.openId);
+        var content = $('#tpl-ml-reader-content');
+        $('#tpl-ml-reader-bar').hidden = !m;
+        content.hidden = !m;
+        $('#tpl-ml-reader-empty').hidden = !!m;
+        if (!m) return;
+        var starBtn = $('[data-act="star"]');
+        starBtn.setAttribute('aria-pressed', String(m.starred));
+        starBtn.querySelector('.material-icons').textContent = m.starred ? 'star' : 'star_border';
+        starBtn.classList.toggle('mtx-icon-button--warning', m.starred);
+        $('[data-act="archive"]').hidden = m.folder === 'archive' || m.folder === 'sent' || m.folder === 'drafts';
+        var labels = m.labels.map(function (k) { var l = labelOf(k); return '<span data-mtx="chip" data-size="small" data-color="' + l.color + '" data-label="' + l.label + '"></span>'; }).join('');
+        var att = m.attachment
+          ? '<div class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1_5 mtx-mt-1 mtx-mb-3 mtx-py-1 mtx-ps-1_5 mtx-pe-1 mtx-border mtx-rounded-2 mtx-typography--body2">' +
+            '<span class="material-icons mtx-color-error" aria-hidden="true">picture_as_pdf</span>' +
+            '<div>' + esc(m.attachment.name) + '<span class="mtx-d-block mtx-typography--caption mtx-color-text-secondary">' + m.attachment.size + '</span></div>' +
+            '<button data-mtx="icon-button" data-icon="file_download" data-size="small" aria-label="Download ' + esc(m.attachment.name) + '" data-download></button></div>'
+          : '';
+        content.innerHTML =
+          '<div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-column-gap-1_5 mtx-row-gap-1 mtx-mb-3">' +
+          '<h2 class="mtx-typography--h5" id="tpl-ml-subject-heading" tabindex="-1">' + esc(m.subject) + '</h2>' + labels + '</div>' +
+          '<div class="mtx-d-flex mtx-align-items-start mtx-gap-2 mtx-mb-3">' +
+          '<span data-mtx="avatar" data-color="' + colorFor(m.from.name) + '" aria-hidden="true">' + esc(initials(m.from.name)) + '</span>' +
+          '<div class="mtx-flex-1 mtx-min-w-0 mtx-typography--body2 mtx-color-text-secondary">' +
+          '<div class="mtx-typography--subtitle1 mtx-color-text-primary">' + esc(m.from.name) + '</div>' +
+          '<div class="mtx-text-truncate">' + esc(m.from.email) + '</div><div>to ' + (m.to === ME.name ? 'me' : esc(m.to)) + '</div></div>' +
+          '<time class="mtx-d-none mtx-d-sm-block mtx-flex-shrink-0 mtx-typography--body2 mtx-color-text-secondary" datetime="' + m.date + '">' + fmtFull.format(new Date(m.date)) + '</time></div>' +
+          '<div class="mtx-typography--body1">' + m.body.map(function (p) { return '<p class="mtx-mb-2">' + esc(p).replace(/\n/g, '<br>') + '</p>'; }).join('') + att + '</div>' +
+          '<div class="mtx-d-flex mtx-flex-wrap mtx-gap-1_5 mtx-mt-4">' +
+          '<button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-reply="reply"><span class="mtx-button__icon material-icons" aria-hidden="true">reply</span>Reply</button>' +
+          '<button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-reply="forward"><span class="mtx-button__icon material-icons" aria-hidden="true">forward</span>Forward</button>' +
+          '</div>';
+        Materix.initAll(content);
+        content.scrollTop = 0;
+      };
+
+      var renderAll = function () { renderNav(); renderList(); renderReader(); };
+
+      /**
+       * Abre un mensaje y lo marca como leído.
+       * @param {string} mid Id del mensaje.
+       */
+      var openMessage = function (mid) {
+        var m = findMsg(mid);
+        if (!m) return;
+        state.openId = mid;
+        m.read = true;
+        setDetail(true);
+        renderAll();
+        if (mq.matches) $('#tpl-ml-subject-heading').focus();
+      };
+      var closeReader = function () {
+        setDetail(false);
+        var btn = state.openId && $('[data-open="' + state.openId + '"]');
+        if (btn) btn.focus();
+      };
+      /** Cierra el mensaje abierto y vuelve a la lista. */
+      var resetOpen = function () {
+        state.openId = null;
+        setDetail(false);
+      };
+
+      // Navegación por carpetas y etiquetas
+      $('#tpl-ml-nav').addEventListener('click', function (e) {
+        var f = e.target.closest('[data-folder]');
+        var l = e.target.closest('[data-label-key]');
+        if (!f && !l) return;
+        state.folder = f ? f.getAttribute('data-folder') : state.folder;
+        state.label = l ? l.getAttribute('data-label-key') : null;
+        state.query = '';
+        $('#tpl-ml-search').value = '';
+        resetOpen();
+        renderAll();
+      });
+
+      $('#tpl-ml-messages').addEventListener('click', function (e) {
+        var star = e.target.closest('[data-star]');
+        if (star) {
+          var m = findMsg(star.getAttribute('data-star'));
+          m.starred = !m.starred;
+          renderList();
+          if (state.openId === m.id) renderReader();
+          var again = $('[data-star="' + m.id + '"]');
+          if (again) again.focus();
+          return;
+        }
+        var open = e.target.closest('[data-open]');
+        if (open) openMessage(open.getAttribute('data-open'));
+      });
+
+      $('#tpl-ml-back').addEventListener('click', closeReader);
+
+      // Acciones del lector
+      $('#tpl-ml-reader-bar').addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-act]');
+        var m = findMsg(state.openId);
+        if (!btn || !m) return;
+        var act = btn.getAttribute('data-act');
+        if (act === 'star') { m.starred = !m.starred; renderList(); renderReader(); return; }
+        if (act === 'reply') { openCompose('reply', m); return; }
+        if (act === 'unread') {
+          m.read = false;
+          resetOpen();
+          renderAll();
+          notify('Marked as unread');
+          return;
+        }
+        var prevFolder = m.folder;
+        m.folder = act === 'archive' ? 'archive' : 'trash';
+        resetOpen();
+        renderAll();
+        notify(act === 'archive' ? 'Conversation archived' : 'Conversation moved to Trash', function () {
+          m.folder = prevFolder;
+          renderAll();
+        });
+      });
+      $('#tpl-ml-reader-content').addEventListener('click', function (e) {
+        var r = e.target.closest('[data-reply]');
+        var m = findMsg(state.openId);
+        if (!m) return;
+        if (r) openCompose(r.getAttribute('data-reply'), m);
+        if (e.target.closest('[data-download]')) notify('Downloading ' + m.attachment.name);
+      });
+
+      $('#tpl-ml-read-all').addEventListener('click', function () {
+        var changed = visible().filter(function (m) { return !m.read; });
+        changed.forEach(function (m) { m.read = true; });
+        renderAll();
+        notify(changed.length + (changed.length === 1 ? ' conversation' : ' conversations') + ' marked as read', function () {
+          changed.forEach(function (m) { m.read = false; });
+          renderAll();
+        });
+      });
+      var refreshCount = 0;
+      $('#tpl-ml-refresh').addEventListener('click', function () {
+        if (++refreshCount > 1) { notify('No new messages'); return; }
+        messages.push(msg({ from: { name: 'Sofia Rossi', email: 'sofia.rossi@lumenstudio.co' }, subject: 'Quick question about the chip sizes', date: new Date(NOW.getTime() + 60000).toISOString().slice(0, 19), read: false, labels: ['work'],
+          body: ['Hi Jordan, do you have five minutes today to look at the chip sizes in the design system? I want to make sure we match the small button height.', 'Sofia'] }));
+        state.folder = 'inbox'; state.label = null;
+        renderAll();
+        notify('1 new message');
+      });
+
+      // Búsqueda
+      var searchTimer;
+      $('#tpl-ml-search').addEventListener('input', function (e) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function () { state.query = e.target.value; renderList(); }, 150);
+      });
+
+      // Redacción
+      var to = inst($('#tpl-ml-to').closest('.mtx-text-field'));
+      var subject = inst($('#tpl-ml-subject').closest('.mtx-text-field'));
+      var body = inst($('#tpl-ml-message').closest('.mtx-text-field'));
+      var sentOk = false;
+      /**
+       * Abre el diálogo de redacción.
+       * @param {string} mode 'new', 'reply' o 'forward'.
+       * @param {Object} [m] Mensaje original.
+       */
+      var openCompose = function (mode, m) {
+        [to, subject, body].forEach(function (f) { f.clearError(); });
+        sentOk = false;
+        composeTitle.textContent = mode === 'reply' ? 'Reply' : mode === 'forward' ? 'Forward' : 'New message';
+        to.value = mode === 'reply' ? m.from.email : '';
+        subject.value = m ? (mode === 'reply' ? 'Re: ' : 'Fwd: ') + m.subject.replace(/^(Re|Fwd):\s*/i, '') : '';
+        body.value = m ? '\n\n— On ' + fmtFull.format(new Date(m.date)) + ', ' + m.from.name + ' wrote:\n' + m.body.join('\n') : '';
+        compose.open();
+        if (mode === 'reply') { body.focus(); body.input.setSelectionRange(0, 0); }
+      };
+      $$('[data-tpl-compose]').forEach(function (b) { b.addEventListener('click', function () { openCompose('new'); }); });
+      [to, subject, body].forEach(function (f) { f.input.addEventListener('input', function () { f.clearError(); }); });
+      var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      $('#tpl-ml-compose-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var first = null;
+        var fail = function (f, text) { f.setError(text); if (!first) first = f; };
+        var recipients = to.value.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+        if (!recipients.length) fail(to, 'Add at least one recipient.');
+        else {
+          var bad = recipients.filter(function (r) { return !EMAIL.test(r); });
+          if (bad.length) fail(to, '“' + bad[0] + '” is not a valid email address.');
+        }
+        if (!subject.value.trim()) fail(subject, 'Add a subject.');
+        if (!body.value.trim()) fail(body, 'Write a message before sending.');
+        if (first) { first.focus(); return; }
+        var sent = msg({ folder: 'sent', from: ME, to: recipients.join(', '), subject: subject.value.trim(), date: new Date().toISOString().slice(0, 19), body: body.value.trim().split(/\n{2,}/) });
+        messages.push(sent);
+        sentOk = true;
+        compose.close('sent');
+        renderAll();
+        notify('Message sent', function () {
+          messages = messages.filter(function (x) { return x !== sent; });
+          renderAll();
+          setTimeout(function () { notify('Sending undone'); }, 200);
+        });
+      });
+      $('#tpl-ml-discard').addEventListener('click', function () { sentOk = true; compose.close('discard'); notify('Draft discarded'); });
+      $('#tpl-ml-compose').addEventListener('mtx:dialog:close', function () {
+        if (sentOk) return;
+        if (!to.value.trim() && !subject.value.trim() && !body.value.trim()) return;
+        messages.push(msg({ folder: 'drafts', from: ME, to: to.value.trim() || '(no recipient)', subject: subject.value.trim() || '(no subject)', date: new Date().toISOString().slice(0, 19), body: [body.value.trim() || ' '] }));
+        renderAll();
+        notify('Draft saved');
+      });
+
+      // Estado inicial: primer mensaje abierto en escritorio
+      if (!mq.matches) { var first = visible()[0]; if (first) { state.openId = first.id; first.read = true; } }
+      renderAll();
+    });
+  </script>
+</body>
+</html>

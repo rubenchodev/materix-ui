@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle Button · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Toggle Button</h1>
+        <p class="demo-lead">Toggle buttons group related options with exclusive or multiple selection; on their own they work as an on/off switch for a single action.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#selection">Exclusive and multiple</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With and without icons</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#orientation">Orientation and width</a>
+      <a href="#enforce-value">Enforce value set</a>
+      <a href="#standalone">Standalone button</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>data-mtx="toggle-button-group"</code> container with plain <code>&lt;button&gt;</code> elements: each button only needs <code>data-value</code> and, if it is icon-only, <code>data-icon</code> and <code>aria-label</code>. The group initializes the buttons, joins their borders and manages <code>aria-pressed</code>.</p>
+      <div class="demo-row">
+        <div data-mtx="toggle-button-group" data-exclusive data-value="left" aria-label="Text alignment">
+          <button data-value="left" data-icon="format_align_left" aria-label="Align left"></button>
+          <button data-value="center" data-icon="format_align_center" aria-label="Center"></button>
+          <button data-value="right" data-icon="format_align_right" aria-label="Align right"></button>
+          <button data-value="justify" data-icon="format_align_justify" aria-label="Justify" disabled></button>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="toggle-button-group" data-exclusive data-value="left" aria-label="Text alignment"&gt;
+  &lt;button data-value="left" data-icon="format_align_left" aria-label="Align left"&gt;&lt;/button&gt;
+  &lt;button data-value="center" data-icon="format_align_center" aria-label="Center"&gt;&lt;/button&gt;
+  &lt;button data-value="right" data-icon="format_align_right" aria-label="Align right"&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="selection">
+      <h2>Exclusive and multiple</h2>
+      <p>With <code>data-exclusive</code> only one button can be active (the value is a string or <code>null</code>). Without it, selection is multiple and the value is an array; <code>data-value</code> accepts a comma-separated list.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Exclusive · data-exclusive</span>
+          <div class="demo-row">
+            <div data-mtx="toggle-button-group" data-exclusive data-value="center" aria-label="Alignment">
+              <button data-value="left" data-icon="format_align_left" aria-label="Left"></button>
+              <button data-value="center" data-icon="format_align_center" aria-label="Center"></button>
+              <button data-value="right" data-icon="format_align_right" aria-label="Right"></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Multiple (default)</span>
+          <div class="demo-row">
+            <div data-mtx="toggle-button-group" data-value="bold,italic" aria-label="Text formatting">
+              <button data-value="bold" data-icon="format_bold" aria-label="Bold"></button>
+              <button data-value="italic" data-icon="format_italic" aria-label="Italic"></button>
+              <button data-value="underlined" data-icon="format_underlined" aria-label="Underline"></button>
+              <button data-value="color" data-icon="format_color_fill" aria-label="Fill color"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Three sizes with <code>data-size</code> on the group (or on each button). The icon always keeps its native 24px grid; only the padding changes (7, 11 and 15px, as in MUI).</p>
+      <div class="demo-group">
+        <span class="demo-label">Large · 56px (aligns with Text Field medium)</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-exclusive data-size="large" data-value="list" aria-label="View (large)">
+            <button data-value="list" data-icon="view_list" aria-label="List"></button>
+            <button data-value="module" data-icon="view_module" aria-label="Modules"></button>
+            <button data-value="quilt" data-icon="view_quilt" aria-label="Quilt"></button>
+          </div>
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Search" type="search" />
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 48px (default, aligns with Button large)</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-exclusive data-value="list" aria-label="View (medium)">
+            <button data-value="list" data-icon="view_list" aria-label="List"></button>
+            <button data-value="module" data-icon="view_module" aria-label="Modules"></button>
+            <button data-value="quilt" data-icon="view_quilt" aria-label="Quilt"></button>
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="large">Apply</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 40px (aligns with Button medium and Text Field small)</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-exclusive data-size="small" data-value="list" aria-label="View (small)">
+            <button data-value="list" data-icon="view_list" aria-label="List"></button>
+            <button data-value="module" data-icon="view_module" aria-label="Modules"></button>
+            <button data-value="quilt" data-icon="view_quilt" aria-label="Quilt"></button>
+          </div>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button">Filter</button>
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Search" data-size="small" type="search" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p>Buttons can have text only, icon and text (<code>data-icon</code> is inserted before the text) or icon only, which requires an <code>aria-label</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Text only</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-exclusive data-value="web" aria-label="Platform">
+            <button data-value="web">Web</button>
+            <button data-value="android">Android</button>
+            <button data-value="ios">iOS</button>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon and text</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-exclusive data-value="month" aria-label="Period">
+            <button data-value="day" data-icon="today">Day</button>
+            <button data-value="week" data-icon="view_week">Week</button>
+            <button data-value="month" data-icon="calendar_month">Month</button>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon only (with aria-label)</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-exclusive data-value="phone" aria-label="Device">
+            <button data-value="laptop" data-icon="laptop" aria-label="Laptop"></button>
+            <button data-value="tv" data-icon="tv" aria-label="TV"></button>
+            <button data-value="phone" data-icon="phone_android" aria-label="Phone"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> colors the selected state: <code>standard</code> (default, primary text) or any palette color.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">standard</span>
+          <div data-mtx="toggle-button-group" data-exclusive data-value="web" aria-label="Platform (standard)">
+            <button data-value="web">Web</button><button data-value="android">Android</button><button data-value="ios">iOS</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">primary</span>
+          <div data-mtx="toggle-button-group" data-exclusive data-color="primary" data-value="web" aria-label="Platform (primary)">
+            <button data-value="web">Web</button><button data-value="android">Android</button><button data-value="ios">iOS</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">secondary</span>
+          <div data-mtx="toggle-button-group" data-exclusive data-color="secondary" data-value="web" aria-label="Platform (secondary)">
+            <button data-value="web">Web</button><button data-value="android">Android</button><button data-value="ios">iOS</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">success</span>
+          <div data-mtx="toggle-button-group" data-exclusive data-color="success" data-value="web" aria-label="Platform (success)">
+            <button data-value="web">Web</button><button data-value="android">Android</button><button data-value="ios">iOS</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">error</span>
+          <div data-mtx="toggle-button-group" data-exclusive data-color="error" data-value="web" aria-label="Platform (error)">
+            <button data-value="web">Web</button><button data-value="android">Android</button><button data-value="ios">iOS</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">warning</span>
+          <div data-mtx="toggle-button-group" data-exclusive data-color="warning" data-value="web" aria-label="Platform (warning)">
+            <button data-value="web">Web</button><button data-value="android">Android</button><button data-value="ios">iOS</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">info</span>
+          <div data-mtx="toggle-button-group" data-exclusive data-color="info" data-value="web" aria-label="Platform (info)">
+            <button data-value="web">Web</button><button data-value="android">Android</button><button data-value="ios">iOS</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover to see the hover background, use <kbd>Tab</kbd> to see the focus ring and click to see the ripple. A button with <code>disabled</code> (or <code>data-disabled</code>) is dimmed; <code>data-disabled</code> on the group disables all of them.</p>
+      <div class="demo-group">
+        <span class="demo-label">Normal, selected and disabled</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-value="bold" aria-label="Formatting states">
+            <button data-value="bold" data-icon="format_bold" aria-label="Bold (selected)"></button>
+            <button data-value="italic" data-icon="format_italic" aria-label="Italic (normal)"></button>
+            <button data-value="underlined" data-icon="format_underlined" aria-label="Underline (disabled)" disabled></button>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Disabled group · data-disabled</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-exclusive data-disabled data-value="day" aria-label="Period (disabled)">
+            <button data-value="day">Day</button>
+            <button data-value="week">Week</button>
+            <button data-value="month">Month</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="orientation">
+      <h2>Orientation and width</h2>
+      <p><code>data-orientation="vertical"</code> stacks the buttons (the up/down arrows move focus) and <code>data-full-width</code> spreads them across the available width.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Vertical</span>
+          <div class="demo-row">
+            <div data-mtx="toggle-button-group" data-exclusive data-orientation="vertical" data-value="list" aria-label="Vertical view">
+              <button data-value="list" data-icon="view_list" aria-label="List"></button>
+              <button data-value="module" data-icon="view_module" aria-label="Modules"></button>
+              <button data-value="quilt" data-icon="view_quilt" aria-label="Quilt"></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Full width · data-full-width</span>
+          <div data-mtx="toggle-button-group" data-exclusive data-full-width data-color="primary" data-value="monthly" aria-label="Billing">
+            <button data-value="monthly">Monthly</button>
+            <button data-value="yearly">Yearly</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="enforce-value">
+      <h2>Enforce value set</h2>
+      <p>With <code>data-enforce-value-set</code> the last active button cannot be deselected: the group always has a value (MUI <em>enforce value set</em> pattern).</p>
+      <div class="demo-row">
+        <div data-mtx="toggle-button-group" data-exclusive data-enforce-value-set data-value="left" aria-label="Required alignment">
+          <button data-value="left" data-icon="format_align_left" aria-label="Left"></button>
+          <button data-value="center" data-icon="format_align_center" aria-label="Center"></button>
+          <button data-value="right" data-icon="format_align_right" aria-label="Right"></button>
+        </div>
+        <div data-mtx="toggle-button-group" data-enforce-value-set data-value="email" aria-label="Notification channels">
+          <button data-value="email" data-icon="mail">Email</button>
+          <button data-value="sms" data-icon="sms">SMS</button>
+          <button data-value="push" data-icon="notifications">Push</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="standalone">
+      <h2>Standalone button</h2>
+      <p>A single <code>data-mtx="toggle-button"</code> toggles its own state and emits <code>mtx:toggle-button:change</code>. Use it for on/off actions such as marking a favorite; <code>data-selected</code> sets the initial state.</p>
+      <div class="demo-row">
+        <button data-mtx="toggle-button" data-value="favorite" data-icon="star" data-color="warning" aria-label="Mark as favorite"></button>
+        <button data-mtx="toggle-button" data-value="check" data-icon="check" data-color="success" data-selected aria-label="Mark as done"></button>
+        <button data-mtx="toggle-button" data-value="wifi" data-icon="wifi" data-size="small" data-selected>Wi-Fi</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <div class="demo-group">
+        <span class="demo-label">Editor toolbar</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-size="small" data-value="bold" aria-label="Formatting">
+            <button data-value="bold" data-icon="format_bold" aria-label="Bold"></button>
+            <button data-value="italic" data-icon="format_italic" aria-label="Italic"></button>
+            <button data-value="underlined" data-icon="format_underlined" aria-label="Underline"></button>
+          </div>
+          <div data-mtx="toggle-button-group" data-exclusive data-enforce-value-set data-size="small" data-value="left" aria-label="Alignment">
+            <button data-value="left" data-icon="format_align_left" aria-label="Left"></button>
+            <button data-value="center" data-icon="format_align_center" aria-label="Center"></button>
+            <button data-value="right" data-icon="format_align_right" aria-label="Right"></button>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Theme switcher (Materix.theme with [data-mtx-theme-toggle])</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" data-exclusive data-enforce-value-set data-size="small" data-color="primary" aria-label="Theme">
+            <button data-value="light" data-icon="light_mode" data-mtx-theme-toggle="light">Light</button>
+            <button data-value="system" data-icon="settings_brightness" data-mtx-theme-toggle="system">System</button>
+            <button data-value="dark" data-icon="dark_mode" data-mtx-theme-toggle="dark">Dark</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Inside <code>mtx-grid</code>, <code>data-full-width</code> makes each group fill its column; on mobile the columns stack.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="toggle-button-group" data-exclusive data-full-width data-value="standard" aria-label="Shipping">
+            <button data-value="standard" data-icon="local_shipping">Standard</button>
+            <button data-value="express" data-icon="bolt">Express</button>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="toggle-button-group" data-full-width data-value="gift" aria-label="Extras">
+            <button data-value="gift" data-icon="redeem">Gift</button>
+            <button data-value="insurance" data-icon="verified_user">Insurance</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The group instance exposes <code>value</code> (read and write, no events), <code>buttons</code>, <code>disable()</code> and <code>enable()</code>, and emits <code>mtx:toggle-button-group:change</code> with <code>detail.value</code> when the user changes the selection.</p>
+      <div class="demo-group">
+        <span class="demo-label">Controlled group</span>
+        <div class="demo-row">
+          <div data-mtx="toggle-button-group" id="tb-target" data-value="bold" aria-label="Formatting (programmatic)">
+            <button data-value="bold" data-icon="format_bold" aria-label="Bold"></button>
+            <button data-value="italic" data-icon="format_italic" aria-label="Italic"></button>
+            <button data-value="underlined" data-icon="format_underlined" aria-label="Underline"></button>
+          </div>
+          <span class="demo-status" id="tb-status">value: ["bold"]</span>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-tb-action="all">value = ['bold', 'italic', 'underlined']</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-tb-action="none">value = []</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-tb-action="disable">disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-tb-action="enable">enable()</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="tb-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The full structure writes the classes and the <code>aria-pressed</code> state; the library reuses the nodes and the existing icon.</p>
+      <div class="mtx-toggle-button-group" data-mtx="toggle-button-group" data-exclusive role="group" aria-label="View (BEM)">
+        <button type="button" class="mtx-toggle-button" data-mtx="toggle-button" data-value="list" aria-pressed="true" aria-label="List">
+          <span class="material-icons" aria-hidden="true">view_list</span>
+        </button>
+        <button type="button" class="mtx-toggle-button" data-mtx="toggle-button" data-value="grid" aria-pressed="false" aria-label="Grid">
+          <span class="material-icons" aria-hidden="true">grid_view</span>
+        </button>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-toggle-button-group" data-mtx="toggle-button-group" data-exclusive role="group" aria-label="View"&gt;
+  &lt;button type="button" class="mtx-toggle-button" data-mtx="toggle-button" data-value="list" aria-pressed="true" aria-label="List"&gt;
+    &lt;span class="material-icons" aria-hidden="true"&gt;view_list&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;button type="button" class="mtx-toggle-button" data-mtx="toggle-button" data-value="grid" aria-pressed="false" aria-label="Grid"&gt;
+    &lt;span class="material-icons" aria-hidden="true"&gt;grid_view&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var groupEl = document.getElementById('tb-target');
+      var group = Materix.getInstance(groupEl);
+      var logEl = document.getElementById('tb-log');
+      var statusEl = document.getElementById('tb-status');
+
+      /** Añade una línea al registro de eventos. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      /** Refleja el valor actual del grupo. */
+      function syncStatus() {
+        statusEl.textContent = 'value: ' + JSON.stringify(group.value) + (group.disabled ? ' · disabled' : '');
+      }
+
+      groupEl.addEventListener('mtx:toggle-button-group:change', function (event) {
+        log('mtx:toggle-button-group:change → ' + JSON.stringify(event.detail.value));
+        syncStatus();
+      });
+
+      document.addEventListener('mtx:toggle-button:change', function (event) {
+        log('mtx:toggle-button:change → ' + JSON.stringify(event.detail));
+      });
+
+      document.querySelectorAll('[data-tb-action]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var action = button.getAttribute('data-tb-action');
+          if (action === 'all') group.value = ['bold', 'italic', 'underlined'];
+          if (action === 'none') group.value = [];
+          if (action === 'disable') group.disable();
+          if (action === 'enable') group.enable();
+          log(action === 'all' || action === 'none' ? 'value = ' + JSON.stringify(group.value) : action + '()');
+          syncStatus();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

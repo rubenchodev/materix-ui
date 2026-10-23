@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badge · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Badges stick out 10px from their box: more gap and some top room. */
+    .demo-badge-row { gap: var(--mtx-spacing-4); padding: var(--mtx-spacing-1) var(--mtx-spacing-1) 0; }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Data display</span>
+        <h1>Badge</h1>
+        <p class="demo-lead">Displays a number or a status dot at the corner of an icon, avatar or button to flag new or pending items.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#with-icons">On icons, avatars and buttons</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#standalone">Inline (standalone)</a>
+      <a href="#position">Position</a>
+      <a href="#overlap">Overlap</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Wrap the content with <code>data-mtx="badge"</code> and put the value in <code>data-content</code>; the component creates and positions the badge.</p>
+      <div class="demo-row demo-badge-row">
+        <div data-mtx="badge" data-content="4" data-color="primary">
+          <span class="material-icons" aria-hidden="true">mail</span>
+        </div>
+        <div data-mtx="badge" data-content="12" data-color="error">
+          <span class="material-icons" aria-hidden="true">notifications</span>
+        </div>
+        <div data-mtx="badge" data-variant="dot" data-color="success">
+          <span class="material-icons" aria-hidden="true">chat</span>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="badge" data-content="4" data-color="primary"&gt;
+  &lt;span class="material-icons" aria-hidden="true"&gt;mail&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>standard</code> shows the content (a number or short text); <code>dot</code> shows an 8px dot with no number.</p>
+      <div class="demo-group">
+        <span class="demo-label">Standard</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-content="4" data-color="secondary">
+            <span class="material-icons" aria-hidden="true">mail</span>
+          </div>
+          <div data-mtx="badge" data-content="New" data-color="success">
+            <span class="material-icons" aria-hidden="true">inventory_2</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Dot</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-variant="dot" data-color="secondary">
+            <span class="material-icons" aria-hidden="true">mail</span>
+          </div>
+          <div data-mtx="badge" data-variant="dot" data-color="error">
+            <span class="material-icons" aria-hidden="true">notifications</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>On icons, avatars and buttons</h2>
+      <p>The badge wraps any element. With IconButton it can go inside the button, wrapping the icon (MUI pattern), or outside, wrapping the button; the number is announced in the button's <code>aria-label</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Icon</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-content="3" data-color="primary">
+            <span class="material-icons" aria-hidden="true">shopping_cart</span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Avatar</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-content="2" data-color="error" data-overlap="circular">
+            <div data-mtx="avatar" data-color="primary">AG</div>
+          </div>
+          <div data-mtx="badge" data-content="9" data-color="error">
+            <div data-mtx="avatar" data-variant="rounded" data-color="secondary">CR</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">IconButton and Button</span>
+        <div class="demo-row demo-badge-row">
+          <button data-mtx="icon-button" aria-label="Notifications, 17 unread">
+            <span data-mtx="badge" data-content="17" data-color="error"><span class="material-icons" aria-hidden="true">notifications</span></span>
+          </button>
+          <div data-mtx="badge" data-content="4" data-color="primary" data-overlap="circular">
+            <button data-mtx="icon-button" data-icon="mail" aria-label="Mail, 4 unread messages"></button>
+          </div>
+          <span data-mtx="badge" data-content="8" data-color="error">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" aria-label="To do, 8 tasks">To do</button>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p>Without <code>data-color</code> (or with <code>default</code>) the badge is neutral gray, as in MUI. The rest use the palette with contrast text.</p>
+      <div class="demo-group">
+        <span class="demo-label">Standard</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-content="4" data-color="default"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="4" data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="4" data-color="secondary"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="4" data-color="error"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="4" data-color="warning"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="4" data-color="info"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="4" data-color="success"><span class="material-icons" aria-hidden="true">mail</span></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Dot</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-variant="dot"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-variant="dot" data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-variant="dot" data-color="secondary"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-variant="dot" data-color="error"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-variant="dot" data-color="warning"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-variant="dot" data-color="info"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-variant="dot" data-color="success"><span class="material-icons" aria-hidden="true">mail</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>The badge is hidden when the value is <code>0</code> or empty. <code>data-show-zero</code> shows the zero, <code>data-invisible</code> always hides it and <code>data-max</code> (99 by default) caps the number.</p>
+      <div class="demo-group">
+        <span class="demo-label">Value 0 · with data-show-zero · data-invisible</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-content="0" data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="0" data-show-zero data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="5" data-invisible data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Maximum value: 99 with max 9 · 150 (max 99) · 1000 with max 999</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-content="99" data-max="9" data-color="error"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="150" data-color="error"><span class="material-icons" aria-hidden="true">mail</span></div>
+          <div data-mtx="badge" data-content="1000" data-max="999" data-color="error"><span class="material-icons" aria-hidden="true">mail</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="standalone">
+      <h2>Inline (standalone)</h2>
+      <p><code>data-standalone</code> shows the badge in the text flow, with no anchored element: useful for counters in navigation, lists or tabs. With content 0 it disappears (unless <code>data-show-zero</code>). <code>data-label</code> adds text for screen readers (<code>{0}</code> = content).</p>
+      <div class="demo-row">
+        <span data-mtx="badge" data-standalone data-content="4" data-color="primary"></span>
+        <span data-mtx="badge" data-standalone data-content="120" data-color="error"></span>
+        <span data-mtx="badge" data-standalone data-content="New"></span>
+        <span data-mtx="badge" data-standalone data-variant="dot" data-color="success"></span>
+      </div>
+      <div class="demo-fixed-width">
+        <ul data-mtx="list" aria-label="Folders">
+          <li><a data-mtx="list-item-button" data-icon="inbox" href="#standalone">Inbox <span data-mtx="badge" data-standalone data-content="4" data-color="primary" data-label="{0} unread" class="mtx-ms-auto"></span></a></li>
+          <li><a data-mtx="list-item-button" data-icon="send" href="#standalone">Sent <span data-mtx="badge" data-standalone data-content="0" class="mtx-ms-auto"></span></a></li>
+        </ul>
+      </div>
+      <pre class="demo-code"><code>&lt;span data-mtx="badge" data-standalone data-content="4" data-color="primary" data-label="{0} unread"&gt;&lt;/span&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="position">
+      <h2>Position</h2>
+      <p><code>data-anchor</code> places the badge at <code>top-right</code> (default), <code>top-left</code>, <code>bottom-right</code> or <code>bottom-left</code>.</p>
+      <div class="demo-row demo-badge-row">
+        <div data-mtx="badge" data-content="3" data-anchor="top-left" data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+        <div data-mtx="badge" data-content="3" data-anchor="top-right" data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+        <div data-mtx="badge" data-content="3" data-anchor="bottom-left" data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+        <div data-mtx="badge" data-content="3" data-anchor="bottom-right" data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="overlap">
+      <h2>Overlap</h2>
+      <p><code>data-overlap="rectangular"</code> (default) uses the corners of the box; <code>circular</code> moves the badge closer to the edge of round shapes.</p>
+      <div class="demo-group">
+        <span class="demo-label">Rectangular</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-variant="dot" data-color="error"><div data-mtx="avatar" data-variant="square" data-color="primary">R</div></div>
+          <div data-mtx="badge" data-content="6" data-color="error"><div data-mtx="avatar" data-variant="square" data-color="primary">R</div></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Circular (four anchors)</span>
+        <div class="demo-row demo-badge-row">
+          <div data-mtx="badge" data-variant="dot" data-color="error" data-overlap="circular"><div data-mtx="avatar" data-color="secondary">C</div></div>
+          <div data-mtx="badge" data-content="6" data-color="error" data-overlap="circular" data-anchor="top-left"><div data-mtx="avatar" data-color="secondary">C</div></div>
+          <div data-mtx="badge" data-content="6" data-color="error" data-overlap="circular" data-anchor="bottom-right"><div data-mtx="avatar" data-color="secondary">C</div></div>
+          <div data-mtx="badge" data-content="6" data-color="error" data-overlap="circular" data-anchor="bottom-left"><div data-mtx="avatar" data-color="secondary">C</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>An action bar with counters and an avatar with an online status.</p>
+      <div class="demo-panel">
+        <div class="demo-row demo-badge-row">
+          <button data-mtx="icon-button" aria-label="Notifications, 17 unread">
+            <span data-mtx="badge" data-content="17" data-color="error"><span class="material-icons" aria-hidden="true">notifications</span></span>
+          </button>
+          <div data-mtx="badge" data-content="4" data-color="primary" data-overlap="circular">
+            <button data-mtx="icon-button" data-icon="mail" aria-label="Mail, 4 unread messages"></button>
+          </div>
+          <div data-mtx="badge" data-content="17" data-color="error" data-overlap="circular">
+            <button data-mtx="icon-button" data-icon="notifications" aria-label="Notifications, 17 new"></button>
+          </div>
+          <div data-mtx="badge" data-variant="dot" data-color="secondary" data-overlap="circular">
+            <button data-mtx="icon-button" data-icon="shopping_cart" aria-label="Cart, items pending"></button>
+          </div>
+          <div data-mtx="badge" data-variant="dot" data-color="success" data-overlap="circular" data-anchor="bottom-right">
+            <div data-mtx="avatar" data-src="https://i.pravatar.cc/120?img=47" data-alt="Anna Green, online"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>Dashboard shortcuts in <code>mtx-grid</code>: 2 columns on mobile and 4 from <code>md</code>.</p>
+      <div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="6" data-md="3">
+            <div class="demo-panel">
+              <div data-mtx="badge" data-content="4" data-color="primary"><span class="material-icons" aria-hidden="true">mail</span></div>
+              <span>Mail</span>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="6" data-md="3">
+            <div class="demo-panel">
+              <div data-mtx="badge" data-content="120" data-color="error"><span class="material-icons" aria-hidden="true">notifications</span></div>
+              <span>Alerts</span>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="6" data-md="3">
+            <div class="demo-panel">
+              <div data-mtx="badge" data-variant="dot" data-color="success"><span class="material-icons" aria-hidden="true">chat</span></div>
+              <span>Chat</span>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="6" data-md="3">
+            <div class="demo-panel">
+              <div data-mtx="badge" data-content="0" data-color="info"><span class="material-icons" aria-hidden="true">event</span></div>
+              <span>Calendar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The <code>content</code> and <code>invisible</code> properties update the badge, applying <code>data-max</code> and the zero rule. Badge does not emit events; the log shows each call and the resulting state.</p>
+      <div class="demo-stack">
+        <div class="demo-row demo-badge-row">
+          <div id="badge-programmatic" data-mtx="badge" data-content="1" data-color="primary" data-max="9">
+            <span class="material-icons" aria-hidden="true">notifications</span>
+          </div>
+          <button id="badge-increment" class="mtx-button mtx-button--outlined" data-mtx="button">content + 1</button>
+          <button id="badge-zero" class="mtx-button mtx-button--outlined" data-mtx="button">content = 0</button>
+          <button id="badge-null" class="mtx-button mtx-button--outlined" data-mtx="button">content = null</button>
+          <button id="badge-toggle" class="mtx-button mtx-button--outlined" data-mtx="button">Toggle invisible</button>
+        </div>
+        <pre id="badge-log" class="demo-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>If <code>.mtx-badge__badge</code> is already rendered, the component reuses it and computes visibility and the maximum from <code>data-content</code>.</p>
+      <div class="demo-row demo-badge-row">
+        <div class="mtx-badge mtx-badge--primary" data-mtx="badge" data-content="4">
+          <span class="material-icons" aria-hidden="true">mail</span>
+          <span class="mtx-badge__badge" aria-hidden="true">4</span>
+        </div>
+        <span class="mtx-badge mtx-badge--error mtx-badge--overlap-circular" data-mtx="badge" data-content="6">
+          <span class="mtx-avatar mtx-avatar--secondary">R</span>
+          <span class="mtx-badge__badge" aria-hidden="true">6</span>
+        </span>
+      </div>
+      <pre class="demo-code"><code>&lt;span class="mtx-badge mtx-badge--error mtx-badge--overlap-circular" data-mtx="badge" data-content="6"&gt;
+  &lt;span class="mtx-avatar mtx-avatar--secondary"&gt;R&lt;/span&gt;
+  &lt;span class="mtx-badge__badge" aria-hidden="true"&gt;6&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const badge = () => Materix.getInstance(document.getElementById('badge-programmatic'));
+      const log = document.getElementById('badge-log');
+      const write = (call) => {
+        log.textContent += `${call} → content: ${badge().content}, invisible: ${badge().invisible}\n`;
+        log.scrollTop = log.scrollHeight;
+      };
+      document.getElementById('badge-increment').addEventListener('click', () => {
+        badge().content = Number(badge().content || 0) + 1;
+        write('badge.content++');
+      });
+      document.getElementById('badge-zero').addEventListener('click', () => { badge().content = 0; write('badge.content = 0'); });
+      document.getElementById('badge-null').addEventListener('click', () => { badge().content = null; write('badge.content = null'); });
+      document.getElementById('badge-toggle').addEventListener('click', () => {
+        badge().invisible = !badge().invisible;
+        write('badge.invisible = !badge.invisible');
+      });
+    });
+  </script>
+</body>
+</html>

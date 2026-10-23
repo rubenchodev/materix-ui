@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Baseline · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Comparison boxes: without the baseline they use the browser typography */
+    .demo-css-baseline-box {
+      padding: var(--mtx-spacing-2);
+      border: 1px dashed var(--mtx-color-divider);
+      border-radius: var(--mtx-shape-radius);
+    }
+    .demo-css-baseline-raw {
+      font-family: serif;
+      font-size: 16px;
+      line-height: normal;
+      color: CanvasText;
+      background-color: Canvas;
+      color-scheme: light;
+    }
+    .demo-css-baseline-sizing {
+      width: 100%;
+      padding: var(--mtx-spacing-2);
+      border: 4px solid var(--mtx-color-primary);
+    }
+  </style>
+</head>
+<body data-mtx="css-baseline">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Layout</span>
+        <h1>CSS Baseline</h1>
+        <p class="demo-lead">Materix global baseline: Roboto typography, theme background and text colors, box-sizing, visible focus and a light or dark color-scheme.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#comparison">With and without baseline</a>
+      <a href="#box-sizing">Box sizing</a>
+      <a href="#focus">Visible focus</a>
+      <a href="#color-scheme">Color scheme</a>
+      <a href="#scope">Scoped baseline</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>This page uses <code>&lt;body data-mtx="css-baseline"&gt;</code>: the component adds the <code>mtx-root</code> class, which applies the typography, the theme colors and <code>box-sizing</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Current body classes</span>
+        <p class="demo-status" id="baseline-body-class" aria-live="polite"></p>
+      </div>
+      <pre class="demo-code"><code>&lt;body data-mtx="css-baseline"&gt;
+  &lt;!-- Application --&gt;
+&lt;/body&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="comparison">
+      <h2>With and without baseline</h2>
+      <p>On the left, a block with the browser defaults; on the right, the same content with <code>mtx-root</code>: Roboto 16px, 1.5 line height, theme colors and bold at 700.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Browser</span>
+          <div class="demo-css-baseline-box demo-css-baseline-raw">
+            <p>Text with the browser typography and <strong>bold</strong>.</p>
+            <input type="text" aria-label="Field without baseline" placeholder="Native field">
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">mtx-root</span>
+          <div class="demo-css-baseline-box" data-mtx="css-baseline">
+            <p>Text with the Materix base typography and <strong>bold</strong>.</p>
+            <input type="text" aria-label="Field with baseline" placeholder="Native field">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="box-sizing">
+      <h2>Box sizing</h2>
+      <p>Inside <code>mtx-root</code> everything uses <code>box-sizing: border-box</code>: a box with <code>width: 100%</code>, 16px of padding and a 4px border does not overflow its container.</p>
+      <div class="demo-group">
+        <span class="demo-label">width 100% + padding 16px + border 4px</span>
+        <div class="demo-css-baseline-sizing">Takes exactly the available width.</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="focus">
+      <h2>Visible focus</h2>
+      <p>Use <kbd>Tab</kbd>: buttons, links and focusable elements show the <code>--mtx-focus-ring-color</code> ring only when navigating with the keyboard. Text fields are excluded because their border already shows focus.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button">Button</button>
+        <a data-mtx="link" href="#focus">Link</a>
+        <input data-mtx="text-field" data-label="Field" data-variant="outlined" data-size="small" type="text">
+      </div>
+    </section>
+
+    <section class="demo-section" id="color-scheme">
+      <h2>Color scheme</h2>
+      <p>Switch the theme with the button in the top bar: with <code>data-mtx-theme="dark"</code> on <code>&lt;html&gt;</code>, <code>mtx-root</code> switches to <code>color-scheme: dark</code> and native controls are drawn dark.</p>
+      <div class="demo-group">
+        <span class="demo-label">Native controls</span>
+        <div class="demo-row">
+          <input type="date" aria-label="Native date">
+          <input type="color" aria-label="Native color" value="#4818d0">
+          <select aria-label="Native select"><option>Native option</option><option>Another option</option></select>
+          <input type="range" aria-label="Native range">
+        </div>
+      </div>
+      <p class="demo-status" id="baseline-scheme" aria-live="polite"></p>
+    </section>
+
+    <section class="demo-section" id="scope">
+      <h2>Scoped baseline</h2>
+      <p>The baseline can also be applied to a specific container, which is handy for embedding Materix in pages with other styles. The container also gets <code>margin: 0</code>.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Container without baseline</span>
+          <div class="demo-css-baseline-box demo-css-baseline-raw">
+            <h3>External widget</h3>
+            <p>Inherits the host site styles.</p>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">section data-mtx="css-baseline"</span>
+          <section class="demo-css-baseline-box" data-mtx="css-baseline">
+            <h3 data-mtx="typography" data-variant="h6" data-gutter-bottom>Materix widget</h3>
+            <p data-mtx="typography" data-variant="body2">Theme typography and colors inside the container.</p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>new Materix.CssBaseline(el)</code> or <code>Materix.init(el, 'css-baseline')</code> apply the baseline to a container created at runtime. The component emits no events; the log shows the element's real state.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" type="button" id="baseline-apply">Apply to the box</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="baseline-theme">Toggle theme</button>
+      </div>
+      <div class="demo-css-baseline-box demo-css-baseline-raw" id="baseline-target">
+        <p>Box created without baseline. Click "Apply to the box".</p>
+      </div>
+      <pre class="demo-log" id="baseline-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const box = document.getElementById('widget');
+Materix.init(box, 'css-baseline');           // adds mtx-root
+document.documentElement.setAttribute('data-mtx-theme', 'dark');</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Without JavaScript, the <code>mtx-root</code> class on the root element is enough.</p>
+      <div class="demo-css-baseline-box mtx-root">
+        <p>Container with <code>class="mtx-root"</code>.</p>
+      </div>
+      <pre class="demo-code"><code>&lt;body class="mtx-root"&gt;…&lt;/body&gt;
+&lt;div class="mtx-root"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var bodyClass = document.getElementById('baseline-body-class');
+      var scheme = document.getElementById('baseline-scheme');
+      var target = document.getElementById('baseline-target');
+      var log = document.getElementById('baseline-log');
+
+      /** Muestra el color-scheme calculado del body. */
+      function refresh() {
+        bodyClass.textContent = 'class="' + document.body.className + '"';
+        scheme.textContent = 'body color-scheme: ' + getComputedStyle(document.body).colorScheme;
+      }
+
+      /**
+       * Añade una línea al registro.
+       * @param {string} text Línea a registrar.
+       */
+      function write(text) {
+        log.textContent += text + '\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.getElementById('baseline-apply').addEventListener('click', function () {
+        target.classList.remove('demo-css-baseline-raw');
+        var instance = Materix.init(target, 'css-baseline');
+        target.firstElementChild.textContent = 'Box with the baseline applied from JavaScript.';
+        write('init → ' + (instance instanceof Materix.CssBaseline ? 'CssBaseline' : '?') + ' · class="' + target.className + '" · font-family: ' + getComputedStyle(target).fontFamily);
+      });
+
+      document.getElementById('baseline-theme').addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.getAttribute('data-mtx-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-mtx-theme', next);
+        refresh();
+        write('data-mtx-theme="' + next + '" → color-scheme: ' + getComputedStyle(document.body).colorScheme);
+      });
+
+      new MutationObserver(refresh).observe(document.documentElement, { attributes: true, attributeFilter: ['data-mtx-theme'] });
+      refresh();
+    });
+  </script>
+</body>
+</html>

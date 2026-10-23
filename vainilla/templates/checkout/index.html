@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout · Materix UI Templates</title>
+  <meta name="description" content="Checkout with shipping, payment and order summary, including validation.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="../shared/template.js"></script>
+  <style>
+    /* D: opciones de envío/pago como tarjetas seleccionables (todo el <label> es el radio; resalta con :has) */
+    .tpl-co-option {
+      border: 1px solid var(--mtx-color-divider);
+      border-radius: var(--mtx-shape-radius);
+      transition: border-color var(--mtx-duration-shorter) var(--mtx-easing-standard), background-color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+    }
+    .tpl-co-option:hover { background-color: var(--mtx-color-action-hover); }
+    .tpl-co-option:has(input:checked) {
+      border-color: var(--mtx-color-primary);
+      background-color: color-mix(in srgb, var(--mtx-color-primary) 6%, transparent);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-co-main">Skip to checkout</a>
+  <header data-mtx="app-bar" data-position="sticky" data-color="default" data-elevation="0">
+    <div class="mtx-toolbar mtx-gap-1">
+      <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1 mtx-typography--h6 mtx-color-text-primary mtx-text-decoration-none" href="../index.html" aria-label="Lumen – all templates">
+        <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="8" fill="var(--mtx-color-primary)" />
+          <path d="M9 22.5V9.5h3.2v10.2H22v2.8H9Z" fill="var(--mtx-color-primary-contrast)" />
+          <circle cx="21" cy="12" r="3" fill="var(--mtx-color-primary-contrast)" opacity="0.7" />
+        </svg>
+        Lumen
+      </a>
+      <span class="mtx-ms-auto mtx-me-1 mtx-d-inline-flex mtx-align-items-center mtx-gap-0_5 mtx-typography--body2 mtx-color-text-secondary">
+        <span class="material-icons mtx-color-success" aria-hidden="true">lock</span>
+        <span class="mtx-d-none mtx-d-sm-inline">Secure checkout</span>
+        <span class="mtx-visually-hidden mtx-d-sm-none">Secure checkout</span>
+      </span>
+      <button type="button" data-mtx="icon-button" data-mtx-theme-toggle>
+        <span class="material-icons" aria-hidden="true">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="tpl-co-main" class="mtx-pt-4 mtx-pb-8" data-mtx="container" tabindex="-1">
+    <h1 class="mtx-typography--h4 mtx-mb-0_5">Checkout</h1>
+    <p class="mtx-typography--body1 mtx-color-text-secondary mtx-mb-4">Complete your order — it only takes a minute.</p>
+
+    <div data-mtx="grid" data-spacing="3" data-spacing-md="4">
+      <div data-mtx="grid" data-xs="12" data-md="7" data-lg="8">
+        <ol id="tpl-co-stepper" class="mtx-mb-3" data-mtx="stepper" aria-label="Checkout steps">
+          <li data-label="Shipping" data-panel="#tpl-co-step-shipping"></li>
+          <li data-label="Payment" data-panel="#tpl-co-step-payment"></li>
+          <li data-label="Review" data-panel="#tpl-co-step-review"></li>
+        </ol>
+
+        <form id="tpl-co-form" novalidate aria-label="Checkout form">
+          <div id="tpl-co-error" class="mtx-mb-3" data-mtx="alert" data-severity="error" data-title="Please check your details" hidden>Some fields need your attention before you can continue.</div>
+
+          <!-- Paso 1: contacto, dirección y método de envío -->
+          <div id="tpl-co-step-shipping" data-mtx="stack" data-spacing="3">
+            <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-co-contact-title">
+              <h2 id="tpl-co-contact-title" class="mtx-typography--h6 mtx-mb-2_5">Contact</h2>
+              <div data-mtx="grid" data-spacing="2">
+                <div data-mtx="grid" data-xs="12" data-sm="6"><input id="tpl-co-email" data-mtx="text-field" data-label="Email" type="email" name="email" autocomplete="email" inputmode="email" data-helper-text="We'll send the receipt here." required /></div>
+                <div data-mtx="grid" data-xs="12" data-sm="6"><input id="tpl-co-phone" data-mtx="text-field" data-label="Phone" data-mask="phone" type="tel" name="phone" autocomplete="tel-national" data-helper-text="For delivery updates only." required /></div>
+              </div>
+            </section>
+
+            <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-co-shipping-title">
+              <h2 id="tpl-co-shipping-title" class="mtx-typography--h6 mtx-mb-2_5">Shipping address</h2>
+              <div data-mtx="grid" data-spacing="2">
+                <div data-mtx="grid" data-xs="12" data-sm="6"><input id="tpl-co-first" data-mtx="text-field" data-label="First name" type="text" name="firstName" autocomplete="given-name" required /></div>
+                <div data-mtx="grid" data-xs="12" data-sm="6"><input id="tpl-co-last" data-mtx="text-field" data-label="Last name" type="text" name="lastName" autocomplete="family-name" required /></div>
+                <div data-mtx="grid" data-xs="12"><input id="tpl-co-address1" data-mtx="text-field" data-label="Street address" type="text" name="address1" autocomplete="address-line1" required /></div>
+                <div data-mtx="grid" data-xs="12"><input id="tpl-co-address2" data-mtx="text-field" data-label="Apartment, suite, etc. (optional)" type="text" name="address2" autocomplete="address-line2" /></div>
+                <div data-mtx="grid" data-xs="12" data-sm="4"><input id="tpl-co-city" data-mtx="text-field" data-label="City" type="text" name="city" autocomplete="address-level2" required /></div>
+                <div data-mtx="grid" data-xs="6" data-sm="4">
+                  <select id="tpl-co-state" data-mtx="select" data-label="State" data-search name="state">
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="FL">Florida</option>
+                    <option value="IL">Illinois</option>
+                    <option value="NY">New York</option>
+                    <option value="OR">Oregon</option>
+                    <option value="TX" selected>Texas</option>
+                    <option value="WA">Washington</option>
+                  </select>
+                </div>
+                <div data-mtx="grid" data-xs="6" data-sm="4"><input id="tpl-co-zip" data-mtx="text-field" data-label="ZIP code" data-mask="00000" type="text" inputmode="numeric" name="zip" autocomplete="postal-code" required /></div>
+              </div>
+            </section>
+
+            <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-co-method-title">
+              <h2 id="tpl-co-method-title" class="mtx-typography--h6 mtx-mb-2_5">Shipping method</h2>
+              <div id="tpl-co-shipping" class="mtx-align-items-stretch mtx-gap-1_5" data-mtx="radio-group" data-name="shipping" aria-labelledby="tpl-co-method-title">
+                <label class="mtx-radio tpl-co-option mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-py-1 mtx-ps-1_5 mtx-pe-2">
+                  <input type="radio" data-mtx="radio" name="shipping" value="standard" checked />
+                  <span class="mtx-flex-1 mtx-min-w-0">Standard<span class="mtx-d-block mtx-typography--body2 mtx-color-text-secondary">5–7 business days · Arrives Oct 27</span></span>
+                  <span class="mtx-typography--subtitle1 mtx-fw-medium mtx-text-nowrap">Free</span>
+                </label>
+                <label class="mtx-radio tpl-co-option mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-py-1 mtx-ps-1_5 mtx-pe-2">
+                  <input type="radio" data-mtx="radio" name="shipping" value="express" />
+                  <span class="mtx-flex-1 mtx-min-w-0">Express<span class="mtx-d-block mtx-typography--body2 mtx-color-text-secondary">2–3 business days · Arrives Oct 22</span></span>
+                  <span class="mtx-typography--subtitle1 mtx-fw-medium mtx-text-nowrap">$9.90</span>
+                </label>
+                <label class="mtx-radio tpl-co-option mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-py-1 mtx-ps-1_5 mtx-pe-2">
+                  <input type="radio" data-mtx="radio" name="shipping" value="overnight" />
+                  <span class="mtx-flex-1 mtx-min-w-0">Overnight<span class="mtx-d-block mtx-typography--body2 mtx-color-text-secondary">Next business day · Arrives Oct 20</span></span>
+                  <span class="mtx-typography--subtitle1 mtx-fw-medium mtx-text-nowrap">$24.00</span>
+                </label>
+              </div>
+            </section>
+
+            <div class="mtx-d-flex mtx-justify-content-end">
+              <button type="button" class="mtx-button mtx-button--contained mtx-button--large" data-mtx="button" data-mtx-stepper-action="next" data-target="#tpl-co-stepper">
+                Continue to payment
+                <span class="mtx-button__icon material-icons" aria-hidden="true">chevron_right</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Paso 2: pago -->
+          <div id="tpl-co-step-payment" data-mtx="stack" data-spacing="3" hidden>
+            <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-co-payment-title">
+              <h2 id="tpl-co-payment-title" class="mtx-typography--h6 mtx-mb-2_5" tabindex="-1">Payment</h2>
+              <div id="tpl-co-payment" class="mtx-align-items-stretch mtx-gap-1_5" data-mtx="radio-group" data-name="payment" aria-labelledby="tpl-co-payment-title">
+                <label class="mtx-radio tpl-co-option mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-py-1 mtx-ps-1_5 mtx-pe-2">
+                  <input type="radio" data-mtx="radio" name="payment" value="card" checked />
+                  <span class="mtx-flex-1 mtx-min-w-0">Credit or debit card<span class="mtx-d-block mtx-typography--body2 mtx-color-text-secondary">Visa, Mastercard, American Express</span></span>
+                  <span class="mtx-d-none mtx-d-sm-flex mtx-gap-0_5" aria-hidden="true">
+                    <span data-mtx="chip" data-label="VISA" data-size="small" data-variant="outlined"></span>
+                    <span data-mtx="chip" data-label="MC" data-size="small" data-variant="outlined"></span>
+                    <span data-mtx="chip" data-label="AMEX" data-size="small" data-variant="outlined"></span>
+                  </span>
+                </label>
+                <label class="mtx-radio tpl-co-option mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-py-1 mtx-ps-1_5 mtx-pe-2">
+                  <input type="radio" data-mtx="radio" name="payment" value="paypal" />
+                  <span class="mtx-flex-1 mtx-min-w-0">PayPal<span class="mtx-d-block mtx-typography--body2 mtx-color-text-secondary">You'll confirm the payment on PayPal.</span></span>
+                  <span class="mtx-d-none mtx-d-sm-flex" aria-hidden="true"><span data-mtx="chip" data-label="PayPal" data-size="small" data-variant="outlined"></span></span>
+                </label>
+              </div>
+
+              <div id="tpl-co-card-fields" class="mtx-mt-2_5">
+                <div class="mtx-mb-3" data-mtx="alert" data-severity="info" data-variant="outlined">Demo mode: use card <strong>4242 4242 4242 4242</strong> with any future date and CVC.</div>
+                <div data-mtx="grid" data-spacing="2">
+                  <div data-mtx="grid" data-xs="12"><input id="tpl-co-card-name" data-mtx="text-field" data-label="Name on card" type="text" name="ccName" autocomplete="cc-name" required /></div>
+                  <div data-mtx="grid" data-xs="12"><input id="tpl-co-card-number" data-mtx="text-field" data-label="Card number" data-mask="credit-card" data-start-icon="credit_card" type="text" inputmode="numeric" name="ccNumber" autocomplete="cc-number" required /></div>
+                  <div data-mtx="grid" data-xs="12" data-sm="6"><input id="tpl-co-card-exp" data-mtx="text-field" data-label="Expiry (MM/YY)" data-mask="date-short" type="text" inputmode="numeric" name="ccExp" autocomplete="cc-exp" required /></div>
+                  <div data-mtx="grid" data-xs="12" data-sm="6"><input id="tpl-co-card-cvc" data-mtx="text-field" data-label="CVC" data-mask="0000" data-helper-text="3 or 4 digits on the back." type="text" inputmode="numeric" name="ccCsc" autocomplete="cc-csc" required /></div>
+                  <div data-mtx="grid" data-xs="12"><input id="tpl-co-same" data-mtx="checkbox" type="checkbox" name="billingSame" data-label="Billing address is the same as shipping" checked /></div>
+                </div>
+              </div>
+              <div id="tpl-co-paypal" class="mtx-mt-2_5" hidden>
+                <div data-mtx="alert" data-severity="info">After you place the order, a PayPal window will open so you can sign in and approve the payment of <strong data-tpl-total>$0.00</strong>.</div>
+              </div>
+            </section>
+
+            <div class="mtx-d-flex mtx-justify-content-between mtx-gap-1">
+              <button type="button" class="mtx-button mtx-button--text mtx-button--large" data-mtx="button" data-mtx-stepper-action="back" data-target="#tpl-co-stepper">
+                <span class="mtx-button__icon material-icons" aria-hidden="true">chevron_left</span>
+                Back
+              </button>
+              <button type="button" class="mtx-button mtx-button--contained mtx-button--large" data-mtx="button" data-mtx-stepper-action="next" data-target="#tpl-co-stepper">
+                Review order
+                <span class="mtx-button__icon material-icons" aria-hidden="true">chevron_right</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Paso 3: revisión -->
+          <div id="tpl-co-step-review" data-mtx="stack" data-spacing="3" hidden>
+            <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-co-review-title">
+              <h2 id="tpl-co-review-title" class="mtx-typography--h6 mtx-mb-2_5" tabindex="-1">Review your order</h2>
+              <div data-mtx="grid" data-spacing="3">
+                <div data-mtx="grid" data-xs="12" data-sm="6">
+                  <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-mb-0_5 mtx-typography--body2">
+                    <h3 class="mtx-typography--subtitle2">Ship to</h3>
+                    <button type="button" data-mtx="link" data-tpl-goto="0" aria-label="Edit shipping details">Edit</button>
+                  </div>
+                  <p id="tpl-co-review-address" class="mtx-typography--body2 mtx-color-text-secondary"></p>
+                </div>
+                <div data-mtx="grid" data-xs="12" data-sm="6">
+                  <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-mb-0_5 mtx-typography--body2">
+                    <h3 class="mtx-typography--subtitle2">Contact</h3>
+                    <button type="button" data-mtx="link" data-tpl-goto="0" aria-label="Edit contact details">Edit</button>
+                  </div>
+                  <p id="tpl-co-review-contact" class="mtx-typography--body2 mtx-color-text-secondary"></p>
+                </div>
+                <div data-mtx="grid" data-xs="12" data-sm="6">
+                  <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-mb-0_5 mtx-typography--body2">
+                    <h3 class="mtx-typography--subtitle2">Shipping method</h3>
+                    <button type="button" data-mtx="link" data-tpl-goto="0" aria-label="Edit shipping method">Edit</button>
+                  </div>
+                  <p id="tpl-co-review-method" class="mtx-typography--body2 mtx-color-text-secondary"></p>
+                </div>
+                <div data-mtx="grid" data-xs="12" data-sm="6">
+                  <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-mb-0_5 mtx-typography--body2">
+                    <h3 class="mtx-typography--subtitle2">Payment</h3>
+                    <button type="button" data-mtx="link" data-tpl-goto="1" aria-label="Edit payment">Edit</button>
+                  </div>
+                  <p id="tpl-co-review-payment" class="mtx-typography--body2 mtx-color-text-secondary"></p>
+                </div>
+              </div>
+            </section>
+
+            <div class="mtx-d-flex mtx-flex-column-reverse mtx-flex-sm-row mtx-justify-content-between mtx-align-items-sm-center mtx-gap-1">
+              <button type="button" class="mtx-button mtx-button--text mtx-button--large" data-mtx="button" data-mtx-stepper-action="back" data-target="#tpl-co-stepper">
+                <span class="mtx-button__icon material-icons" aria-hidden="true">chevron_left</span>
+                Back
+              </button>
+              <button type="submit" id="tpl-co-place" class="mtx-button mtx-button--contained mtx-button--large" data-mtx="button">
+                <span class="mtx-button__icon material-icons" aria-hidden="true">lock</span>
+                <span data-tpl-place-label>Place order</span>
+              </button>
+            </div>
+            <p class="mtx-typography--caption mtx-color-text-secondary mtx-text-sm-end">By placing your order you agree to Lumen's Terms of Sale. Free returns within 30 days.</p>
+          </div>
+        </form>
+      </div>
+
+      <div data-mtx="grid" data-xs="12" data-md="5" data-lg="4">
+        <aside class="mtx-sticky-md-top mtx-p-2 mtx-p-sm-3" data-mtx="paper" data-variant="outlined" aria-labelledby="tpl-co-summary-title">
+          <h2 id="tpl-co-summary-title" class="mtx-typography--h6 mtx-mb-2">Order summary</h2>
+          <ul class="mtx-p-0 mtx-mt-0 mtx-mb-2" data-mtx="stack" data-spacing="2">
+            <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5">
+              <span data-mtx="badge" data-content="1" data-color="default" data-label="Quantity {0}"><span data-mtx="avatar" data-variant="rounded" data-icon="light" data-color="warning" data-size="56"></span></span>
+              <span class="mtx-flex-1 mtx-min-w-0 mtx-typography--body2 mtx-color-text-secondary"><span class="mtx-d-block mtx-typography--subtitle2 mtx-color-text-primary">Aurora Desk Lamp</span>Matte black · Warm white</span>
+              <span class="mtx-typography--body2 mtx-fw-medium mtx-tabular-nums">$89.00</span>
+            </li>
+            <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5">
+              <span data-mtx="badge" data-content="1" data-color="default" data-label="Quantity {0}"><span data-mtx="avatar" data-variant="rounded" data-icon="headphones" data-color="primary" data-size="56"></span></span>
+              <span class="mtx-flex-1 mtx-min-w-0 mtx-typography--body2 mtx-color-text-secondary"><span class="mtx-d-block mtx-typography--subtitle2 mtx-color-text-primary">Nimbus Wireless Earbuds</span>Graphite</span>
+              <span class="mtx-typography--body2 mtx-fw-medium mtx-tabular-nums">$149.00</span>
+            </li>
+            <li class="mtx-d-flex mtx-align-items-center mtx-gap-1_5">
+              <span data-mtx="badge" data-content="2" data-color="default" data-label="Quantity {0}"><span data-mtx="avatar" data-variant="rounded" data-icon="coffee" data-color="secondary" data-size="56"></span></span>
+              <span class="mtx-flex-1 mtx-min-w-0 mtx-typography--body2 mtx-color-text-secondary"><span class="mtx-d-block mtx-typography--subtitle2 mtx-color-text-primary">Terra Ceramic Mug Set</span>Set of 4 · Sand</span>
+              <span class="mtx-typography--body2 mtx-fw-medium mtx-tabular-nums">$68.00</span>
+            </li>
+          </ul>
+          <hr data-mtx="divider">
+          <form id="tpl-co-promo-form" class="mtx-d-flex mtx-align-items-start mtx-gap-1 mtx-my-2" novalidate>
+            <div class="mtx-flex-1 mtx-min-w-0">
+              <input id="tpl-co-promo" data-mtx="text-field" data-label="Promo code" data-size="small" type="text" name="promo" autocomplete="off" data-helper-text="Try MATERIX10" />
+            </div>
+            <button type="submit" class="mtx-button mtx-button--outlined mtx-flex-shrink-0" data-mtx="button">Apply</button>
+          </form>
+          <hr data-mtx="divider">
+          <dl class="mtx-typography--body2 mtx-my-2" data-mtx="stack" data-spacing="1">
+            <div class="mtx-d-flex mtx-justify-content-between mtx-gap-2"><dt class="mtx-color-text-secondary">Subtotal (4 items)</dt><dd id="tpl-co-subtotal" class="mtx-m-0 mtx-tabular-nums">$306.00</dd></div>
+            <div id="tpl-co-discount-row" class="mtx-d-flex mtx-justify-content-between mtx-gap-2 mtx-color-success" hidden><dt>Discount (MATERIX10)</dt><dd id="tpl-co-discount" class="mtx-m-0 mtx-tabular-nums">−$0.00</dd></div>
+            <div class="mtx-d-flex mtx-justify-content-between mtx-gap-2"><dt class="mtx-color-text-secondary">Shipping</dt><dd id="tpl-co-shipping-cost" class="mtx-m-0 mtx-tabular-nums">Free</dd></div>
+            <div class="mtx-d-flex mtx-justify-content-between mtx-gap-2"><dt class="mtx-color-text-secondary">Estimated tax (8.25%)</dt><dd id="tpl-co-tax" class="mtx-m-0 mtx-tabular-nums">$25.25</dd></div>
+          </dl>
+          <hr data-mtx="divider">
+          <div class="mtx-d-flex mtx-justify-content-between mtx-align-items-baseline mtx-mt-2 mtx-typography--h6">
+            <span>Total</span><span id="tpl-co-total" class="mtx-tabular-nums" aria-live="polite">$331.25</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="tpl-co-confirm" data-mtx="dialog" class="mtx-dialog--max-sm" data-disable-backdrop-close data-title="Order confirmed" data-description="Thank you! We're preparing your order and will email you updates.">
+    <dl class="mtx-typography--body2 mtx-mt-2 mtx-mb-0" data-mtx="stack" data-spacing="1">
+      <div class="mtx-d-flex mtx-justify-content-between mtx-gap-2"><dt class="mtx-color-text-secondary">Order number</dt><dd id="tpl-co-confirm-number" class="mtx-m-0">#10493</dd></div>
+      <div class="mtx-d-flex mtx-justify-content-between mtx-gap-2"><dt class="mtx-color-text-secondary">Total charged</dt><dd id="tpl-co-confirm-total" class="mtx-m-0 mtx-text-end mtx-tabular-nums"></dd></div>
+      <div class="mtx-d-flex mtx-justify-content-between mtx-gap-2"><dt class="mtx-color-text-secondary">Estimated delivery</dt><dd id="tpl-co-confirm-eta" class="mtx-m-0 mtx-text-end"></dd></div>
+    </dl>
+    <div class="mtx-dialog__actions">
+      <a class="mtx-button mtx-button--text" data-mtx="button" href="../dashboard/">View in dashboard</a>
+      <button type="button" class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close data-dialog-autofocus>Continue shopping</button>
+    </div>
+  </div>
+
+  <p id="tpl-co-status" class="mtx-visually-hidden" role="status" aria-live="polite"></p>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      var TAX_RATE = 0.0825;
+      var SUBTOTAL = 306;
+      var SHIPPING = { standard: 0, express: 9.9, overnight: 24 };
+      var SHIPPING_NAME = { standard: 'Standard (5–7 business days)', express: 'Express (2–3 business days)', overnight: 'Overnight (next business day)' };
+      var ETA = { standard: 'Tuesday, Oct 27', express: 'Thursday, Oct 22', overnight: 'Tuesday, Oct 20' };
+      var usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+      var $ = function (id) { return document.getElementById(id); };
+      var field = function (id) { return Materix.getInstance($(id)); };
+      var stepperEl = $('tpl-co-stepper');
+      var stepper = Materix.getInstance(stepperEl);
+      var shippingGroup = Materix.getInstance($('tpl-co-shipping'));
+      var paymentGroup = Materix.getInstance($('tpl-co-payment'));
+      var errorAlert = Materix.getInstance($('tpl-co-error'));
+      var placeBtn = field('tpl-co-place');
+      var snack = null;
+      var discountRate = 0;
+
+      /**
+       * Recalcula y pinta los totales del resumen.
+       * @returns {number} Total final.
+       */
+      var updateTotals = function () {
+        var shipping = SHIPPING[shippingGroup.value] || 0;
+        var discount = Math.round(SUBTOTAL * discountRate * 100) / 100;
+        var tax = Math.round((SUBTOTAL - discount) * TAX_RATE * 100) / 100;
+        var total = SUBTOTAL - discount + shipping + tax;
+        $('tpl-co-discount').textContent = '−' + usd.format(discount);
+        $('tpl-co-discount-row').hidden = !discount;
+        $('tpl-co-shipping-cost').textContent = shipping ? usd.format(shipping) : 'Free';
+        $('tpl-co-tax').textContent = usd.format(tax);
+        $('tpl-co-total').textContent = usd.format(total);
+        document.querySelectorAll('[data-tpl-total]').forEach(function (el) { el.textContent = usd.format(total); });
+        return total;
+      };
+
+      $('tpl-co-shipping').addEventListener('mtx:radio-group:change', updateTotals);
+      $('tpl-co-payment').addEventListener('mtx:radio-group:change', function (event) {
+        var isCard = event.detail.value === 'card';
+        $('tpl-co-card-fields').hidden = !isCard;
+        $('tpl-co-paypal').hidden = isCard;
+        document.querySelector('[data-tpl-place-label]').textContent = isCard ? 'Place order' : 'Continue to PayPal';
+      });
+
+      // Código promocional
+      $('tpl-co-promo-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var code = $('tpl-co-promo').value.trim().toUpperCase();
+        if (!code) { field('tpl-co-promo').setError('Enter a code.'); return; }
+        if (code !== 'MATERIX10') { field('tpl-co-promo').setError('This code is not valid.'); return; }
+        field('tpl-co-promo').clearError();
+        discountRate = 0.1;
+        updateTotals();
+        snack = Materix.snackbar.show('MATERIX10 applied: 10% off your order');
+      });
+
+      /**
+       * Comprueba el dígito de control Luhn.
+       * @param {string} digits Número sin espacios.
+       * @returns {boolean} `true` si es válido.
+       */
+      var luhn = function (digits) {
+        var sum = 0;
+        for (var i = 0; i < digits.length; i++) {
+          var d = Number(digits.charAt(digits.length - 1 - i));
+          if (i % 2) { d *= 2; if (d > 9) d -= 9; }
+          sum += d;
+        }
+        return sum % 10 === 0;
+      };
+
+      var required = function (label) { return function (v) { return v.trim() ? '' : label + ' is required.'; }; };
+      var SHIPPING_RULES = {
+        'tpl-co-email': function (v) { return !v.trim() ? 'Email is required.' : (EMAIL_RE.test(v.trim()) ? '' : 'Enter a valid email address.'); },
+        'tpl-co-phone': function () { return field('tpl-co-phone').isMaskComplete && $('tpl-co-phone').value ? '' : 'Enter a 10-digit phone number.'; },
+        'tpl-co-first': required('First name'),
+        'tpl-co-last': required('Last name'),
+        'tpl-co-address1': required('Street address'),
+        'tpl-co-city': required('City'),
+        'tpl-co-zip': function (v) { return /^\d{5}$/.test(v) ? '' : 'Enter a 5-digit ZIP code.'; }
+      };
+      var CARD_RULES = {
+        'tpl-co-card-name': required('Name on card'),
+        'tpl-co-card-number': function (v) {
+          var digits = v.replace(/\D/g, '');
+          if (digits.length < 16) return 'Enter the 16-digit card number.';
+          return luhn(digits) ? '' : 'This card number is not valid.';
+        },
+        'tpl-co-card-exp': function (v) {
+          var m = /^(\d{2})\/(\d{2})$/.exec(v);
+          if (!m) return 'Use the format MM/YY.';
+          var month = Number(m[1]);
+          var year = 2000 + Number(m[2]);
+          if (month < 1 || month > 12) return 'Month must be between 01 and 12.';
+          var now = new Date();
+          if (year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1)) return 'This card has expired.';
+          return '';
+        },
+        'tpl-co-card-cvc': function (v) { return /^\d{3,4}$/.test(v) ? '' : 'Enter the 3 or 4 digit security code.'; }
+      };
+
+      /**
+       * Reglas de validación del paso indicado.
+       * @param {number} step Índice del paso (0 envío, 1 pago).
+       * @returns {Object<string, Function>} Reglas por id de campo.
+       */
+      var rulesFor = function (step) {
+        if (step === 0) return SHIPPING_RULES;
+        if (step === 1 && paymentGroup.value === 'card') return CARD_RULES;
+        return {};
+      };
+
+      /**
+       * Valida un campo según su regla.
+       * @param {string} id Id del input.
+       * @param {Function} rule Regla que devuelve el mensaje de error.
+       * @returns {boolean} `true` si es válido.
+       */
+      var check = function (id, rule) {
+        var message = rule($(id).value);
+        field(id).setError(message);
+        return !message;
+      };
+
+      /**
+       * Valida todos los campos de un paso y enfoca el primero inválido.
+       * @param {number} step Índice del paso.
+       * @returns {boolean} `true` si el paso es válido.
+       */
+      var validateStep = function (step) {
+        var rules = rulesFor(step);
+        var firstInvalid = null;
+        Object.keys(rules).forEach(function (id) {
+          if (!check(id, rules[id]) && !firstInvalid) firstInvalid = $(id);
+        });
+        stepper.setError(step, firstInvalid ? 'Check the highlighted fields' : false);
+        if (firstInvalid) { errorAlert.open(); firstInvalid.focus(); } else { errorAlert.close(); }
+        return !firstInvalid;
+      };
+
+      Object.keys(SHIPPING_RULES).concat(Object.keys(CARD_RULES)).forEach(function (id) {
+        var rule = SHIPPING_RULES[id] || CARD_RULES[id];
+        $(id).addEventListener('blur', function () { if ($(id).value) check(id, rule); });
+        $(id).addEventListener('input', function () { if ($(id).getAttribute('aria-invalid') === 'true') check(id, rule); });
+      });
+
+      /** Rellena el paso de revisión con los datos introducidos. */
+      var fillReview = function () {
+        var v = function (id) { return $(id).value.trim(); };
+        var state = $('tpl-co-state');
+        $('tpl-co-review-address').textContent = v('tpl-co-first') + ' ' + v('tpl-co-last') + ', ' + v('tpl-co-address1')
+          + (v('tpl-co-address2') ? ', ' + v('tpl-co-address2') : '') + ', ' + v('tpl-co-city') + ', ' + state.value + ' ' + v('tpl-co-zip');
+        $('tpl-co-review-contact').textContent = v('tpl-co-email') + ' · ' + v('tpl-co-phone');
+        $('tpl-co-review-method').textContent = SHIPPING_NAME[shippingGroup.value] + ' · Arrives ' + ETA[shippingGroup.value];
+        $('tpl-co-review-payment').textContent = paymentGroup.value === 'card'
+          ? 'Card ending in ' + v('tpl-co-card-number').slice(-4) + ' · ' + v('tpl-co-card-name')
+          : 'PayPal (you will approve the payment after placing the order)';
+      };
+
+      // Guardia del Stepper: el evento cancelable impide avanzar si el paso que se abandona no es válido.
+      stepperEl.addEventListener('mtx:stepper:change', function (event) {
+        var from = event.detail.previousStep;
+        var to = event.detail.activeStep;
+        if (to > from && !validateStep(from)) { event.preventDefault(); return; }
+        errorAlert.close();
+        if (to === 2) fillReview();
+        window.setTimeout(function () {
+          var target = to === 0 ? $('tpl-co-email') : $(to === 1 ? 'tpl-co-payment-title' : 'tpl-co-review-title');
+          target.focus();
+        });
+      });
+
+      document.querySelectorAll('[data-tpl-goto]').forEach(function (btn) {
+        btn.addEventListener('click', function () { stepper.goTo(Number(btn.getAttribute('data-tpl-goto'))); });
+      });
+
+      // Enter avanza al siguiente paso; en la revisión, envía el pedido.
+      $('tpl-co-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (stepper.activeStep < 2) { stepper.next(); return; }
+        if (!validateStep(0)) { stepper.goTo(0); return; }
+        if (!validateStep(1)) { stepper.goTo(1); return; }
+        placeBtn.setLoading(true);
+        $('tpl-co-status').textContent = 'Placing order…';
+        window.setTimeout(function () {
+          placeBtn.setLoading(false);
+          $('tpl-co-status').textContent = '';
+          var dialog = Materix.getInstance($('tpl-co-confirm'));
+          dialog.paper.querySelector('.mtx-dialog__content-text').textContent = 'Thank you, ' + $('tpl-co-first').value.trim()
+            + '! We\'re preparing your order and will email updates to ' + $('tpl-co-email').value.trim() + '.';
+          $('tpl-co-confirm-total').textContent = $('tpl-co-total').textContent + (paymentGroup.value === 'card' ? ' · Visa •••• ' + $('tpl-co-card-number').value.slice(-4) : ' · PayPal');
+          $('tpl-co-confirm-eta').textContent = ETA[shippingGroup.value];
+          if (snack) snack.close();
+          dialog.open();
+        }, 1600);
+      });
+
+      updateTotals();
+    });
+  </script>
+</body>
+</html>

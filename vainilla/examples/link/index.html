@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Navigation</span>
+        <h1>Link</h1>
+        <p class="demo-lead">MUI-styled text link on a native &lt;a&gt;: palette colors and three underline modes, without losing semantics.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#underline">Underline</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#as-button">As a button</a>
+      <a href="#in-paragraph">In a paragraph</a>
+      <a href="#external-links">External links</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;a&gt;</code> with <code>data-mtx="link"</code>. With no other attributes it uses the primary color and is always underlined (MUI v5 default), so it never relies on color alone.</p>
+      <div class="demo-row">
+        <a data-mtx="link" href="#basic-usage">View documentation</a>
+        <a data-mtx="link" data-color="secondary" href="#basic-usage">Services</a>
+        <a data-mtx="link" data-underline="hover" href="#basic-usage">Terms</a>
+      </div>
+      <pre class="demo-code"><code>&lt;a data-mtx="link" href="/docs"&gt;View documentation&lt;/a&gt;
+&lt;a data-mtx="link" data-color="secondary" href="/services"&gt;Services&lt;/a&gt;
+&lt;a data-mtx="link" data-underline="hover" href="/terms"&gt;Terms&lt;/a&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="underline">
+      <h2>Underline</h2>
+      <p>The link's variant is its underline: <code>data-underline="always|hover|none"</code>. <code>always</code> is the default, as in MUI v5: a soft underline (40% of the color) that becomes solid on hover. Use <code>hover</code> or <code>none</code> only for links that are not inside running text (navigation, lists, footers).</p>
+      <div class="demo-group">
+        <span class="demo-label">always · default</span>
+        <div class="demo-row"><a data-mtx="link" href="#underline">Always underlined</a></div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">hover</span>
+        <div class="demo-row"><a data-mtx="link" data-underline="hover" href="#underline">Underlined on hover</a></div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">none</span>
+        <div class="demo-row"><a data-mtx="link" data-underline="none" href="#underline">Never underlined</a></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> accepts the six palette colors, the text colors and <code>inherit</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Palette</span>
+        <div class="demo-row">
+          <a data-mtx="link" href="#colors">primary</a>
+          <a data-mtx="link" data-color="secondary" href="#colors">secondary</a>
+          <a data-mtx="link" data-color="error" href="#colors">error</a>
+          <a data-mtx="link" data-color="warning" href="#colors">warning</a>
+          <a data-mtx="link" data-color="info" href="#colors">info</a>
+          <a data-mtx="link" data-color="success" href="#colors">success</a>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Text</span>
+        <div class="demo-row">
+          <a data-mtx="link" data-color="text-primary" href="#colors">text-primary</a>
+          <a data-mtx="link" data-color="text-secondary" href="#colors">text-secondary</a>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">inherit · inside an alert</span>
+        <div data-mtx="alert" data-severity="info">
+          A new version is available. <a data-mtx="link" data-color="inherit" data-underline="always" href="#colors">See what's new</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover to see the underline and use <kbd>Tab</kbd> to see the focus ring. <code>data-disabled</code> disables the link (<code>aria-disabled</code>, out of the tab order and not clickable on <code>&lt;a&gt;</code>; <code>disabled</code> on <code>&lt;button&gt;</code>).</p>
+      <div class="demo-group">
+        <span class="demo-label">Normal · hover · focus-visible</span>
+        <div class="demo-row">
+          <a data-mtx="link" href="#states">Normal link</a>
+          <a data-mtx="link" data-underline="hover" href="#states">Underlined on hover</a>
+          <a data-mtx="link" data-color="text-secondary" href="#states">Secondary link</a>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Disabled · data-disabled</span>
+        <div class="demo-row">
+          <a data-mtx="link" data-disabled href="#states">Disabled link</a>
+          <button data-mtx="link" disabled>Disabled link button</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="as-button">
+      <h2>As a button</h2>
+      <p>For actions that don't navigate but should look like a link inside text, use <code>&lt;button data-mtx="link"&gt;</code> (MUI's <code>component="button"</code>): no native background, border or padding, and the typography of the surrounding text. Without <code>type</code>, it gets <code>type="button"</code> so it doesn't submit forms.</p>
+      <div class="demo-group">
+        <span class="demo-label">Inside a body2 and a body1 paragraph</span>
+        <p data-mtx="typography" data-variant="body2">Didn't get the code? <button data-mtx="link" id="link-resend">Resend code</button></p>
+        <p data-mtx="typography" data-variant="body1">Forgot your password? <button data-mtx="link" data-underline="always">Recover it here</button></p>
+      </div>
+      <pre class="demo-code"><code>&lt;p&gt;Didn't get the code? &lt;button data-mtx="link"&gt;Resend code&lt;/button&gt;&lt;/p&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="in-paragraph">
+      <h2>In a paragraph</h2>
+      <p>Inside running text keep the default underline (<code>always</code>) so the link doesn't rely on color alone (WCAG 1.4.1). The link inherits the paragraph's typography (like MUI's <code>variant="inherit"</code>), so it fits any variant.</p>
+      <div class="demo-group">
+        <span class="demo-label">body2 paragraph</span>
+        <p data-mtx="typography" data-variant="body2" class="demo-wide">
+        By creating an account you accept the <a data-mtx="link" href="#in-paragraph">terms of service</a>
+        and the <a data-mtx="link" href="#in-paragraph">privacy policy</a>.
+        You can change your preferences at any time from the settings panel.
+        </p>
+      </div>
+    </section>
+
+    <section class="demo-section" id="external-links">
+      <h2>External links</h2>
+      <p>With <code>target="_blank"</code> always add <code>rel="noopener noreferrer"</code> and announce the change of context in the visible text or in text hidden for screen readers.</p>
+      <div class="demo-row">
+        <a data-mtx="link" href="https://mui.com/material-ui/react-link/" target="_blank" rel="noopener noreferrer">MUI guide (opens in a new tab)</a>
+        <a data-mtx="link" href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub repository<span class="demo-visually-hidden"> (opens in a new tab)</span></a>
+      </div>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>Secondary links under a sign-in form and a breadcrumb trail.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Form footer</span>
+          <div class="demo-stack demo-fixed-width">
+            <input data-mtx="text-field" data-label="Email" data-variant="outlined" type="email" autocomplete="email">
+            <button class="mtx-button mtx-button--contained" data-mtx="button" type="button">Sign in</button>
+            <p data-mtx="typography" data-variant="body2">
+              <a data-mtx="link" href="#real-world">Forgot your password?</a> ·
+              <a data-mtx="link" data-color="text-secondary" href="#real-world">Create an account</a>
+            </p>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Breadcrumbs</span>
+          <nav aria-label="Breadcrumb" data-mtx="typography" data-variant="body2">
+            <a data-mtx="link" data-color="text-secondary" href="#real-world">Home</a> /
+            <a data-mtx="link" data-color="text-secondary" href="#real-world">Projects</a> /
+            <span aria-current="page">Materix UI</span>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>In a grid</h2>
+      <p>Footer with columns of links in <code>mtx-grid</code>: one column on mobile, two on tablet and four on desktop.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3">
+          <div class="demo-stack">
+            <span class="demo-label">Product</span>
+            <a data-mtx="link" data-color="text-primary" href="#grid-layout">Features</a>
+            <a data-mtx="link" data-color="text-primary" href="#grid-layout">Pricing</a>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3">
+          <div class="demo-stack">
+            <span class="demo-label">Resources</span>
+            <a data-mtx="link" data-color="text-primary" href="#grid-layout">Documentation</a>
+            <a data-mtx="link" data-color="text-primary" href="#grid-layout">Examples</a>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3">
+          <div class="demo-stack">
+            <span class="demo-label">Company</span>
+            <a data-mtx="link" data-color="text-primary" href="#grid-layout">Team</a>
+            <a data-mtx="link" data-color="text-primary" href="#grid-layout">Contact</a>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3">
+          <div class="demo-stack">
+            <span class="demo-label">Legal</span>
+            <a data-mtx="link" data-color="text-primary" href="#grid-layout">Privacy</a>
+            <a data-mtx="link" data-color="text-primary" href="#grid-layout">Terms</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>Link</code> has no methods of its own: its API is initialization. Create links at runtime and register them with <code>Materix.init(el, 'link')</code>; the log shows the resulting classes.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="link-add-primary">Create primary link</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="link-add-error">Create error link · always</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="link-clear">Clear</button>
+      </div>
+      <div class="demo-row" id="link-dynamic-target" aria-live="polite"></div>
+      <pre class="demo-log" id="link-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const a = document.createElement('a');
+a.href = '#';
+a.textContent = 'Dynamic link';
+a.setAttribute('data-color', 'error');
+a.setAttribute('data-underline', 'always');
+container.append(a);
+Materix.init(a, 'link');</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The styling is CSS only: with the classes written by hand you don't need JavaScript. Add <code>data-mtx="link"</code> if you want to register the instance.</p>
+      <div class="demo-row">
+        <a class="mtx-link" href="#bem-usage">Home</a>
+        <a class="mtx-link mtx-link--secondary mtx-link--underline-always" href="#bem-usage">Terms</a>
+        <a class="mtx-link mtx-link--text-secondary mtx-link--underline-none" data-mtx="link" href="#bem-usage">Help</a>
+      </div>
+      <pre class="demo-code"><code>&lt;a class="mtx-link" href="/"&gt;Home&lt;/a&gt;
+&lt;a class="mtx-link mtx-link--secondary mtx-link--underline-always" href="/terms"&gt;Terms&lt;/a&gt;
+&lt;a class="mtx-link mtx-link--text-secondary mtx-link--underline-none" data-mtx="link" href="/help"&gt;Help&lt;/a&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var target = document.getElementById('link-dynamic-target');
+      var log = document.getElementById('link-log');
+      var count = 0;
+
+      /**
+       * Crea un enlace, lo inicializa y registra sus clases.
+       * @param {string} color Color de la paleta.
+       * @param {string|null} underline Modo de subrayado.
+       */
+      function addLink(color, underline) {
+        var a = document.createElement('a');
+        count += 1;
+        a.href = '#programmatic-usage';
+        a.textContent = 'Dynamic link ' + count;
+        a.setAttribute('data-color', color);
+        if (underline) a.setAttribute('data-underline', underline);
+        target.appendChild(a);
+        var instance = Materix.init(a, 'link');
+        log.textContent += 'init → ' + (instance instanceof Materix.Link ? 'Link' : '?') + ' · class="' + a.className + '"\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.getElementById('link-add-primary').addEventListener('click', function () { addLink('primary', null); });
+      document.getElementById('link-add-error').addEventListener('click', function () { addLink('error', 'always'); });
+      document.getElementById('link-clear').addEventListener('click', function () {
+        target.textContent = '';
+        log.textContent = '';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drawer · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Contained application frame: AppBar on top and a drawer + content row */
+    .demo-drawer-frame {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      height: 400px;
+    }
+    .demo-drawer-frame__body {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 0;
+      padding: 0;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .demo-drawer-main {
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: var(--mtx-spacing-2);
+      overflow: auto;
+      color: var(--mtx-color-text-secondary);
+      font: var(--mtx-type-body2);
+    }
+    .demo-drawer-main > p { margin: var(--mtx-spacing-1) 0 0; }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Navigation</span>
+        <h1>Drawer</h1>
+        <p class="demo-lead">Side panel for navigation or supplementary content: temporary, persistent, permanent or responsive, with a generated header and footer and an app shell pattern.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#app-shell">App shell</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Widths</a>
+      <a href="#anchors">Anchors</a>
+      <a href="#header-footer">Header and footer</a>
+      <a href="#states">States</a>
+      <a href="#clipped">Under the AppBar</a>
+      <a href="#responsive">Responsive</a>
+      <a href="#submenus">Submenus</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>data-mtx="drawer"</code> container with <code>data-title</code> and its direct content. Open it with <code>data-mtx-drawer-open="id"</code>; it generates the header, the close button, the scrollable panel and the backdrop. Close it with <kbd>Escape</kbd>, the backdrop or the X.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-open="drawer-basic">Open navigation</button>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-open="drawer-basic"&gt;Open navigation&lt;/button&gt;
+
+&lt;div data-mtx="drawer" id="drawer-basic" data-title="Mail"&gt;
+  &lt;nav data-mtx="list" aria-label="Main navigation"&gt;
+    &lt;a data-mtx="list-item-button" data-icon="inbox" href="/inbox" data-selected&gt;Inbox&lt;/a&gt;
+    &lt;a data-mtx="list-item-button" data-icon="star" href="/starred"&gt;Starred&lt;/a&gt;
+    &lt;a data-mtx="list-item-button" data-icon="send" href="/sent"&gt;Sent&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <div data-mtx="drawer" id="drawer-basic" data-title="Mail">
+      <nav data-mtx="list" aria-label="Main navigation">
+        <a data-mtx="list-item-button" data-icon="inbox" href="#basic-usage" data-selected>Inbox</a>
+        <a data-mtx="list-item-button" data-icon="star" href="#basic-usage">Starred</a>
+        <a data-mtx="list-item-button" data-icon="send" href="#basic-usage">Sent</a>
+        <a data-mtx="list-item-button" data-icon="drafts" href="#basic-usage">Drafts</a>
+      </nav>
+    </div>
+
+    <section class="demo-section demo-section--highlight" id="app-shell">
+      <h2>App shell: AppBar + responsive Drawer</h2>
+      <p>The main recipe for an application, with no custom CSS: a <code>fixed</code> AppBar, an <code>mtx-d-flex</code> row with the drawer <code>data-variant="responsive"</code> + <code>data-clipped</code> (temporary below <code>data-breakpoint</code>, permanent under the AppBar above it) and a <code>&lt;main&gt;</code> that starts with <code>.mtx-toolbar-offset</code>. The AppBar menu icon (<code>data-drawer="id"</code>) opens the drawer on mobile and hides itself on desktop.</p>
+      <div class="demo-row">
+        <a class="mtx-button mtx-button--contained" data-mtx="button" href="dashboard.html"><span class="material-icons" aria-hidden="true">open_in_new</span>Open the full-screen app shell</a>
+      </div>
+      <pre class="demo-code"><code>&lt;header data-mtx="app-bar" data-position="fixed" data-color="primary"
+        data-start-icon="menu" data-drawer="app-nav" data-title="My app"&gt;
+  &lt;div class="mtx-app-bar-search mtx-app-bar-search--grow" role="search"&gt;
+    &lt;span class="material-icons" aria-hidden="true"&gt;search&lt;/span&gt;
+    &lt;input type="search" placeholder="Search…" aria-label="Search"&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;div class="mtx-d-flex"&gt;
+  &lt;div data-mtx="drawer" id="app-nav" data-variant="responsive" data-breakpoint="md"
+       data-clipped data-width="240px" data-title="My app" data-header="temporary"
+       aria-label="Main navigation"&gt;
+    &lt;nav data-mtx="list" aria-label="Sections"&gt;
+      &lt;a data-mtx="list-item-button" data-icon="dashboard" href="/" aria-current="page" data-mtx-drawer-close&gt;Overview&lt;/a&gt;
+      &lt;a data-mtx="list-item-button" data-icon="receipt_long" href="/orders" data-mtx-drawer-close&gt;Orders&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;div class="mtx-mt-auto mtx-p-2"&gt;…footer pinned to the bottom…&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;main class="mtx-flex-1 mtx-min-w-0"&gt;
+    &lt;div class="mtx-toolbar-offset"&gt;&lt;/div&gt;
+    …
+  &lt;/main&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>data-variant</code>: <code>temporary</code> (default: modal with a backdrop, locks scrolling and traps focus), <code>persistent</code> (opens without a backdrop and the page stays usable), <code>permanent</code> (always visible: a fixed-width box in a flex row, with the panel sticky at the window height) and <code>responsive</code> (see "App shell" and "Responsive"). Here they are contained in a frame with <code>data-absolute</code>, which in <code>permanent</code> takes the container height instead of the window's.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">temporary · data-absolute</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-drawer-main">
+              <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-temporary">Open</button>
+              <p>Semi-transparent backdrop; click outside or press Escape to close.</p>
+            </div>
+            <div data-mtx="drawer" id="drawer-temporary" data-absolute data-width="narrow" data-title="Temporary">
+              <nav data-mtx="list" aria-label="Temporary navigation">
+                <a data-mtx="list-item-button" data-icon="inbox" href="#variants" data-selected>Inbox</a>
+                <a data-mtx="list-item-button" data-icon="star" href="#variants">Starred</a>
+                <a data-mtx="list-item-button" data-icon="send" href="#variants">Sent</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">persistent · data-absolute</span>
+          <div class="demo-panel demo-panel--tall">
+            <div data-mtx="drawer" id="drawer-persistent" data-variant="persistent" data-absolute data-width="narrow" data-title="Persistent">
+              <nav data-mtx="list" aria-label="Persistent navigation">
+                <a data-mtx="list-item-button" data-icon="inbox" href="#variants" data-selected>Inbox</a>
+                <a data-mtx="list-item-button" data-icon="star" href="#variants">Starred</a>
+                <a data-mtx="list-item-button" data-icon="send" href="#variants">Sent</a>
+              </nav>
+            </div>
+            <div class="demo-drawer-main">
+              <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-toggle="drawer-persistent">Toggle</button>
+              <p>No backdrop: the content stays interactive.</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">permanent · data-absolute</span>
+          <div class="demo-panel demo-panel--tall demo-drawer-frame__body">
+            <div data-mtx="drawer" data-variant="permanent" data-absolute data-width="narrow" data-title="Permanent">
+              <nav data-mtx="list" aria-label="Permanent navigation">
+                <a data-mtx="list-item-button" data-icon="inbox" href="#variants" data-selected>Inbox</a>
+                <a data-mtx="list-item-button" data-icon="star" href="#variants">Starred</a>
+                <a data-mtx="list-item-button" data-icon="send" href="#variants">Sent</a>
+              </nav>
+            </div>
+            <div class="demo-drawer-main">Always visible, with no animation or backdrop.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Widths</h2>
+      <p>Responsive default: <code>min(85vw, 320px)</code> on mobile, 280px from 600px and 300px from 900px. <code>data-width="narrow|wide|full"</code> sets 200px, 360px or 100vw, and any CSS length (<code>450px</code>, <code>40vw</code>) is applied as is. It never exceeds 85% of the window width except with <code>full</code>.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-width-narrow">narrow · 200px</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-width-default">default</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-width-wide">wide · 360px</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-width-custom">450px</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-width-full">full · 100vw</button>
+      </div>
+    </section>
+
+    <div data-mtx="drawer" id="drawer-width-narrow" data-width="narrow" data-title="200px" data-padded="true">
+      <p>For compact menus with icons and short labels.</p>
+    </div>
+    <div data-mtx="drawer" id="drawer-width-default" data-title="Default width" data-padded="true">
+      <p>320px (max. 85vw) on mobile, 280px on tablet and 300px on desktop.</p>
+    </div>
+    <div data-mtx="drawer" id="drawer-width-wide" data-width="wide" data-title="360px" data-padded="true">
+      <p>For forms, complex filters or detailed listings.</p>
+    </div>
+    <div data-mtx="drawer" id="drawer-width-custom" data-anchor="right" data-width="450px" data-title="450px" data-padded="true">
+      <p>Arbitrary length with <code>data-width="450px"</code>.</p>
+    </div>
+    <div data-mtx="drawer" id="drawer-width-full" data-width="full" data-title="Full screen" data-padded="true">
+      <p>Takes the full width; useful on mobile for complete flows.</p>
+    </div>
+
+    <section class="demo-section" id="anchors">
+      <h2>Anchors</h2>
+      <p><code>data-anchor="left|right|top|bottom"</code>. <code>right</code> is usually used for details or filters; <code>top</code> and <code>bottom</code> take the full width and fit their content (bottom sheet).</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-anchor-left"><span class="material-icons" aria-hidden="true">west</span>left</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-anchor-right"><span class="material-icons" aria-hidden="true">east</span>right</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-anchor-top"><span class="material-icons" aria-hidden="true">north</span>top</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-anchor-bottom"><span class="material-icons" aria-hidden="true">south</span>bottom</button>
+      </div>
+    </section>
+
+    <div data-mtx="drawer" id="drawer-anchor-left" data-anchor="left" data-title="left">
+      <nav data-mtx="list" aria-label="Navigation (left)">
+        <a data-mtx="list-item-button" data-icon="inbox" href="#anchors" data-selected>Inbox</a>
+        <a data-mtx="list-item-button" data-icon="star" href="#anchors">Starred</a>
+        <a data-mtx="list-item-button" data-icon="send" href="#anchors">Sent</a>
+        <a data-mtx="list-item-button" data-icon="drafts" href="#anchors">Drafts</a>
+      </nav>
+    </div>
+    <div data-mtx="drawer" id="drawer-anchor-right" data-anchor="right" data-title="Details" data-padded="true">
+      <p>Details panel anchored to the right.</p>
+      <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-close>OK</button>
+    </div>
+    <div data-mtx="drawer" id="drawer-anchor-top" data-anchor="top" data-title="Notice" data-padded="true">
+      <p>Top panel for global notices.</p>
+      <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-drawer-close>Got it</button>
+    </div>
+    <div data-mtx="drawer" id="drawer-anchor-bottom" data-anchor="bottom" data-title="Share">
+      <nav data-mtx="list" aria-label="Share options">
+        <a data-mtx="list-item-button" data-icon="mail" href="#anchors">Email</a>
+        <a data-mtx="list-item-button" data-icon="link" href="#anchors">Copy link</a>
+        <a data-mtx="list-item-button" data-icon="qr_code" href="#anchors">QR code</a>
+      </nav>
+    </div>
+
+    <section class="demo-section" id="header-footer">
+      <h2>Header and footer</h2>
+      <p>Without a title the drawer only wraps the content. <code>data-title</code> generates a text header; <code>data-user-name</code>, <code>data-user-email</code> and <code>data-user-avatar</code>, a user header. <code>data-footer-version</code> and <code>data-footer-action</code> (+ <code>data-footer-action-icon</code>) create a fixed footer; the middle scrolls its content independently.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-plain">No header</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-title">With title</button>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-open="drawer-user">User and footer</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-noclose">data-close-button="false"</button>
+      </div>
+    </section>
+
+    <div data-mtx="drawer" id="drawer-plain">
+      <nav data-mtx="list" aria-label="Navigation without header">
+        <a data-mtx="list-item-button" data-icon="inbox" href="#header-footer" data-selected>Inbox</a>
+        <a data-mtx="list-item-button" data-icon="star" href="#header-footer">Starred</a>
+        <a data-mtx="list-item-button" data-icon="send" href="#header-footer">Sent</a>
+        <a data-mtx="list-item-button" data-icon="drafts" href="#header-footer">Drafts</a>
+      </nav>
+    </div>
+    <div data-mtx="drawer" id="drawer-title" data-title="Project Atlas">
+      <nav data-mtx="list" aria-label="Project navigation">
+        <a data-mtx="list-item-button" data-icon="dashboard" href="#header-footer" data-selected>Overview</a>
+        <a data-mtx="list-item-button" data-icon="task_alt" href="#header-footer">Tasks</a>
+        <a data-mtx="list-item-button" data-icon="group" href="#header-footer">Team</a>
+      </nav>
+    </div>
+    <div data-mtx="drawer" id="drawer-user" data-user-name="Emma Johnson" data-user-email="emma@example.com" data-user-avatar="EJ" data-footer-version="v0.1.0" data-footer-action="Sign out" data-footer-action-icon="logout">
+      <div data-mtx="list-subheader">General</div>
+      <nav data-mtx="list" aria-label="General navigation">
+        <a data-mtx="list-item-button" data-icon="dashboard" href="#header-footer" data-selected>Dashboard</a>
+        <a data-mtx="list-item-button" data-icon="mail" href="#header-footer">Messages</a>
+        <a data-mtx="list-item-button" data-icon="calendar_month" href="#header-footer">Calendar</a>
+      </nav>
+      <div data-mtx="list-subheader">Settings</div>
+      <nav data-mtx="list" aria-label="Settings">
+        <a data-mtx="list-item-button" data-icon="tune" href="#header-footer">Preferences</a>
+        <a data-mtx="list-item-button" data-icon="security" href="#header-footer">Security</a>
+        <a data-mtx="list-item-button" data-icon="help_outline" href="#header-footer">Help</a>
+      </nav>
+    </div>
+    <div data-mtx="drawer" id="drawer-noclose" data-title="No close button" data-close-button="false" data-padded="true">
+      <p>Close it with <kbd>Escape</kbd>, the backdrop or the button below.</p>
+      <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-close>Close</button>
+    </div>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Closed and open; you can also prevent implicit closing: <code>data-disable-backdrop-click</code> (neither the backdrop nor a click outside closes it), <code>data-disable-escape</code> and <code>data-backdrop="false"</code> (no backdrop). Triggers receive <code>aria-expanded</code> and <code>aria-controls</code>.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-locked">Explicit close only</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-nobackdrop">No backdrop</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-toggle="drawer-nobackdrop">Toggle without backdrop</button>
+      </div>
+    </section>
+
+    <div data-mtx="drawer" id="drawer-locked" data-title="Unsaved changes" data-disable-backdrop-click data-disable-escape data-close-button="false" data-padded="true">
+      <p>Neither <kbd>Escape</kbd> nor the backdrop closes this panel. Use the buttons.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-drawer-close>Discard</button>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-close>Save</button>
+      </div>
+    </div>
+    <div data-mtx="drawer" id="drawer-nobackdrop" data-anchor="right" data-backdrop="false" data-title="No backdrop" data-padded="true">
+      <p>No dark overlay; a click outside the panel still closes it.</p>
+    </div>
+
+    <section class="demo-section" id="clipped">
+      <h2>Under the AppBar (clipped)</h2>
+      <p>The AppBar spans the full width and the drawer starts below it. On a full page use <code>data-clipped</code> on a <code>permanent</code>, <code>responsive</code> or <code>persistent</code> drawer: it is placed at <code>--mtx-app-bar-height</code> (56px on mobile, 64px from 600px) and stacks under the AppBar. The temporary drawer ignores <code>clipped</code>: it is modal and covers the AppBar, as in MUI. Here, inside a frame, it is achieved with a permanent drawer contained in the row under the AppBar.</p>
+      <div class="demo-panel demo-panel--tall demo-drawer-frame">
+        <header data-mtx="app-bar" data-position="static" data-color="primary">
+          <span class="mtx-toolbar__title">My app</span>
+        </header>
+        <div class="demo-drawer-frame__body">
+          <div data-mtx="drawer" data-variant="permanent" data-absolute data-width="220px">
+            <nav data-mtx="list" aria-label="App navigation">
+              <a data-mtx="list-item-button" data-icon="dashboard" href="#clipped" data-selected>Overview</a>
+              <a data-mtx="list-item-button" data-icon="shopping_cart" href="#clipped">Orders</a>
+              <a data-mtx="list-item-button" data-icon="people" href="#clipped">Customers</a>
+              <a data-mtx="list-item-button" data-icon="bar_chart" href="#clipped">Reports</a>
+            </nav>
+          </div>
+          <div class="demo-drawer-main">
+            <strong>Overview</strong>
+            <p>The drawer is clipped under the top bar, which stays continuous from edge to edge.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="responsive">
+      <h2>Responsive: temporary on mobile, permanent on desktop</h2>
+      <p>A single drawer with <code>data-variant="responsive"</code> and <code>data-breakpoint="md"</code> (<code>sm</code> 600px, <code>md</code> 900px, <code>lg</code> 1200px, <code>xl</code> 1536px): below it, it is temporary and opens with its trigger; above it, it is permanent and the trigger hides. When crossing the breakpoint, classes, ARIA, backdrop and focus are synced and <code>mtx:drawer:mode-change</code> is emitted. Resize the window.</p>
+      <div class="demo-panel demo-panel--tall demo-drawer-frame">
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-start-icon="menu" data-drawer="drawer-responsive" data-title="Mail"></header>
+        <div class="demo-drawer-frame__body">
+          <div data-mtx="drawer" id="drawer-responsive" data-variant="responsive" data-breakpoint="md" data-absolute data-width="220px" data-title="Mail" data-header="temporary" aria-label="Folders">
+            <nav data-mtx="list" aria-label="Folders">
+              <a data-mtx="list-item-button" data-icon="inbox" href="#responsive" data-selected data-mtx-drawer-close>Inbox</a>
+              <a data-mtx="list-item-button" data-icon="star" href="#responsive" data-mtx-drawer-close>Starred</a>
+              <a data-mtx="list-item-button" data-icon="send" href="#responsive" data-mtx-drawer-close>Sent</a>
+              <a data-mtx="list-item-button" data-icon="drafts" href="#responsive" data-mtx-drawer-close>Drafts</a>
+            </nav>
+          </div>
+          <div class="demo-drawer-main">
+            <strong>Inbox</strong>
+            <p>Current mode: <span id="drawer-responsive-mode" aria-live="polite">—</span>.</p>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;header data-mtx="app-bar" data-start-icon="menu" data-drawer="nav" data-title="Mail"&gt;&lt;/header&gt;
+
+&lt;div data-mtx="drawer" id="nav" data-variant="responsive" data-breakpoint="md"
+     data-title="Mail" data-header="temporary" aria-label="Folders"&gt;
+  &lt;nav data-mtx="list" aria-label="Folders"&gt;…&lt;/nav&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="submenus">
+      <h2>Collapsible submenus</h2>
+      <p>An item with <code>data-mtx-collapse-trigger="id"</code> and <code>aria-expanded</code> expands an <code>mtx-collapse</code> container with a nested list (<code>data-nested</code>). The <code>mtx-collapse-indicator</code> rotates 90°.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-open="drawer-nested">Open with submenus</button>
+      </div>
+    </section>
+
+    <div data-mtx="drawer" id="drawer-nested" data-title="Projects">
+      <nav data-mtx="list" aria-label="Projects">
+        <a data-mtx="list-item-button" data-icon="dashboard" href="#submenus" data-selected>Overview</a>
+        <button type="button" data-mtx="list-item-button" data-icon="folder" data-no-select data-mtx-collapse-trigger="drawer-nested-projects" aria-expanded="true">My projects<span class="material-icons mtx-collapse-indicator" aria-hidden="true">chevron_right</span></button>
+        <div id="drawer-nested-projects" class="mtx-collapse">
+          <div data-mtx="list" data-nested>
+            <a data-mtx="list-item-button" data-icon="language" href="#submenus">Website</a>
+            <a data-mtx="list-item-button" data-icon="smartphone" href="#submenus">Mobile app</a>
+          </div>
+        </div>
+        <button type="button" data-mtx="list-item-button" data-icon="analytics" data-no-select data-mtx-collapse-trigger="drawer-nested-reports" aria-expanded="false">Reports<span class="material-icons mtx-collapse-indicator" aria-hidden="true">chevron_right</span></button>
+        <div id="drawer-nested-reports" class="mtx-collapse" hidden>
+          <div data-mtx="list" data-nested>
+            <a data-mtx="list-item-button" data-icon="trending_up" href="#submenus">Conversions</a>
+            <a data-mtx="list-item-button" data-icon="bar_chart" href="#submenus">Billing</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>With a grid: filter panel</h2>
+      <p>A right drawer with <code>data-width="wide"</code> and <code>data-padded="true"</code> containing a form laid out with <code>mtx-grid</code>.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-filters"><span class="material-icons" aria-hidden="true">filter_list</span>Filters</button>
+      </div>
+    </section>
+
+    <div data-mtx="drawer" id="drawer-filters" data-anchor="right" data-width="wide" data-padded="true" data-title="Filters">
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12"><input data-mtx="text-field" data-label="Search" data-variant="outlined" data-start-icon="search" type="search"></div>
+        <div data-mtx="grid" data-xs="6"><input data-mtx="text-field" data-label="Min. price" data-variant="outlined" type="number"></div>
+        <div data-mtx="grid" data-xs="6"><input data-mtx="text-field" data-label="Max. price" data-variant="outlined" type="number"></div>
+        <div data-mtx="grid" data-xs="12"><input type="checkbox" data-mtx="checkbox" data-label="In stock only" checked></div>
+        <div data-mtx="grid" data-xs="6"><button class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" data-mtx-drawer-close>Clear</button></div>
+        <div data-mtx="grid" data-xs="6"><button class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" data-mtx-drawer-close>Apply</button></div>
+      </div>
+    </div>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>open()</code>, <code>close(reason)</code>, <code>toggle()</code> and <code>isOpen</code>. The log shows the real <code>mtx:drawer:open</code> and <code>mtx:drawer:close</code> events with their <code>detail.reason</code>: also try <kbd>Escape</kbd>, the backdrop and the X.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="drawer-api-open">open()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="drawer-api-toggle">toggle()</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="drawer-api-state">Read isOpen</button>
+      </div>
+      <pre class="demo-log" id="drawer-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const drawer = Materix.getInstance(document.getElementById('drawer-api'));
+drawer.open();
+drawer.close('saved');
+drawer.element.addEventListener('mtx:drawer:close', (e) =&gt; console.log(e.detail.reason));</code></pre>
+    </section>
+
+    <div data-mtx="drawer" id="drawer-api" data-anchor="right" data-title="Programmatic control" data-padded="true">
+      <p>Close it from here with <code>close('saved')</code>.</p>
+      <button class="mtx-button mtx-button--contained" data-mtx="button" type="button" id="drawer-api-close">close('saved')</button>
+    </div>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>With the full structure (header, content and footer written by hand) the component duplicates nothing and only adds behavior.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-drawer-open="drawer-bem">Open BEM drawer</button>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-drawer mtx-drawer--left mtx-drawer--wide" id="drawer-bem" data-mtx="drawer"&gt;
+  &lt;div class="mtx-drawer__header"&gt;
+    &lt;h3 class="mtx-drawer__title"&gt;Edit profile&lt;/h3&gt;
+    &lt;button type="button" class="mtx-icon-button mtx-drawer__close" aria-label="Close" data-mtx-drawer-close&gt;
+      &lt;span class="material-icons" aria-hidden="true"&gt;close&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="mtx-drawer__content mtx-drawer__content--padded"&gt;…&lt;/div&gt;
+  &lt;div class="mtx-drawer__footer"&gt;
+    &lt;button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-drawer-close&gt;Cancel&lt;/button&gt;
+    &lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-close&gt;Save&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <div class="mtx-drawer mtx-drawer--left mtx-drawer--wide" id="drawer-bem" data-mtx="drawer">
+      <div class="mtx-drawer__header">
+        <h3 class="mtx-drawer__title">Edit profile</h3>
+        <button type="button" class="mtx-icon-button mtx-drawer__close" aria-label="Close" data-mtx-drawer-close>
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <div class="mtx-drawer__content mtx-drawer__content--padded">
+        <input data-mtx="text-field" data-label="Name" data-variant="outlined" type="text" value="Emma Johnson">
+      </div>
+      <div class="mtx-drawer__footer">
+        <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-drawer-close>Cancel</button>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-drawer-close>Save</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var el = document.getElementById('drawer-api');
+      var drawer = Materix.getInstance(el);
+      var log = document.getElementById('drawer-log');
+
+      /**
+       * Añade una línea al registro.
+       * @param {string} text Línea a registrar.
+       */
+      function write(text) {
+        log.textContent += text + '\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.getElementById('drawer-api-open').addEventListener('click', function (event) {
+        event.stopPropagation();
+        drawer.open();
+      });
+      document.getElementById('drawer-api-toggle').addEventListener('click', function (event) {
+        event.stopPropagation();
+        drawer.toggle();
+      });
+      document.getElementById('drawer-api-close').addEventListener('click', function () {
+        drawer.close('saved');
+      });
+      document.getElementById('drawer-api-state').addEventListener('click', function () {
+        write('isOpen → ' + drawer.isOpen);
+      });
+      el.addEventListener('mtx:drawer:open', function () { write('mtx:drawer:open'); });
+
+      var responsive = document.getElementById('drawer-responsive');
+      var modeLabel = document.getElementById('drawer-responsive-mode');
+      modeLabel.textContent = Materix.getInstance(responsive).mode;
+      responsive.addEventListener('mtx:drawer:mode-change', function (event) {
+        modeLabel.textContent = event.detail.mode;
+      });
+      el.addEventListener('mtx:drawer:close', function (event) {
+        write('mtx:drawer:close · detail.reason="' + event.detail.reason + '"');
+      });
+    });
+  </script>
+</body>
+</html>

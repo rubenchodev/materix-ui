@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examples · Materix UI</title>
+  <meta name="description" content="Catalog of working Materix UI examples: vanilla CSS + JavaScript components based on Material UI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-hero">
+      <span class="demo-crumbs">Materix UI · Examples</span>
+      <h1>Component catalog</h1>
+      <p class="demo-lead">46 components and a utility system in vanilla CSS + JavaScript that follow Material UI (MUI). Each card opens a working page that uses the real compiled library, with its variants, sizes and states.</p>
+      <ul class="demo-hero__steps">
+        <li>
+          <span class="material-icons" aria-hidden="true">code</span>
+          <span><strong>A single line</strong>Write the element with <code>data-mtx</code> and the library builds the rest.</span>
+        </li>
+        <li>
+          <span class="material-icons" aria-hidden="true">dark_mode</span>
+          <span><strong>Light and dark</strong>Switch the theme from the top bar to check both modes.</span>
+        </li>
+        <li>
+          <span class="material-icons" aria-hidden="true">search</span>
+          <span><strong>Quick search</strong>Press <code>/</code> to filter components in the side menu.</span>
+        </li>
+      </ul>
+      <div class="demo-hero__actions">
+        <a class="mtx-button mtx-button--contained" data-mtx="button" href="../">View documentation</a>
+        <a class="mtx-button mtx-button--outlined" data-mtx="button" href="#layout">Explore components</a>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="Component groups">
+      <a href="#layout">Layout</a>
+      <a href="#inputs">Inputs</a>
+      <a href="#data-display">Data display</a>
+      <a href="#feedback">Feedback</a>
+      <a href="#surfaces">Surfaces</a>
+      <a href="#navigation">Navigation</a>
+    </nav>
+
+    <section class="demo-section" id="layout" aria-labelledby="layout-title">
+      <h2 id="layout-title">Layout<span class="demo-section__count">5</span></h2>
+      <p>Page structure and typographic baseline.</p>
+      <div class="demo-catalog">
+        <a class="demo-card" href="grid/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">grid_view</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Grid</span>
+            <span class="demo-card__text">Flexible 12-column grid with breakpoints and spacing.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="css-baseline/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">format_paint</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">CSS Baseline</span>
+            <span class="demo-card__text">Global reset for typography, box-sizing and color scheme.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="container/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">crop_free</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Container</span>
+            <span class="demo-card__text">Centers content with a max width and responsive side gutters.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="stack/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">view_agenda</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Stack</span>
+            <span class="demo-card__text">Stacks items in a row or column with even spacing and dividers.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="utilities/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">build</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Utilities</span>
+            <span class="demo-card__text">Mobile-first classes for display, flex, spacing, text, color and position.</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="demo-section" id="inputs" aria-labelledby="inputs-title">
+      <h2 id="inputs-title">Inputs<span class="demo-section__count">15</span></h2>
+      <p>Controls for users to take action or enter data.</p>
+      <div class="demo-catalog">
+        <a class="demo-card" href="button/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">smart_button</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Button</span>
+            <span class="demo-card__text">Actions with text, outlined and contained variants in three sizes.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="button-group/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">view_week</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Button Group</span>
+            <span class="demo-card__text">Joined buttons with variants, vertical orientation and the split button pattern.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="icon-button/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">ads_click</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Icon Button</span>
+            <span class="demo-card__text">Compact icon-only actions at 48, 40 and 32 px.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="fab/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">add_circle</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Fab</span>
+            <span class="demo-card__text">Floating action button for the primary action on screen.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="checkbox/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">check_box</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Checkbox</span>
+            <span class="demo-card__text">Select one or more options, with an indeterminate state.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="radio/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">radio_button_checked</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Radio</span>
+            <span class="demo-card__text">Select a single option within a group.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="rating/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">star_half</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Rating</span>
+            <span class="demo-card__text">Star ratings with half stars and a read-only mode.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="slider/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">tune</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Slider</span>
+            <span class="demo-card__text">Pick a value or a range by sliding along a track, with marks and a value label.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="switch/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">toggle_on</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Switch</span>
+            <span class="demo-card__text">Turns a setting on or off immediately.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="text-field/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">edit</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Text Field</span>
+            <span class="demo-card__text">Text fields with floating label, adornments, masks and validation.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="select/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">list</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Select</span>
+            <span class="demo-card__text">Single or multiple selection with a menu, search and icons.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="native-select/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">arrow_drop_down_circle</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Native Select</span>
+            <span class="demo-card__text">The native browser select with the MUI look.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="autocomplete/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">manage_search</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Autocomplete</span>
+            <span class="demo-card__text">Filterable suggestions with chips, free values, groups and async loading.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="date-time-picker/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">event</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Date Time Picker</span>
+            <span class="demo-card__text">Date and time with a calendar, year picker and radial clock.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="toggle-button/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">toggle_off</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Toggle Button</span>
+            <span class="demo-card__text">Related options with exclusive or multiple selection.</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="demo-section" id="data-display" aria-labelledby="data-display-title">
+      <h2 id="data-display-title">Data display<span class="demo-section__count">8</span></h2>
+      <p>Present information in a compact, readable way.</p>
+      <div class="demo-catalog">
+        <a class="demo-card" href="avatar/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">account_circle</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Avatar</span>
+            <span class="demo-card__text">Image, initials or icon for a person; groupable.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="badge/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">notifications</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Badge</span>
+            <span class="demo-card__text">Counter or status dot anchored to another element.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="chip/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">label</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Chip</span>
+            <span class="demo-card__text">Compact labels, clickable or deletable.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="divider/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">horizontal_rule</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Divider</span>
+            <span class="demo-card__text">Horizontal and vertical separators, with or without text.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="list/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">format_list_bulleted</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">List</span>
+            <span class="demo-card__text">Lists with icons, secondary text, selection and subheaders.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="table/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">table_chart</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Table</span>
+            <span class="demo-card__text">Tables with sorting, row selection, sticky header and pagination.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="typography/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">text_fields</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Typography</span>
+            <span class="demo-card__text">Full type scale from h1 to overline.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="tooltip/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">info</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Tooltip</span>
+            <span class="demo-card__text">Floating labels on hover, focus and long press with data-mtx-tooltip.</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="demo-section" id="feedback" aria-labelledby="feedback-title">
+      <h2 id="feedback-title">Feedback<span class="demo-section__count">6</span></h2>
+      <p>Communicate status and results, or ask for confirmation.</p>
+      <div class="demo-catalog">
+        <a class="demo-card" href="alert/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">warning</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Alert</span>
+            <span class="demo-card__text">Success, info, warning or error messages.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="backdrop/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">gradient</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Backdrop</span>
+            <span class="demo-card__text">Full-screen overlay with a loading indicator, fade and optional dismissal.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="dialog/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">open_in_browser</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Dialog</span>
+            <span class="demo-card__text">Modal windows with focus trapping, Escape and actions.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="progress/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">donut_large</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Progress</span>
+            <span class="demo-card__text">Circular and linear indicators: indeterminate, determinate, buffer and query.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="skeleton/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">view_day</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Skeleton</span>
+            <span class="demo-card__text">Text, circular, rectangular and rounded loading placeholders with pulse or wave.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="snackbar/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">chat_bubble</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Snackbar</span>
+            <span class="demo-card__text">Brief notifications with auto-hide and an optional action.</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="demo-section" id="surfaces" aria-labelledby="surfaces-title">
+      <h2 id="surfaces-title">Surfaces<span class="demo-section__count">5</span></h2>
+      <p>Containers that group and elevate content.</p>
+      <div class="demo-catalog">
+        <a class="demo-card" href="accordion/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">expand_circle_down</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Accordion</span>
+            <span class="demo-card__text">Collapsible panels with a clickable summary, exclusive groups and details enhancement.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="app-bar/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">view_headline</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">App Bar</span>
+            <span class="demo-card__text">Top bar with Toolbar, positions and elevation on scroll.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="card/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">web</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Card</span>
+            <span class="demo-card__text">Cards with header, media, content and actions.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="paper/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">layers</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Paper</span>
+            <span class="demo-card__text">Base surface with elevations 0-24 or an outlined border.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="popover/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">picture_in_picture</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Popover</span>
+            <span class="demo-card__text">Anchored floating content, closes on outside click or Escape and returns focus.</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="demo-section" id="navigation" aria-labelledby="navigation-title">
+      <h2 id="navigation-title">Navigation<span class="demo-section__count">8</span></h2>
+      <p>Move between views and actions.</p>
+      <div class="demo-catalog">
+        <a class="demo-card" href="drawer/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">menu_open</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Drawer</span>
+            <span class="demo-card__text">Temporary, persistent or permanent side panels.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="link/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">link</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Link</span>
+            <span class="demo-card__text">Links with palette colors and underline styles.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="menu/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">more_vert</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Menu</span>
+            <span class="demo-card__text">Dropdown menus with icons and keyboard navigation.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="tabs/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">tab</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Tabs</span>
+            <span class="demo-card__text">Horizontal or vertical tabs with an animated indicator.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="speed-dial/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">touch_app</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Speed Dial</span>
+            <span class="demo-card__text">FAB that reveals secondary actions with tooltips.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="stepper/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">linear_scale</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Stepper</span>
+            <span class="demo-card__text">Horizontal, vertical or non-linear step progress, plus a mobile stepper.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="breadcrumbs/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">more_horiz</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Breadcrumbs</span>
+            <span class="demo-card__text">Hierarchical navigation path with separators, icons and collapsing.</span>
+          </span>
+        </a>
+        <a class="demo-card" href="pagination/index.html">
+          <span class="demo-card__icon" aria-hidden="true"><span class="material-icons">last_page</span></span>
+          <span class="demo-card__body">
+            <span class="demo-card__title">Pagination</span>
+            <span class="demo-card__text">Page selector with ellipsis, variants, sizes and link mode.</span>
+          </span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../dist/materix.umd.js?v=8"></script>
+  <script src="shared/locale.js?v=8"></script>
+  <script src="shared/theme.js?v=8"></script>
+  <script src="shared/nav.js?v=8"></script>
+</body>
+</html>

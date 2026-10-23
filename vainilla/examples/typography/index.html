@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typography · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Data display</span>
+        <h1>Typography</h1>
+        <p class="demo-lead">Applies the MUI type scale (h1 to overline) to any element, separating HTML semantics from visual style.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Type scale</a>
+      <a href="#semantics">Semantics vs. style</a>
+      <a href="#colors">Colors</a>
+      <a href="#alignment">Alignment</a>
+      <a href="#margins">Margins and truncation</a>
+      <a href="#responsive">Responsive</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Headings <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> with <code>data-mtx="typography"</code> pick up their variant automatically; on other tags set it with <code>data-variant</code>.</p>
+      <div>
+        <h3 data-mtx="typography" data-variant="h4" data-gutter-bottom>Monthly report</h3>
+        <p data-mtx="typography" data-variant="body1">Sales grew 12% over the previous month, driven by the online channel.</p>
+      </div>
+      <pre class="demo-code"><code>&lt;h3 data-mtx="typography" data-variant="h4" data-gutter-bottom&gt;Monthly report&lt;/h3&gt;
+&lt;p data-mtx="typography" data-variant="body1"&gt;Sales grew 12%...&lt;/p&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Type scale</h2>
+      <p>The 13 MUI variants with their size, weight and line height. As in MUI, no variant has a margin (h1–h6 included): add one with <code>data-gutter-bottom</code> or <code>data-paragraph</code>. The headings in this demo use <code>&lt;p&gt;</code> with <code>data-variant</code> so the page hierarchy is not altered.</p>
+      <div class="demo-group">
+        <span class="demo-label">h1 · 96px / 300</span>
+        <p data-mtx="typography" data-variant="h1">h1. Heading</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">h2 · 60px / 300</span>
+        <p data-mtx="typography" data-variant="h2">h2. Heading</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">h3 · 48px / 400</span>
+        <p data-mtx="typography" data-variant="h3">h3. Heading</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">h4 · 34px / 400</span>
+        <p data-mtx="typography" data-variant="h4">h4. Section heading</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">h5 · 24px / 400</span>
+        <p data-mtx="typography" data-variant="h5">h5. Section heading</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">h6 · 20px / 500</span>
+        <p data-mtx="typography" data-variant="h6">h6. Section heading</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">subtitle1 · 16px / 400 · subtitle2 · 14px / 500</span>
+        <p data-mtx="typography" data-variant="subtitle1">subtitle1. Supporting text for headings and sections.</p>
+        <p data-mtx="typography" data-variant="subtitle2">subtitle2. Compact supporting text with more weight.</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">body1 · 16px / 400 · body2 · 14px / 400</span>
+        <p data-mtx="typography" data-variant="body1">body1. Main application text, designed for continuous reading with comfortable line spacing.</p>
+        <p data-mtx="typography" data-variant="body2">body2. Secondary text for descriptions, notes and metadata.</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">button · 14px / 500 · caption · 12px · overline · 12px</span>
+        <span data-mtx="typography" data-variant="button">button. Button text</span>
+        <span data-mtx="typography" data-variant="caption">caption. Image caption or helper text.</span>
+        <span data-mtx="typography" data-variant="overline">overline. Category label</span>
+      </div>
+    </section>
+
+    <section class="demo-section" id="semantics">
+      <h2>Semantics vs. style</h2>
+      <p>The tag defines the structure and <code>data-variant</code> the look: <code>data-variant</code> takes precedence over the tag.</p>
+      <div class="demo-panel">
+        <h3 data-mtx="typography" data-variant="h5" data-gutter-bottom>Semantic h3 styled as h5</h3>
+        <h4 data-mtx="typography" data-variant="subtitle1">Semantic h4 styled as subtitle1</h4>
+        <p data-mtx="typography" data-variant="body2">Paragraph styled as body2.</p>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> accepts the palette colors (<code>primary</code>, <code>secondary</code>, <code>error</code>, <code>warning</code>, <code>info</code>, <code>success</code>), the text colors (<code>text-primary</code>, <code>text-secondary</code>, <code>disabled</code>) and <code>inherit</code>.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Palette and text (data-color)</span>
+          <p data-mtx="typography" data-variant="body1" data-color="primary">Primary</p>
+          <p data-mtx="typography" data-variant="body1" data-color="secondary">Secondary</p>
+          <p data-mtx="typography" data-variant="body1" data-color="text-secondary">Secondary text</p>
+          <p data-mtx="typography" data-variant="body1" data-color="disabled" aria-disabled="true">Disabled text</p>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Status (data-color)</span>
+          <p data-mtx="typography" data-variant="body1" data-color="error">Error</p>
+          <p data-mtx="typography" data-variant="body1" data-color="warning">Warning</p>
+          <p data-mtx="typography" data-variant="body1" data-color="info">Info</p>
+          <p data-mtx="typography" data-variant="body1" data-color="success">Success</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="alignment">
+      <h2>Alignment</h2>
+      <p><code>data-align</code> accepts <code>left</code>, <code>center</code>, <code>right</code> and <code>justify</code>.</p>
+      <div class="demo-panel">
+        <p data-mtx="typography" data-variant="body1" data-align="left" class="demo-wide">Left aligned</p>
+        <p data-mtx="typography" data-variant="body1" data-align="center" class="demo-wide">Centered</p>
+        <p data-mtx="typography" data-variant="body1" data-align="right" class="demo-wide">Right aligned</p>
+        <p data-mtx="typography" data-variant="body2" data-align="justify" class="demo-wide">Justified text: full lines are spread across the container width so both margins line up, which is useful for long reading blocks.</p>
+      </div>
+    </section>
+
+    <section class="demo-section" id="margins">
+      <h2>Margins and truncation</h2>
+      <p><code>data-gutter-bottom</code> adds a 0.35em bottom margin; <code>data-paragraph</code> (class <code>mtx-typography--paragraph</code>) adds 16px; <code>data-no-wrap</code> truncates to a single line with an ellipsis.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">gutterBottom and paragraph</span>
+          <div class="demo-panel">
+            <div>
+              <p data-mtx="typography" data-variant="subtitle2" data-gutter-bottom>Heading with data-gutter-bottom</p>
+              <p data-mtx="typography" data-variant="body2" data-paragraph>Paragraph with a 16px bottom margin (data-paragraph).</p>
+              <p data-mtx="typography" data-variant="body2">Next paragraph.</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">noWrap</span>
+          <div class="demo-panel">
+            <p data-mtx="typography" data-variant="body1" data-no-wrap class="demo-fixed-width">Very long text that doesn't fit on a single line and is truncated with an ellipsis.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="responsive">
+      <h2>Responsive typography</h2>
+      <p>Variant per breakpoint (mobile-first: sm 600, md 900, lg 1200, xl 1536px) with <code>data-variant-{bp}</code> or the <code>mtx-typography--{bp}-{variant}</code> class; and fluid h1–h6 scaling with <code>data-responsive</code> / <code>mtx-typography--responsive</code> (like MUI's <code>responsiveFontSizes</code>). Resize the window to see it.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Per breakpoint · h5 → md h4 → lg h3</span>
+          <div class="demo-panel">
+            <div>
+              <h2 data-mtx="typography" data-variant="h5" data-variant-md="h4" data-variant-lg="h3">What's new in October</h2>
+              <p class="mtx-typography--body2 mtx-typography--md-body1">body2 on mobile, body1 from 900px (plain class)</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Fluid scale · clamp()</span>
+          <div class="demo-panel">
+            <div>
+              <h2 data-mtx="typography" data-variant="h2" data-responsive>Fluid headline</h2>
+              <h3 data-mtx="typography" data-variant="h4" data-responsive>Fluid subtitle</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;h2 data-mtx="typography" data-variant="h5" data-variant-md="h4" data-variant-lg="h3"&gt;…&lt;/h2&gt;
+&lt;h2 class="mtx-typography--h5 mtx-typography--md-h4"&gt;…&lt;/h2&gt;
+&lt;h1 data-mtx="typography" data-variant="h2" data-responsive&gt;…&lt;/h1&gt;
+&lt;html class="mtx-typography--responsive"&gt; &lt;!-- whole page --&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>Article header inside a Paper: overline, title, metadata and excerpt.</p>
+      <div data-mtx="paper" data-variant="outlined" class="demo-wide">
+        <div class="demo-panel">
+          <div>
+            <span data-mtx="typography" data-variant="overline" data-color="primary">Guide</span>
+            <h3 data-mtx="typography" data-variant="h5" data-gutter-bottom>How to prepare a quarterly budget</h3>
+            <p data-mtx="typography" data-variant="caption" data-color="text-secondary" data-gutter-bottom>By Jane Smith · 6 min read</p>
+            <p data-mtx="typography" data-variant="body2">We go over the steps to estimate income and expenses, set safety margins and review the budget every month.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>KPIs with <code>mtx-grid</code>: figure in <code>h4</code>, label in <code>overline</code> and change in <code>caption</code>.</p>
+      <div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div class="demo-panel">
+              <span data-mtx="typography" data-variant="overline" class="mtx-typography--text-secondary">Revenue</span>
+              <p data-mtx="typography" data-variant="h4">$48,200</p>
+              <span data-mtx="typography" data-variant="caption" class="mtx-typography--success">+12% this month</span>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div class="demo-panel">
+              <span data-mtx="typography" data-variant="overline" class="mtx-typography--text-secondary">Orders</span>
+              <p data-mtx="typography" data-variant="h4">1,284</p>
+              <span data-mtx="typography" data-variant="caption" class="mtx-typography--success">+4% this month</span>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div class="demo-panel">
+              <span data-mtx="typography" data-variant="overline" class="mtx-typography--text-secondary">Returns</span>
+              <p data-mtx="typography" data-variant="h4">37</p>
+              <span data-mtx="typography" data-variant="caption" class="mtx-typography--error">+9% this month</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Typography has no methods or events; dynamically created elements are initialized with <code>Materix.init(el, 'typography')</code>.</p>
+      <div class="demo-stack">
+        <div class="demo-row">
+          <button id="typo-add" class="mtx-button mtx-button--outlined" data-mtx="button">Add dynamic heading</button>
+        </div>
+        <div id="typo-target"></div>
+        <pre id="typo-log" class="demo-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The classes work without JavaScript.</p>
+      <div>
+        <p class="mtx-typography mtx-typography--h4 mtx-typography--color-primary" data-mtx="typography">BEM heading</p>
+        <p class="mtx-typography mtx-typography--body2 mtx-typography--text-secondary" data-mtx="typography">Secondary text rendered on the server.</p>
+      </div>
+      <pre class="demo-code"><code>&lt;p class="mtx-typography mtx-typography--h4 mtx-typography--color-primary"&gt;BEM heading&lt;/p&gt;
+&lt;p class="mtx-typography mtx-typography--body2 mtx-typography--text-secondary"&gt;Secondary text...&lt;/p&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const variants = ['h5', 'h6', 'subtitle1', 'overline'];
+      const target = document.getElementById('typo-target');
+      const log = document.getElementById('typo-log');
+      let count = 0;
+      document.getElementById('typo-add').addEventListener('click', () => {
+        const variant = variants[count % variants.length];
+        count += 1;
+        const el = document.createElement('p');
+        el.setAttribute('data-variant', variant);
+        el.textContent = `Dynamic heading ${count} (${variant})`;
+        target.appendChild(el);
+        Materix.init(el, 'typography');
+        log.textContent += `Materix.init(p, 'typography') → classes: ${el.className}\n`;
+        log.scrollTop = log.scrollHeight;
+      });
+    });
+  </script>
+</body>
+</html>

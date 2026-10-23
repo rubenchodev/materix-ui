@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Group · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Button Group</h1>
+        <p class="demo-lead">Groups related buttons into a single piece with joined borders, separators and inherited variant, size and color.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#colors">Colors</a>
+      <a href="#orientation">Orientation</a>
+      <a href="#full-width">Full width</a>
+      <a href="#states">States</a>
+      <a href="#split-button">Split button</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A container with <code>data-mtx="button-group"</code> and plain buttons inside: the group turns them into Buttons, applies its variant (outlined by default) and adds <code>role="group"</code>. Give it a name with <code>data-label</code> or <code>aria-label</code>.</p>
+      <div class="demo-row">
+        <div data-mtx="button-group" data-variant="contained" data-label="Basic actions">
+          <button>One</button>
+          <button>Two</button>
+          <button>Three</button>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="button-group" data-variant="contained" data-label="Basic actions"&gt;
+  &lt;button&gt;One&lt;/button&gt;
+  &lt;button&gt;Two&lt;/button&gt;
+  &lt;button&gt;Three&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>data-variant="outlined|contained|text"</code>, as in MUI. Outlined overlaps the borders; contained separates with the dark shade of the color and moves the elevation to the group; text separates with a 50% line.</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">outlined (default)</span>
+          <div data-mtx="button-group" data-label="Outlined"><button>One</button><button>Two</button><button>Three</button></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">contained</span>
+          <div data-mtx="button-group" data-variant="contained" data-label="Contained"><button>One</button><button>Two</button><button>Three</button></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">text</span>
+          <div data-mtx="button-group" data-variant="text" data-label="Text"><button>One</button><button>Two</button><button>Three</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p><code>data-size="small|medium|large"</code> is inherited by every button (32, 40 and 48px), aligned with a TextField and IconButton of the same height.</p>
+      <div class="demo-group">
+        <span class="demo-label">Large · 48px</span>
+        <div class="demo-row">
+          <div data-mtx="button-group" data-size="large" data-label="Large"><button>One</button><button>Two</button><button>Three</button></div>
+          <button class="mtx-icon-button mtx-icon-button--large" data-mtx="icon-button" aria-label="More options"><span class="material-icons" aria-hidden="true">more_vert</span></button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 40px</span>
+        <div class="demo-row">
+          <div data-mtx="button-group" data-label="Medium"><button>One</button><button>Two</button><button>Three</button></div>
+          <input data-mtx="text-field" data-label="Search" data-size="small" type="text">
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 32px</span>
+        <div class="demo-row">
+          <div data-mtx="button-group" data-size="small" data-label="Small"><button>One</button><button>Two</button><button>Three</button></div>
+          <button class="mtx-icon-button mtx-icon-button--small" data-mtx="icon-button" aria-label="More options"><span class="material-icons" aria-hidden="true">more_vert</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With icons</h2>
+      <p>Each child accepts the Button attributes (<code>data-start-icon</code>, <code>data-end-icon</code>). For icon-only buttons, use a direct <code>.material-icons</code> and an <code>aria-label</code>: the group compacts their padding.</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">No icon</span>
+          <div data-mtx="button-group" data-label="No icon"><button>Day</button><button>Week</button><button>Month</button></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Start icon</span>
+          <div data-mtx="button-group" data-variant="contained" data-label="Start icon">
+            <button data-start-icon="content_copy">Copy</button>
+            <button data-start-icon="content_cut">Cut</button>
+            <button data-start-icon="content_paste">Paste</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">End icon</span>
+          <div data-mtx="button-group" data-label="End icon">
+            <button data-end-icon="send">Send</button>
+            <button data-end-icon="schedule_send">Schedule</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Icon only</span>
+          <div data-mtx="button-group" data-label="Text alignment">
+            <button aria-label="Align left"><span class="material-icons" aria-hidden="true">format_align_left</span></button>
+            <button aria-label="Center"><span class="material-icons" aria-hidden="true">format_align_center</span></button>
+            <button aria-label="Align right"><span class="material-icons" aria-hidden="true">format_align_right</span></button>
+            <button aria-label="Justify"><span class="material-icons" aria-hidden="true">format_align_justify</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> accepts the palette colors and <code>inherit</code>; a child with its own <code>data-color</code> keeps it.</p>
+      <div class="demo-stack">
+        <div data-mtx="button-group" data-variant="contained" data-color="secondary" data-label="Secondary"><button>One</button><button>Two</button><button>Three</button></div>
+        <div data-mtx="button-group" data-color="success" data-label="Success"><button>One</button><button>Two</button><button>Three</button></div>
+        <div data-mtx="button-group" data-variant="text" data-color="error" data-label="Error"><button>One</button><button>Two</button><button>Three</button></div>
+        <div data-mtx="button-group" data-variant="contained" data-color="inherit" data-label="Inherit"><button>One</button><button>Two</button><button>Three</button></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="orientation">
+      <h2>Orientation</h2>
+      <p><code>data-orientation="vertical"</code> stacks the buttons (keeps <code>role="group"</code>, which does not allow <code>aria-orientation</code>).</p>
+      <div class="demo-row demo-row--start">
+        <div data-mtx="button-group" data-orientation="vertical" data-label="Vertical outlined"><button>One</button><button>Two</button><button>Three</button></div>
+        <div data-mtx="button-group" data-orientation="vertical" data-variant="contained" data-label="Vertical contained"><button>One</button><button>Two</button><button>Three</button></div>
+        <div data-mtx="button-group" data-orientation="vertical" data-variant="text" data-label="Vertical text"><button>One</button><button>Two</button><button>Three</button></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="full-width">
+      <h2>Full width</h2>
+      <p><code>data-full-width</code> takes the full width and splits the space evenly.</p>
+      <div data-mtx="button-group" data-full-width data-variant="contained" data-label="Full width"><button>One</button><button>Two</button><button>Three</button></div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover or use <kbd>Tab</kbd> to see hover and focus (the active button is drawn above the neighboring borders). <code>data-disabled</code> disables the whole group; a single child can be disabled on its own. <code>data-disable-elevation</code> removes the shadow of the contained group.</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">Disabled group</span>
+          <div class="demo-row">
+            <div data-mtx="button-group" data-disabled data-label="Disabled outlined"><button>One</button><button>Two</button><button>Three</button></div>
+            <div data-mtx="button-group" data-variant="contained" data-disabled data-label="Disabled contained"><button>One</button><button>Two</button><button>Three</button></div>
+            <div data-mtx="button-group" data-variant="text" data-disabled data-label="Disabled text"><button>One</button><button>Two</button><button>Three</button></div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">One disabled button</span>
+          <div data-mtx="button-group" data-variant="contained" data-label="One disabled child"><button>One</button><button disabled>Two</button><button>Three</button></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">No elevation</span>
+          <div data-mtx="button-group" data-variant="contained" data-disable-elevation data-label="No elevation"><button>One</button><button>Two</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="split-button">
+      <h2>Split button</h2>
+      <p>MUI pattern: the primary action plus an arrow that opens a <a href="../menu/index.html">Menu</a> with <code>data-open-menu</code>. The menu handles <code>aria-haspopup</code>, <code>aria-expanded</code> and the keyboard; choosing an option (<code>mtx:menu:select</code>) updates the text of the primary button. <code>data-position-anchor</code> anchors the menu to the whole group (as MUI does) while focus still returns to the arrow.</p>
+      <div class="demo-row">
+        <div data-mtx="button-group" data-variant="contained" data-label="Merge pull request" id="split-group">
+          <button id="split-main">Squash and merge</button>
+          <button id="split-arrow" aria-label="Choose merge strategy" data-open-menu="#split-menu"><span class="material-icons" aria-hidden="true">arrow_drop_down</span></button>
+        </div>
+        <div data-mtx="menu" id="split-menu" data-position-anchor="#split-group">
+          <div data-mtx="menu-item" role="menuitemradio" data-value="Create a merge commit">Create a merge commit</div>
+          <div data-mtx="menu-item" role="menuitemradio" data-value="Squash and merge" data-checked>Squash and merge</div>
+          <div data-mtx="menu-item" role="menuitemradio" data-value="Rebase and merge" data-disabled>Rebase and merge</div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="button-group" data-variant="contained" data-label="Merge pull request" id="split-group"&gt;
+  &lt;button id="split-main"&gt;Squash and merge&lt;/button&gt;
+  &lt;button aria-label="Choose merge strategy" data-open-menu="#split-menu"&gt;
+    &lt;span class="material-icons" aria-hidden="true"&gt;arrow_drop_down&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;div data-mtx="menu" id="split-menu" data-position-anchor="#split-group"&gt;
+  &lt;div data-mtx="menu-item" role="menuitemradio" data-value="Create a merge commit"&gt;Create a merge commit&lt;/div&gt;
+  &lt;div data-mtx="menu-item" role="menuitemradio" data-value="Squash and merge" data-checked&gt;Squash and merge&lt;/div&gt;
+&lt;/div&gt;
+
+document.getElementById('split-menu').addEventListener('mtx:menu:select', (e) =&gt; {
+  document.getElementById('split-main').textContent = e.detail.item.dataset.value;
+});</code></pre>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>With <code>data-full-width</code> the group adapts to the <code>mtx-grid</code> column.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="button-group" data-full-width data-label="Period"><button>Day</button><button>Week</button><button>Month</button></div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div data-mtx="button-group" data-full-width data-variant="contained" data-label="Export"><button data-start-icon="picture_as_pdf">PDF</button><button data-start-icon="table_view">CSV</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>disable()</code>, <code>enable()</code>, <code>disabled</code>, <code>buttons</code> and <code>refresh()</code> (after adding or removing buttons).</p>
+      <div class="demo-row">
+        <div data-mtx="button-group" id="group-api" data-label="Programmatic group"><button>One</button><button>Two</button></div>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="group-api-toggle">disable() / enable()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="group-api-add">Add button + refresh()</button>
+      </div>
+      <pre class="demo-log" id="group-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const group = Materix.getInstance(document.getElementById('group-api'));
+group.disabled ? group.enable() : group.disable();
+
+const extra = document.createElement('button');
+extra.textContent = 'Three';
+group.element.appendChild(extra);
+group.refresh();</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Full structure for SSR: the group with its classes and the Buttons already marked up. The JavaScript computes the position classes <code>mtx-button-group__first|middle|last</code>.</p>
+      <div class="demo-row">
+        <div class="mtx-button-group mtx-button-group--contained mtx-button-group--horizontal" role="group" aria-label="Formatting" data-mtx="button-group">
+          <button type="button" class="mtx-button mtx-button--contained" data-mtx="button">Bold</button>
+          <button type="button" class="mtx-button mtx-button--contained" data-mtx="button">Italic</button>
+          <button type="button" class="mtx-button mtx-button--contained" data-mtx="button">Underline</button>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-button-group mtx-button-group--contained mtx-button-group--horizontal"
+     role="group" aria-label="Formatting" data-mtx="button-group"&gt;
+  &lt;button type="button" class="mtx-button mtx-button--contained" data-mtx="button"&gt;Bold&lt;/button&gt;
+  &lt;button type="button" class="mtx-button mtx-button--contained" data-mtx="button"&gt;Italic&lt;/button&gt;
+  &lt;button type="button" class="mtx-button mtx-button--contained" data-mtx="button"&gt;Underline&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var log = document.getElementById('group-log');
+      function write(text) {
+        log.textContent = (text + '\n' + log.textContent).split('\n').slice(0, 6).join('\n');
+      }
+
+      document.getElementById('split-menu').addEventListener('mtx:menu:select', function (event) {
+        var value = event.detail.item.getAttribute('data-value');
+        document.getElementById('split-main').textContent = value;
+      });
+
+      var group = Materix.getInstance(document.getElementById('group-api'));
+      document.getElementById('group-api-toggle').addEventListener('click', function () {
+        if (group.disabled) group.enable(); else group.disable();
+        write('disabled = ' + group.disabled);
+      });
+      var names = ['Three', 'Four', 'Five'];
+      document.getElementById('group-api-add').addEventListener('click', function () {
+        if (!names.length) return;
+        var extra = document.createElement('button');
+        extra.textContent = names.shift();
+        group.element.appendChild(extra);
+        group.refresh();
+        write('refresh() → ' + group.buttons.length + ' buttons');
+      });
+    });
+  </script>
+</body>
+</html>

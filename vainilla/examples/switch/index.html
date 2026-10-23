@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Switch · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Preference group with a legend (equivalent to MUI's FormGroup + FormLabel) */
+    .demo-switch-fieldset {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--mtx-spacing-1_5);
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .demo-switch-fieldset legend {
+      margin-bottom: var(--mtx-spacing-1);
+      padding: 0;
+      color: var(--mtx-color-text-secondary);
+      font: var(--mtx-type-body2);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Switch</h1>
+        <p class="demo-lead">Toggle that turns an option on or off instantly, like a settings preference; uses role="switch" on a native checkbox.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#label">With and without label</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#helper-error">Helper and error</a>
+      <a href="#grouping">Grouping</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Write only the <code>&lt;input type="checkbox"&gt;</code> with <code>data-mtx="switch"</code> and <code>data-label</code>. The library generates the track, the thumb and the label, and adds <code>role="switch"</code> so it is announced as "on / off".</p>
+      <div class="demo-row">
+        <input type="checkbox" data-mtx="switch" data-label="Wi-Fi" checked />
+        <input type="checkbox" data-mtx="switch" data-label="Bluetooth" />
+      </div>
+      <pre class="demo-code"><code>&lt;input type="checkbox" data-mtx="switch" data-label="Wi-Fi" checked /&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Two sizes: <strong>medium</strong> (34×20px track, default) and <strong>small</strong> (28×16px and body2 text) with <code>data-size="small"</code>.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Medium · 34×20px track (default)</span>
+          <div class="demo-row">
+            <input type="checkbox" data-mtx="switch" data-label="On" checked />
+            <input type="checkbox" data-mtx="switch" data-label="Off" />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Small · 28×16px track</span>
+          <div class="demo-row">
+            <input type="checkbox" data-mtx="switch" data-label="On" data-size="small" checked />
+            <input type="checkbox" data-mtx="switch" data-label="Off" data-size="small" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="label">
+      <h2>With and without label</h2>
+      <p>Without <code>data-label</code> only the switch is drawn; in that case add <code>aria-label</code> or <code>aria-labelledby</code> to give it an accessible name.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">With visible label</span>
+          <div class="demo-row">
+            <input type="checkbox" data-mtx="switch" data-label="Airplane mode" />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Switch only · aria-label</span>
+          <div class="demo-row">
+            <input type="checkbox" data-mtx="switch" aria-label="Auto-sync" checked />
+            <input type="checkbox" data-mtx="switch" aria-label="Auto-sync (small)" data-size="small" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p>Primary is the default. Use <code>data-color</code> on the input (or the <code>mtx-switch--{color}</code> class, which is moved to the generated container). The color shows in the on state.</p>
+      <div class="demo-row">
+        <input type="checkbox" data-mtx="switch" data-label="Primary" checked />
+        <input type="checkbox" data-color="secondary" data-mtx="switch" data-label="Secondary" checked />
+        <input type="checkbox" data-color="success" data-mtx="switch" data-label="Success" checked />
+        <input type="checkbox" data-color="error" data-mtx="switch" data-label="Error" checked />
+        <input type="checkbox" data-color="warning" data-mtx="switch" data-label="Warning" checked />
+        <input type="checkbox" data-color="info" data-mtx="switch" data-label="Info" checked />
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Click to see the ripple on the thumb and use <kbd>Tab</kbd> and <kbd>Space</kbd> to focus and toggle. <code>disabled</code> dims the control; <code>readonly</code> keeps it focusable and legible but blocks changes.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Enabled</span>
+          <div class="demo-row demo-row--col">
+            <input type="checkbox" data-mtx="switch" data-label="Off" />
+            <input type="checkbox" data-mtx="switch" data-label="On" checked />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled · disabled</span>
+          <div class="demo-row demo-row--col">
+            <input type="checkbox" data-mtx="switch" data-label="Off" disabled />
+            <input type="checkbox" data-mtx="switch" data-label="On" checked disabled />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Read-only · readonly</span>
+          <div class="demo-row demo-row--col">
+            <input type="checkbox" data-mtx="switch" data-label="Backups (managed)" checked readonly />
+            <input type="checkbox" data-mtx="switch" data-label="Telemetry (managed)" readonly />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="helper-error">
+      <h2>Helper and error (FormHelperText)</h2>
+      <p><code>data-helper-text</code> adds a <code>.mtx-form-helper-text</code> below the switch, linked with <code>aria-describedby</code>. <code>data-error</code> (empty or with a message) turns on the error state with <code>aria-invalid="true"</code>; <code>setError()</code> and <code>clearError()</code> control it from code.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Helper text</span>
+          <input type="checkbox" data-mtx="switch" data-label="Automatic backups" data-helper-text="Every night at 2:00 AM." checked />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error with message</span>
+          <input type="checkbox" data-mtx="switch" data-label="Two-step verification" data-error="Required for administrators." />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled with helper</span>
+          <input type="checkbox" data-mtx="switch" data-label="Security alerts" data-helper-text="Always on." checked disabled />
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;input type="checkbox" data-mtx="switch" data-label="Automatic backups" data-helper-text="Every night at 2:00 AM." /&gt;
+&lt;input type="checkbox" data-mtx="switch" data-label="Two-step verification" data-error="Required for administrators." /&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="grouping">
+      <h2>Grouping</h2>
+      <p>Group related switches in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>. Each one stays independent: turning one on does not affect the others.</p>
+      <fieldset class="demo-switch-fieldset">
+        <legend>Notifications</legend>
+        <input type="checkbox" name="notify" value="push" data-mtx="switch" data-label="Push notifications" checked />
+        <input type="checkbox" name="notify" value="email" data-mtx="switch" data-label="Email digest" />
+        <input type="checkbox" name="notify" value="sms" data-mtx="switch" data-label="SMS alerts" />
+      </fieldset>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>A settings panel where each switch applies the change immediately, with no "Save" button. Turning on "Dark mode" really changes this page's theme.</p>
+      <div class="demo-panel demo-fixed-width">
+        <span class="demo-label">Preferences</span>
+        <input type="checkbox" data-mtx="switch" data-label="Dark mode" id="switch-theme" />
+        <input type="checkbox" data-mtx="switch" data-label="Autoplay videos" checked />
+        <input type="checkbox" data-mtx="switch" data-label="Show link previews" checked />
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>In an <code>mtx-grid</code> the switches are spread across columns: one on mobile, two from 600px and three from 900px.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="switch" data-label="Location" checked /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="switch" data-label="Camera" /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="switch" data-label="Microphone" /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="switch" data-label="Contacts" checked /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="switch" data-label="Calendar" /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="switch" data-label="Storage" checked /></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>Materix.getInstance(input)</code> returns the instance (also from the generated <code>&lt;label&gt;</code>). Changes made from code do not fire events; user changes emit the input's native <code>change</code>, which is logged below.</p>
+      <div class="demo-group">
+        <span class="demo-label">Controlled switch</span>
+        <div class="demo-row">
+          <input type="checkbox" data-mtx="switch" data-label="Controlled switch" id="switch-target" />
+          <span class="demo-status" id="switch-status">checked: false · disabled: false</span>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-switch-action="toggle">toggle()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-switch-action="on">checked = true</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-switch-action="off">checked = false</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-switch-action="disable">disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-switch-action="enable">enable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-switch-action="focus">focus()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-switch-action="error">setError()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-switch-action="clear">clearError()</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="switch-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The full structure declares the <code>&lt;label class="mtx-switch"&gt;</code> with the input, the track with its thumb, and the label. The library reuses the nodes and adds <code>role="switch"</code> to the input.</p>
+      <div class="demo-row">
+        <label class="mtx-switch" data-mtx="switch">
+          <input type="checkbox" checked />
+          <span class="mtx-switch__track"><span class="mtx-switch__thumb"></span></span>
+          <span class="mtx-switch__label">Wi-Fi</span>
+        </label>
+        <label class="mtx-switch mtx-switch--success mtx-switch--small" data-mtx="switch">
+          <input type="checkbox" checked />
+          <span class="mtx-switch__track"><span class="mtx-switch__thumb"></span></span>
+          <span class="mtx-switch__label">Success small</span>
+        </label>
+      </div>
+      <pre class="demo-code"><code>&lt;label class="mtx-switch" data-mtx="switch"&gt;
+  &lt;input type="checkbox" checked /&gt;
+  &lt;span class="mtx-switch__track"&gt;&lt;span class="mtx-switch__thumb"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="mtx-switch__label"&gt;Wi-Fi&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Caso de uso: modo oscuro real.
+      var themeSwitch = document.getElementById('switch-theme');
+      var root = document.documentElement;
+      themeSwitch.checked = root.getAttribute('data-mtx-theme') === 'dark';
+      themeSwitch.addEventListener('change', function () {
+        var next = themeSwitch.checked ? 'dark' : 'light';
+        if (window.MtxDemoTheme) window.MtxDemoTheme.apply(next, true);
+        else root.setAttribute('data-mtx-theme', next);
+      });
+      document.addEventListener('demo:themechange', function (event) {
+        themeSwitch.checked = event.detail.theme === 'dark';
+      });
+
+      // Uso programático.
+      var target = document.getElementById('switch-target');
+      var control = Materix.getInstance(target);
+      var logEl = document.getElementById('switch-log');
+      var statusEl = document.getElementById('switch-status');
+
+      /** Añade una línea al registro de eventos. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      /** Refleja el estado actual de la instancia. */
+      function syncStatus() {
+        statusEl.textContent = 'checked: ' + control.checked + ' · disabled: ' + control.disabled;
+      }
+
+      target.addEventListener('change', function () {
+        log('change (user) → checked: ' + target.checked + ', aria-checked: ' + target.getAttribute('aria-checked'));
+        syncStatus();
+      });
+
+      var actions = {
+        toggle: function () { control.toggle(); return 'switch.toggle()'; },
+        on: function () { control.checked = true; return 'switch.checked = true'; },
+        off: function () { control.checked = false; return 'switch.checked = false'; },
+        disable: function () { control.disable(); return 'switch.disable()'; },
+        enable: function () { control.enable(); return 'switch.enable()'; },
+        focus: function () { control.focus(); return 'switch.focus()'; },
+        error: function () { control.setError('Turn it on to continue.'); return 'switch.setError(...) → aria-invalid: ' + target.getAttribute('aria-invalid'); },
+        clear: function () { control.clearError(); return 'switch.clearError()'; }
+      };
+
+      document.querySelectorAll('[data-switch-action]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          log(actions[btn.getAttribute('data-switch-action')]());
+          syncStatus();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
