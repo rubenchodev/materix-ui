@@ -1,5 +1,5 @@
 # Publica la documentación Hugo (docs/) en GitHub Pages, una carpeta por rama:
-#   https://rubenchodev.github.io/materix-ui/{rama}/
+#   https://qualitycode.dev/materix-ui/{rama}/
 # La raíz redirige a la rama por defecto. Al borrar una rama se elimina su carpeta.
 # Requiere: Settings → Pages → Source = "Deploy from a branch" → gh-pages / (root).
 name: Docs
@@ -20,7 +20,8 @@ concurrency:
 
 env:
   HUGO_VERSION: 0.168.0
-  SITE_URL: https://rubenchodev.github.io/materix-ui
+  # Dominio propio de la cuenta (rubenchodev.github.io redirige a qualitycode.dev).
+  SITE_URL: https://qualitycode.dev/materix-ui
 
 jobs:
   deploy:
