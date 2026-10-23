@@ -41,12 +41,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Test
-        run: npm test
-
-      # hugo.toml monta ../dist, ../examples y ../templates: dist/ debe existir antes de Hugo.
+      # Va antes de los tests: tests/utilities.test.js valida el dist/ compilado,
+      # y hugo.toml monta ../dist, ../examples y ../templates.
       - name: Build library
         run: npm run build
+
+      - name: Test
+        run: npm test
 
       - name: Install Hugo extended
         run: |
