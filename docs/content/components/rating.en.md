@@ -158,7 +158,7 @@ rating.focus();
 With ES modules:
 
 ```javascript
-import { init, getInstance, Rating } from 'materix-ui';
+import { init, getInstance, Rating } from '@rubenchodev/materix-ui';
 const rating = new Rating(document.querySelector('#score'));
 ```
 

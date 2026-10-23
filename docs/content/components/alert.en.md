@@ -206,7 +206,7 @@ el.addEventListener('mtx:alert:close', () => console.log('closed'));
 
 ```javascript
 // ES modules
-import { Alert, getInstance } from 'materix-ui';
+import { Alert, getInstance } from '@rubenchodev/materix-ui';
 
 const alert = new Alert(document.querySelector('#notice'));
 alert.close();

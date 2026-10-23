@@ -1,5 +1,5 @@
 /**
- * Tipos de Materix UI (`materix-ui`): bundle completo y global `Materix` (UMD).
+ * Tipos de Materix UI (`@rubenchodev/materix-ui`): bundle completo y global `Materix` (UMD).
  *
  * - Componentes: clases generadas desde el JSDoc de `src/` (`types/lib`).
  * - Núcleo refinado a mano: `./core.d.ts` (registro, tema, i18n, posicionamiento).

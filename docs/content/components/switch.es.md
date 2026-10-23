@@ -144,7 +144,7 @@ Materix.init(newInput, 'switch');
 Con ES modules:
 
 ```javascript
-import { init, getInstance, Switch } from 'materix-ui';
+import { init, getInstance, Switch } from '@rubenchodev/materix-ui';
 const wifi = new Switch(document.querySelector('#wifi'));
 ```
 

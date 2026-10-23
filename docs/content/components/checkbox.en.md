@@ -237,7 +237,7 @@ Materix.init(newInput, 'checkbox');
 With ES modules:
 
 ```javascript
-import { init, getInstance, Checkbox } from 'materix-ui';
+import { init, getInstance, Checkbox } from '@rubenchodev/materix-ui';
 const checkbox = new Checkbox(document.querySelector('#remember'));
 ```
 

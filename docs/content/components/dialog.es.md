@@ -337,7 +337,7 @@ document.addEventListener('mtx:dialog:close', (event) => {
 
 ```javascript
 // ES modules
-import { Dialog } from 'materix-ui';
+import { Dialog } from '@rubenchodev/materix-ui';
 
 const dialog = new Dialog(document.querySelector('#mi-dialogo'));
 dialog.open();

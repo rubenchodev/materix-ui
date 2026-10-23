@@ -286,7 +286,7 @@ menu.element.addEventListener('mtx:menu:select', (event) => {
 With ES modules:
 
 ```javascript
-import { Menu, MenuItem, getInstance } from 'materix-ui';
+import { Menu, MenuItem, getInstance } from '@rubenchodev/materix-ui';
 Menu.createContextMenu('.row', [{ label: 'Delete', icon: 'delete', action: (item) => {} }]);
 ```
 

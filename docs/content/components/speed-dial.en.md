@@ -174,7 +174,7 @@ dial.element.addEventListener('mtx:speed-dial:close', () => console.log('closed'
 With ES modules:
 
 ```javascript
-import { SpeedDial, getInstance } from 'materix-ui';
+import { SpeedDial, getInstance } from '@rubenchodev/materix-ui';
 const dial = new SpeedDial(document.getElementById('actions'));
 ```
 

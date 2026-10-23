@@ -221,7 +221,7 @@ trail.expand();                         // muestra los ítems colapsados
 Con ES modules:
 
 ```javascript
-import { Breadcrumbs, getInstance } from 'materix-ui';
+import { Breadcrumbs, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 `Materix.getInstance()` devuelve la misma instancia para el `<ol>` original y para el `<nav>` que lo envuelve; `instance.element` es siempre el `<nav>`.

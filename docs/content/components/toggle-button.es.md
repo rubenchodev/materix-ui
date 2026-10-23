@@ -244,7 +244,7 @@ fav.toggle();
 Con módulos ES:
 
 ```javascript
-import { init, getInstance, ToggleButton, ToggleButtonGroup } from 'materix-ui';
+import { init, getInstance, ToggleButton, ToggleButtonGroup } from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="value y mtx:toggle-button-group:change" >}}

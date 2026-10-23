@@ -203,7 +203,7 @@ el.addEventListener('mtx:popover:close', (event) => console.log(event.detail.rea
 Con módulos ES:
 
 ```javascript
-import { Popover, computePosition, autoUpdate } from 'materix-ui';
+import { Popover, computePosition, autoUpdate } from '@rubenchodev/materix-ui';
 const popover = new Popover(document.getElementById('filters'));
 ```
 

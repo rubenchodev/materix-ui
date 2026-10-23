@@ -106,7 +106,7 @@ Materix.init(nuevoElemento, 'container');
 Con ES modules:
 
 ```javascript
-import { Container } from 'materix-ui';
+import { Container } from '@rubenchodev/materix-ui';
 const container = new Container(document.querySelector('main'));
 ```
 

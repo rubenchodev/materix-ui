@@ -171,7 +171,7 @@ button.addEventListener('mtx:tooltip:open', () => console.log('visible'));
 Con módulos ES:
 
 ```javascript
-import { Tooltip, tooltip } from 'materix-ui';
+import { Tooltip, tooltip } from '@rubenchodev/materix-ui';
 
 // Forma avanzada sobre un contenedor
 const instance = new Tooltip(document.getElementById('export-wrapper'));

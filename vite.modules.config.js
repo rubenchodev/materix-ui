@@ -126,7 +126,7 @@ function materixModules() {
     async generateBundle(_options, bundle) {
       const read = (path) => readFileSync(resolve(root, 'src', path), 'utf8');
       // Cada módulo de componente importa (efecto secundario) los CSS individuales que necesita:
-      // `import 'materix-ui/components/autocomplete'` trae sus estilos y los de sus dependencias,
+      // `import '@rubenchodev/materix-ui/components/autocomplete'` trae sus estilos y los de sus dependencias,
       // y el bundler del consumidor deduplica cada `.css` aunque lo importen varios componentes.
       Object.values(bundle).forEach((chunk) => {
         if (chunk.type !== 'chunk' || !chunk.isEntry || !chunk.name.startsWith('components/')) return;

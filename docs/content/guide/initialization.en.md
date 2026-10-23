@@ -201,7 +201,7 @@ Materix.initAll(); // initializes the data-mtx="copy-button" elements already on
 ```
 
 ```html
-<button class="mtx-button mtx-button--outlined" data-mtx="copy-button" data-copy="npm install materix-ui">
+<button class="mtx-button mtx-button--outlined" data-mtx="copy-button" data-copy="npm install @rubenchodev/materix-ui">
   Copy command
 </button>
 ```

@@ -193,7 +193,7 @@ Materix.initAll(document.getElementById('user-list'));
 With ES modules:
 
 ```javascript
-import { Avatar, AvatarGroup, getInstance } from 'materix-ui';
+import { Avatar, AvatarGroup, getInstance } from '@rubenchodev/materix-ui';
 
 const group = getInstance(document.getElementById('team'));
 group.max = 3;     // shows 2 avatars + "+N"

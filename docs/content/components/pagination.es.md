@@ -191,7 +191,7 @@ const pager = new Materix.Pagination(document.querySelector('nav.paginador'));
 Con ES modules:
 
 ```javascript
-import { Pagination, getInstance } from 'materix-ui';
+import { Pagination, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 ## Referencia de API

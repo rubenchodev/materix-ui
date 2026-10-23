@@ -218,7 +218,7 @@ slider.destroy();            // retira listeners y restaura el <input> original
 Con ES modules:
 
 ```javascript
-import { Slider } from 'materix-ui';
+import { Slider } from '@rubenchodev/materix-ui';
 const price = new Slider(document.querySelector('#price'));
 price.value = [100, 400];
 ```

@@ -159,7 +159,7 @@ Materix.initAll(document.getElementById('results'));
 With ES modules:
 
 ```javascript
-import { Link, init, getInstance } from 'materix-ui';
+import { Link, init, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 Attributes are read only when the instance is created: to change the color afterwards, change the class (`mtx-link--secondary`, etc.) directly.

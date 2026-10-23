@@ -284,7 +284,7 @@ el.addEventListener('mtx:accordion:change', (event) => {
 
 ```javascript
 // ES modules
-import { Accordion, AccordionGroup } from 'materix-ui';
+import { Accordion, AccordionGroup } from '@rubenchodev/materix-ui';
 
 const group = new AccordionGroup(document.querySelector('#faq'));
 group.collapseAll();

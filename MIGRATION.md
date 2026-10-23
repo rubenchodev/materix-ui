@@ -6,7 +6,7 @@ behavior change, how to find the affected code and how to update it.
 
 Quick checklist:
 
-1. Update the package: `npm install materix-ui@0.2.0` (or change the version in your CDN URLs).
+1. Update the package: `npm install @rubenchodev/materix-ui@0.2.0` (or change the version in your CDN URLs).
 2. Go through the [behavior changes](#behavior-changes) below; each one has a search pattern to
    find the affected markup.
 3. Rename your event listeners using the [event table](#renamed-events). The old names still work
@@ -147,7 +147,7 @@ size is still 56px.
 
 **Detect:** references to `box.css` in your build or HTML.
 
-**Migrate:** remove the reference. With per-component imports, import `materix-ui/utilities.css`
+**Migrate:** remove the reference. With per-component imports, import `@rubenchodev/materix-ui/utilities.css`
 last.
 
 ### Color contrast: WCAG AA by default
@@ -258,18 +258,18 @@ Do not listen to both names: the handler would run twice.
 
 ## Optional: per-component imports
 
-The full bundle (`materix-ui`, `materix.min.css`, `materix.umd.js`) is unchanged. With a bundler you
+The full bundle (`@rubenchodev/materix-ui`, `materix.min.css`, `materix.umd.js`) is unchanged. With a bundler you
 can now import only what you use:
 
 ```js
-import 'materix-ui/base.css';                 // tokens + base styles (always first)
-import 'materix-ui/utilities.css';            // optional, always last
-import { Button } from 'materix-ui/components/button';
-import 'materix-ui/components/text-field';    // registers, auto-initializes and imports its CSS
-import { getInstance, theme } from 'materix-ui/core';
+import '@rubenchodev/materix-ui/base.css';                 // tokens + base styles (always first)
+import '@rubenchodev/materix-ui/utilities.css';            // optional, always last
+import { Button } from '@rubenchodev/materix-ui/components/button';
+import '@rubenchodev/materix-ui/components/text-field';    // registers, auto-initializes and imports its CSS
+import { getInstance, theme } from '@rubenchodev/materix-ui/core';
 ```
 
-Do not mix `materix-ui` (full bundle) and `materix-ui/components/*` in the same page: each one has
+Do not mix `@rubenchodev/materix-ui` (full bundle) and `@rubenchodev/materix-ui/components/*` in the same page: each one has
 its own registry.
 
 ## Optional: TypeScript
@@ -277,7 +277,7 @@ its own registry.
 Types ship with the package; no `@types` package is needed.
 
 ```ts
-import { getInstance, type Dialog } from 'materix-ui';
+import { getInstance, type Dialog } from '@rubenchodev/materix-ui';
 
 const dialog = getInstance<Dialog>(document.getElementById('confirm'));
 dialog?.open();

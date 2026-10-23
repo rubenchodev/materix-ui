@@ -319,7 +319,7 @@ console.log(instance.disabled); // false
 Con ES modules:
 
 ```javascript
-import { init, getInstance, Button } from 'materix-ui';
+import { init, getInstance, Button } from '@rubenchodev/materix-ui';
 
 const button = new Button(document.querySelector('#save'));
 button.disable();

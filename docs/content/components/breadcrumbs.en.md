@@ -221,7 +221,7 @@ trail.expand();                         // shows the collapsed items
 With ES modules:
 
 ```javascript
-import { Breadcrumbs, getInstance } from 'materix-ui';
+import { Breadcrumbs, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 `Materix.getInstance()` returns the same instance for the original `<ol>` and for the `<nav>` it is wrapped in; `instance.element` is always the `<nav>`.

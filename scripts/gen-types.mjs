@@ -2,7 +2,7 @@
  * Genera las declaraciones TypeScript base a partir del JSDoc de `src/`.
  *
  * - `types/lib/**`: declaraciones de cada módulo fuente (sin miembros privados `_*`).
- * - `types/components/{slug}.d.ts`: punto de entrada de `materix-ui/components/{slug}`.
+ * - `types/components/{slug}.d.ts`: punto de entrada de `@rubenchodev/materix-ui/components/{slug}`.
  *
  * Los archivos escritos a mano (`types/index.d.ts`, `types/core.d.ts`, `types/events.d.ts`)
  * refinan y completan esta base. Uso: `npm run build:types`.
@@ -97,7 +97,7 @@ const aliases = {
 };
 slugs.forEach((slug) => {
   const body = [
-    `// Generado por scripts/gen-types.mjs: materix-ui/components/${slug}`,
+    `// Generado por scripts/gen-types.mjs: @rubenchodev/materix-ui/components/${slug}`,
     `export * from '../lib/components/${slug}/${slug}.js';`,
     'import \'../events.js\';',
     '',

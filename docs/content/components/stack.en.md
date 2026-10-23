@@ -166,7 +166,7 @@ stack.refresh();
 With ES modules:
 
 ```javascript
-import { Stack } from 'materix-ui';
+import { Stack } from '@rubenchodev/materix-ui';
 const stack = new Stack(document.getElementById('actions'));
 ```
 

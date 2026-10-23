@@ -418,7 +418,7 @@ sort.active = true;         // actualiza aria-sort del <th>
 Con ES modules:
 
 ```javascript
-import { Table, TableContainer, TableRow, TableCell, TableSortLabel, TablePagination, TableToolbar } from 'materix-ui';
+import { Table, TableContainer, TableRow, TableCell, TableSortLabel, TablePagination, TableToolbar } from '@rubenchodev/materix-ui';
 ```
 
 ## Referencia de API

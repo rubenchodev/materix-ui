@@ -192,7 +192,7 @@ group.refresh();            // applies variant/size/color and recomputes borders
 
 ```javascript
 // ES modules
-import { ButtonGroup } from 'materix-ui';
+import { ButtonGroup } from '@rubenchodev/materix-ui';
 
 const group = new ButtonGroup(document.querySelector('#actions'));
 console.log(group.buttons.length, group.disabled);

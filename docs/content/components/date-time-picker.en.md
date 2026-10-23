@@ -297,7 +297,7 @@ input.addEventListener('mtx:date-time-picker:change', (e) => console.log(e.detai
 ```
 
 ```javascript
-import { DateTimePicker, DatePicker, TimePicker } from 'materix-ui';
+import { DateTimePicker, DatePicker, TimePicker } from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="Live API" >}}

@@ -266,7 +266,7 @@ media.image = 'new-cover.jpg';   // background-image (or src if it's an <img>)
 
 ```javascript
 // ES modules
-import { Card, CardActionArea, CardMedia } from 'materix-ui';
+import { Card, CardActionArea, CardMedia } from '@rubenchodev/materix-ui';
 
 const card = new Card(document.querySelector('#product'));
 ```

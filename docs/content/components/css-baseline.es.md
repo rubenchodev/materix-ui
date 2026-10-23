@@ -106,7 +106,7 @@ document.documentElement.setAttribute('data-mtx-theme', 'dark');
 Con ES modules:
 
 ```javascript
-import { CssBaseline, init } from 'materix-ui';
+import { CssBaseline, init } from '@rubenchodev/materix-ui';
 new CssBaseline(document.body);
 ```
 

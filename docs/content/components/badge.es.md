@@ -201,7 +201,7 @@ badge.invisible = true;   // oculta aunque tenga valor
 Con ES modules:
 
 ```javascript
-import { Badge } from 'materix-ui';
+import { Badge } from '@rubenchodev/materix-ui';
 
 const badge = new Badge(document.querySelector('#inbox-badge'));
 badge.content = 120; // muestra "99+"

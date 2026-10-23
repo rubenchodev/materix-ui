@@ -218,7 +218,7 @@ slider.destroy();            // removes listeners and restores the original <inp
 With ES modules:
 
 ```javascript
-import { Slider } from 'materix-ui';
+import { Slider } from '@rubenchodev/materix-ui';
 const price = new Slider(document.querySelector('#price'));
 price.value = [100, 400];
 ```

@@ -260,7 +260,7 @@ const spinner = Materix.createCircularProgress({ size: 20, color: 'inherit', dec
 
 ```javascript
 // ES modules
-import { CircularProgress, createCircularProgress } from 'materix-ui';
+import { CircularProgress, createCircularProgress } from '@rubenchodev/materix-ui';
 
 const circular = new CircularProgress(document.querySelector('#progress'));
 circular.setValue(80);

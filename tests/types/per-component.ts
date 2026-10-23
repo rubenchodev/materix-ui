@@ -1,9 +1,9 @@
-// Imports por componente (`materix-ui/components/*` y `materix-ui/core`).
-import { Button } from 'materix-ui/components/button';
-import { TextField } from 'materix-ui/components/text-field';
-import { DatePicker, DateTimePicker } from 'materix-ui/components/date-time-picker';
-import { snackbar } from 'materix-ui/components/snackbar';
-import { getInstance, theme, initAll, type MtxEventDetail } from 'materix-ui/core';
+// Imports por componente (`@rubenchodev/materix-ui/components/*` y `@rubenchodev/materix-ui/core`).
+import { Button } from '@rubenchodev/materix-ui/components/button';
+import { TextField } from '@rubenchodev/materix-ui/components/text-field';
+import { DatePicker, DateTimePicker } from '@rubenchodev/materix-ui/components/date-time-picker';
+import { snackbar } from '@rubenchodev/materix-ui/components/snackbar';
+import { getInstance, theme, initAll, type MtxEventDetail } from '@rubenchodev/materix-ui/core';
 
 const input = document.createElement('input');
 const field = new TextField(input);

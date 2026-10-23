@@ -22,9 +22,9 @@
 
       <div class="doc-install">
         <p class="doc-install-label" id="doc-install-npm">{{ i18n "home_install_npm" }}</p>
-        {{ highlight "npm install materix-ui" "bash" "" }}
+        {{ highlight "npm install @rubenchodev/materix-ui" "bash" "" }}
         <p class="doc-install-label" id="doc-install-cdn">{{ i18n "home_install_cdn" }}</p>
-        {{ $cdn := printf "<link rel=\"stylesheet\" href=\"https://unpkg.com/materix-ui@%s/dist/materix.min.css\">\n<script src=\"https://unpkg.com/materix-ui@%s/dist/materix.umd.js\"></script>" $version $version }}
+        {{ $cdn := printf "<link rel=\"stylesheet\" href=\"https://unpkg.com/@rubenchodev/materix-ui@%s/dist/materix.min.css\">\n<script src=\"https://unpkg.com/@rubenchodev/materix-ui@%s/dist/materix.umd.js\"></script>" $version $version }}
         {{ highlight $cdn "html" "" }}
       </div>
     </div>

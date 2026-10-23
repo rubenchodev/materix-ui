@@ -1,5 +1,5 @@
 /**
- * API del núcleo de Materix UI (`materix-ui/core` y parte de `materix-ui`).
+ * API del núcleo de Materix UI (`@rubenchodev/materix-ui/core` y parte de `@rubenchodev/materix-ui`).
  *
  * Registro de componentes, ciclo de vida, eventos, tema, i18n y posicionamiento.
  */

@@ -134,7 +134,7 @@ el.className;                              // "mtx-paper mtx-paper--elevation-4"
 
 ```javascript
 // ES modules
-import { Paper } from 'materix-ui';
+import { Paper } from '@rubenchodev/materix-ui';
 new Paper(document.querySelector('#panel'));
 ```
 

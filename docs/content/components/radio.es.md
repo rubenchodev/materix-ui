@@ -170,7 +170,7 @@ radio.focus();
 Con ES modules:
 
 ```javascript
-import { init, getInstance, Radio } from 'materix-ui';
+import { init, getInstance, Radio } from '@rubenchodev/materix-ui';
 ```
 
 {{< callout type="info" >}}

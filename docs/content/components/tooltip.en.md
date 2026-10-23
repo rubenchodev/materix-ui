@@ -171,7 +171,7 @@ button.addEventListener('mtx:tooltip:open', () => console.log('visible'));
 With ES modules:
 
 ```javascript
-import { Tooltip, tooltip } from 'materix-ui';
+import { Tooltip, tooltip } from '@rubenchodev/materix-ui';
 
 // Advanced form on a container
 const instance = new Tooltip(document.getElementById('export-wrapper'));

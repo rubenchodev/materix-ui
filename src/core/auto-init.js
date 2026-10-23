@@ -1,5 +1,5 @@
 /**
- * Auto-inicialización para los módulos por componente (`materix-ui/components/*`).
+ * Auto-inicialización para los módulos por componente (`@rubenchodev/materix-ui/components/*`).
  *
  * Cada entrada por componente la invoca tras registrarse: agrupa las llamadas
  * y ejecuta un único `initAll()` al cargar el DOM (o en la siguiente microtarea

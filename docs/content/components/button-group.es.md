@@ -192,7 +192,7 @@ group.refresh();            // aplica variante/tamaño/color y recalcula bordes
 
 ```javascript
 // ES modules
-import { ButtonGroup } from 'materix-ui';
+import { ButtonGroup } from '@rubenchodev/materix-ui';
 
 const group = new ButtonGroup(document.querySelector('#acciones'));
 console.log(group.buttons.length, group.disabled);

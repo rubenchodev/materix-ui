@@ -360,7 +360,7 @@ drawer.element.addEventListener('mtx:drawer:close', (event) => {
 Con ES modules:
 
 ```javascript
-import { Drawer, getInstance } from 'materix-ui';
+import { Drawer, getInstance } from '@rubenchodev/materix-ui';
 const drawer = new Drawer(document.getElementById('perfil'));
 ```
 

@@ -4,7 +4,7 @@
  * Convención: `mtx:{componente}:{acción}`. Los nombres antiguos se siguen emitiendo
  * como alias deprecados (mismo `detail`) hasta la versión 1.0.
  *
- * Al importar `materix-ui` (o cualquier `materix-ui/components/*`) se amplían
+ * Al importar `@rubenchodev/materix-ui` (o cualquier `@rubenchodev/materix-ui/components/*`) se amplían
  * `HTMLElementEventMap` y `DocumentEventMap`, de modo que
  * `element.addEventListener('mtx:tabs:change', (e) => e.detail.tab)` queda tipado.
  */

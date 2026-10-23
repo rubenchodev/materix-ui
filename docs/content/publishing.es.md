@@ -41,7 +41,7 @@ refactor: simplify the component registry
 | `module` | `dist/materix.es.js` |
 | `types` | `types/index.d.ts` |
 | `style` | `dist/materix.min.css` |
-| `unpkg` / `jsdelivr` | `dist/materix.umd.js` (el archivo por defecto de `https://cdn.jsdelivr.net/npm/materix-ui`) |
+| `unpkg` / `jsdelivr` | `dist/materix.umd.js` (el archivo por defecto de `https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui`) |
 | `exports` | `.`, `./core`, `./components/*`, `./components/*.css`, `./base.css`, `./utilities.css`, `./materix.min.css`, `./dist/*` |
 | `sideEffects` | Los CSS y `dist/**/*.js` (los módulos registran componentes al importarse) |
 
@@ -88,7 +88,7 @@ El paquete se publica desde la raíz del [repositorio materix-ui](https://github
 
 ### Versiones previas
 
-Publica las betas con una dist-tag para que `npm install materix-ui` siga instalando la versión estable:
+Publica las betas con una dist-tag para que `npm install @rubenchodev/materix-ui` siga instalando la versión estable:
 
 ```bash
 npm version 0.3.0-beta.1 --no-git-tag-version
@@ -100,5 +100,5 @@ npm publish --tag next
 npm no permite volver a publicar una versión. Publica un `PATCH` nuevo con la corrección y, si hace falta, depreca la defectuosa:
 
 ```bash
-npm deprecate materix-ui@0.3.0 "Broken build, use 0.3.1"
+npm deprecate @rubenchodev/materix-ui@0.3.0 "Broken build, use 0.3.1"
 ```

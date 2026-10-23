@@ -237,7 +237,7 @@ stepper.element.addEventListener('mtx:stepper:change', (event) => {
 With ES modules:
 
 ```javascript
-import { Stepper, MobileStepper, getInstance } from 'materix-ui';
+import { Stepper, MobileStepper, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="API and events" layout="column" >}}

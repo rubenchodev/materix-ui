@@ -162,7 +162,7 @@ document.addEventListener('mtx:backdrop:close', (e) => console.log(e.detail.reas
 
 ```javascript
 // ES modules
-import { Backdrop } from 'materix-ui';
+import { Backdrop } from '@rubenchodev/materix-ui';
 
 const el = document.createElement('div');
 el.setAttribute('data-close-on-escape', '');

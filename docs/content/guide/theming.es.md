@@ -19,7 +19,7 @@ Para que el fondo y el texto de la página sigan al tema, pon `class="mtx-root"`
 
 ## API de tema
 
-La librería incluye una pequeña API para leer y cambiar el tema, disponible como `Materix.theme` (UMD) o `import { theme } from 'materix-ui'` (ES modules). Escribe el tema efectivo en `<html data-mtx-theme>` y el modo elegido en `<html data-mtx-theme-mode>`. Al cargar solo lee el atributo actual: si tu página no define nada, no cambia nada.
+La librería incluye una pequeña API para leer y cambiar el tema, disponible como `Materix.theme` (UMD) o `import { theme } from '@rubenchodev/materix-ui'` (ES modules). Escribe el tema efectivo en `<html data-mtx-theme>` y el modo elegido en `<html data-mtx-theme-mode>`. Al cargar solo lee el atributo actual: si tu página no define nada, no cambia nada.
 
 | Método | Retorna | Descripción |
 |---|---|---|

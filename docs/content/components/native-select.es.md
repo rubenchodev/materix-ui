@@ -192,7 +192,7 @@ select.input.addEventListener('change', () => console.log(select.value));
 ```
 
 ```javascript
-import { NativeSelect, init, getInstance } from 'materix-ui';
+import { NativeSelect, init, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="API en vivo" >}}

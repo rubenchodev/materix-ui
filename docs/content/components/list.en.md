@@ -249,7 +249,7 @@ With ES modules:
 import {
   List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar,
   ListItemSecondaryAction, ListSubheader, getInstance,
-} from 'materix-ui';
+} from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="Selection with event" layout="block" >}}

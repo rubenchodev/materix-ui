@@ -266,7 +266,7 @@ media.image = 'nueva-portada.jpg';   // background-image (o src si es <img>)
 
 ```javascript
 // ES modules
-import { Card, CardActionArea, CardMedia } from 'materix-ui';
+import { Card, CardActionArea, CardMedia } from '@rubenchodev/materix-ui';
 
 const card = new Card(document.querySelector('#producto'));
 ```

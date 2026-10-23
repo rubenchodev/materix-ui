@@ -159,7 +159,7 @@ Materix.initAll(document.getElementById('resultados'));
 Con ES modules:
 
 ```javascript
-import { Link, init, getInstance } from 'materix-ui';
+import { Link, init, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 Los atributos se leen solo al crear la instancia: para cambiar el color después, cambia la clase (`mtx-link--secondary`, etc.) directamente.

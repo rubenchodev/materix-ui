@@ -162,7 +162,7 @@ Materix.initAll(container);          // everything inside a container
 With ES modules:
 
 ```javascript
-import { Typography } from 'materix-ui';
+import { Typography } from '@rubenchodev/materix-ui';
 new Typography(document.querySelector('#title'));
 ```
 

@@ -270,7 +270,7 @@ Materix.init(item, 'grid');
 Con ES modules:
 
 ```javascript
-import { Grid, getInstance } from 'materix-ui';
+import { Grid, getInstance } from '@rubenchodev/materix-ui';
 const grid = new Grid(document.getElementById('productos'));
 ```
 

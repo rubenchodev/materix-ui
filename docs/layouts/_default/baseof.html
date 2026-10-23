@@ -79,7 +79,7 @@
   <script type="application/json" id="doc-i18n">{{ $ui | jsonify | safeJS }}</script>
   {{/* Configuración del playground (CodePen/StackBlitz): base de dist/ y fuentes del proyecto generado. */}}
   {{ $version := site.Params.version | default "latest" }}
-  {{ $cdn := replace (site.Params.cdnBase | default "https://cdn.jsdelivr.net/npm/materix-ui@{version}/dist/") "{version}" $version }}
+  {{ $cdn := replace (site.Params.cdnBase | default "https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui@{version}/dist/") "{version}" $version }}
   {{ $config := dict
     "version" $version
     "cdnBase" $cdn

@@ -196,7 +196,7 @@ document.addEventListener('mtx:skeleton:change', (e) => console.log(e.detail.loa
 
 ```javascript
 // ES modules
-import { Skeleton, skeleton } from 'materix-ui';
+import { Skeleton, skeleton } from '@rubenchodev/materix-ui';
 
 new Skeleton(document.querySelector('#avatar-placeholder'));
 skeleton.toggle(document.querySelector('#profile'));

@@ -19,7 +19,7 @@ To make the page background and text follow the theme, put `class="mtx-root"` on
 
 ## Theme API
 
-The library includes a small API to read and change the theme, available as `Materix.theme` (UMD) or `import { theme } from 'materix-ui'` (ES modules). It writes the effective theme to `<html data-mtx-theme>` and the chosen mode to `<html data-mtx-theme-mode>`. On load it only reads the current attribute: if your page sets nothing, nothing changes.
+The library includes a small API to read and change the theme, available as `Materix.theme` (UMD) or `import { theme } from '@rubenchodev/materix-ui'` (ES modules). It writes the effective theme to `<html data-mtx-theme>` and the chosen mode to `<html data-mtx-theme-mode>`. On load it only reads the current attribute: if your page sets nothing, nothing changes.
 
 | Method | Returns | Description |
 |---|---|---|

@@ -146,7 +146,7 @@ Materix.init(el, 'fab');
 With ES modules:
 
 ```javascript
-import { getInstance, Fab } from 'materix-ui';
+import { getInstance, Fab } from '@rubenchodev/materix-ui';
 const fab = new Fab(document.querySelector('#compose'));
 ```
 

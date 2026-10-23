@@ -209,7 +209,7 @@ tabs.onChange = (tab) => console.log(tab.textContent);
 With ES modules:
 
 ```javascript
-import { Tabs, Tab, getInstance } from 'materix-ui';
+import { Tabs, Tab, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="select() and events" layout="block" >}}

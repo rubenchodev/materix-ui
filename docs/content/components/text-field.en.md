@@ -436,7 +436,7 @@ Materix.initAll(document.getElementById('signup-form'));
 With ES modules:
 
 ```javascript
-import { TextField, init, initAll, getInstance } from 'materix-ui';
+import { TextField, init, initAll, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="Live API" >}}

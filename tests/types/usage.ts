@@ -4,7 +4,7 @@ import Materix, {
   getInstance, init, initAll, watch, destroy, destroyAll, theme, snackbar, tooltip, skeleton,
   createCircularProgress, computePosition, autoUpdate, i18n, setLocale, t,
   type MtxComponentMap, type Placement, type ThemeMode, type MtxEventDetailMap,
-} from 'materix-ui';
+} from '@rubenchodev/materix-ui';
 
 const el = document.createElement('button');
 const button: Button = new Button(el);

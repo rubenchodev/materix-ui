@@ -111,7 +111,7 @@ Materix.initAll(container);                // todo lo que haya en un contenedor
 Con ES modules:
 
 ```javascript
-import { Divider } from 'materix-ui';
+import { Divider } from '@rubenchodev/materix-ui';
 new Divider(document.querySelector('#separator'));
 ```
 

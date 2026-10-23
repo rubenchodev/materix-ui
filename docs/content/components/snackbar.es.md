@@ -211,7 +211,7 @@ document.addEventListener('mtx:snackbar:close', (event) => {
 
 ```javascript
 // ES modules
-import { Snackbar } from 'materix-ui';
+import { Snackbar } from '@rubenchodev/materix-ui';
 
 const snackbar = new Snackbar(document.querySelector('#aviso'));
 snackbar.open();

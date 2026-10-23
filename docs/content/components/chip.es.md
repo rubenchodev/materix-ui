@@ -195,7 +195,7 @@ document.getElementById('tag-js').addEventListener('mtx:chip:delete', (e) => e.t
 Con ES modules:
 
 ```javascript
-import { Chip } from 'materix-ui';
+import { Chip } from '@rubenchodev/materix-ui';
 
 const el = document.createElement('div');
 el.setAttribute('data-label', 'Nuevo');

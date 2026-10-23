@@ -189,7 +189,7 @@ instance.enable();
 With ES modules:
 
 ```javascript
-import { init, getInstance, IconButton } from 'materix-ui';
+import { init, getInstance, IconButton } from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="disable() / enable()" >}}

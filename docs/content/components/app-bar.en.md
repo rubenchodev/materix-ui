@@ -252,7 +252,7 @@ appBar.destroy();                         // removes the scroll listener and unl
 
 ```javascript
 // ES modules
-import { AppBar } from 'materix-ui';
+import { AppBar } from '@rubenchodev/materix-ui';
 const appBar = new AppBar(document.querySelector('header'));
 ```
 

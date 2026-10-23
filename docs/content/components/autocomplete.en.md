@@ -415,7 +415,7 @@ city.destroy();
 ```
 
 ```javascript
-import { Autocomplete, init, getInstance } from 'materix-ui';
+import { Autocomplete, init, getInstance } from '@rubenchodev/materix-ui';
 ```
 
 {{< mtx-demo title="Live API" >}}
