@@ -20,12 +20,12 @@ Rails, ASP.NET, WordPress or any SPA.
 ### npm
 
 ```bash
-npm install materix-ui
+npm install @rubenchodev/materix-ui
 ```
 
 ```js
-import 'materix-ui/materix.min.css';
-import Materix from 'materix-ui';
+import '@rubenchodev/materix-ui/materix.min.css';
+import Materix from '@rubenchodev/materix-ui';
 ```
 
 ### CDN
@@ -33,11 +33,11 @@ import Materix from 'materix-ui';
 Pin the exact version:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/materix-ui@0.2.0/dist/materix.min.css">
-<script src="https://cdn.jsdelivr.net/npm/materix-ui@0.2.0/dist/materix.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui@0.3.1/dist/materix.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui@0.3.1/dist/materix.umd.js"></script>
 ```
 
-unpkg works with the same paths: `https://unpkg.com/materix-ui@0.2.0/dist/materix.umd.js`.
+unpkg works with the same paths: `https://unpkg.com/@rubenchodev/materix-ui@0.3.1/dist/materix.umd.js`.
 
 ### Fonts
 
@@ -64,7 +64,7 @@ ready; no JavaScript is required.
   </select>
   <button data-mtx="button" class="mtx-button mtx-button--contained">Subscribe</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/materix-ui@0.2.0/dist/materix.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui@0.3.1/dist/materix.umd.js"></script>
 </body>
 ```
 
@@ -97,11 +97,11 @@ module registers itself, auto-initializes its `[data-mtx]` elements and imports 
 CSS of the components it uses inside. The shared core and each stylesheet are bundled once.
 
 ```js
-import 'materix-ui/base.css';                  // design tokens + base styles (first)
-import 'materix-ui/components/autocomplete';   // JS + CSS (autocomplete, text-field, chip…)
-import { Button } from 'materix-ui/components/button';
-import { getInstance, theme } from 'materix-ui/core';
-import 'materix-ui/utilities.css';             // optional, last
+import '@rubenchodev/materix-ui/base.css';                  // design tokens + base styles (first)
+import '@rubenchodev/materix-ui/components/autocomplete';   // JS + CSS (autocomplete, text-field, chip…)
+import { Button } from '@rubenchodev/materix-ui/components/button';
+import { getInstance, theme } from '@rubenchodev/materix-ui/core';
+import '@rubenchodev/materix-ui/utilities.css';             // optional, last
 ```
 
 A page that uses only Button ships about 28 kB of JavaScript (9 kB gzip) and 30 kB of CSS
@@ -109,18 +109,18 @@ A page that uses only Button ships about 28 kB of JavaScript (9 kB gzip) and 30 
 
 The modules import `.css` files, so they need a bundler that handles CSS imports. For a `<link>`
 without JavaScript, `components/{name}.bundle.css` contains a component plus its dependencies.
-Do not mix the full bundle (`materix-ui`) with `materix-ui/components/*` on the same
+Do not mix the full bundle (`@rubenchodev/materix-ui`) with `@rubenchodev/materix-ui/components/*` on the same
 page: each one has its own registry.
 
 | Entry point | Contents |
 |---|---|
-| `materix-ui` | Full ES bundle (`dist/materix.es.js`); `require()` gets `dist/materix.umd.cjs` |
-| `materix-ui/materix.min.css` | Every style (tokens, base, components, utilities) |
-| `materix-ui/core` | Registry, lifecycle, `ComponentBase`, `emit`, theme, i18n, positioning |
-| `materix-ui/components/{name}` | One component (ES module, imports its CSS) |
-| `materix-ui/components/{name}.css` | One component's own styles (`.bundle.css`: with dependencies) |
-| `materix-ui/base.css` / `utilities.css` | Tokens + base styles / utility classes |
-| `materix-ui/dist/*` | Any built file, e.g. `dist/materix.umd.js` |
+| `@rubenchodev/materix-ui` | Full ES bundle (`dist/materix.es.js`); `require()` gets `dist/materix.umd.cjs` |
+| `@rubenchodev/materix-ui/materix.min.css` | Every style (tokens, base, components, utilities) |
+| `@rubenchodev/materix-ui/core` | Registry, lifecycle, `ComponentBase`, `emit`, theme, i18n, positioning |
+| `@rubenchodev/materix-ui/components/{name}` | One component (ES module, imports its CSS) |
+| `@rubenchodev/materix-ui/components/{name}.css` | One component's own styles (`.bundle.css`: with dependencies) |
+| `@rubenchodev/materix-ui/base.css` / `utilities.css` | Tokens + base styles / utility classes |
+| `@rubenchodev/materix-ui/dist/*` | Any built file, e.g. `dist/materix.umd.js` |
 
 ## TypeScript
 
@@ -128,14 +128,14 @@ Types are included (`types/index.d.ts`): component classes, the core API with ge
 `mtx:*` events.
 
 ```ts
-import { getInstance, init, type Dialog } from 'materix-ui';
+import { getInstance, init, type Dialog } from '@rubenchodev/materix-ui';
 
 const dialog = getInstance<Dialog>(document.getElementById('confirm'));
 const select = init(element, 'select');            // typed as Select | null
 element.addEventListener('mtx:table:selection-change', (e) => e.detail.selected);
 ```
 
-For the UMD global, add `/// <reference types="materix-ui" />`.
+For the UMD global, add `/// <reference types="@rubenchodev/materix-ui" />`.
 
 ## Theming
 
@@ -155,11 +155,13 @@ document.addEventListener('mtx:theme:change', (e) => console.log(e.detail.theme)
 
 ## Documentation
 
-- Documentation (English and Spanish), live examples and 12 full-page templates are in the
-  repository: [docs](https://github.com/rubenchodev/materix-ui/tree/vainilla/docs),
+- **Documentation site (English and Spanish), with live demos and templates:
+  [qualitycode.dev/materix-ui](https://qualitycode.dev/materix-ui/vainilla/)**
+  ([español](https://qualitycode.dev/materix-ui/vainilla/es/)).
+- Sources in the repository: [docs](https://github.com/rubenchodev/materix-ui/tree/vainilla/docs),
   [examples](https://github.com/rubenchodev/materix-ui/tree/vainilla/examples),
   [templates](https://github.com/rubenchodev/materix-ui/tree/vainilla/templates).
-- [CHANGELOG](./CHANGELOG.md) and [migration guide from 0.1](./MIGRATION.md).
+- [CHANGELOG](https://github.com/rubenchodev/materix-ui/blob/vainilla/CHANGELOG.md) and [migration guide from 0.1](https://github.com/rubenchodev/materix-ui/blob/vainilla/MIGRATION.md).
 
 ## Supported browsers
 
@@ -175,4 +177,4 @@ Internet Explorer and legacy Edge are not supported.
 
 ## License
 
-[MIT](./LICENSE) © 2026 Rubén Sánchez LYD
+[MIT](https://github.com/rubenchodev/materix-ui/blob/vainilla/LICENSE) © 2026 Rubén Sánchez LYD

@@ -55,7 +55,7 @@ disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
   # Versión mostrada en la barra superior (mantener sincronizada con package.json).
-  version = "0.2.0"
+  version = "0.3.1"
   # Repositorio: enlace de GitHub, "Código fuente" (repoURL + /src/components/{example})
   # y código de las plantillas (repoURL + /templates/{slug}/index.html).
   repoURL = "https://github.com/rubenchodev/materix-ui/tree/vainilla"
@@ -80,7 +80,7 @@ disableKinds = ["taxonomy", "term", "RSS"]
   # Playground (botones CodePen / StackBlitz de cada demo). Base de dist/ con la que se generan
   # los proyectos; {version} se sustituye por params.version. Mientras el paquete no esté
   # publicado en npm se puede sobrescribir con otra CDN o activar playgroundUseLocal.
-  cdnBase = "https://cdn.jsdelivr.net/npm/materix-ui@{version}/dist/"
+  cdnBase = "https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui@{version}/dist/"
   # true: usa la URL absoluta del dist/ servido por este sitio (útil en local o en un sitio
   # publicado propio) en lugar de cdnBase.
   playgroundUseLocal = false

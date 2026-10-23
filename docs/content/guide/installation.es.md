@@ -16,7 +16,7 @@ Materix UI se distribuye como **bundle completo** (un CSS y un JS) y como **mód
 | `dist/materix.min.css` | CSS único con tokens, base, todos los componentes y las utilidades | Usas el bundle completo. |
 | `dist/materix.es.js` | ES module (`import`) con todos los componentes | Trabajas con Vite, webpack, Rollup o `<script type="module">`. |
 | `dist/materix.umd.js` | UMD: expone el global `window.Materix` | Cargas la librería con un `<script>` clásico. |
-| `dist/materix.umd.cjs` | El mismo UMD como CommonJS | `require('materix-ui')` (Node, Jest). |
+| `dist/materix.umd.cjs` | El mismo UMD como CommonJS | `require('@rubenchodev/materix-ui')` (Node, Jest). |
 | `dist/components/{nombre}.js` | Un componente (ES module); importa el CSS que necesita | Importas solo lo que usas. |
 | `dist/components/{nombre}.css` / `.bundle.css` | Estilos propios del componente / con sus dependencias | Estilos sin el módulo JS. |
 | `dist/core.js` | Registro, ciclo de vida, `ComponentBase`, `emit`, tema, i18n, posicionamiento | Uso por componente. |
@@ -28,20 +28,20 @@ El paquete incluye además las declaraciones TypeScript en `types/`.
 ## Con npm
 
 ```bash
-npm install materix-ui
+npm install @rubenchodev/materix-ui
 ```
 
 Importa el JS y el CSS en el punto de entrada de tu aplicación:
 
 ```javascript
-import Materix from 'materix-ui';
-import 'materix-ui/materix.min.css';
+import Materix from '@rubenchodev/materix-ui';
+import '@rubenchodev/materix-ui/materix.min.css';
 ```
 
-`materix-ui` resuelve a `dist/materix.es.js` (con `import`) o a `dist/materix.umd.cjs` (con `require`). `materix-ui/dist/materix.min.css` sigue funcionando. También puedes importar por nombre:
+`@rubenchodev/materix-ui` resuelve a `dist/materix.es.js` (con `import`) o a `dist/materix.umd.cjs` (con `require`). `@rubenchodev/materix-ui/dist/materix.min.css` sigue funcionando. También puedes importar por nombre:
 
 ```javascript
-import { initAll, getInstance, Dialog, setLocale } from 'materix-ui';
+import { initAll, getInstance, Dialog, setLocale } from '@rubenchodev/materix-ui';
 ```
 
 {{< callout type="info" title="El import ya inicializa" >}}
@@ -50,14 +50,14 @@ Importar la librería registra todos los componentes e inicializa los `[data-mtx
 
 ## Imports por componente
 
-Con un bundler puedes incluir solo los componentes que usas. Cada módulo `materix-ui/components/{nombre}` registra su componente, programa un `initAll()` automático (al cargar el DOM) e **importa su propio CSS y el de los componentes que usa por dentro**. Basta con importar el módulo; solo añades `base.css` (tokens y estilos base) una vez.
+Con un bundler puedes incluir solo los componentes que usas. Cada módulo `@rubenchodev/materix-ui/components/{nombre}` registra su componente, programa un `initAll()` automático (al cargar el DOM) e **importa su propio CSS y el de los componentes que usa por dentro**. Basta con importar el módulo; solo añades `base.css` (tokens y estilos base) una vez.
 
 ```javascript
-import 'materix-ui/base.css';                    // tokens + estilos base: siempre primero
-import 'materix-ui/components/autocomplete';     // JS + CSS de autocomplete, text-field, chip…
-import { Button } from 'materix-ui/components/button';
-import { getInstance, theme, watch } from 'materix-ui/core';
-import 'materix-ui/utilities.css';               // opcional: siempre al final
+import '@rubenchodev/materix-ui/base.css';                    // tokens + estilos base: siempre primero
+import '@rubenchodev/materix-ui/components/autocomplete';     // JS + CSS de autocomplete, text-field, chip…
+import { Button } from '@rubenchodev/materix-ui/components/button';
+import { getInstance, theme, watch } from '@rubenchodev/materix-ui/core';
+import '@rubenchodev/materix-ui/utilities.css';               // opcional: siempre al final
 ```
 
 `{nombre}` es la carpeta del componente: `button`, `text-field`, `date-time-picker`, `toggle-button`, `app-bar`… El núcleo JavaScript compartido y cada archivo CSS se incluyen **una sola vez** aunque los importen varios componentes (el bundler deduplica cada módulo `components/{nombre}.css`). Como referencia, una app Vite que solo usa Button pesa unos 28 kB de JS (9 kB gzip) y 30 kB de CSS (5 kB gzip); una que solo usa Autocomplete, 81 kB de JS (22 kB gzip) y 72 kB de CSS (10 kB gzip). El bundle completo pesa 414 kB / 373 kB.
@@ -68,8 +68,8 @@ Hojas de estilo disponibles por componente:
 
 | Archivo | Contenido | Úsalo cuando |
 |---|---|---|
-| `materix-ui/components/{nombre}.css` | Solo los estilos del componente (sin dependencias). | Control fino, o estilos sin el JavaScript. Es el archivo que importa el módulo. |
-| `materix-ui/components/{nombre}.bundle.css` | El componente y los componentes que usa por dentro, en orden de dependencia (sin `base.css`). | Un `<link>` o un import solo de CSS. No lo combines con el módulo JS ni con otro `.bundle.css` que comparta dependencias: las reglas compartidas se cargarían dos veces. |
+| `@rubenchodev/materix-ui/components/{nombre}.css` | Solo los estilos del componente (sin dependencias). | Control fino, o estilos sin el JavaScript. Es el archivo que importa el módulo. |
+| `@rubenchodev/materix-ui/components/{nombre}.bundle.css` | El componente y los componentes que usa por dentro, en orden de dependencia (sin `base.css`). | Un `<link>` o un import solo de CSS. No lo combines con el módulo JS ni con otro `.bundle.css` que comparta dependencias: las reglas compartidas se cargarían dos veces. |
 
 Como referencia, estas son las hojas que cada módulo importa además de la suya (generadas a partir del grafo de imports de `src/components` y del marcado que renderiza cada componente):
 
@@ -92,7 +92,7 @@ Como referencia, estas son las hojas que cada módulo importa además de la suya
 | `text-field` | `form-helper-text`, `icon-button` |
 
 {{< callout type="warning" title="No mezcles ambos builds" >}}
-En una página usa el bundle completo (`materix-ui`) o los módulos por componente (`materix-ui/components/*` + `materix-ui/core`), no ambos: cada uno tiene su propio registro, de modo que `getInstance()` de uno no ve las instancias del otro.
+En una página usa el bundle completo (`@rubenchodev/materix-ui`) o los módulos por componente (`@rubenchodev/materix-ui/components/*` + `@rubenchodev/materix-ui/core`), no ambos: cada uno tiene su propio registro, de modo que `getInstance()` de uno no ve las instancias del otro.
 {{< /callout >}}
 
 ## TypeScript
@@ -100,7 +100,7 @@ En una página usa el bundle completo (`materix-ui`) o los módulos por componen
 Las declaraciones vienen en el paquete (no hace falta un paquete `@types`): cada clase de componente con sus métodos públicos, la API del núcleo con genéricos y los eventos `mtx:*` tipados como `CustomEvent`.
 
 ```typescript
-import { getInstance, init, type Dialog } from 'materix-ui';
+import { getInstance, init, type Dialog } from '@rubenchodev/materix-ui';
 
 const dialog = getInstance<Dialog>(document.getElementById('confirm'));
 dialog?.open();
@@ -111,18 +111,18 @@ element.addEventListener('mtx:tabs:change', (event) => {
 });
 ```
 
-Los módulos por componente tienen sus propios tipos (`materix-ui/components/button`, `materix-ui/core`). Para el global UMD en scripts sin módulos, añade `/// <reference types="materix-ui" />`.
+Los módulos por componente tienen sus propios tipos (`@rubenchodev/materix-ui/components/button`, `@rubenchodev/materix-ui/core`). Para el global UMD en scripts sin módulos, añade `/// <reference types="@rubenchodev/materix-ui" />`.
 
 ## Desde una CDN
 
 Cualquier CDN que sirva paquetes npm funciona con las mismas rutas. Fija siempre la versión exacta:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/materix-ui@0.2.0/dist/materix.min.css">
-<script src="https://cdn.jsdelivr.net/npm/materix-ui@0.2.0/dist/materix.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui@0.3.1/dist/materix.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui@0.3.1/dist/materix.umd.js"></script>
 ```
 
-Con unpkg: `https://unpkg.com/materix-ui@0.2.0/dist/materix.umd.js`. Los módulos JavaScript por componente importan archivos CSS, que el navegador no puede cargar como módulos: desde una CDN usa el bundle completo (los archivos `components/{nombre}.bundle.css` se pueden enlazar si solo necesitas estilos).
+Con unpkg: `https://unpkg.com/@rubenchodev/materix-ui@0.3.1/dist/materix.umd.js`. Los módulos JavaScript por componente importan archivos CSS, que el navegador no puede cargar como módulos: desde una CDN usa el bundle completo (los archivos `components/{nombre}.bundle.css` se pueden enlazar si solo necesitas estilos).
 
 ## Con archivos directos (sin bundler)
 

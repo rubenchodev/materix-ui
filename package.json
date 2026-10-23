@@ -1,6 +1,6 @@
 {
-  "name": "materix-ui",
-  "version": "0.2.0",
+  "name": "@rubenchodev/materix-ui",
+  "version": "0.3.1",
   "description": "Vanilla CSS + JavaScript UI component library based on Material UI (Material Design 2): declarative data-mtx components, no framework required.",
   "keywords": [
     "material-ui",
@@ -21,7 +21,7 @@
     "dark-mode",
     "bootstrap-alternative"
   ],
-  "homepage": "https://github.com/rubenchodev/materix-ui#readme",
+  "homepage": "https://qualitycode.dev/materix-ui/vainilla/",
   "bugs": {
     "url": "https://github.com/rubenchodev/materix-ui/issues"
   },

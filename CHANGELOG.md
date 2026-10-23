@@ -9,6 +9,16 @@ of them is listed here and explained step by step in [MIGRATION.md](./MIGRATION.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-10-23
+
+### Changed
+- `homepage` in `package.json` points to the documentation site, [qualitycode.dev/materix-ui](https://qualitycode.dev/materix-ui/vainilla/).
+- README: prominent link to the documentation site (English and Spanish); links to CHANGELOG, MIGRATION and LICENSE are absolute so they also work on npmjs.com.
+
+## [0.3.0] - 2026-10-23
+
+First release on npm, published as **`@rubenchodev/materix-ui`** (npm rejects the unscoped name `materix-ui` as too similar to `material-ui`). Use `npm install @rubenchodev/materix-ui` and `https://cdn.jsdelivr.net/npm/@rubenchodev/materix-ui@0.3.0/dist/`.
+
 ### Added
 - `resetLocale()` (also `Materix.i18n.resetLocale()`): discards the language set with `setLocale()` and follows `<html lang>` again.
 - Tokens `--mtx-color-common-white`, `--mtx-color-common-black`, `--mtx-color-grey-100/200/700`, `--mtx-rating-color` and `--mtx-breadcrumbs-collapse-*`.
@@ -38,14 +48,14 @@ First release prepared for npm. See [MIGRATION.md](./MIGRATION.md) for upgrading
 
 #### Packaging
 
-- **Per-component ES modules** for tree-shaking: `materix-ui/components/{name}` (JavaScript, registers
+- **Per-component ES modules** for tree-shaking: `@rubenchodev/materix-ui/components/{name}` (JavaScript, registers
   itself, auto-initializes its `[data-mtx]` elements and imports the CSS it needs: its own and that of
   the components it uses inside, derived from the import graph, so one import is enough).
-  `materix-ui/components/{name}.css` holds only that component's styles (deduplicated by bundlers
-  when several components import it) and `materix-ui/components/{name}.bundle.css` the component
+  `@rubenchodev/materix-ui/components/{name}.css` holds only that component's styles (deduplicated by bundlers
+  when several components import it) and `@rubenchodev/materix-ui/components/{name}.bundle.css` the component
   plus its dependencies for `<link>` usage. Shared code lives in `dist/chunks/` and the core is emitted once.
-- `materix-ui/core` (registry, lifecycle, `ComponentBase`, `emit`, theme, i18n, positioning),
-  `materix-ui/base.css` (design tokens + base styles + ripple) and `materix-ui/utilities.css`
+- `@rubenchodev/materix-ui/core` (registry, lifecycle, `ComponentBase`, `emit`, theme, i18n, positioning),
+  `@rubenchodev/materix-ui/base.css` (design tokens + base styles + ripple) and `@rubenchodev/materix-ui/utilities.css`
   as separate entry points.
 - **TypeScript declarations** (`types/`): every component class with its public methods and
   properties, the core API with generics (`getInstance<Dialog>(el)`, `init(el, 'select')` returns a
@@ -218,6 +228,8 @@ Initial development version (not published to npm).
 - i18n with English and Spanish dictionaries.
 - Examples in `/examples` and Hugo documentation.
 
-[Unreleased]: https://github.com/rubenchodev/materix-ui/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/rubenchodev/materix-ui/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/rubenchodev/materix-ui/releases/tag/v0.3.1
+[0.3.0]: https://github.com/rubenchodev/materix-ui/releases/tag/v0.3.0
 [0.2.0]: https://github.com/rubenchodev/materix-ui/releases/tag/v0.2.0
 [0.1.0]: https://github.com/rubenchodev/open-source-libraries/tree/main/materix-ui
