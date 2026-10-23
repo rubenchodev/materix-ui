@@ -1,0 +1,122 @@
+/* ==========================================================================
+   Materix UI — Switch
+   Interruptor basado en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-switch {
+  --mtx-sw-color: var(--mtx-color-primary);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  font: var(--mtx-type-body1);
+  color: var(--mtx-color-text-primary);
+}
+
+/* Input nativo: fuera del flujo y sin interacción visual */
+.mtx-switch__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Pista y pulgar (tamaños MUI: 34x20, radio 10) */
+.mtx-switch__track {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background-color: var(--mtx-switch-track);
+  transition: background-color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+
+.mtx-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  color: var(--mtx-sw-color);
+  background-color: var(--mtx-switch-thumb);
+  box-shadow: var(--mtx-elevation-2);
+  transition: transform var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+
+/* Activado: track con color y pulgar a la derecha */
+.mtx-switch__input:checked + .mtx-switch__track {
+  background-color: color-mix(in srgb, var(--mtx-sw-color) 50%, transparent);
+}
+.mtx-switch__input:checked + .mtx-switch__track .mtx-switch__thumb {
+  transform: translateX(14px);
+  background-color: var(--mtx-sw-color);
+}
+
+/* Tamaño pequeño (MUI: 28x16, radio 8) */
+.mtx-switch--small {
+  font-size: 0.875rem;
+}
+.mtx-switch--small .mtx-switch__track {
+  width: 28px;
+  height: 16px;
+  border-radius: 8px;
+}
+.mtx-switch--small .mtx-switch__thumb {
+  width: 12px;
+  height: 12px;
+}
+.mtx-switch--small .mtx-switch__input:checked + .mtx-switch__track .mtx-switch__thumb {
+  transform: translateX(12px);
+}
+
+/* Estados */
+.mtx-switch:hover .mtx-switch__track {
+  filter: brightness(0.96);
+}
+.mtx-switch__input:focus-visible + .mtx-switch__track {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: 2px;
+}
+.mtx-switch__input:disabled + .mtx-switch__track {
+  background-color: var(--mtx-switch-track-disabled);
+  cursor: not-allowed;
+}
+.mtx-switch__input:disabled + .mtx-switch__track .mtx-switch__thumb {
+  background-color: var(--mtx-switch-thumb-disabled);
+  box-shadow: none;
+}
+.mtx-switch__input:disabled:checked + .mtx-switch__track {
+  background-color: var(--mtx-switch-track-disabled);
+}
+.mtx-switch__input:disabled:checked + .mtx-switch__track .mtx-switch__thumb {
+  background-color: var(--mtx-switch-thumb-disabled);
+}
+.mtx-switch:has(.mtx-switch__input:disabled) .mtx-switch__label {
+  color: var(--mtx-color-text-disabled);
+}
+
+.mtx-switch__label {
+  line-height: 1.5;
+  transform: translateY(1px);
+}
+
+/* Colores (equivalente al prop `color` de MUI) */
+.mtx-switch--secondary { --mtx-sw-color: var(--mtx-color-secondary); }
+.mtx-switch--error     { --mtx-sw-color: var(--mtx-color-error); }
+.mtx-switch--warning   { --mtx-sw-color: var(--mtx-color-warning); }
+.mtx-switch--info      { --mtx-sw-color: var(--mtx-color-info); }
+.mtx-switch--success   { --mtx-sw-color: var(--mtx-color-success); }

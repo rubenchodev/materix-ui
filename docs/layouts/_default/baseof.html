@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default site.Language.Lang }}" data-mtx-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Hugo {{ hugo.Version }}">
+  <title>{{ if .IsHome }}{{ site.Title }} · {{ i18n "site_tagline" }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ .Description | default site.Params.description }}">
+  {{/* Versiones alternativas por idioma (solo las traducciones existentes) y x-default al idioma por defecto. */}}
+  {{ if .IsTranslated }}
+    {{ range .AllTranslations }}
+  <link rel="alternate" hreflang="{{ .Language.Locale | default .Language.Lang }}" href="{{ .Permalink }}">
+    {{ end }}
+    {{ range first 1 (where .AllTranslations "Language.Lang" "en") }}
+  <link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+    {{ end }}
+  {{ end }}
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%234818d0'/%3E%3Cpath d='M8 23V9h3l5 7 5-7h3v14h-3v-9l-5 7-5-7v9z' fill='%23fff'/%3E%3C/svg%3E">
+  {{/* Tema sin parpadeo: se aplica antes de pintar. */}}
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('mtx-doc-theme');
+        var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-mtx-theme', dark ? 'dark' : 'light');
+      } catch (e) { /* sin almacenamiento: tema claro */ }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+  {{/* Assets compartidos: relURL (sin prefijo de idioma) para que en /es/ resuelvan a la raíz. */}}
+  <link rel="stylesheet" href="{{ "dist/materix.min.css" | relURL }}">
+  {{/* Las fuentes de iconos van después de la librería para que .material-icons conserve su familia tipográfica. */}}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+  <link rel="stylesheet" href="{{ "docs.css" | relURL }}">
+  {{/* La librería se carga en <head> para que su autoinicialización (DOMContentLoaded) corra antes que los scripts de las páginas y getInstance() ya devuelva instancias. */}}
+  <script src="{{ "dist/materix.umd.js" | relURL }}"></script>
+</head>
+<body class="mtx-root doc-body{{ if .IsHome }} doc-body--home{{ end }}">
+  <a class="doc-skip" href="#doc-content">{{ i18n "skip_to_content" }}</a>
+
+  {{ partial "topbar.html" . }}
+
+  <div class="doc-shell">
+    <aside id="doc-sidebar" class="doc-sidebar" aria-label="{{ i18n "docs_navigation" }}">
+      {{ partial "sidebar.html" . }}
+    </aside>
+    <div class="doc-backdrop" data-doc-backdrop hidden></div>
+
+    <main id="doc-content" class="doc-main" tabindex="-1">
+      {{ block "main" . }}{{ end }}
+    </main>
+  </div>
+
+  {{ partial "search.html" . }}
+
+  {{/* Textos de interfaz para docs.js en el idioma de la página. */}}
+  {{ $ui := dict
+    "copied" (i18n "copied")
+    "copyFailed" (i18n "copy_failed")
+    "copyCode" (i18n "copy_code")
+    "showCode" (i18n "show_code")
+    "hideCode" (i18n "hide_code")
+    "themeToDark" (i18n "theme_to_dark")
+    "themeToLight" (i18n "theme_to_light")
+    "navOpen" (i18n "nav_open")
+    "navClose" (i18n "nav_close")
+    "table" (i18n "table")
+    "codeExample" (i18n "code_example")
+    "noResults" (i18n "search_no_results_status")
+    "oneResult" (i18n "search_one_result")
+    "nResults" (i18n "search_n_results")
+    "searchError" (i18n "search_error")
+    "searchInPage" (i18n "search_in_page")
+    "playgroundTitle" (i18n "playground_title")
+  }}
+  <script type="application/json" id="doc-i18n">{{ $ui | jsonify | safeJS }}</script>
+  {{/* Configuración del playground (CodePen/StackBlitz): base de dist/ y fuentes del proyecto generado. */}}
+  {{ $version := site.Params.version | default "latest" }}
+  {{ $cdn := replace (site.Params.cdnBase | default "https://cdn.jsdelivr.net/npm/materix-ui@{version}/dist/") "{version}" $version }}
+  {{ $config := dict
+    "version" $version
+    "cdnBase" $cdn
+    "useLocal" (site.Params.playgroundUseLocal | default false)
+    "localBase" ("dist/" | relURL)
+    "fonts" (slice
+      "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      "https://fonts.googleapis.com/icon?family=Material+Icons"
+      "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0")
+  }}
+  <script type="application/json" id="doc-config">{{ $config | jsonify | safeJS }}</script>
+  <script src="{{ "docs.js" | relURL }}"></script>
+</body>
+</html>

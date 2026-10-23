@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Materix UI — Base
+   ========================================================================== */
+
+.mtx-root,
+.mtx-root *,
+.mtx-root *::before,
+.mtx-root *::after {
+  box-sizing: border-box;
+}
+
+/* Solo el <body> raíz pierde su margen: un .mtx-root acotado (contenedor) conserva el suyo. */
+body.mtx-root {
+  margin: 0;
+}
+
+.mtx-root {
+  font-family: var(--mtx-font-family);
+  font-weight: 400;
+  color: var(--mtx-color-text-primary);
+  background-color: var(--mtx-color-background-default);
+  font-size: 1rem;
+  line-height: 1.5;
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mtx-root[data-mtx-theme='dark'],
+[data-mtx-theme='dark'] .mtx-root {
+  color-scheme: dark;
+}
+
+/* Atributo hidden siempre gana (reboot Bootstrap): evita que display de
+   componentes o utilidades muestre elementos ocultos. */
+.mtx-root [hidden] {
+  display: none !important;
+}
+
+.mtx-root strong,
+.mtx-root b {
+  font-weight: 700;
+}
+
+/* Focus visible global para accesibilidad.
+   Se excluyen los campos de texto (input, textarea, select), que ya
+   comunican el foco mediante su propio borde/subrayado (como MUI). */
+.mtx-root :focus-visible:not(input):not(textarea):not(select):not(.mtx-menu) {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: 2px;
+}
+
+.mtx-root .mtx-menu-item {
+  outline: none !important;
+}
+
+/* Reducir animaciones según preferencias del usuario. Acotado a los elementos de
+   Materix (clases mtx-*): no altera las animaciones del resto de la página. */
+@media (prefers-reduced-motion: reduce) {
+
+  [class*='mtx-'],
+  [class*='mtx-']::before,
+  [class*='mtx-']::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .mtx-root {
+    background-color: #ffffff;
+    color-scheme: light;
+  }
+}

@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Materix UI — Tabs
+   Basado en Material UI (MUI)
+   ========================================================================== */
+.mtx-tabs {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 48px;
+  border-bottom: 1px solid var(--mtx-color-divider);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.mtx-tabs::-webkit-scrollbar {
+  display: none;
+}
+.mtx-tabs--full .mtx-tab {
+  flex: 1;
+}
+.mtx-tabs--centered {
+  justify-content: center;
+}
+.mtx-tabs--vertical {
+  flex-direction: column;
+  width: max-content;
+  min-width: 160px;
+  border-right: 1px solid var(--mtx-color-divider);
+  border-bottom: none;
+  overflow-x: visible;
+  overflow-y: auto;
+}
+.mtx-tabs--vertical .mtx-tab {
+  justify-content: flex-start;
+}
+.mtx-tabs--vertical .mtx-tabs__indicator {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  width: 2px;
+  height: auto;
+  border-radius: 1px 0 0 1px;
+  transition: transform var(--mtx-duration-standard) var(--mtx-easing-standard),
+    height var(--mtx-duration-standard) var(--mtx-easing-standard);
+}
+/* Contenedor Opcional (Boxed/Outlined) */
+.mtx-tabs-container {
+  border: 1px solid var(--mtx-color-divider);
+  border-radius: var(--mtx-shape-radius);
+  background-color: var(--mtx-color-background-paper);
+  overflow: hidden;
+}
+.mtx-tabs-container--borderless {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.mtx-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mtx-spacing-1);
+  flex-shrink: 0;
+  min-width: 90px;
+  min-height: 48px;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--mtx-color-text-secondary);
+  font-family: var(--mtx-font-family);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+.mtx-tab:hover {
+  color: var(--mtx-color-text-primary);
+  background-color: var(--mtx-color-action-hover);
+}
+.mtx-tab__icon,
+.mtx-tab .material-icons,
+.mtx-tab svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  font-size: 24px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.mtx-tab--active {
+  color: var(--mtx-color-primary);
+}
+.mtx-tab[data-disabled],
+.mtx-tab:disabled,
+.mtx-tab[aria-disabled="true"] {
+  color: var(--mtx-color-action-disabled);
+  cursor: default;
+  pointer-events: none;
+}
+.mtx-tab:focus-visible {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: -2px;
+}
+/* Indicador */
+.mtx-tabs__indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 1px 1px 0 0;
+  background-color: var(--mtx-color-primary);
+  transition: transform var(--mtx-duration-standard) var(--mtx-easing-standard),
+    width var(--mtx-duration-standard) var(--mtx-easing-standard);
+}
+/* TabPanel */
+.mtx-tab-panel {
+  padding: 16px 24px;
+  font-family: var(--mtx-font-family);
+  color: var(--mtx-color-text-primary);
+}
+.mtx-tab-panel[hidden] {
+  display: none;
+}

@@ -1,0 +1,100 @@
+# Plantillas de página completa (carpeta /templates del repo).
+# Cada entrada genera una tarjeta en /templates/ (y en la home si figura en params.featuredTemplates).
+# Capturas esperadas: static/img/templates/{slug}-light.png y {slug}-dark.png (1440x900).
+# components: slugs de las páginas de docs (/components/{slug}/) que usa la plantilla.
+items:
+  - slug: sign-in
+    icon: login
+    title_en: "Sign in"
+    title_es: "Inicio de sesión"
+    desc_en: "Sign-in page with email/password validation, remember me and social providers."
+    desc_es: "Página de inicio de sesión con validación de correo y contraseña, opción de recordarme y proveedores sociales."
+    components: [text-field, button, checkbox, divider, link, card, snackbar]
+
+  - slug: sign-up
+    icon: person_add
+    title_en: "Sign up"
+    title_es: "Registro"
+    desc_en: "Multi-field registration form with password rules, terms and validation."
+    desc_es: "Formulario de registro con varios campos, reglas de contraseña, términos y validación."
+    components: [text-field, select, button, checkbox, link, card, grid]
+
+  - slug: forgot-password
+    icon: lock_reset
+    title_en: "Forgot password"
+    title_es: "Recuperar contraseña"
+    desc_en: "Password recovery flow: request link, code verification and new password."
+    desc_es: "Flujo de recuperación de contraseña: solicitud del enlace, verificación del código y nueva contraseña."
+    components: [text-field, button, alert, link, card]
+
+  - slug: dashboard
+    icon: dashboard
+    title_en: "Dashboard"
+    title_es: "Dashboard"
+    desc_en: "Admin dashboard with navigation drawer, KPI cards, charts and recent orders table."
+    desc_es: "Panel de administración con drawer de navegación, tarjetas de KPI, gráficos y tabla de pedidos recientes."
+    components: [app-bar, drawer, list, card, table, chip, avatar, badge, menu, grid]
+
+  - slug: settings
+    icon: manage_accounts
+    title_en: "Account settings"
+    title_es: "Ajustes de cuenta"
+    desc_en: "Profile, security, notifications and billing settings organized with tabs."
+    desc_es: "Ajustes de perfil, seguridad, notificaciones y facturación organizados en pestañas."
+    components: [tabs, text-field, select, switch, avatar, button, dialog, snackbar, paper]
+
+  - slug: checkout
+    icon: shopping_cart_checkout
+    title_en: "Checkout"
+    title_es: "Checkout"
+    desc_en: "Checkout with shipping, payment and order summary, including validation."
+    desc_es: "Proceso de pago con envío, método de pago y resumen del pedido, con validación."
+    components: [text-field, select, radio, checkbox, button, list, divider, paper, alert]
+
+  - slug: file-manager
+    icon: folder_open
+    title_en: "File manager"
+    title_es: "Administrador de archivos"
+    desc_en: "Drive-style file manager with folders, grid/list views, upload, rename and delete."
+    desc_es: "Administrador de archivos estilo Drive con carpetas, vistas en cuadrícula o lista, subida, renombrado y borrado."
+    components: [app-bar, drawer, list, card, table, menu, dialog, fab, snackbar]
+
+  - slug: landing-page
+    icon: web
+    title_en: "Landing page"
+    title_es: "Página web"
+    desc_en: "Marketing website with hero, features, testimonials, pricing teaser, FAQ and footer."
+    desc_es: "Sitio de marketing con hero, características, testimonios, avance de precios, preguntas frecuentes y pie de página."
+    components: [app-bar, button, card, avatar, chip, typography, divider, link, grid]
+
+  - slug: pricing
+    icon: sell
+    title_en: "Pricing"
+    title_es: "Precios"
+    desc_en: "Pricing plans with monthly/yearly toggle, comparison table and FAQ."
+    desc_es: "Planes de precios con selector mensual o anual, tabla comparativa y preguntas frecuentes."
+    components: [card, button, switch, chip, table, list, typography, grid]
+
+  - slug: user-management
+    icon: group
+    title_en: "User management"
+    title_es: "Gestión de usuarios"
+    desc_en: "CRUD admin table with search, filters, sorting, pagination, bulk actions and edit dialog."
+    desc_es: "Tabla de administración CRUD con búsqueda, filtros, ordenación, paginación, acciones en lote y diálogo de edición."
+    components: [table, text-field, select, checkbox, chip, avatar, menu, dialog, snackbar]
+
+  - slug: mail
+    icon: mail
+    title_en: "Mail"
+    title_es: "Correo"
+    desc_en: "Email client with folders, message list, reading pane and compose dialog."
+    desc_es: "Cliente de correo con carpetas, lista de mensajes, panel de lectura y diálogo de redacción."
+    components: [app-bar, drawer, list, badge, avatar, icon-button, dialog, text-field, fab]
+
+  - slug: blog
+    icon: article
+    title_en: "Blog"
+    title_es: "Blog"
+    desc_en: "Blog home with featured post, category tabs, article cards and newsletter signup."
+    desc_es: "Portada de blog con artículo destacado, pestañas de categorías, tarjetas de artículos y suscripción al boletín."
+    components: [app-bar, tabs, card, chip, avatar, text-field, button, typography, grid]

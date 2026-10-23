@@ -1,0 +1,129 @@
+{
+  "name": "materix-ui",
+  "version": "0.2.0",
+  "description": "Vanilla CSS + JavaScript UI component library based on Material UI (Material Design 2): declarative data-mtx components, no framework required.",
+  "keywords": [
+    "material-ui",
+    "mui",
+    "material-design",
+    "material-design-2",
+    "ui",
+    "components",
+    "ui-components",
+    "css",
+    "css-framework",
+    "javascript",
+    "vanilla-js",
+    "no-framework",
+    "design-system",
+    "accessibility",
+    "a11y",
+    "dark-mode",
+    "bootstrap-alternative"
+  ],
+  "homepage": "https://github.com/rubenchodev/materix-ui#readme",
+  "bugs": {
+    "url": "https://github.com/rubenchodev/materix-ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubenchodev/materix-ui.git"
+  },
+  "license": "MIT",
+  "author": "Rubén Sánchez LYD",
+  "type": "module",
+  "main": "dist/materix.umd.cjs",
+  "module": "dist/materix.es.js",
+  "types": "types/index.d.ts",
+  "style": "dist/materix.min.css",
+  "unpkg": "dist/materix.umd.js",
+  "jsdelivr": "dist/materix.umd.js",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/materix.es.js",
+      "require": "./dist/materix.umd.cjs",
+      "default": "./dist/materix.es.js"
+    },
+    "./core": {
+      "types": "./types/core.d.ts",
+      "import": "./dist/core.js",
+      "default": "./dist/core.js"
+    },
+    "./components/*.css": "./dist/components/*.css",
+    "./components/*": {
+      "types": "./types/components/*.d.ts",
+      "import": "./dist/components/*.js",
+      "default": "./dist/components/*.js"
+    },
+    "./base.css": "./dist/base.css",
+    "./utilities.css": "./dist/utilities.css",
+    "./materix.min.css": "./dist/materix.min.css",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "core": [
+        "types/core.d.ts"
+      ],
+      "components/*": [
+        "types/components/*.d.ts"
+      ]
+    }
+  },
+  "sideEffects": [
+    "*.css",
+    "./dist/**/*.js"
+  ],
+  "files": [
+    "dist",
+    "types",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "MIGRATION.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 121",
+    "safari >= 16.2",
+    "ios_saf >= 16.2"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vite build -c vite.modules.config.js && node scripts/gen-types.mjs",
+    "build:types": "node scripts/gen-types.mjs",
+    "gen:utilities": "node scripts/gen-utilities.mjs",
+    "preview": "vite preview",
+    "docs:build": "npm run build && node -e \"fs.cpSync('dist', 'docs/static/dist', {recursive: true})\" && hugo -s docs",
+    "docs:dev": "npm run build && node -e \"fs.cpSync('dist', 'docs/static/dist', {recursive: true})\" && hugo server -s docs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "types:check": "tsc -p tests/types/tsconfig.json",
+    "prepublishOnly": "npm run build && npm test && npm run types:check",
+    "test:e2e": "playwright test",
+    "test:smoke": "playwright test smoke",
+    "test:interactions": "playwright test interactions --project=chromium --project=firefox --project=webkit",
+    "test:a11y": "playwright test a11y --project=chromium",
+    "test:visual": "playwright test visual --project=chromium --project=mobile-chromium",
+    "test:visual:update": "playwright test visual --project=chromium --project=mobile-chromium --update-snapshots=all",
+    "test:e2e:install": "playwright install chromium firefox webkit",
+    "test:all": "vitest run && npm run build && playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.9.3",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.8"
+  }
+}

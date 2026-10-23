@@ -1,0 +1,30 @@
+{{/*
+  search-index — Devuelve el índice de búsqueda del idioma actual, en el orden de la navegación.
+  Cada entrada: {t: título, d: descripción, g: grupo, u: URL, i: icono, s: secciones (ver search-sections)}.
+  Lo serializa home.searchindex.json en /search-index.json (y /es/search-index.json); docs.js lo carga
+  bajo demanda al abrir el buscador.
+*/}}
+{{ $lang := site.Language.Lang }}
+{{ $items := slice }}
+{{ with site.GetPage "/guide" }}
+  {{ range .RegularPages.ByWeight }}
+    {{ $items = $items | append (dict "t" .Title "d" .Description "g" (i18n "guide") "u" .RelPermalink "i" (.Params.icon | default "menu_book") "s" (partial "search-sections.html" .)) }}
+  {{ end }}
+{{ end }}
+{{ with site.GetPage "/templates" }}
+  {{ $gallery := . }}
+  {{ $items = $items | append (dict "t" (i18n "template_gallery") "d" .Description "g" (i18n "templates") "u" .RelPermalink "i" (.Params.icon | default "dashboard_customize") "s" (partial "search-sections.html" .)) }}
+  {{ range hugo.Data.templates.items }}
+    {{ $items = $items | append (dict "t" (index . (printf "title_%s" $lang)) "d" (index . (printf "desc_%s" $lang)) "g" (i18n "templates") "u" (printf "%s#tpl-%s" $gallery.RelPermalink .slug) "i" (.icon | default "web")) }}
+  {{ end }}
+{{ end }}
+{{ range partialCached "component-groups.html" . "doc-groups" $lang }}
+  {{ $g := .name }}
+  {{ range .pages }}
+    {{ $items = $items | append (dict "t" .Title "d" .Description "g" $g "u" .RelPermalink "i" (.Params.icon | default "widgets") "s" (partial "search-sections.html" .)) }}
+  {{ end }}
+{{ end }}
+{{ range (where site.RegularPages "Section" "").ByWeight }}
+  {{ $items = $items | append (dict "t" .Title "d" .Description "g" (i18n "project") "u" .RelPermalink "i" (.Params.icon | default "article") "s" (partial "search-sections.html" .)) }}
+{{ end }}
+{{ return $items }}

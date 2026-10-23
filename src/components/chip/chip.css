@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Materix UI — Chip
+   Basado en Material UI (MUI)
+   ========================================================================== */
+.mtx-chip {
+  --mtx-chip-current-bg: var(--mtx-chip-bg);
+  display: inline-flex;
+  align-items: center;
+  height: var(--mtx-chip-height);
+  max-width: 100%;
+  /* Reset de <button>/<a> (MUI Chip root): sin borde, relleno ni márgenes nativos. */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-decoration: none;
+  border-radius: var(--mtx-chip-radius);
+  background-color: var(--mtx-chip-bg);
+  color: var(--mtx-chip-text);
+  font-family: var(--mtx-font-family);
+  font-size: var(--mtx-chip-font-size);
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: middle;
+  box-sizing: border-box;
+  cursor: default;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--mtx-duration-shorter) var(--mtx-easing-standard),
+    box-shadow var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+.mtx-chip--small {
+  height: var(--mtx-chip-height-small);
+  border-radius: var(--mtx-chip-radius-small);
+  font-size: var(--mtx-chip-font-size-small);
+}
+.mtx-chip__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: var(--mtx-chip-label-padding);
+}
+.mtx-chip--small .mtx-chip__label {
+  padding: var(--mtx-chip-label-padding-small);
+}
+/* Avatar e icono */
+.mtx-chip__avatar,
+.mtx-chip__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 5px;
+  margin-right: -6px;
+}
+/* Solo el icono hereda el color del chip; el avatar conserva su contraste propio */
+.mtx-chip__icon {
+  color: inherit;
+}
+.mtx-chip__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.mtx-chip--small .mtx-chip__avatar,
+.mtx-chip--small .mtx-chip__icon {
+  margin-left: 4px;
+  margin-right: -4px;
+}
+/* Delete icon */
+.mtx-chip__delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px 0 -6px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mtx-chip-delete-color);
+  font-size: var(--mtx-chip-delete-size);
+  cursor: pointer;
+  transition: color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+.mtx-chip__delete:hover {
+  color: var(--mtx-chip-delete-color-hover);
+}
+.mtx-chip--small .mtx-chip__delete {
+  margin: 0 4px 0 -4px;
+  width: 16px;
+  height: 16px;
+  font-size: var(--mtx-chip-delete-size-small);
+}
+/* Clickable */
+.mtx-chip--clickable {
+  cursor: pointer;
+}
+.mtx-chip--clickable:hover {
+  background-color: color-mix(in srgb, var(--mtx-chip-current-bg) 92%, var(--mtx-color-common-black));
+}
+/* Contraste AA (por defecto): con texto oscuro sobre el color, el hover aclara el fondo
+   en lugar de oscurecerlo para no bajar de 4.5:1 (como Button). data-mtx-contrast="mui" lo excluye. */
+.mtx-chip--clickable:is(.mtx-chip--warning, .mtx-chip--info):not(.mtx-chip--outlined, [data-mtx-contrast='mui'] *):hover,
+[data-mtx-contrast='mui'] [data-mtx-contrast='aa'] .mtx-chip--clickable:is(.mtx-chip--warning, .mtx-chip--info):not(.mtx-chip--outlined):hover,
+[data-mtx-theme='dark'] .mtx-chip--clickable:is(.mtx-chip--primary, .mtx-chip--secondary, .mtx-chip--error, .mtx-chip--warning, .mtx-chip--info, .mtx-chip--success):not(.mtx-chip--outlined, [data-mtx-contrast='mui'] *):hover,
+[data-mtx-theme='dark'] [data-mtx-contrast='mui'] [data-mtx-contrast='aa'] .mtx-chip--clickable:is(.mtx-chip--primary, .mtx-chip--secondary, .mtx-chip--error, .mtx-chip--warning, .mtx-chip--info, .mtx-chip--success):not(.mtx-chip--outlined):hover {
+  background-color: color-mix(in srgb, var(--mtx-chip-current-bg) 85%, #fff);
+}
+.mtx-chip--clickable:focus-visible {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: 2px;
+}
+.mtx-chip--clickable:active {
+  box-shadow: var(--mtx-elevation-1);
+}
+/* Outlined */
+.mtx-chip--outlined {
+  background-color: transparent;
+  border: 1px solid var(--mtx-color-divider);
+}
+.mtx-chip--outlined .mtx-chip__label {
+  padding: 0 11px;
+}
+.mtx-chip--outlined.mtx-chip--small .mtx-chip__label {
+  padding: 0 7px;
+}
+.mtx-chip--outlined.mtx-chip--clickable:hover {
+  background-color: var(--mtx-color-action-hover);
+}
+/* Colores */
+.mtx-chip--primary { --mtx-chip-current-bg: var(--mtx-color-primary); background-color: var(--mtx-color-primary); color: var(--mtx-color-primary-contrast); }
+.mtx-chip--primary.mtx-chip--outlined { --mtx-chip-current-bg: transparent; background-color: transparent; color: var(--mtx-color-primary-text); border-color: currentColor; }
+.mtx-chip--secondary { --mtx-chip-current-bg: var(--mtx-color-secondary); background-color: var(--mtx-color-secondary); color: var(--mtx-color-secondary-contrast); }
+.mtx-chip--secondary.mtx-chip--outlined { --mtx-chip-current-bg: transparent; background-color: transparent; color: var(--mtx-color-secondary-text); border-color: currentColor; }
+.mtx-chip--error { --mtx-chip-current-bg: var(--mtx-color-error); background-color: var(--mtx-color-error); color: var(--mtx-color-error-contrast); }
+.mtx-chip--error.mtx-chip--outlined { --mtx-chip-current-bg: transparent; background-color: transparent; color: var(--mtx-color-error-text); border-color: currentColor; }
+.mtx-chip--warning { --mtx-chip-current-bg: var(--mtx-color-warning); background-color: var(--mtx-color-warning); color: var(--mtx-color-warning-contrast); }
+.mtx-chip--warning.mtx-chip--outlined { --mtx-chip-current-bg: transparent; background-color: transparent; color: var(--mtx-color-warning-text); border-color: currentColor; }
+.mtx-chip--info { --mtx-chip-current-bg: var(--mtx-color-info); background-color: var(--mtx-color-info); color: var(--mtx-color-info-contrast); }
+.mtx-chip--info.mtx-chip--outlined { --mtx-chip-current-bg: transparent; background-color: transparent; color: var(--mtx-color-info-text); border-color: currentColor; }
+.mtx-chip--success { --mtx-chip-current-bg: var(--mtx-color-success); background-color: var(--mtx-color-success); color: var(--mtx-color-success-contrast); }
+.mtx-chip--success.mtx-chip--outlined { --mtx-chip-current-bg: transparent; background-color: transparent; color: var(--mtx-color-success-text); border-color: currentColor; }
+/* Delete color por color de chip */
+.mtx-chip--primary .mtx-chip__delete,
+.mtx-chip--secondary .mtx-chip__delete,
+.mtx-chip--error .mtx-chip__delete,
+.mtx-chip--warning .mtx-chip__delete,
+.mtx-chip--info .mtx-chip__delete,
+.mtx-chip--success .mtx-chip__delete {
+  color: currentColor;
+  opacity: 0.7;
+}
+.mtx-chip--primary .mtx-chip__delete:hover,
+.mtx-chip--secondary .mtx-chip__delete:hover,
+.mtx-chip--error .mtx-chip__delete:hover,
+.mtx-chip--warning .mtx-chip__delete:hover,
+.mtx-chip--info .mtx-chip__delete:hover,
+.mtx-chip--success .mtx-chip__delete:hover {
+  opacity: 1;
+}
+/* Disabled */
+.mtx-chip--disabled,
+.mtx-chip[aria-disabled="true"] {
+  opacity: var(--mtx-disabled-opacity);
+  pointer-events: none;
+}

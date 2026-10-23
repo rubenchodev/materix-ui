@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account settings · Materix UI Templates</title>
+  <meta name="description" content="Profile, security, notifications and billing settings organized with tabs.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="../shared/template.js"></script>
+  <style>
+    /* Marca de la tarjeta de pago (ilustración propia) */
+    .tpl-set-card-brand {
+      display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 32px;
+      border: 1px solid var(--mtx-color-divider); border-radius: var(--mtx-shape-radius);
+      color: var(--mtx-color-primary); font: var(--mtx-type-caption); font-weight: 700; letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-set-main">Skip to content</a>
+
+  <header data-mtx="app-bar" data-position="sticky" data-color="default" data-elevation="0">
+    <div class="mtx-toolbar mtx-gap-0_5">
+      <a class="mtx-toolbar__navigation-icon" data-mtx="icon-button" data-edge="start" href="../dashboard/" aria-label="Back to dashboard">
+        <span class="material-icons" aria-hidden="true">arrow_back</span>
+      </a>
+      <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1 mtx-color-text-primary mtx-text-decoration-none mtx-typography--h6" href="../index.html" aria-label="Lumen – all templates">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="8" fill="var(--mtx-color-primary)" />
+          <path d="M9 22.5V9.5h3.2v10.2H22v2.8H9Z" fill="var(--mtx-color-primary-contrast)" />
+          <circle cx="21" cy="12" r="3" fill="var(--mtx-color-primary-contrast)" opacity="0.7" />
+        </svg>
+        <span class="mtx-d-none mtx-d-sm-inline">Lumen</span>
+      </a>
+      <button type="button" class="mtx-ms-auto" data-mtx="icon-button" data-mtx-theme-toggle>
+        <span class="material-icons" aria-hidden="true">dark_mode</span>
+      </button>
+      <span id="tpl-set-header-avatar" data-mtx="avatar" data-color="primary" data-size="32" aria-hidden="true">OM</span>
+    </div>
+  </header>
+
+  <main id="tpl-set-main" tabindex="-1" data-mtx="container" data-max-width="md" class="mtx-pt-4 mtx-pb-8">
+    <div class="mtx-mb-3">
+      <h1 class="mtx-typography--h4 mtx-mb-0_5">Account settings</h1>
+      <p class="mtx-typography--body1 mtx-color-text-secondary">Manage your profile, security and how Lumen keeps in touch with you.</p>
+    </div>
+
+    <div id="tpl-set-tabs" class="mtx-mb-3" data-mtx="tabs" aria-label="Settings sections">
+      <button data-mtx="tab" data-panel="#tpl-set-profile" data-value="profile" data-icon="person" data-active>Profile</button>
+      <button data-mtx="tab" data-panel="#tpl-set-security" data-value="security" data-icon="lock">Security</button>
+      <button data-mtx="tab" data-panel="#tpl-set-notifications" data-value="notifications" data-icon="notifications">Notifications</button>
+      <button data-mtx="tab" data-panel="#tpl-set-billing" data-value="billing" data-icon="credit_card">Billing</button>
+    </div>
+
+    <!-- Perfil -->
+    <div id="tpl-set-profile" data-mtx="stack" data-spacing="3">
+      <form id="tpl-set-profile-form" class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" novalidate aria-labelledby="tpl-set-profile-title">
+        <div class="mtx-mb-2_5">
+          <h2 id="tpl-set-profile-title" class="mtx-typography--h6">Public profile</h2>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">This information is visible to people in your workspace.</p>
+        </div>
+        <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-2_5 mtx-mb-3">
+          <span id="tpl-set-avatar" data-mtx="avatar" data-color="primary" data-size="80">OM</span>
+          <div class="mtx-flex-1">
+            <p class="mtx-typography--subtitle1 mtx-fw-medium">Profile photo</p>
+            <p class="mtx-typography--body2 mtx-color-text-secondary">JPG, PNG or GIF. Max 2 MB.</p>
+          </div>
+          <div class="mtx-d-flex mtx-flex-wrap mtx-gap-1">
+            <input type="file" id="tpl-set-photo-input" accept="image/png,image/jpeg,image/gif" tabindex="-1" aria-hidden="true" hidden />
+            <button type="button" id="tpl-set-photo-change" class="mtx-button mtx-button--outlined" data-mtx="button"><span class="mtx-button__icon material-icons" aria-hidden="true">photo_camera</span>Change</button>
+            <button type="button" id="tpl-set-photo-remove" class="mtx-button mtx-button--text" data-mtx="button" data-color="error">Remove</button>
+          </div>
+        </div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <input id="tpl-set-first" data-mtx="text-field" data-label="First name" type="text" name="firstName" value="Olivia" autocomplete="given-name" required />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <input id="tpl-set-last" data-mtx="text-field" data-label="Last name" type="text" name="lastName" value="Martin" autocomplete="family-name" required />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <input id="tpl-set-email" data-mtx="text-field" data-label="Email" data-start-icon="mail_outline" type="email" name="email" value="olivia.martin@lumen.app" autocomplete="email" required />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <input id="tpl-set-title" data-mtx="text-field" data-label="Job title" type="text" name="title" value="Head of Operations" autocomplete="organization-title" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <select id="tpl-set-timezone" data-mtx="select" data-label="Time zone" data-search name="timezone">
+              <option value="America/Los_Angeles">Pacific Time (GMT−7)</option>
+              <option value="America/Denver">Mountain Time (GMT−6)</option>
+              <option value="America/Chicago">Central Time (GMT−5)</option>
+              <option value="America/New_York" selected>Eastern Time (GMT−4)</option>
+              <option value="America/Bogota">Bogotá (GMT−5)</option>
+              <option value="Europe/London">London (GMT+1)</option>
+              <option value="Europe/Madrid">Madrid (GMT+2)</option>
+              <option value="Asia/Tokyo">Tokyo (GMT+9)</option>
+            </select>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <select id="tpl-set-language" data-mtx="native-select" data-variant="outlined" data-label="Language" name="language">
+              <option value="en" selected>English (US)</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+              <option value="pt">Português</option>
+            </select>
+          </div>
+          <div data-mtx="grid" data-xs="12">
+            <textarea id="tpl-set-bio" data-mtx="text-field" data-label="Bio" data-max-characters="200" data-rows="3" data-auto-resize name="bio">I keep our fulfillment running smoothly and love a well-labeled spreadsheet.</textarea>
+          </div>
+        </div>
+        <div class="mtx-d-flex mtx-flex-wrap mtx-justify-content-end mtx-gap-1 mtx-mt-3">
+          <button type="reset" class="mtx-button mtx-button--text" data-mtx="button">Cancel</button>
+          <button type="submit" class="mtx-button mtx-button--contained" data-mtx="button">Save changes</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Seguridad -->
+    <div id="tpl-set-security" data-mtx="stack" data-spacing="3" hidden>
+      <form id="tpl-set-password-form" class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" novalidate aria-labelledby="tpl-set-password-title">
+        <div class="mtx-mb-2_5">
+          <h2 id="tpl-set-password-title" class="mtx-typography--h6">Change password</h2>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">Last changed 3 months ago.</p>
+        </div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12">
+            <input id="tpl-set-current" data-mtx="text-field" data-label="Current password" data-password-toggle data-password-toggle-label="Show passwords" type="password" name="currentPassword" autocomplete="current-password" required />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <input id="tpl-set-new" data-mtx="text-field" data-label="New password" data-helper-text="At least 8 characters, with a number and a symbol." type="password" name="newPassword" autocomplete="new-password" required />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6">
+            <input id="tpl-set-confirm" data-mtx="text-field" data-label="Confirm new password" type="password" name="confirmPassword" autocomplete="new-password" required />
+          </div>
+        </div>
+        <div class="mtx-d-flex mtx-flex-wrap mtx-justify-content-end mtx-gap-1 mtx-mt-3">
+          <button type="submit" class="mtx-button mtx-button--contained" data-mtx="button">Update password</button>
+        </div>
+      </form>
+
+      <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-set-2fa-title">
+        <div class="mtx-mb-2">
+          <h2 id="tpl-set-2fa-title" class="mtx-typography--h6">Two-factor authentication</h2>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">Add a second step when you sign in on a new device.</p>
+        </div>
+        <div data-mtx="stack" data-spacing="2">
+          <input id="tpl-set-2fa" data-mtx="switch" type="checkbox" name="twoFactor" data-label="Require a code from my authenticator app" data-helper-text="Works with 1Password, Google Authenticator and any TOTP app." />
+          <div id="tpl-set-2fa-off" data-mtx="alert" data-severity="warning">Your account is protected by a password only. We strongly recommend turning on two-factor authentication.</div>
+          <div id="tpl-set-2fa-on" data-mtx="alert" data-severity="success" data-title="Two-factor authentication is on" hidden>Recovery codes were generated. Store them somewhere safe — each can be used once.</div>
+        </div>
+      </section>
+
+      <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-set-sessions-title">
+        <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-start mtx-justify-content-between mtx-gap-2 mtx-mb-2_5">
+          <div>
+            <h2 id="tpl-set-sessions-title" class="mtx-typography--h6">Active sessions</h2>
+            <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">Devices currently signed in to your account.</p>
+          </div>
+          <button type="button" id="tpl-set-signout-all" class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small">Sign out all others</button>
+        </div>
+        <ul id="tpl-set-sessions" class="mtx-border mtx-rounded mtx-py-0" data-mtx="list" aria-labelledby="tpl-set-sessions-title">
+          <li data-mtx="list-item" data-icon="laptop_windows" data-secondary="Austin, TX · Active now" data-divider>Chrome on Windows · This device</li>
+          <li data-mtx="list-item" data-icon="phone_iphone" data-secondary="Austin, TX · 2 hours ago" data-divider>
+            Safari on iPhone 15
+            <span class="mtx-list-item-secondary-action">
+              <button type="button" class="mtx-button mtx-button--text" data-mtx="button" data-size="small" data-tpl-signout="Safari on iPhone 15" aria-label="Sign out Safari on iPhone 15">Sign out</button>
+            </span>
+          </li>
+          <li data-mtx="list-item" data-icon="laptop_mac" data-secondary="Denver, CO · Oct 14, 2026">
+            Firefox on macOS
+            <span class="mtx-list-item-secondary-action">
+              <button type="button" class="mtx-button mtx-button--text" data-mtx="button" data-size="small" data-tpl-signout="Firefox on macOS" aria-label="Sign out Firefox on macOS">Sign out</button>
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="mtx-p-2 mtx-p-sm-3 mtx-border-error" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-set-danger-title">
+        <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-start mtx-justify-content-between mtx-gap-2">
+          <div>
+            <h2 id="tpl-set-danger-title" class="mtx-typography--h6 mtx-color-error">Delete account</h2>
+            <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">Permanently delete your account and all workspace data. This can't be undone.</p>
+          </div>
+          <button type="button" class="mtx-button mtx-button--outlined" data-mtx="button" data-color="error" data-mtx-dialog-open="tpl-set-delete-dialog">Delete account</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Notificaciones -->
+    <div id="tpl-set-notifications" data-mtx="stack" data-spacing="3" hidden>
+      <form id="tpl-set-notif-form" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-set-notif-title">
+        <div class="mtx-px-2 mtx-px-sm-3 mtx-pt-3 mtx-pb-1">
+          <h2 id="tpl-set-notif-title" class="mtx-typography--h6">Notification preferences</h2>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">Choose where you want to be notified about each kind of activity.</p>
+        </div>
+        <div data-mtx="table-container">
+          <table data-mtx="table" data-hover>
+            <caption>Security alerts are always sent by email.</caption>
+            <thead>
+              <tr><th scope="col">Activity</th><th scope="col" data-align="center">Email</th><th scope="col" data-align="center">Push</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">New orders<span class="mtx-d-block mtx-color-text-secondary">When a customer places or cancels an order.</span></th>
+                <td data-align="center"><input data-mtx="switch" type="checkbox" name="orders-email" aria-label="New orders by email" checked /></td>
+                <td data-align="center"><input data-mtx="switch" type="checkbox" name="orders-push" aria-label="New orders by push" checked /></td>
+              </tr>
+              <tr>
+                <th scope="row">Mentions and comments<span class="mtx-d-block mtx-color-text-secondary">When someone mentions you or replies.</span></th>
+                <td data-align="center"><input data-mtx="switch" type="checkbox" name="mentions-email" aria-label="Mentions by email" /></td>
+                <td data-align="center"><input data-mtx="switch" type="checkbox" name="mentions-push" aria-label="Mentions by push" checked /></td>
+              </tr>
+              <tr>
+                <th scope="row">Product updates<span class="mtx-d-block mtx-color-text-secondary">New features and improvements.</span></th>
+                <td data-align="center"><input data-mtx="switch" type="checkbox" name="updates-email" aria-label="Product updates by email" checked /></td>
+                <td data-align="center"><input data-mtx="switch" type="checkbox" name="updates-push" aria-label="Product updates by push" /></td>
+              </tr>
+              <tr>
+                <th scope="row">Security alerts<span class="mtx-d-block mtx-color-text-secondary">New sign-ins and password changes.</span></th>
+                <td data-align="center"><input data-mtx="switch" type="checkbox" name="security-email" aria-label="Security alerts by email" checked disabled /></td>
+                <td data-align="center"><input data-mtx="switch" type="checkbox" name="security-push" aria-label="Security alerts by push" checked /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mtx-px-2 mtx-px-sm-3 mtx-pb-3">
+          <hr data-mtx="divider" class="mtx-mt-0 mtx-mb-3">
+          <div id="tpl-set-digest" data-mtx="radio-group" data-name="digest" data-label="Email digest" data-helper-text="A summary of everything that happened in your workspace.">
+            <input type="radio" data-mtx="radio" name="digest" value="daily" data-label="Daily summary at 8:00 AM" />
+            <input type="radio" data-mtx="radio" name="digest" value="weekly" data-label="Weekly summary on Mondays" checked />
+            <input type="radio" data-mtx="radio" name="digest" value="never" data-label="Never" />
+          </div>
+          <div class="mtx-d-flex mtx-flex-wrap mtx-justify-content-end mtx-gap-1 mtx-mt-3">
+            <button type="submit" class="mtx-button mtx-button--contained" data-mtx="button">Save preferences</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Facturación -->
+    <div id="tpl-set-billing" data-mtx="stack" data-spacing="3" hidden>
+      <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-set-plan-title">
+        <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-start mtx-justify-content-between mtx-gap-2 mtx-mb-2_5">
+          <div>
+            <h2 id="tpl-set-plan-title" class="mtx-typography--h6">Current plan</h2>
+            <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">Your next invoice of $29.00 is due on November 12, 2026.</p>
+          </div>
+          <a class="mtx-button mtx-button--outlined" data-mtx="button" href="../pricing/">Change plan</a>
+        </div>
+        <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-2">
+          <span class="mtx-typography--h4 mtx-tabular-nums">$29 <small class="mtx-typography--body1 mtx-color-text-secondary">/ month</small></span>
+          <span data-mtx="chip" data-color="primary" data-size="small">Pro</span>
+          <span data-mtx="chip" data-variant="outlined" data-size="small" data-icon="autorenew">Renews monthly</span>
+        </div>
+        <div data-mtx="grid" data-spacing="2" class="mtx-mt-2_5">
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div class="mtx-d-flex mtx-justify-content-between mtx-typography--body2 mtx-mb-1"><span>Team seats</span><span class="mtx-color-text-secondary">7 of 10</span></div>
+            <div data-mtx="linear-progress" data-rounded data-min="0" data-max="10" data-value="7" data-label="Team seats used"></div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div class="mtx-d-flex mtx-justify-content-between mtx-typography--body2 mtx-mb-1"><span>Storage</span><span class="mtx-color-text-secondary">18.4 of 50 GB</span></div>
+            <div data-mtx="linear-progress" data-rounded data-min="0" data-max="50" data-value="18.4" data-label="Storage used"></div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div class="mtx-d-flex mtx-justify-content-between mtx-typography--body2 mtx-mb-1"><span>API calls</span><span class="mtx-color-text-secondary">81k of 100k</span></div>
+            <div data-mtx="linear-progress" data-rounded data-min="0" data-max="100" data-value="81" data-color="warning" data-label="API calls used"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mtx-p-2 mtx-p-sm-3" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-set-payment-title">
+        <div class="mtx-mb-2_5">
+          <h2 id="tpl-set-payment-title" class="mtx-typography--h6">Payment method</h2>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">Charges are made in USD.</p>
+        </div>
+        <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-2">
+          <span class="tpl-set-card-brand" aria-hidden="true">VISA</span>
+          <div class="mtx-flex-1">
+            <p class="mtx-typography--subtitle1 mtx-fw-medium">Visa ending in 4242</p>
+            <p class="mtx-typography--body2 mtx-color-text-secondary">Expires 08/2028 · billing@lumen.app</p>
+          </div>
+          <a class="mtx-button mtx-button--text" data-mtx="button" href="../checkout/">Update</a>
+        </div>
+      </section>
+
+      <section data-mtx="card" data-variant="outlined" aria-labelledby="tpl-set-invoices-title">
+        <div class="mtx-px-2 mtx-px-sm-3 mtx-pt-3 mtx-pb-1">
+          <h2 id="tpl-set-invoices-title" class="mtx-typography--h6">Billing history</h2>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-0_5">Download past invoices for your records.</p>
+        </div>
+        <div data-mtx="table-container">
+          <table data-mtx="table" data-hover aria-labelledby="tpl-set-invoices-title">
+            <thead>
+              <tr><th scope="col">Invoice</th><th scope="col">Date</th><th scope="col">Status</th><th scope="col" data-align="right">Amount</th><th scope="col" data-align="right"><span class="mtx-visually-hidden">Download</span></th></tr>
+            </thead>
+            <tbody>
+              <tr><td>INV-2026-010</td><td>Oct 12, 2026</td><td><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="success">Paid</span></td><td data-align="right" class="mtx-tabular-nums">$29.00</td><td data-align="right"><button type="button" data-mtx="icon-button" data-icon="download" data-size="small" aria-label="Download invoice INV-2026-010" data-tpl-invoice="INV-2026-010"></button></td></tr>
+              <tr><td>INV-2026-009</td><td>Sep 12, 2026</td><td><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="success">Paid</span></td><td data-align="right" class="mtx-tabular-nums">$29.00</td><td data-align="right"><button type="button" data-mtx="icon-button" data-icon="download" data-size="small" aria-label="Download invoice INV-2026-009" data-tpl-invoice="INV-2026-009"></button></td></tr>
+              <tr><td>INV-2026-008</td><td>Aug 12, 2026</td><td><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="success">Paid</span></td><td data-align="right" class="mtx-tabular-nums">$29.00</td><td data-align="right"><button type="button" data-mtx="icon-button" data-icon="download" data-size="small" aria-label="Download invoice INV-2026-008" data-tpl-invoice="INV-2026-008"></button></td></tr>
+              <tr><td>INV-2026-007</td><td>Jul 12, 2026</td><td><span data-mtx="chip" data-size="small" data-variant="outlined">Refunded</span></td><td data-align="right" class="mtx-tabular-nums">$12.00</td><td data-align="right"><button type="button" data-mtx="icon-button" data-icon="download" data-size="small" aria-label="Download invoice INV-2026-007" data-tpl-invoice="INV-2026-007"></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="tpl-set-delete-dialog" data-mtx="dialog" class="mtx-dialog--max-sm" data-title="Delete your account?" data-description="This permanently deletes the Lumen Operations workspace, 1,284 orders and 7 team members' access.">
+    <input id="tpl-set-delete-confirm" data-mtx="text-field" data-label="Confirmation" data-helper-text="Type DELETE to confirm." type="text" autocomplete="off" />
+    <div class="mtx-dialog__actions">
+      <button type="button" class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Cancel</button>
+      <button type="button" id="tpl-set-delete-btn" class="mtx-button mtx-button--contained" data-mtx="button" data-color="error" disabled>Delete account</button>
+    </div>
+  </div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      var PASSWORD_IDS = ['tpl-set-current', 'tpl-set-new', 'tpl-set-confirm'];
+      var $ = function (id) { return document.getElementById(id); };
+      var field = function (id) { return Materix.getInstance($(id)); };
+      var notify = function (message) { Materix.snackbar.show(message); };
+      var tabs = Materix.getInstance($('tpl-set-tabs'));
+
+      // Pestaña inicial desde el hash (#security, #billing…) y sincronización del hash
+      var initial = window.location.hash.replace('#', '');
+      if (['profile', 'security', 'notifications', 'billing'].indexOf(initial) > 0) tabs.select(initial);
+      $('tpl-set-tabs').addEventListener('mtx:tabs:change', function () {
+        history.replaceState(null, '', '#' + tabs.value);
+      });
+
+      // ---------------- Perfil ----------------
+      var avatarEl = $('tpl-set-avatar');
+      var photoInput = $('tpl-set-photo-input');
+
+      /**
+       * Pinta una imagen (o las iniciales) en los avatares.
+       * @param {string|null} src URL de la imagen o `null` para iniciales.
+       */
+      var setAvatar = function (src) {
+        var initials = ($('tpl-set-first').value.charAt(0) + $('tpl-set-last').value.charAt(0)).toUpperCase();
+        [avatarEl, $('tpl-set-header-avatar')].forEach(function (el) {
+          el.textContent = '';
+          if (!src) { el.textContent = initials; return; }
+          var img = document.createElement('img');
+          img.src = src;
+          img.alt = el === avatarEl ? 'Profile photo' : '';
+          img.className = 'mtx-avatar__img';
+          el.appendChild(img);
+        });
+      };
+
+      $('tpl-set-photo-change').addEventListener('click', function () { photoInput.click(); });
+      photoInput.addEventListener('change', function () {
+        var file = photoInput.files && photoInput.files[0];
+        if (!file) return;
+        if (file.size > 2 * 1024 * 1024) { notify('That image is larger than 2 MB.'); photoInput.value = ''; return; }
+        var reader = new FileReader();
+        reader.onload = function () { setAvatar(reader.result); notify('Photo updated'); };
+        reader.readAsDataURL(file);
+      });
+      $('tpl-set-photo-remove').addEventListener('click', function () {
+        photoInput.value = '';
+        setAvatar(null);
+        notify('Photo removed');
+      });
+
+      $('tpl-set-profile-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var invalid = null;
+        [['tpl-set-first', 'First name is required.'], ['tpl-set-last', 'Last name is required.']].forEach(function (pair) {
+          if (!$(pair[0]).value.trim()) { field(pair[0]).setError(pair[1]); invalid = invalid || $(pair[0]); } else { field(pair[0]).clearError(); }
+        });
+        if (!EMAIL_RE.test($('tpl-set-email').value.trim())) { field('tpl-set-email').setError('Enter a valid email address.'); invalid = invalid || $('tpl-set-email'); } else { field('tpl-set-email').clearError(); }
+        if ($('tpl-set-bio').getAttribute('aria-invalid') === 'true') invalid = invalid || $('tpl-set-bio');
+        if (invalid) { invalid.focus(); return; }
+        if (!avatarEl.querySelector('img')) setAvatar(null);
+        notify('Profile saved');
+      });
+      $('tpl-set-profile-form').addEventListener('reset', function () {
+        window.setTimeout(function () {
+          ['tpl-set-first', 'tpl-set-last', 'tpl-set-email', 'tpl-set-title', 'tpl-set-bio'].forEach(function (id) {
+            field(id).clearError();
+            field(id).value = $(id).defaultValue;
+          });
+          notify('Changes discarded');
+        });
+      });
+
+      // ---------------- Seguridad ----------------
+      // El botón de "Current password" muestra u oculta las tres contraseñas a la vez.
+      $('tpl-set-password-form').addEventListener('mtx:text-field:password-visibility', function (event) {
+        PASSWORD_IDS.slice(1).forEach(function (id) { $(id).type = event.detail.visible ? 'text' : 'password'; });
+      });
+
+      $('tpl-set-password-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var current = $('tpl-set-current').value;
+        var pw = $('tpl-set-new').value;
+        var confirm = $('tpl-set-confirm').value;
+        var invalid = null;
+        if (!current) { field('tpl-set-current').setError('Enter your current password.'); invalid = $('tpl-set-current'); } else { field('tpl-set-current').clearError(); }
+        if (pw.length < 8 || !/\d/.test(pw) || !/[^A-Za-z0-9]/.test(pw)) { field('tpl-set-new').setError('Use at least 8 characters, including a number and a symbol.'); invalid = invalid || $('tpl-set-new'); }
+        else if (pw === current) { field('tpl-set-new').setError('Choose a password you haven’t used before.'); invalid = invalid || $('tpl-set-new'); }
+        else { field('tpl-set-new').clearError(); }
+        if (!confirm || confirm !== pw) { field('tpl-set-confirm').setError(confirm ? 'Passwords don’t match.' : 'Confirm your new password.'); invalid = invalid || $('tpl-set-confirm'); } else { field('tpl-set-confirm').clearError(); }
+        if (invalid) { invalid.focus(); return; }
+        event.target.reset();
+        field('tpl-set-current').togglePasswordVisibility(false);
+        notify('Password updated');
+      });
+
+      $('tpl-set-2fa').addEventListener('change', function (event) {
+        var on = event.target.checked;
+        Materix.getInstance($('tpl-set-2fa-on'))[on ? 'open' : 'close']();
+        Materix.getInstance($('tpl-set-2fa-off'))[on ? 'close' : 'open']();
+        notify(on ? 'Two-factor authentication enabled' : 'Two-factor authentication disabled');
+      });
+
+      /**
+       * Elimina una fila de sesión y desactiva "Sign out all others" si no quedan.
+       * @param {HTMLElement} row Fila de la lista.
+       */
+      var removeSession = function (row) {
+        row.remove();
+        if (!$('tpl-set-sessions').querySelector('[data-tpl-signout]')) Materix.getInstance($('tpl-set-signout-all')).disable();
+      };
+      $('tpl-set-sessions').addEventListener('click', function (event) {
+        var btn = event.target.closest('[data-tpl-signout]');
+        if (!btn) return;
+        removeSession(btn.closest('.mtx-list-item'));
+        if (!$('tpl-set-signout-all').disabled) $('tpl-set-signout-all').focus();
+        notify('Signed out of ' + btn.getAttribute('data-tpl-signout'));
+      });
+      $('tpl-set-signout-all').addEventListener('click', function () {
+        $('tpl-set-sessions').querySelectorAll('[data-tpl-signout]').forEach(function (btn) { removeSession(btn.closest('.mtx-list-item')); });
+        notify('Signed out of all other devices');
+      });
+
+      var deleteInput = $('tpl-set-delete-confirm');
+      var deleteBtn = $('tpl-set-delete-btn');
+      deleteInput.addEventListener('input', function () { deleteBtn.disabled = deleteInput.value.trim() !== 'DELETE'; });
+      $('tpl-set-delete-dialog').addEventListener('mtx:dialog:close', function () {
+        field('tpl-set-delete-confirm').value = '';
+        deleteBtn.disabled = true;
+      });
+      deleteBtn.addEventListener('click', function () {
+        Materix.getInstance($('tpl-set-delete-dialog')).close('confirmed');
+        notify('Account scheduled for deletion. You have 14 days to change your mind.');
+      });
+
+      // ---------------- Notificaciones y facturación ----------------
+      $('tpl-set-notif-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var digest = Materix.getInstance($('tpl-set-digest')).value;
+        notify('Preferences saved · ' + (digest === 'never' ? 'No email digest' : digest.charAt(0).toUpperCase() + digest.slice(1) + ' digest'));
+      });
+      document.querySelectorAll('[data-tpl-invoice]').forEach(function (btn) {
+        btn.addEventListener('click', function () { notify('Downloading ' + btn.getAttribute('data-tpl-invoice') + '.pdf'); });
+      });
+    });
+  </script>
+</body>
+</html>

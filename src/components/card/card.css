@@ -1,0 +1,270 @@
+/* ==========================================================================
+   Materix UI — Card
+   Tarjeta basada en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--mtx-color-background-paper);
+  color: var(--mtx-color-text-primary);
+  border-radius: var(--mtx-shape-radius);
+  box-shadow: var(--mtx-elevation-1);
+  /* Tema oscuro: overlay blanco según la elevación (MUI); en claro el token es `none`. */
+  background-image: var(--mtx-overlay-elevation-1);
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: var(--mtx-font-family);
+  transition: box-shadow var(--mtx-duration-standard) var(--mtx-easing-standard);
+}
+
+.mtx-card--elevation-0 { box-shadow: none; background-image: var(--mtx-overlay-elevation-0); }
+.mtx-card--elevation-1 { box-shadow: var(--mtx-elevation-1); background-image: var(--mtx-overlay-elevation-1); }
+.mtx-card--elevation-2 { box-shadow: var(--mtx-elevation-2); background-image: var(--mtx-overlay-elevation-2); }
+.mtx-card--elevation-3 { box-shadow: var(--mtx-elevation-3); background-image: var(--mtx-overlay-elevation-3); }
+.mtx-card--elevation-4 { box-shadow: var(--mtx-elevation-4); background-image: var(--mtx-overlay-elevation-4); }
+.mtx-card--elevation-5 { box-shadow: var(--mtx-elevation-5); background-image: var(--mtx-overlay-elevation-5); }
+.mtx-card--elevation-6 { box-shadow: var(--mtx-elevation-6); background-image: var(--mtx-overlay-elevation-6); }
+.mtx-card--elevation-7 { box-shadow: var(--mtx-elevation-7); background-image: var(--mtx-overlay-elevation-7); }
+.mtx-card--elevation-8 { box-shadow: var(--mtx-elevation-8); background-image: var(--mtx-overlay-elevation-8); }
+.mtx-card--elevation-12 { box-shadow: var(--mtx-elevation-12); background-image: var(--mtx-overlay-elevation-12); }
+.mtx-card--elevation-16 { box-shadow: var(--mtx-elevation-16); background-image: var(--mtx-overlay-elevation-16); }
+.mtx-card--elevation-24 { box-shadow: var(--mtx-elevation-24); background-image: var(--mtx-overlay-elevation-24); }
+.mtx-card--raised { box-shadow: var(--mtx-elevation-8); background-image: var(--mtx-overlay-elevation-8); }
+
+/* Outlined tras las elevaciones y con más especificidad: --elevation-N no reintroduce sombra. */
+.mtx-card.mtx-card--outlined,
+.mtx-card--outlined {
+  border: 1px solid var(--mtx-color-divider);
+  box-shadow: none;
+  background-image: none;
+}
+.mtx-card--square { border-radius: 0; }
+
+/* Tarjeta clickable (interactiva) */
+.mtx-card--clickable {
+  cursor: pointer;
+  outline: none;
+}
+.mtx-card--clickable:hover {
+  box-shadow: var(--mtx-elevation-4);
+  background-image: var(--mtx-overlay-elevation-4);
+}
+.mtx-card--clickable:focus-visible {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: 2px;
+}
+
+.mtx-card--disabled,
+.mtx-card[aria-disabled="true"] {
+  color: var(--mtx-color-text-disabled);
+  opacity: var(--mtx-disabled-opacity);
+  pointer-events: none;
+}
+
+/* Área de acción principal (MUI CardActionArea) */
+.mtx-card-action-area,
+.mtx-card__action-area {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.mtx-card-action-area::after,
+.mtx-card__action-area::after {
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  content: '';
+  transition: opacity var(--mtx-duration-shortest) var(--mtx-easing-standard);
+}
+.mtx-card-action-area:hover::after,
+.mtx-card__action-area:hover::after { opacity: 0.04; }
+.mtx-card-action-area:focus-visible,
+.mtx-card__action-area:focus-visible {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: -2px;
+}
+.mtx-card-action-area:focus-visible::after,
+.mtx-card__action-area:focus-visible::after { opacity: 0.12; }
+.mtx-card-action-area--disabled,
+.mtx-card-action-area[aria-disabled='true'] {
+  color: var(--mtx-color-text-disabled);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Recurso visual (CardMedia) — Sangrado completo de borde a borde */
+.mtx-card__media,
+.mtx-card-media {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 194px;
+  min-height: 140px;
+  object-fit: cover;
+  background-color: var(--mtx-color-grey-300);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 0;
+}
+
+/* Encabezado (CardHeader) */
+.mtx-card__header,
+.mtx-card-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.mtx-card__header-avatar,
+.mtx-card-header__avatar {
+  display: flex;
+  flex: 0 0 auto;
+  margin-right: 16px;
+}
+
+.mtx-card__header-content,
+.mtx-card-header__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mtx-card__title,
+.mtx-card__header-title,
+.mtx-card-header__title {
+  display: block;
+  font-family: var(--mtx-font-family);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  color: var(--mtx-color-text-primary);
+  margin: 0;
+}
+
+.mtx-card__subheader,
+.mtx-card__header-subheader,
+.mtx-card-header__subheader {
+  display: block;
+  font-family: var(--mtx-font-family);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  color: var(--mtx-color-text-secondary);
+  margin: 0;
+}
+
+.mtx-card__header-action,
+.mtx-card-header__action {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  margin-top: -4px;
+  margin-right: -8px;
+  margin-left: auto;
+}
+
+/* Contenido (CardContent) */
+.mtx-card__content,
+.mtx-card-content {
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: var(--mtx-font-family);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.01071em;
+  color: var(--mtx-color-text-secondary);
+}
+.mtx-card__content:last-child,
+.mtx-card-content:last-child {
+  padding-bottom: 24px;
+}
+/* Estilos por defecto con especificidad 0 (:where): una clase mtx-typography--* o una
+   utilidad en el título o el párrafo los sustituye sin pelear por especificidad. */
+/* .mtx-card__title conserva su especificidad: debe ganar a la regla base .mtx-card__title (0.9375rem). */
+:where(.mtx-card__content > h1, .mtx-card__content > h2, .mtx-card__content > h3,
+  .mtx-card__content > h4, .mtx-card__content > h5, .mtx-card__content > h6),
+.mtx-card__content > .mtx-card__title {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--mtx-color-text-primary);
+}
+:where(.mtx-card__content > p) {
+  margin: 0;
+  line-height: 1.5;
+}
+:where(.mtx-card__content > p + p) {
+  margin-top: 8px;
+}
+
+/* Acciones (CardActions). Desviación consciente de MUI: a la derecha por defecto
+   (como DialogActions); `data-align="start"` recupera la alineación izquierda de MUI. */
+.mtx-card__actions,
+.mtx-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.mtx-card__actions--start,
+:is(.mtx-card__actions, .mtx-card-actions)[data-align='start'] { justify-content: flex-start; }
+.mtx-card__actions--center,
+:is(.mtx-card__actions, .mtx-card-actions)[data-align='center'] { justify-content: center; }
+.mtx-card__actions--between,
+:is(.mtx-card__actions, .mtx-card-actions)[data-align='between'] { justify-content: space-between; }
+.mtx-card__actions--end,
+:is(.mtx-card__actions, .mtx-card-actions)[data-align='end'] { justify-content: flex-end; }
+.mtx-card__actions:not(.mtx-card__actions--disable-spacing) > * + *,
+.mtx-card-actions:not(.mtx-card-actions--disable-spacing) > * + * {
+  margin-left: 8px;
+}
+
+/* Botones dentro de CardActions siguen especificación MUI (padding 4px 8px, font-size 13px) */
+.mtx-card__actions .mtx-button--text,
+.mtx-card__actions .mtx-button,
+.mtx-card-actions .mtx-button--text,
+.mtx-card-actions .mtx-button {
+  padding: 4px 8px;
+  font-size: 0.8125rem;
+  min-height: 32px;
+  min-width: 64px;
+}
+
+.mtx-card__actions-expand,
+.mtx-card__actions-end {
+  margin-left: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-card,
+  .mtx-card--clickable,
+  .mtx-card-action-area::after,
+  .mtx-card__action-area::after { transition: none; }
+}

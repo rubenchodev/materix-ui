@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Materix UI — Breadcrumbs
+   Basado en Breadcrumbs de Material UI (MUI): Typography body1 en
+   text.secondary, separadores con margen horizontal de 8px y botón de
+   colapso (MoreHoriz 24×16) sobre grey[100] / grey[700] en oscuro.
+   ========================================================================== */
+:root {
+  --mtx-breadcrumbs-separator-gap: var(--mtx-spacing-1);
+}
+
+/* Colores del botón de colapso: --mtx-breadcrumbs-collapse-* en tokens.css (claro y oscuro). */
+
+/* Especificidad 0 para que las clases mtx-typography--* puedan cambiar la escala */
+:where(.mtx-breadcrumbs) {
+  font: var(--mtx-type-body1);
+  letter-spacing: 0.00938em;
+  color: var(--mtx-color-text-secondary);
+}
+
+.mtx-breadcrumbs__ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mtx-breadcrumbs__li {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.mtx-breadcrumbs__separator {
+  display: flex;
+  align-items: center;
+  margin-inline: var(--mtx-breadcrumbs-separator-gap);
+  user-select: none;
+  color: inherit;
+}
+
+.mtx-breadcrumbs__separator .material-icons {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Ítem con icono: el icono sale del flujo para que el subrayado del enlace
+   (text-decoration se propaga a los hijos en flujo) quede solo bajo el texto,
+   como el SvgIcon de la demo MUI. El padding reserva su hueco (24px + 4px). */
+.mtx-breadcrumbs .mtx-breadcrumbs__item--with-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-inline-start: calc(24px + var(--mtx-spacing-0_5));
+}
+
+.mtx-breadcrumbs__icon.material-icons {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.mtx-breadcrumbs__item--with-icon > .mtx-breadcrumbs__icon {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  text-decoration: none;
+}
+
+/* Página actual: text.primary como el Typography final de la demo MUI */
+.mtx-breadcrumbs [aria-current='page'] {
+  color: var(--mtx-color-text-primary);
+}
+
+/* Botón de colapso (BreadcrumbCollapsed de MUI) */
+.mtx-breadcrumbs__collapsed {
+  display: inline-flex;
+  align-items: center;
+}
+
+.mtx-breadcrumbs__collapse-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 var(--mtx-spacing-0_5);
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background-color: var(--mtx-breadcrumbs-collapse-bg);
+  color: var(--mtx-breadcrumbs-collapse-color);
+  cursor: pointer;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--mtx-duration-shortest) var(--mtx-easing-standard);
+}
+
+.mtx-breadcrumbs__collapse-icon {
+  display: block;
+  width: 24px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.mtx-breadcrumbs__collapse-button:hover {
+  background-color: var(--mtx-breadcrumbs-collapse-bg-hover);
+}
+
+.mtx-breadcrumbs__collapse-button:focus-visible {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: 2px;
+  background-color: var(--mtx-breadcrumbs-collapse-bg-hover);
+}
+
+.mtx-breadcrumbs__collapse-button:active {
+  background-color: color-mix(in srgb, var(--mtx-breadcrumbs-collapse-bg-hover) 88%, var(--mtx-breadcrumbs-collapse-color));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-breadcrumbs__collapse-button {
+    transition: none;
+  }
+}
+
+/* Enlaces del rastro: subrayado solo en hover (como la demo de MUI), aunque Link
+   subraye siempre por defecto; un data-underline explícito sigue mandando. */
+.mtx-breadcrumbs__link.mtx-link:not([class*='mtx-link--underline-']) {
+  text-decoration: none;
+}
+.mtx-breadcrumbs__link.mtx-link:not([class*='mtx-link--underline-']):hover {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}

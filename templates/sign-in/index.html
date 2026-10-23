@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in · Materix UI Templates</title>
+  <meta name="description" content="Sign-in page with email/password validation, remember me and social providers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="../shared/template.js"></script>
+  <style>
+    /* D: fondo de marca con halo del color primario (adaptado al tema por tokens) */
+    .tpl-sign-in {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--mtx-color-primary) 14%, transparent), transparent),
+        var(--mtx-color-background-default);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-sign-in-main">Skip to sign-in form</a>
+  <div class="tpl-sign-in mtx-d-flex mtx-flex-column mtx-min-vh-100">
+    <header class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-gap-1 mtx-px-2 mtx-py-1_5 mtx-typography--body2">
+      <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-0_5" data-mtx="link" data-underline="hover" href="../index.html">
+        <span class="material-icons" aria-hidden="true">arrow_back</span>
+        All templates
+      </a>
+      <button type="button" data-mtx="icon-button" data-mtx-theme-toggle>
+        <span class="material-icons" aria-hidden="true">dark_mode</span>
+      </button>
+    </header>
+
+    <main id="tpl-sign-in-main" class="mtx-flex-1 mtx-d-flex mtx-align-items-start mtx-align-items-sm-center mtx-justify-content-center mtx-px-2 mtx-pb-6">
+      <div data-mtx="container" data-max-width="xs" data-disable-gutters>
+        <div class="mtx-px-2_5 mtx-py-3 mtx-p-sm-4 mtx-elevation-2" data-mtx="card" data-variant="outlined">
+          <a class="mtx-d-inline-flex mtx-align-items-center mtx-align-self-start mtx-gap-1 mtx-mb-3 mtx-typography--h6 mtx-color-text-primary mtx-text-decoration-none" href="../index.html" aria-label="Lumen home">
+            <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <rect width="32" height="32" rx="8" fill="var(--mtx-color-primary)" />
+              <path d="M9 22.5V9.5h3.2v10.2H22v2.8H9Z" fill="var(--mtx-color-primary-contrast)" />
+              <circle cx="21" cy="12" r="3" fill="var(--mtx-color-primary-contrast)" opacity="0.7" />
+            </svg>
+            Lumen
+          </a>
+
+          <h1 class="mtx-typography--h4 mtx-mb-0_5">Sign in</h1>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-3">Welcome back. Enter your details to access your workspace.</p>
+
+          <div id="tpl-sign-in-error" class="mtx-mb-3" data-mtx="alert" data-severity="error" data-title="Sign-in failed" data-dismissible data-close-label="Dismiss" hidden>
+            The email or password you entered is incorrect. Try again or reset your password.
+          </div>
+
+          <form id="tpl-sign-in-form" data-mtx="stack" data-spacing="2.5" novalidate>
+            <input id="tpl-sign-in-email" data-mtx="text-field" data-label="Email" type="email" name="email" autocomplete="email" inputmode="email" required />
+            <div data-mtx="stack" data-spacing="1.5">
+              <input id="tpl-sign-in-password" data-mtx="text-field" data-label="Password" data-password-toggle type="password" name="password" autocomplete="current-password" required />
+              <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-flex-wrap mtx-gap-1 mtx-typography--body2">
+                <input id="tpl-sign-in-remember" data-mtx="checkbox" data-label="Remember me" type="checkbox" name="remember" checked />
+                <a data-mtx="link" href="../forgot-password/">Forgot password?</a>
+              </div>
+            </div>
+
+            <button id="tpl-sign-in-submit" class="mtx-button mtx-button--contained mtx-button--large mtx-button--full-width" data-mtx="button" type="submit">
+              Sign in
+            </button>
+          </form>
+
+          <div class="mtx-my-3" data-mtx="divider" data-text="or"></div>
+
+          <div data-mtx="stack" data-spacing="1.5">
+            <button type="button" class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" data-tpl-provider="Google">
+              <span class="mtx-button__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.56c2.08-1.92 3.28-4.74 3.28-8.1Z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.77c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z" />
+                  <path fill="#FBBC05" d="M5.84 14.1A6.6 6.6 0 0 1 5.5 12c0-.73.13-1.44.34-2.1V7.06H2.18A11 11 0 0 0 1 12c0 1.77.43 3.45 1.18 4.94l3.66-2.84Z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52Z" />
+                </svg>
+              </span>
+              Sign in with Google
+            </button>
+            <button type="button" class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" data-tpl-provider="GitHub">
+              <span class="mtx-button__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path fill="currentColor" d="M12 1.27a11 11 0 0 0-3.48 21.46c.55.1.75-.24.75-.53v-1.86c-3.06.67-3.71-1.47-3.71-1.47-.5-1.27-1.22-1.61-1.22-1.61-1-.68.07-.67.07-.67 1.1.08 1.69 1.13 1.69 1.13.98 1.69 2.58 1.2 3.21.92.1-.71.38-1.2.7-1.48-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.91 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.42 3.02-1.13 3.02-1.13.6 1.51.22 2.63.11 2.91.7.77 1.13 1.75 1.13 2.95 0 4.22-2.58 5.15-5.03 5.42.4.34.75 1.01.75 2.04v3.03c0 .29.2.64.76.53A11 11 0 0 0 12 1.27Z" />
+                </svg>
+              </span>
+              Sign in with GitHub
+            </button>
+          </div>
+
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-text-center mtx-mt-3 mtx-mb-0">
+            Don't have an account?
+            <a data-mtx="link" href="../sign-up/">Sign up</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      var form = document.getElementById('tpl-sign-in-form');
+      var emailInput = document.getElementById('tpl-sign-in-email');
+      var passwordInput = document.getElementById('tpl-sign-in-password');
+      var emailField = Materix.getInstance(emailInput);
+      var passwordField = Materix.getInstance(passwordInput);
+      var submit = Materix.getInstance(document.getElementById('tpl-sign-in-submit'));
+      var errorAlert = Materix.getInstance(document.getElementById('tpl-sign-in-error'));
+
+      /**
+       * Valida el correo y actualiza su estado de error.
+       * @returns {boolean} `true` si es válido.
+       */
+      var validateEmail = function () {
+        var value = emailInput.value.trim();
+        if (!value) { emailField.setError('Email is required.'); return false; }
+        if (!EMAIL_RE.test(value)) { emailField.setError('Enter a valid email address, like name@company.com.'); return false; }
+        emailField.clearError();
+        return true;
+      };
+
+      /**
+       * Valida la contraseña y actualiza su estado de error.
+       * @returns {boolean} `true` si es válida.
+       */
+      var validatePassword = function () {
+        var value = passwordInput.value;
+        if (!value) { passwordField.setError('Password is required.'); return false; }
+        if (value.length < 8) { passwordField.setError('Password must be at least 8 characters long.'); return false; }
+        passwordField.clearError();
+        return true;
+      };
+
+      emailInput.addEventListener('blur', function () { if (emailInput.value) validateEmail(); });
+      emailInput.addEventListener('input', function () { if (emailInput.getAttribute('aria-invalid') === 'true') validateEmail(); });
+      passwordInput.addEventListener('input', function () { if (passwordInput.getAttribute('aria-invalid') === 'true') validatePassword(); });
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        errorAlert.close();
+        var emailOk = validateEmail();
+        var passwordOk = validatePassword();
+        if (!emailOk) { emailField.focus(); return; }
+        if (!passwordOk) { passwordField.focus(); return; }
+
+        submit.setLoading(true);
+        window.setTimeout(function () {
+          submit.setLoading(false);
+          // Credenciales de demostración: "wrongpassword" simula un fallo del servidor.
+          if (passwordInput.value === 'wrongpassword') {
+            errorAlert.open();
+            passwordField.focus();
+            return;
+          }
+          var name = emailInput.value.split('@')[0];
+          Materix.snackbar.show({ message: 'Welcome back, ' + name + '! You are now signed in.', duration: 5000 });
+          form.reset();
+          emailField.value = '';
+          passwordField.value = '';
+        }, 1400);
+      });
+
+      document.querySelectorAll('[data-tpl-provider]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          Materix.snackbar.show('Redirecting to ' + btn.getAttribute('data-tpl-provider') + '…');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

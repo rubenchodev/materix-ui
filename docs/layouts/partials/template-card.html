@@ -1,0 +1,63 @@
+{{/*
+  template-card — Tarjeta de una plantilla de data/templates.yaml en el idioma actual.
+  Uso: partial "template-card.html" (dict "tpl" $item "level" 2 "compact" false)
+  Capturas: static/img/templates/{slug}-light.png y {slug}-dark.png (se comprueban al compilar;
+  si faltan se muestra un marcador con el icono; si solo existe la clara se usa en ambos temas).
+*/}}
+{{ $t := .tpl }}
+{{ $level := .level | default 2 }}
+{{ $compact := .compact | default false }}
+{{ $lang := site.Language.Lang }}
+{{ $title := index $t (printf "title_%s" $lang) | default $t.title_en }}
+{{ $desc := index $t (printf "desc_%s" $lang) | default $t.desc_en }}
+{{ $base := partial "resolve-base.html" (site.Params.templatesURL | default "../templates/") }}
+{{ $preview := printf "%s%s/index.html" $base $t.slug }}
+{{ $light := printf "img/templates/%s-light.png" $t.slug }}
+{{ $dark := printf "img/templates/%s-dark.png" $t.slug }}
+{{ $hasLight := fileExists (printf "static/%s" $light) }}
+{{ $hasDark := fileExists (printf "static/%s" $dark) }}
+{{ $newTab := i18n "opens_new_tab" }}
+<article class="doc-tpl-card{{ if $compact }} doc-tpl-card--compact{{ end }}" id="tpl-{{ $t.slug }}" aria-labelledby="tpl-{{ $t.slug }}-title">
+  <a class="doc-tpl-media" href="{{ $preview }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+    {{ if $hasLight }}
+      <img class="doc-tpl-shot{{ if $hasDark }} doc-tpl-shot--light{{ end }}" src="{{ $light | relURL }}" alt="" width="1440" height="900" loading="lazy" decoding="async">
+      {{ if $hasDark }}
+      <img class="doc-tpl-shot doc-tpl-shot--dark" src="{{ $dark | relURL }}" alt="" width="1440" height="900" loading="lazy" decoding="async">
+      {{ end }}
+    {{ else }}
+      <span class="doc-tpl-placeholder">
+        <span class="material-icons" aria-hidden="true">{{ $t.icon | default "web" }}</span>
+        <span class="doc-tpl-placeholder-text">{{ i18n "template_screenshot_pending" }}</span>
+      </span>
+    {{ end }}
+  </a>
+  <div class="doc-tpl-body">
+    <h{{ $level }} class="doc-tpl-title" id="tpl-{{ $t.slug }}-title">
+      <span class="material-icons" aria-hidden="true">{{ $t.icon | default "web" }}</span>{{ $title }}
+    </h{{ $level }}>
+    <p class="doc-tpl-desc">{{ $desc }}</p>
+    {{ if and (not $compact) $t.components }}
+    <ul class="doc-tpl-chips" aria-label="{{ i18n "template_components" }}">
+      {{ range $t.components }}
+        {{ with site.GetPage (printf "/components/%s" .) }}
+          <li><a class="doc-tpl-chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+        {{ else }}
+          <li><span class="doc-tpl-chip">{{ humanize . }}</span></li>
+        {{ end }}
+      {{ end }}
+    </ul>
+    {{ end }}
+    <div class="doc-tpl-actions">
+      <a class="mtx-button mtx-button--contained mtx-button--small" data-mtx="button" href="{{ $preview }}" target="_blank" rel="noopener">
+        {{ i18n "live_preview" }}<span class="doc-visually-hidden"> {{ $title }} {{ $newTab }}</span>
+        <span class="mtx-button__icon material-icons" aria-hidden="true">open_in_new</span>
+      </a>
+      {{ with site.Params.repoURL }}
+      <a class="mtx-button mtx-button--text mtx-button--small" data-mtx="button" href="{{ printf "%s/templates/%s/index.html" . $t.slug }}" target="_blank" rel="noopener">
+        <span class="mtx-button__icon material-icons" aria-hidden="true">code</span>
+        {{ i18n "source_code" }}<span class="doc-visually-hidden"> {{ $title }} {{ $newTab }}</span>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</article>

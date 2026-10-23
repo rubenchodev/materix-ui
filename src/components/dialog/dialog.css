@@ -1,0 +1,197 @@
+/* ==========================================================================
+   Materix UI — Dialog
+   Diálogo (modal) basado en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-dialog {
+  position: fixed;
+  inset: 0;
+  /* Raíz fija: no hereda márgenes de estilos ajenos (p. ej. `* + * { margin-top }`) */
+  margin: 0;
+  z-index: var(--mtx-z-index-modal, 1300);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.mtx-dialog--open {
+  display: flex;
+}
+
+.mtx-dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: var(--mtx-backdrop-bg);
+}
+
+/* Panel */
+.mtx-dialog__paper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 32rem;
+  max-height: calc(100vh - 64px);
+  background-color: var(--mtx-color-background-paper);
+  color: var(--mtx-color-text-primary);
+  border-radius: var(--mtx-shape-radius);
+  box-shadow: var(--mtx-elevation-24);
+  background-image: var(--mtx-overlay-elevation-24);
+  overflow-y: auto;
+  opacity: 0;
+  transform: scale(0.9) translateY(10px);
+  transition:
+    opacity var(--mtx-duration-short) var(--mtx-easing-standard),
+    transform var(--mtx-duration-short) var(--mtx-easing-standard);
+}
+
+.mtx-dialog--open .mtx-dialog__paper {
+  opacity: 1;
+  transform: none;
+}
+
+.mtx-dialog__title {
+  margin: 0;
+  padding: 24px 24px 8px;
+  font: var(--mtx-type-h6);
+  letter-spacing: 0.00938em;
+}
+
+/* Cabecera y acciones fijas: sólo el contenido central hace scroll. */
+.mtx-dialog__paper:has(> .mtx-dialog__title--sticky, > .mtx-dialog__actions--sticky) {
+  overflow: hidden;
+}
+.mtx-dialog__paper:has(> .mtx-dialog__title--sticky, > .mtx-dialog__actions--sticky)
+  > .mtx-dialog__content {
+  min-height: 0;
+  overflow-y: auto;
+}
+.mtx-dialog__title--sticky {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--mtx-color-divider);
+  background-color: var(--mtx-color-background-paper);
+}
+.mtx-dialog__actions--sticky {
+  position: relative;
+  z-index: 1;
+  min-height: 64px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 8px 24px;
+  border-top: 1px solid var(--mtx-color-divider);
+  background-color: var(--mtx-color-background-paper);
+}
+
+.mtx-dialog__content {
+  padding: 8px 24px 20px;
+  font: var(--mtx-type-body1);
+  line-height: 1.5;
+  color: var(--mtx-color-text-secondary);
+  flex: 1;
+}
+
+.mtx-dialog__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--mtx-spacing-1);
+  padding: 16px 24px 16px 24px;
+}
+
+/* Alineación de las acciones (MUI DialogActions: a la derecha por defecto). El atributo
+   `data-align` funciona también sin JS (SSR); el JS añade la clase equivalente. */
+.mtx-dialog__actions--end,
+.mtx-dialog__actions[data-align='end'] { justify-content: flex-end; }
+.mtx-dialog__actions--start,
+.mtx-dialog__actions[data-align='start'] { justify-content: flex-start; }
+.mtx-dialog__actions--center,
+.mtx-dialog__actions[data-align='center'] { justify-content: center; }
+.mtx-dialog__actions--between,
+.mtx-dialog__actions[data-align='between'] { justify-content: space-between; }
+
+/* MUI `disableSpacing`: sin separación entre acciones. */
+.mtx-dialog__actions--disable-spacing,
+.mtx-dialog__actions[data-disable-spacing]:not([data-disable-spacing='false']) { gap: 0; }
+
+/* Scroll paper (por defecto): el contenido scrollea dentro del panel */
+.mtx-dialog--scroll-paper .mtx-dialog__paper {
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+/* Scroll body (MUI `scroll="body"`): el panel crece sin límite y desplaza el contenedor. */
+.mtx-dialog--scroll-body.mtx-dialog--open {
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.mtx-dialog--scroll-body .mtx-dialog__backdrop {
+  position: fixed;
+}
+.mtx-dialog--scroll-body .mtx-dialog__paper {
+  max-height: none;
+  margin: 16px auto;
+  overflow: visible;
+}
+.mtx-dialog--scroll-body.mtx-dialog--full .mtx-dialog__paper {
+  height: auto;
+  min-height: 100%;
+  margin: 0;
+}
+
+/* DialogContentText (MUI): texto descriptivo del contenido. */
+.mtx-dialog__content-text {
+  margin: 0;
+  font: var(--mtx-type-body1);
+  color: var(--mtx-color-text-secondary);
+}
+.mtx-dialog__content-text + .mtx-dialog__content-text {
+  margin-top: 8px;
+}
+.mtx-dialog__content-text + :is(.mtx-text-field, .mtx-select, .mtx-native-select, form, .mtx-stack, .mtx-grid) {
+  margin-top: 16px;
+}
+
+/* El label flotante de un campo al inicio del contenido sobresale ~8px: se reserva espacio
+   para que el scroll del contenido no lo recorte. */
+.mtx-dialog__content:where(:has(
+  > :is(.mtx-text-field, .mtx-select, .mtx-native-select):first-child,
+  > :first-child > :is(.mtx-text-field, .mtx-select, .mtx-native-select):first-child,
+  > :first-child > :first-child > :is(.mtx-text-field, .mtx-select, .mtx-native-select):first-child
+)) {
+  padding-top: 16px;
+}
+
+/* Contenido con divisores (MUI `DialogContent dividers`) */
+.mtx-dialog__content--dividers {
+  border-top: 1px solid var(--mtx-color-divider);
+  border-bottom: 1px solid var(--mtx-color-divider);
+  padding: 20px 24px;
+}
+
+.mtx-dialog--max-sm  .mtx-dialog__paper { max-width: 24rem; }
+.mtx-dialog--max-md  .mtx-dialog__paper { max-width: 32rem; }
+.mtx-dialog--max-lg  .mtx-dialog__paper { max-width: 48rem; }
+.mtx-dialog--max-xl  .mtx-dialog__paper { max-width: 64rem; }
+.mtx-dialog--full    { padding: 0; }
+.mtx-dialog--full .mtx-dialog__paper {
+  max-width: 100%;
+  max-height: 100vh;
+  height: 100%;
+  border-radius: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-dialog__paper {
+    transition: none;
+  }
+}

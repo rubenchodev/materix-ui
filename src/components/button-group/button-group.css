@@ -1,0 +1,136 @@
+/* ==========================================================================
+   Materix UI — ButtonGroup
+   Botones relacionados con bordes unidos, basado en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-button-group {
+  display: inline-flex;
+  box-sizing: border-box;
+  vertical-align: middle;
+  /* No se estira en contenedores flex en columna: la sombra contained sigue al contenido */
+  width: fit-content;
+  max-width: 100%;
+  border-radius: var(--mtx-shape-radius);
+}
+
+.mtx-button-group--vertical {
+  flex-direction: column;
+}
+
+.mtx-button-group--full-width {
+  display: flex;
+  width: 100%;
+}
+
+.mtx-button-group--full-width > .mtx-button {
+  flex: 1 1 0;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Contained: la elevación es del grupo, no de cada botón */
+.mtx-button-group--contained {
+  box-shadow: var(--mtx-elevation-2);
+}
+
+.mtx-button-group--contained.mtx-button-group--disable-elevation,
+.mtx-button-group--contained.mtx-button-group--disabled {
+  box-shadow: none;
+}
+
+.mtx-button-group > .mtx-button {
+  min-width: 40px;
+}
+
+.mtx-button-group > .mtx-button.mtx-button--contained,
+.mtx-button-group > .mtx-button.mtx-button--contained:hover,
+.mtx-button-group > .mtx-button.mtx-button--contained:active,
+.mtx-button-group > .mtx-button.mtx-button--contained:focus-visible {
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   Esquinas unidas
+   -------------------------------------------------------------------------- */
+.mtx-button-group--horizontal > .mtx-button:not(.mtx-button-group__first) {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.mtx-button-group--horizontal > .mtx-button:not(.mtx-button-group__last) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.mtx-button-group--vertical > .mtx-button:not(.mtx-button-group__first) {
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+}
+
+.mtx-button-group--vertical > .mtx-button:not(.mtx-button-group__last) {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Separadores
+   -------------------------------------------------------------------------- */
+/* Contained: línea del tono oscuro del color (grey 400 en inherit) */
+.mtx-button-group--horizontal > .mtx-button--contained:not(.mtx-button-group__last) {
+  border-inline-end-color: var(--mtx-btn-hover);
+}
+
+.mtx-button-group--vertical > .mtx-button--contained:not(.mtx-button-group__last) {
+  border-bottom-color: var(--mtx-btn-hover);
+}
+
+/* Text: línea del color al 50 % */
+.mtx-button-group--horizontal > .mtx-button--text:not(.mtx-button-group__last) {
+  border-inline-end-color: color-mix(in srgb, var(--mtx-btn-color) 50%, transparent);
+}
+
+.mtx-button-group--vertical > .mtx-button--text:not(.mtx-button-group__last) {
+  border-bottom-color: color-mix(in srgb, var(--mtx-btn-color) 50%, transparent);
+}
+
+.mtx-button-group > .mtx-button--contained:disabled:not(.mtx-button-group__last),
+.mtx-button-group > .mtx-button--contained[aria-disabled="true"]:not(.mtx-button-group__last),
+.mtx-button-group > .mtx-button--text:disabled:not(.mtx-button-group__last),
+.mtx-button-group > .mtx-button--text[aria-disabled="true"]:not(.mtx-button-group__last) {
+  border-color: transparent;
+  border-inline-end-color: var(--mtx-color-action-disabled);
+}
+
+.mtx-button-group--vertical > .mtx-button--contained:disabled:not(.mtx-button-group__last),
+.mtx-button-group--vertical > .mtx-button--contained[aria-disabled="true"]:not(.mtx-button-group__last),
+.mtx-button-group--vertical > .mtx-button--text:disabled:not(.mtx-button-group__last),
+.mtx-button-group--vertical > .mtx-button--text[aria-disabled="true"]:not(.mtx-button-group__last) {
+  border-inline-end-color: transparent;
+  border-bottom-color: var(--mtx-color-action-disabled);
+}
+
+/* Outlined: bordes solapados 1px; el botón activo se pinta encima */
+.mtx-button-group--horizontal > .mtx-button--outlined:not(.mtx-button-group__first) {
+  margin-inline-start: -1px;
+}
+
+.mtx-button-group--vertical > .mtx-button--outlined:not(.mtx-button-group__first) {
+  margin-top: -1px;
+}
+
+.mtx-button-group > .mtx-button:hover,
+.mtx-button-group > .mtx-button:focus-visible {
+  z-index: 1;
+}
+
+/* Botón de solo icono (p. ej. flecha del split button: un `.material-icons` o `svg`
+   directo, sin texto): padding compacto de MUI */
+.mtx-button-group > .mtx-button:has(> .material-icons:not(.mtx-button__icon)),
+.mtx-button-group > .mtx-button:has(> svg) {
+  padding-inline: 8px;
+}
+
+.mtx-button-group > .mtx-button--small:has(> .material-icons:not(.mtx-button__icon)),
+.mtx-button-group > .mtx-button--small:has(> svg) {
+  padding-inline: 4px;
+}

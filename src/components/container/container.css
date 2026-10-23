@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Materix UI — Container
+   Centra el contenido horizontalmente con un ancho máximo (MUI Container).
+   max-width = min(ancho fijo por breakpoint, tope de data-max-width).
+   ========================================================================== */
+
+.mtx-container {
+  --mtx-container-max: 1200px;  /* maxWidth="lg" por defecto, como MUI */
+  --mtx-container-fixed: 100%;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: min(var(--mtx-container-fixed), var(--mtx-container-max));
+  margin-inline: auto;
+  padding-inline: var(--mtx-spacing-2);
+}
+
+@media (min-width: 600px) {
+  .mtx-container {
+    padding-inline: var(--mtx-spacing-3);
+  }
+}
+
+/* Topes de ancho (data-max-width) */
+.mtx-container--xs { --mtx-container-max: 444px; }
+.mtx-container--sm { --mtx-container-max: 600px; }
+.mtx-container--md { --mtx-container-max: 900px; }
+.mtx-container--lg { --mtx-container-max: 1200px; }
+.mtx-container--xl { --mtx-container-max: 1536px; }
+.mtx-container--fluid { --mtx-container-max: 100%; }
+
+/* Sin márgenes laterales internos (data-disable-gutters) */
+.mtx-container.mtx-container--disable-gutters {
+  padding-inline: 0;
+}
+
+/* Ancho fijo: el max-width salta al min-width de cada breakpoint (data-fixed) */
+@media (min-width: 600px) {
+  .mtx-container--fixed { --mtx-container-fixed: 600px; }
+}
+@media (min-width: 900px) {
+  .mtx-container--fixed { --mtx-container-fixed: 900px; }
+}
+@media (min-width: 1200px) {
+  .mtx-container--fixed { --mtx-container-fixed: 1200px; }
+}
+@media (min-width: 1536px) {
+  .mtx-container--fixed { --mtx-container-fixed: 1536px; }
+}

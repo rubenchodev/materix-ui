@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkbox · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Option group with a legend (equivalent to MUI FormControl + FormLabel) */
+    .demo-checkbox-fieldset {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--mtx-spacing-1);
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .demo-checkbox-fieldset legend {
+      margin-bottom: var(--mtx-spacing-1);
+      padding: 0;
+      color: var(--mtx-color-text-secondary);
+      font: var(--mtx-type-body2);
+    }
+
+    .demo-checkbox-children {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--mtx-spacing-1);
+      padding-left: var(--mtx-spacing-3);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Checkbox</h1>
+        <p class="demo-lead">A box for selecting one or more options from a list or confirming a condition; supports an indeterminate state.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#label">With and without label</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#helper-error">Helper and error</a>
+      <a href="#indeterminate">Indeterminate</a>
+      <a href="#grouping">Grouping</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Write just the <code>&lt;input type="checkbox"&gt;</code> with <code>data-mtx="checkbox"</code> and <code>data-label</code>. The library wraps it in a <code>&lt;label class="mtx-checkbox"&gt;</code>, draws the box and the label, and keeps <code>name</code>, <code>value</code>, <code>checked</code> and every other native attribute.</p>
+      <div class="demo-row">
+        <input type="checkbox" data-mtx="checkbox" data-label="Remember me" checked />
+        <input type="checkbox" data-mtx="checkbox" data-label="Receive updates" />
+      </div>
+      <pre class="demo-code"><code>&lt;input type="checkbox" data-mtx="checkbox" data-label="Remember me" checked /&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Two sizes, as in MUI: <strong>medium</strong> (18px box, default) and <strong>small</strong> (16px and body2 text) with <code>data-size="small"</code>, for tables and dense forms.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Medium · 18px box (default)</span>
+          <div class="demo-row">
+            <input type="checkbox" data-mtx="checkbox" data-label="Medium" checked />
+            <input type="checkbox" data-mtx="checkbox" data-label="Medium" />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Small · 16px box</span>
+          <div class="demo-row">
+            <input type="checkbox" data-mtx="checkbox" data-label="Small" data-size="small" checked />
+            <input type="checkbox" data-mtx="checkbox" data-label="Small" data-size="small" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="label">
+      <h2>With and without label</h2>
+      <p>Without <code>data-label</code> only the box is drawn; in that case add <code>aria-label</code> (or <code>aria-labelledby</code>) so the control has an accessible name, as in table rows.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">With visible label</span>
+          <div class="demo-row">
+            <input type="checkbox" data-mtx="checkbox" data-label="Send a copy to my email" checked />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Box only · aria-label</span>
+          <div class="demo-row">
+            <input type="checkbox" data-mtx="checkbox" aria-label="Select row 1" checked />
+            <input type="checkbox" data-mtx="checkbox" aria-label="Select row 2" />
+            <input type="checkbox" data-mtx="checkbox" aria-label="Select row 3" data-size="small" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p>Primary is the default. Use <code>data-color</code> on the input (or the <code>mtx-checkbox--{color}</code> class, which is moved to the generated wrapper).</p>
+      <div class="demo-row">
+        <input type="checkbox" data-mtx="checkbox" data-label="Primary" checked />
+        <input type="checkbox" data-color="secondary" data-mtx="checkbox" data-label="Secondary" checked />
+        <input type="checkbox" data-color="success" data-mtx="checkbox" data-label="Success" checked />
+        <input type="checkbox" data-color="error" data-mtx="checkbox" data-label="Error" checked />
+        <input type="checkbox" data-color="warning" data-mtx="checkbox" data-label="Warning" checked />
+        <input type="checkbox" data-color="info" data-mtx="checkbox" data-label="Info" checked />
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover to see the border change color, press to see the ripple, and use <kbd>Tab</kbd> and <kbd>Space</kbd> to focus and check. The native input does not support <code>readonly</code>: to lock a checkbox use <code>disabled</code>.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Enabled</span>
+          <div class="demo-row demo-row--col">
+            <input type="checkbox" data-mtx="checkbox" data-label="Unchecked" />
+            <input type="checkbox" data-mtx="checkbox" data-label="Checked" checked />
+            <input type="checkbox" data-mtx="checkbox" data-label="Indeterminate" data-indeterminate />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled · disabled</span>
+          <div class="demo-row demo-row--col">
+            <input type="checkbox" data-mtx="checkbox" data-label="Unchecked" disabled />
+            <input type="checkbox" data-mtx="checkbox" data-label="Checked" checked disabled />
+            <input type="checkbox" data-mtx="checkbox" data-label="Indeterminate" data-indeterminate disabled />
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error and helper text</span>
+          <div class="demo-row demo-row--col">
+            <input type="checkbox" data-mtx="checkbox" data-label="Terms of service" data-error="You must accept the terms." required />
+            <input type="checkbox" data-mtx="checkbox" data-label="Share usage statistics" data-helper-text="Anonymous; you can turn it off later." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="helper-error">
+      <h2>Helper and error (FormHelperText)</h2>
+      <p><code>data-helper-text</code> wraps the checkbox in <code>.mtx-form-control</code> and adds a <code>.mtx-form-helper-text</code> below it, linked with <code>aria-describedby</code> (outside the <code>&lt;label&gt;</code>, so it does not mix with the name). An empty <code>data-error</code> turns on the error state and keeps the helper; with text, the message replaces it. In both cases the input gets <code>aria-invalid="true"</code> and the box border turns red.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Helper text</span>
+          <input type="checkbox" data-mtx="checkbox" data-label="Email me the receipt" data-helper-text="It will be sent to jane@example.com" checked />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error without message · data-error</span>
+          <input type="checkbox" data-mtx="checkbox" data-label="I confirm I am of legal age" data-helper-text="Legal requirement" data-error />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Validation on submit</span>
+          <form id="checkbox-consent-form" class="demo-stack" novalidate>
+            <input type="checkbox" id="checkbox-consent" data-mtx="checkbox" data-label="I accept the terms and the privacy policy" required />
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Create account</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Manual FormHelperText · .mtx-form-control</span>
+        <div class="mtx-form-control">
+          <label class="mtx-checkbox" data-mtx="checkbox">
+            <input type="checkbox" />
+            <span class="mtx-checkbox__box"></span>
+            <span class="mtx-checkbox__label">Subscribe to the newsletter</span>
+          </label>
+          <p class="mtx-form-helper-text">One email a month, no spam.</p>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;input type="checkbox" data-mtx="checkbox" data-label="I accept the terms" data-helper-text="Required" /&gt;
+&lt;input type="checkbox" data-mtx="checkbox" data-label="I accept the terms" data-error="You must accept the terms." /&gt;
+
+&lt;!-- Manual: the existing helper is linked with aria-describedby --&gt;
+&lt;div class="mtx-form-control"&gt;
+  &lt;label class="mtx-checkbox" data-mtx="checkbox"&gt;…&lt;/label&gt;
+  &lt;p class="mtx-form-helper-text"&gt;One email a month, no spam.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="indeterminate">
+      <h2>Indeterminate</h2>
+      <p>The indeterminate state shows that only some child options are checked. Declare it with <code>data-indeterminate</code> or the <code>indeterminate</code> property; the library keeps <code>aria-checked="mixed"</code> in sync. Check or uncheck the options to see it in action.</p>
+      <div class="demo-panel demo-fixed-width">
+        <input type="checkbox" data-mtx="checkbox" data-label="All permissions" id="checkbox-parent" data-indeterminate />
+        <div class="demo-checkbox-children" id="checkbox-children">
+          <input type="checkbox" data-mtx="checkbox" data-label="Read" checked />
+          <input type="checkbox" data-mtx="checkbox" data-label="Write" />
+          <input type="checkbox" data-mtx="checkbox" data-label="Delete" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grouping">
+      <h2>Grouping</h2>
+      <p>Group related checkboxes in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>: screen readers announce the legend when entering the group. Use the same <code>name</code> to submit them together in a form.</p>
+      <div class="demo-grid-2">
+        <fieldset class="demo-checkbox-fieldset">
+          <legend>Email notifications</legend>
+          <input type="checkbox" name="notify" value="comments" data-mtx="checkbox" data-label="Comments" checked />
+          <input type="checkbox" name="notify" value="mentions" data-mtx="checkbox" data-label="Mentions" checked />
+          <input type="checkbox" name="notify" value="digest" data-mtx="checkbox" data-label="Weekly digest" />
+        </fieldset>
+        <fieldset class="demo-checkbox-fieldset">
+          <legend>Interests (small)</legend>
+          <input type="checkbox" name="topics" value="design" data-mtx="checkbox" data-label="Design" data-size="small" />
+          <input type="checkbox" name="topics" value="frontend" data-mtx="checkbox" data-label="Frontend" data-size="small" checked />
+          <input type="checkbox" name="topics" value="a11y" data-mtx="checkbox" data-label="Accessibility" data-size="small" checked />
+        </fieldset>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>A sign-in form with a "Remember me" checkbox and a terms confirmation before submitting.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Sign-in form</span>
+          <form class="demo-panel" onsubmit="return false">
+            <input data-mtx="text-field" data-label="Email" data-start-icon="email" type="email" autocomplete="email" />
+            <input data-mtx="text-field" data-label="Password" data-start-icon="lock" type="password" autocomplete="current-password" />
+            <input type="checkbox" name="remember" data-mtx="checkbox" data-label="Remember me on this device" />
+            <button class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" type="submit">Sign in</button>
+          </form>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Confirmation before submitting</span>
+          <div class="demo-panel">
+            <input type="checkbox" data-mtx="checkbox" data-label="I have read and accept the terms" id="checkbox-terms" />
+            <button class="mtx-button mtx-button--contained" data-mtx="button" id="checkbox-terms-submit" disabled>Create account</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>With <code>mtx-grid</code> a long list of options is split into columns: one on mobile, two from 600px and three from 900px.</p>
+      <div data-mtx="grid" data-spacing="1">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="checkbox" data-label="Monday" checked /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="checkbox" data-label="Tuesday" checked /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="checkbox" data-label="Wednesday" checked /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="checkbox" data-label="Thursday" checked /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="checkbox" data-label="Friday" checked /></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input type="checkbox" data-mtx="checkbox" data-label="Saturday" /></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>Materix.getInstance(input)</code> returns the instance (it also works with the generated <code>&lt;label&gt;</code>). Changes made from code do not fire events; user changes emit the input's native <code>change</code>, logged below.</p>
+      <div class="demo-group">
+        <span class="demo-label">Controlled checkbox</span>
+        <div class="demo-row">
+          <input type="checkbox" data-mtx="checkbox" data-label="Controlled checkbox" id="checkbox-target" />
+          <span class="demo-status" id="checkbox-status">checked: false · indeterminate: false · disabled: false</span>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-checkbox-action="toggle">toggle()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-checkbox-action="check">checked = true</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-checkbox-action="indeterminate">indeterminate = true</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-checkbox-action="disable">disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-checkbox-action="enable">enable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-checkbox-action="focus">focus()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-checkbox-action="error">setError()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-checkbox-action="clear">clearError()</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="checkbox-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The full structure declares the wrapping <code>&lt;label&gt;</code> with <code>data-mtx</code>, the input, the visual box and the label. The library reuses the existing nodes without duplicating them.</p>
+      <div class="demo-row">
+        <label class="mtx-checkbox" data-mtx="checkbox">
+          <input type="checkbox" checked />
+          <span class="mtx-checkbox__box"></span>
+          <span class="mtx-checkbox__label">Checked</span>
+        </label>
+        <label class="mtx-checkbox mtx-checkbox--secondary mtx-checkbox--small" data-mtx="checkbox">
+          <input type="checkbox" />
+          <span class="mtx-checkbox__box"></span>
+          <span class="mtx-checkbox__label">Secondary small</span>
+        </label>
+      </div>
+      <pre class="demo-code"><code>&lt;label class="mtx-checkbox" data-mtx="checkbox"&gt;
+  &lt;input type="checkbox" checked /&gt;
+  &lt;span class="mtx-checkbox__box"&gt;&lt;/span&gt;
+  &lt;span class="mtx-checkbox__label"&gt;Checked&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Seleccionar todo con estado indeterminado.
+      var parent = Materix.getInstance(document.getElementById('checkbox-parent'));
+      var children = Array.prototype.map.call(
+        document.querySelectorAll('#checkbox-children input[type="checkbox"]'),
+        function (input) { return Materix.getInstance(input); }
+      );
+
+      /** Recalcula el estado de la casilla padre a partir de las hijas. */
+      function syncParent() {
+        var checkedCount = children.filter(function (c) { return c.checked; }).length;
+        parent.indeterminate = checkedCount > 0 && checkedCount < children.length;
+        parent.checked = checkedCount === children.length;
+      }
+
+      parent.input.addEventListener('change', function () {
+        children.forEach(function (c) { c.checked = parent.checked; });
+        syncParent();
+      });
+      children.forEach(function (c) { c.input.addEventListener('change', syncParent); });
+      syncParent();
+
+      // Confirmación de términos.
+      var terms = document.getElementById('checkbox-terms');
+      var submit = Materix.getInstance(document.getElementById('checkbox-terms-submit'));
+      terms.addEventListener('change', function () {
+        if (terms.checked) submit.enable(); else submit.disable();
+      });
+
+      // Consentimiento obligatorio con FormHelperText.
+      var consentInput = document.getElementById('checkbox-consent');
+      var consent = Materix.getInstance(consentInput);
+      document.getElementById('checkbox-consent-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (consent.checked) consent.clearError();
+        else consent.setError('You must accept the terms to continue.');
+      });
+      consentInput.addEventListener('change', function () { if (consent.checked) consent.clearError(); });
+
+      // Uso programático.
+      var target = document.getElementById('checkbox-target');
+      var checkbox = Materix.getInstance(target);
+      var logEl = document.getElementById('checkbox-log');
+      var statusEl = document.getElementById('checkbox-status');
+
+      /** Añade una línea al registro de eventos. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      /** Refleja el estado actual de la instancia. */
+      function syncStatus() {
+        statusEl.textContent = 'checked: ' + checkbox.checked + ' · indeterminate: ' + checkbox.indeterminate + ' · disabled: ' + checkbox.disabled;
+      }
+
+      target.addEventListener('change', function () {
+        log('change (user) → checked: ' + target.checked + ', aria-checked: ' + target.getAttribute('aria-checked'));
+        syncStatus();
+      });
+
+      var actions = {
+        toggle: function () { checkbox.toggle(); return 'checkbox.toggle()'; },
+        check: function () { checkbox.checked = true; return 'checkbox.checked = true'; },
+        indeterminate: function () { checkbox.indeterminate = true; return 'checkbox.indeterminate = true → aria-checked: ' + target.getAttribute('aria-checked'); },
+        disable: function () { checkbox.disable(); return 'checkbox.disable()'; },
+        enable: function () { checkbox.enable(); return 'checkbox.enable()'; },
+        focus: function () { checkbox.focus(); return 'checkbox.focus()'; },
+        error: function () { checkbox.setError('Check this box.'); return 'checkbox.setError(...) → aria-invalid: ' + target.getAttribute('aria-invalid'); },
+        clear: function () { checkbox.clearError(); return 'checkbox.clearError()'; }
+      };
+
+      document.querySelectorAll('[data-checkbox-action]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          log(actions[btn.getAttribute('data-checkbox-action')]());
+          syncStatus();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

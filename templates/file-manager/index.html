@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File manager · Materix UI Templates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="icon" href="data:,">
+  <script src="../shared/template.js"></script>
+  <style>
+    /* Marca: logotipo con degradado */
+    .tpl-fm-logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--mtx-color-primary), var(--mtx-color-info)); color: var(--mtx-color-primary-contrast); }
+
+    /* Navegación en píldora (decisión de diseño estilo Drive) */
+    .tpl-fm-nav .mtx-list-item-button { width: calc(100% - 12px); border-radius: 0 999px 999px 0; }
+    .tpl-fm-nav .mtx-list-item--selected { font-weight: 500; }
+    .tpl-fm-nav .mtx-list-item--selected .mtx-list-item-icon { color: var(--mtx-color-primary); }
+
+    /* Tarjetas de archivo: elevación al pasar el puntero y área de vista previa */
+    .tpl-fm-tile:hover { box-shadow: var(--mtx-elevation-2); }
+    .tpl-fm-preview { height: 128px; }
+    @media (prefers-reduced-motion: no-preference) {
+      .tpl-fm-tile, .tpl-fm-dropzone { transition: box-shadow var(--mtx-duration-shorter) var(--mtx-easing-standard), background-color var(--mtx-duration-shorter) var(--mtx-easing-standard), border-color var(--mtx-duration-shorter) var(--mtx-easing-standard); }
+    }
+
+    /* Zona de arrastre y superposición al soltar archivos */
+    .tpl-fm-dropzone { border: 2px dashed var(--mtx-color-divider); }
+    .tpl-fm-overlay { inset: calc(var(--mtx-app-bar-height) + 8px) 8px 8px; border: 2px dashed var(--mtx-color-primary); opacity: 0.94; }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-fm-main">Skip to content</a>
+
+  <header data-mtx="app-bar" data-position="fixed" data-color="default" data-elevation="0" data-start-icon="menu" data-drawer="tpl-fm-nav">
+    <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1_5 mtx-flex-shrink-0 mtx-me-1 mtx-color-text-primary mtx-text-decoration-none mtx-typography--h6" href="#" aria-label="Cloudbox home">
+      <span class="tpl-fm-logo mtx-d-inline-flex mtx-align-items-center mtx-justify-content-center"><span class="material-icons" aria-hidden="true">cloud</span></span>
+      <span class="mtx-d-none mtx-d-sm-inline">Cloudbox</span>
+    </a>
+    <div class="mtx-app-bar-search mtx-app-bar-search--grow mtx-mx-0_5 mtx-mx-sm-2" role="search">
+      <span class="material-icons" aria-hidden="true">search</span>
+      <input type="search" id="tpl-fm-search" placeholder="Search in Drive" aria-label="Search files and folders" autocomplete="off">
+    </div>
+    <div class="mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-ms-auto">
+      <button class="mtx-button mtx-button--outlined mtx-d-none mtx-d-sm-inline-flex mtx-me-1" data-mtx="button" type="button" data-tpl-upload>
+        <span class="mtx-button__icon material-icons" aria-hidden="true">upload</span>
+        Upload
+      </button>
+      <button data-mtx="icon-button" data-mtx-theme-toggle aria-label="Toggle theme"><span class="material-icons" aria-hidden="true">dark_mode</span></button>
+      <div data-mtx="avatar" data-color="secondary" class="mtx-d-none mtx-d-sm-flex" role="img" aria-label="Signed in as Olivia Martin">OM</div>
+    </div>
+  </header>
+
+  <div class="mtx-d-flex">
+    <div data-mtx="drawer" id="tpl-fm-nav" data-variant="responsive" data-breakpoint="md" data-clipped data-width="256px" data-title="Cloudbox" data-header="temporary" aria-label="Drive">
+      <div class="mtx-px-2 mtx-pt-2 mtx-pb-1">
+        <button class="mtx-button mtx-button--contained mtx-button--large" data-mtx="button" type="button" data-open-menu="#tpl-fm-new-menu">
+          <span class="mtx-button__icon material-icons" aria-hidden="true">add</span>
+          New
+        </button>
+      </div>
+      <nav data-mtx="list" class="tpl-fm-nav" aria-label="Locations">
+        <button data-mtx="list-item-button" data-icon="folder" data-section="files" data-selected type="button" data-mtx-drawer-close>My files</button>
+        <button data-mtx="list-item-button" data-icon="people" data-section="shared" type="button" data-mtx-drawer-close>Shared with me</button>
+        <button data-mtx="list-item-button" data-icon="schedule" data-section="recent" type="button" data-mtx-drawer-close>Recent</button>
+        <button data-mtx="list-item-button" data-icon="star_border" data-section="starred" type="button" data-mtx-drawer-close>Starred</button>
+        <button data-mtx="list-item-button" data-icon="delete_outline" data-section="trash" type="button" data-mtx-drawer-close>Trash</button>
+        <button data-mtx="list-item-button" data-icon="upload" class="mtx-drawer__temporary-only" type="button" data-no-select data-tpl-upload data-mtx-drawer-close>Upload files</button>
+      </nav>
+      <section class="mtx-mt-auto mtx-px-3 mtx-pt-2 mtx-pb-3 mtx-border-top" aria-labelledby="tpl-fm-storage-title">
+        <div class="mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-mb-1_5 mtx-typography--subtitle2">
+          <span class="material-icons mtx-color-text-secondary" aria-hidden="true">cloud_queue</span><span id="tpl-fm-storage-title">Storage</span>
+        </div>
+        <div data-mtx="linear-progress" data-rounded data-value="68" id="tpl-fm-storage-bar" aria-labelledby="tpl-fm-storage-title"></div>
+        <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mt-1 mtx-mb-1_5" id="tpl-fm-storage-text"></p>
+        <dl class="mtx-d-flex mtx-flex-column mtx-gap-0_5 mtx-m-0 mtx-mb-2 mtx-typography--body2 mtx-color-text-secondary">
+          <div class="mtx-d-flex mtx-justify-content-between"><dt>Documents</dt><dd class="mtx-m-0 mtx-color-text-primary">18.2 GB</dd></div>
+          <div class="mtx-d-flex mtx-justify-content-between"><dt>Photos &amp; video</dt><dd class="mtx-m-0 mtx-color-text-primary">41.6 GB</dd></div>
+          <div class="mtx-d-flex mtx-justify-content-between"><dt>Other</dt><dd class="mtx-m-0 mtx-color-text-primary">8.6 GB</dd></div>
+        </dl>
+        <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button" type="button" data-tpl-get-storage>Get more storage</button>
+      </section>
+    </div>
+
+    <main id="tpl-fm-main" class="mtx-flex-1 mtx-min-w-0 mtx-position-relative" tabindex="-1">
+      <div class="mtx-toolbar-offset"></div>
+      <div class="mtx-px-2 mtx-px-md-4 mtx-pt-1_5 mtx-pb-6">
+        <nav data-mtx="breadcrumbs" id="tpl-fm-crumbs" data-separator="chevron_right" aria-label="Breadcrumb" class="mtx-typography--body2" hidden>
+          <ol><li>My files</li></ol>
+        </nav>
+
+        <div data-mtx="table-toolbar" id="tpl-fm-toolbar" class="mtx-rounded-pill mtx-ps-0 mtx-pe-1 mtx-mb-1" aria-label="Files toolbar" data-selected-text="{0} selected">
+          <h1 class="mtx-flex-1 mtx-min-w-0 mtx-text-truncate mtx-typography--h5" id="tpl-fm-title" data-show="default">My files</h1>
+          <div class="mtx-table-toolbar__actions" data-show="selected">
+            <button data-mtx="icon-button" data-icon="close" aria-label="Clear selection" data-tpl-clear-selection></button>
+          </div>
+          <div class="mtx-table-toolbar__count"></div>
+          <div class="mtx-table-toolbar__actions" data-show="default">
+            <button class="mtx-button mtx-button--text mtx-button--small" data-mtx="button" type="button" data-open-menu="#tpl-fm-sort-menu" aria-label="Sort by: Name" id="tpl-fm-sort-btn">
+              <span class="mtx-button__icon material-icons" aria-hidden="true">sort</span>
+              <span id="tpl-fm-sort-label">Name</span>
+            </button>
+            <div data-mtx="toggle-button-group" id="tpl-fm-view" data-exclusive data-enforce-value-set data-value="grid" data-size="small" data-color="primary" data-label="Layout">
+              <button type="button" data-value="grid" data-icon="grid_view" aria-label="Grid view"></button>
+              <button type="button" data-value="list" data-icon="view_list" aria-label="List view"></button>
+            </div>
+          </div>
+          <div class="mtx-table-toolbar__actions mtx-gap-0" data-show="selected">
+            <button data-mtx="icon-button" data-icon="select_all" aria-label="Select all" data-tpl-select-all></button>
+            <button data-mtx="icon-button" data-icon="file_download" aria-label="Download selected" data-tpl-bulk-download></button>
+            <button data-mtx="icon-button" data-icon="star_border" aria-label="Star selected" data-tpl-bulk-star></button>
+            <button data-mtx="icon-button" data-icon="delete" aria-label="Move selected to trash" data-tpl-bulk-delete></button>
+          </div>
+        </div>
+
+        <div id="tpl-fm-content" aria-live="polite"></div>
+
+        <div class="tpl-fm-dropzone mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-justify-content-center mtx-column-gap-2 mtx-row-gap-1 mtx-mt-4 mtx-p-3 mtx-rounded-3 mtx-text-center mtx-typography--body2 mtx-color-text-secondary" id="tpl-fm-dropzone">
+          <span class="material-icons mtx-color-primary" aria-hidden="true">cloud_upload</span>
+          <span>Drag and drop files here to upload, or</span>
+          <button class="mtx-button mtx-button--text mtx-button--small" data-mtx="button" type="button" data-tpl-upload>Browse files</button>
+        </div>
+      </div>
+      <div class="tpl-fm-overlay mtx-position-absolute mtx-z-1 mtx-d-flex mtx-flex-column mtx-align-items-center mtx-justify-content-center mtx-gap-1 mtx-rounded-3 mtx-bg-paper mtx-color-primary mtx-fw-medium mtx-pointer-events-none" id="tpl-fm-overlay" aria-hidden="true" hidden>
+        <span class="material-icons">cloud_upload</span>
+        <span id="tpl-fm-overlay-text">Drop files to upload</span>
+      </div>
+      <input type="file" id="tpl-fm-file-input" class="mtx-visually-hidden" multiple tabindex="-1" aria-hidden="true" aria-label="Upload files">
+    </main>
+  </div>
+
+  <!-- Menús -->
+  <div data-mtx="menu" id="tpl-fm-new-menu">
+    <div data-mtx="menu-item" data-icon="create_new_folder" data-value="folder">New folder</div>
+    <div data-mtx="menu-item" data-divider></div>
+    <div data-mtx="menu-item" data-icon="upload_file" data-value="upload">File upload</div>
+  </div>
+
+  <div data-mtx="menu" id="tpl-fm-sort-menu">
+    <div data-mtx="menu-item" role="menuitemradio" data-value="name" data-checked>Name</div>
+    <div data-mtx="menu-item" role="menuitemradio" data-value="modified">Last modified</div>
+    <div data-mtx="menu-item" role="menuitemradio" data-value="size">File size</div>
+  </div>
+
+  <div data-mtx="menu" id="tpl-fm-item-menu">
+    <div data-mtx="menu-item" data-icon="open_in_new" data-value="open">Open</div>
+    <div data-mtx="menu-item" data-icon="drive_file_rename_outline" data-value="rename">Rename</div>
+    <div data-mtx="menu-item" data-icon="file_download" data-value="download">Download</div>
+    <div data-mtx="menu-item" data-icon="star_border" data-value="star"><span data-tpl-star-label>Add to starred</span></div>
+    <div data-mtx="menu-item" data-divider></div>
+    <div data-mtx="menu-item" data-icon="restore" data-value="restore">Restore</div>
+    <div data-mtx="menu-item" data-icon="delete" data-value="delete"><span data-tpl-delete-label>Move to trash</span></div>
+  </div>
+
+  <!-- Diálogos -->
+  <div data-mtx="dialog" id="tpl-fm-rename-dialog" data-title="Rename">
+    <form id="tpl-fm-rename-form" novalidate>
+      <input data-mtx="text-field" data-label="Name" type="text" id="tpl-fm-rename-input" name="name" class="mtx-text-field--full-width" autocomplete="off" required>
+    </form>
+    <div class="mtx-dialog__actions">
+      <button class="mtx-button mtx-button--text" data-mtx="button" type="button" data-mtx-dialog-close>Cancel</button>
+      <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit" form="tpl-fm-rename-form" id="tpl-fm-rename-submit">Rename</button>
+    </div>
+  </div>
+
+  <div data-mtx="dialog" id="tpl-fm-delete-dialog" class="mtx-dialog--max-sm" data-title="Move to trash?" data-description="The selected items will be moved to the trash.">
+    <div class="mtx-dialog__actions">
+      <button class="mtx-button mtx-button--text" data-mtx="button" type="button" data-mtx-dialog-close data-dialog-autofocus>Cancel</button>
+      <button class="mtx-button mtx-button--contained mtx-button--error" data-mtx="button" type="button" id="tpl-fm-delete-confirm">Move to trash</button>
+    </div>
+  </div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      'use strict';
+
+      var STORAGE_QUOTA = 100 * 1024 * 1024 * 1024;
+      var BASE_USAGE = 68.4 * 1024 * 1024 * 1024;
+      var TYPE_META = {
+        folder: { icon: 'folder', color: 'primary', label: 'Folder' },
+        pdf: { icon: 'picture_as_pdf', color: 'error', label: 'PDF document' },
+        image: { icon: 'image', color: 'success', label: 'Image' },
+        doc: { icon: 'description', color: 'info', label: 'Document' },
+        sheet: { icon: 'table_chart', color: 'success', label: 'Spreadsheet' },
+        slides: { icon: 'slideshow', color: 'warning', label: 'Presentation' },
+        video: { icon: 'movie', color: 'secondary', label: 'Video' },
+        audio: { icon: 'audiotrack', color: 'secondary', label: 'Audio' },
+        archive: { icon: 'folder_zip', color: 'default', label: 'Archive' },
+        file: { icon: 'insert_drive_file', color: 'default', label: 'File' }
+      };
+      var EXT_TYPES = { pdf: 'pdf', png: 'image', jpg: 'image', jpeg: 'image', gif: 'image', svg: 'image', webp: 'image', doc: 'doc', docx: 'doc', txt: 'doc', md: 'doc', xls: 'sheet', xlsx: 'sheet', csv: 'sheet', ppt: 'slides', pptx: 'slides', key: 'slides', mp4: 'video', mov: 'video', webm: 'video', mp3: 'audio', wav: 'audio', zip: 'archive', rar: 'archive', '7z': 'archive' };
+      var SECTION_TITLES = { files: 'My files', shared: 'Shared with me', recent: 'Recent', starred: 'Starred', trash: 'Trash' };
+      var SORT_LABELS = { name: 'Name', modified: 'Last modified', size: 'File size' };
+      var MB = 1024 * 1024;
+
+      var nextId = 1;
+      /**
+       * Crea un elemento del árbol de archivos.
+       * @param {Object} data Datos parciales.
+       * @returns {Object} Elemento normalizado.
+       */
+      var makeItem = function (data) {
+        return Object.assign({ id: 'f' + (nextId++), parent: null, owner: 'me', starred: false, trashed: false, size: 0 }, data);
+      };
+
+      var items = [
+        makeItem({ name: 'Design assets', type: 'folder', modified: '2026-10-17T15:20:00' }),
+        makeItem({ name: 'Marketing Q4', type: 'folder', modified: '2026-10-16T09:12:00', starred: true }),
+        makeItem({ name: 'Contracts', type: 'folder', modified: '2026-10-02T11:40:00' }),
+        makeItem({ name: 'Product specs', type: 'folder', modified: '2026-09-28T17:05:00' }),
+        makeItem({ name: 'Brand guidelines v3.pdf', type: 'pdf', size: 4.8 * MB, modified: '2026-10-18T10:24:00', starred: true }),
+        makeItem({ name: 'Q3 revenue report.xlsx', type: 'sheet', size: 1.2 * MB, modified: '2026-10-15T08:51:00' }),
+        makeItem({ name: 'Homepage hero.png', type: 'image', size: 3.4 * MB, modified: '2026-10-14T16:33:00' }),
+        makeItem({ name: 'Onboarding deck.pptx', type: 'slides', size: 12.6 * MB, modified: '2026-10-11T13:02:00' }),
+        makeItem({ name: 'Product demo.mp4', type: 'video', size: 248 * MB, modified: '2026-10-09T18:47:00' }),
+        makeItem({ name: 'Meeting notes - Oct 14.docx', type: 'doc', size: 0.3 * MB, modified: '2026-10-14T12:10:00' }),
+        makeItem({ name: 'Assets backup.zip', type: 'archive', size: 864 * MB, modified: '2026-09-30T21:15:00' }),
+        makeItem({ name: 'Podcast episode 12.mp3', type: 'audio', size: 58 * MB, modified: '2026-09-25T07:30:00' }),
+        makeItem({ name: 'Partner agreement - Northwind.pdf', type: 'pdf', size: 0.9 * MB, modified: '2026-10-12T14:44:00', owner: 'Liam Carter' }),
+        makeItem({ name: 'Roadmap 2027.pptx', type: 'slides', size: 8.1 * MB, modified: '2026-10-16T19:20:00', owner: 'Ava Thompson', starred: true }),
+        makeItem({ name: 'Customer interviews.docx', type: 'doc', size: 0.6 * MB, modified: '2026-10-08T10:05:00', owner: 'Noah Kim' }),
+        makeItem({ name: 'Old logo concepts.png', type: 'image', size: 2.2 * MB, modified: '2026-08-21T09:00:00', trashed: true })
+      ];
+      var byName = function (name) { return items.find(function (i) { return i.name === name; }); };
+      var design = byName('Design assets');
+      var marketing = byName('Marketing Q4');
+      var contracts = byName('Contracts');
+      [
+        { name: 'Icons', type: 'folder', parent: design.id, modified: '2026-10-17T15:20:00' },
+        { name: 'App mockups.png', type: 'image', parent: design.id, size: 6.2 * MB, modified: '2026-10-17T14:02:00' },
+        { name: 'Color palette.pdf', type: 'pdf', parent: design.id, size: 0.4 * MB, modified: '2026-10-10T11:11:00' },
+        { name: 'Illustrations.zip', type: 'archive', parent: design.id, size: 120 * MB, modified: '2026-10-05T16:40:00' },
+        { name: 'Campaign brief.docx', type: 'doc', parent: marketing.id, size: 0.2 * MB, modified: '2026-10-16T09:12:00' },
+        { name: 'Ad budget.xlsx', type: 'sheet', parent: marketing.id, size: 0.5 * MB, modified: '2026-10-13T15:30:00' },
+        { name: 'Launch video.mp4', type: 'video', parent: marketing.id, size: 312 * MB, modified: '2026-10-07T12:00:00' },
+        { name: 'NDA template.pdf', type: 'pdf', parent: contracts.id, size: 0.2 * MB, modified: '2026-10-02T11:40:00' }
+      ].forEach(function (d) { items.push(makeItem(d)); });
+
+      var state = { section: 'files', folder: null, view: 'grid', sort: 'name', query: '', selected: new Set() };
+      var pending = null;
+
+      var $ = function (sel, root) { return (root || document).querySelector(sel); };
+      var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+      var esc = function (str) { return String(str).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+      var inst = function (id) { return Materix.getInstance(document.getElementById(id)); };
+      var content = $('#tpl-fm-content');
+      var main = $('#tpl-fm-main');
+      var crumbsEl = $('#tpl-fm-crumbs');
+      var crumbs = inst('tpl-fm-crumbs');
+      var toolbar = inst('tpl-fm-toolbar');
+      var viewGroup = $('#tpl-fm-view');
+      var storageBar = inst('tpl-fm-storage-bar');
+      var dropzone = $('#tpl-fm-dropzone');
+      var overlay = $('#tpl-fm-overlay');
+
+      /**
+       * Formatea un tamaño en bytes.
+       * @param {number} bytes Tamaño.
+       * @returns {string} Tamaño legible.
+       */
+      var formatSize = function (bytes) {
+        if (!bytes) return '—';
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < MB) return Math.round(bytes / 1024) + ' KB';
+        if (bytes < 1024 * MB) return (bytes / MB).toFixed(bytes < 10 * MB ? 1 : 0) + ' MB';
+        return (bytes / 1024 / MB).toFixed(1) + ' GB';
+      };
+      var DATE_FMT = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      var formatDate = function (iso) { return DATE_FMT.format(new Date(iso)); };
+      var folderSize = function (folder) {
+        var n = items.filter(function (i) { return i.parent === folder.id && !i.trashed; }).length;
+        return n === 0 ? 'Empty' : n === 1 ? '1 item' : n + ' items';
+      };
+
+      /**
+       * Muestra una notificación con acción de deshacer opcional.
+       * @param {string} message Texto.
+       * @param {Function} [undo] Acción de deshacer.
+       */
+      var notify = function (message, undo) {
+        Materix.snackbar.show({ message: message, action: undo ? 'Undo' : null, onAction: undo || null, duration: 5000, anchor: 'bottom-left' });
+      };
+
+      /** Actualiza la barra de almacenamiento. */
+      var updateStorage = function () {
+        var uploaded = items.filter(function (i) { return i.uploaded && !i.trashed; }).reduce(function (s, i) { return s + i.size; }, 0);
+        var used = BASE_USAGE + uploaded;
+        var pct = Math.min(100, used / STORAGE_QUOTA * 100);
+        var text = formatSize(used) + ' of 100 GB used';
+        storageBar.value = pct;
+        storageBar.color = pct >= 85 ? 'warning' : 'primary';
+        storageBar.element.setAttribute('aria-valuetext', text);
+        $('#tpl-fm-storage-text').textContent = text;
+      };
+
+      /**
+       * Devuelve los elementos visibles según sección, carpeta, búsqueda y orden.
+       * @returns {Object[]} Elementos.
+       */
+      var visibleItems = function () {
+        var list;
+        var q = state.query.trim().toLowerCase();
+        if (q) {
+          list = items.filter(function (i) { return !i.trashed && i.name.toLowerCase().indexOf(q) !== -1; });
+        } else if (state.section === 'files') {
+          list = items.filter(function (i) { return !i.trashed && i.owner === 'me' && i.parent === state.folder; });
+        } else if (state.section === 'shared') {
+          list = items.filter(function (i) { return !i.trashed && i.owner !== 'me'; });
+        } else if (state.section === 'recent') {
+          return items.filter(function (i) { return !i.trashed && i.type !== 'folder'; })
+            .sort(function (a, b) { return b.modified.localeCompare(a.modified); }).slice(0, 10);
+        } else if (state.section === 'starred') {
+          list = items.filter(function (i) { return !i.trashed && i.starred; });
+        } else {
+          list = items.filter(function (i) { return i.trashed; });
+        }
+        var cmp = {
+          name: function (a, b) { return a.name.localeCompare(b.name, 'en', { numeric: true }); },
+          modified: function (a, b) { return b.modified.localeCompare(a.modified); },
+          size: function (a, b) { return b.size - a.size; }
+        }[state.sort];
+        return list.sort(cmp);
+      };
+
+      /** Actualiza migas de pan y título. */
+      var renderCrumbs = function () {
+        var trail = [{ label: state.query ? 'Search results' : SECTION_TITLES[state.section], data: { folder: '' } }];
+        if (!state.query && state.section === 'files' && state.folder) {
+          var chain = [];
+          var current = findItem(state.folder);
+          while (current) { chain.unshift(current); current = findItem(current.parent); }
+          chain.forEach(function (f) { trail.push({ label: f.name, data: { folder: f.id } }); });
+        }
+        crumbs.setItems(trail);
+        crumbsEl.hidden = trail.length < 2;
+        $('#tpl-fm-title').textContent = trail[trail.length - 1].label;
+      };
+
+      var typeIcon = function (item) {
+        var meta = TYPE_META[item.type] || TYPE_META.file;
+        var color = meta.color === 'default' ? 'text-secondary' : meta.color;
+        return '<span class="material-icons mtx-flex-shrink-0 mtx-color-' + color + '" role="img" aria-label="' + meta.label + '">' + meta.icon + '</span>';
+      };
+      var nameHtml = function (item) {
+        var cls = 'mtx-flex-1 mtx-min-w-0 mtx-text-truncate mtx-fw-medium';
+        if (item.type === 'folder' && !item.trashed) {
+          return '<button type="button" data-mtx="link" data-color="inherit" data-underline="hover" class="' + cls + ' mtx-text-start" data-open="' + item.id + '" title="' + esc(item.name) + '">' + esc(item.name) + '</button>';
+        }
+        return '<span class="' + cls + '" title="' + esc(item.name) + '">' + esc(item.name) + '</span>';
+      };
+      var starHtml = function (item) {
+        return item.starred ? '<span class="material-icons mtx-color-warning" role="img" aria-label="Starred">star</span>' : '';
+      };
+      var moreHtml = function (item) {
+        return '<button data-mtx="icon-button" data-icon="more_vert" data-more="' + item.id + '" data-open-menu="#tpl-fm-item-menu" aria-label="More actions for ' + esc(item.name) + '"></button>';
+      };
+      var sizeText = function (item) { return item.type === 'folder' ? folderSize(item) : formatSize(item.size); };
+      var ownerText = function (item) { return item.owner === 'me' ? 'You' : esc(item.owner); };
+      var tileState = function (on) { return on ? ' mtx-border-primary mtx-bg-action-selected' : ' mtx-bg-paper'; };
+
+      /**
+       * Pinta una lista de elementos como cuadrícula de tarjetas.
+       * @param {Object[]} list Elementos.
+       * @returns {string} HTML.
+       */
+      var gridHtml = function (list) {
+        return '<div data-mtx="grid" data-spacing="1" data-spacing-sm="2" role="list">' + list.map(function (item) {
+          var meta = TYPE_META[item.type] || TYPE_META.file;
+          var preview = item.type === 'folder' ? '' :
+            '<div class="tpl-fm-preview mtx-d-none mtx-d-sm-flex mtx-align-items-center mtx-justify-content-center mtx-mx-1 mtx-rounded-2 mtx-bg-action-hover" aria-hidden="true">' +
+            '<span data-mtx="avatar" data-variant="rounded" data-size="large" data-icon="' + meta.icon + '" class="mtx-elevation-1"' + (meta.color !== 'default' ? ' data-color="' + meta.color + '"' : '') + '></span></div>';
+          return '<div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3" role="listitem">' +
+            '<article class="tpl-fm-tile mtx-d-flex mtx-flex-column mtx-h-100 mtx-border mtx-rounded-3' + tileState(state.selected.has(item.id)) + '" data-item="' + item.id + '" aria-label="' + esc(item.name) + '">' +
+            '<div class="mtx-d-flex mtx-align-items-center mtx-gap-1 mtx-p-0_5 mtx-typography--body2">' +
+            '<input type="checkbox" data-mtx="checkbox" data-select="' + item.id + '" aria-label="Select ' + esc(item.name) + '"' + (state.selected.has(item.id) ? ' checked' : '') + '>' +
+            typeIcon(item) + nameHtml(item) + starHtml(item) +
+            '<span class="mtx-d-flex mtx-d-sm-none mtx-flex-column mtx-align-items-end mtx-text-nowrap mtx-typography--caption mtx-color-text-secondary">' + sizeText(item) + '<span>' + formatDate(item.modified) + '</span></span>' +
+            moreHtml(item) + '</div>' + preview +
+            '<div class="mtx-d-none mtx-d-sm-flex mtx-justify-content-between mtx-gap-1 mtx-mt-auto mtx-px-2 mtx-pt-1 mtx-pb-1_5 mtx-typography--caption mtx-color-text-secondary">' +
+            '<span>' + sizeText(item) + (item.type === 'folder' ? '' : ' · ' + ownerText(item)) + '</span><span>' + formatDate(item.modified) + '</span></div>' +
+            '</article></div>';
+        }).join('') + '</div>';
+      };
+
+      /**
+       * Pinta una lista de elementos como tabla con selección integrada.
+       * @param {Object[]} list Elementos.
+       * @returns {string} HTML.
+       */
+      var tableHtml = function (list) {
+        return '<div data-mtx="table-container" class="mtx-paper mtx-paper--outlined"><table data-mtx="table" data-selectable data-hover class="mtx-text-nowrap" aria-label="Files">' +
+          '<thead><tr><th>Name</th><th>Owner</th><th>Last modified</th><th data-align="right">Size</th><th data-align="right"><span class="mtx-visually-hidden">Actions</span></th></tr></thead><tbody>' +
+          list.map(function (item) {
+            return '<tr data-id="' + item.id + '" data-label="' + esc(item.name) + '"' + (state.selected.has(item.id) ? ' data-selected' : '') + '>' +
+              '<td><div class="mtx-d-flex mtx-align-items-center mtx-gap-1_5 mtx-fw-medium">' + typeIcon(item) + nameHtml(item) + starHtml(item) + '</div></td>' +
+              '<td>' + ownerText(item) + '</td><td>' + formatDate(item.modified) + '</td>' +
+              '<td data-align="right">' + sizeText(item) + '</td><td data-align="right">' + moreHtml(item) + '</td></tr>';
+          }).join('') + '</tbody></table></div>';
+      };
+
+      /**
+       * Estado vacío según la sección o la búsqueda.
+       * @returns {string} HTML.
+       */
+      var emptyHtml = function () {
+        var e = state.query
+          ? { icon: 'search_off', title: 'No results for “' + esc(state.query) + '”', text: 'Try a different name or check the spelling.' }
+          : state.section === 'trash'
+            ? { icon: 'delete_outline', title: 'Trash is empty', text: 'Items moved to the trash appear here and can be restored.' }
+            : state.section === 'starred'
+              ? { icon: 'star_border', title: 'No starred files', text: 'Star the files and folders you use most to find them quickly.' }
+              : { icon: 'folder_open', title: 'This folder is empty', text: 'Drop files here or use the Upload button to add content.' };
+        return '<div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-text-center mtx-gap-1 mtx-py-6 mtx-px-2">' +
+          '<span data-mtx="avatar" data-size="large" data-icon="' + e.icon + '" aria-hidden="true"></span>' +
+          '<h2 class="mtx-typography--h6 mtx-mt-1">' + e.title + '</h2>' +
+          '<p class="mtx-typography--body2 mtx-color-text-secondary">' + e.text + '</p></div>';
+      };
+
+      /** Pinta el contenido principal. */
+      var render = function () {
+        renderCrumbs();
+        var list = visibleItems();
+        var visibleIds = new Set(list.map(function (i) { return i.id; }));
+        state.selected.forEach(function (id) { if (!visibleIds.has(id)) state.selected.delete(id); });
+        var html = '';
+        if (!list.length) {
+          html = emptyHtml();
+        } else if (state.view === 'list') {
+          html = tableHtml(list);
+        } else {
+          var folders = list.filter(function (i) { return i.type === 'folder'; });
+          var files = list.filter(function (i) { return i.type !== 'folder'; });
+          var heading = function (text) { return '<h2 class="mtx-typography--subtitle2 mtx-color-text-secondary mtx-mt-3 mtx-mb-1_5">' + text + '</h2>'; };
+          if (folders.length) html += heading('Folders') + gridHtml(folders);
+          if (files.length) html += heading('Files') + gridHtml(files);
+        }
+        content.innerHTML = html;
+        Materix.initAll(content);
+        dropzone.hidden = state.section !== 'files' || !!state.query;
+        updateSelection();
+      };
+
+      /** Sincroniza la barra de selección y el estado visual de las tarjetas. */
+      var updateSelection = function () {
+        toolbar.count = state.selected.size;
+        var inTrash = state.section === 'trash';
+        $('[data-tpl-bulk-delete]').setAttribute('aria-label', inTrash ? 'Delete selected forever' : 'Move selected to trash');
+        $('[data-tpl-bulk-star]').hidden = inTrash;
+        $('[data-tpl-bulk-download]').hidden = inTrash;
+        $$('article[data-item]', content).forEach(function (card) {
+          var on = state.selected.has(card.getAttribute('data-item'));
+          card.classList.toggle('mtx-border-primary', on);
+          card.classList.toggle('mtx-bg-action-selected', on);
+          card.classList.toggle('mtx-bg-paper', !on);
+          var cb = Materix.getInstance($('.mtx-checkbox', card));
+          if (cb && cb.checked !== on) cb.checked = on;
+        });
+      };
+      var tableInstance = function () { var t = $('table', content); return t && Materix.getInstance(t); };
+
+      var findItem = function (id) { return id ? items.find(function (i) { return i.id === id; }) : undefined; };
+      /**
+       * Devuelve un elemento y todos sus descendientes.
+       * @param {Object} item Elemento raíz.
+       * @returns {Object[]} Elementos.
+       */
+      var withDescendants = function (item) {
+        var out = [item];
+        items.filter(function (i) { return i.parent === item.id; }).forEach(function (c) { out = out.concat(withDescendants(c)); });
+        return out;
+      };
+
+      /**
+       * Cambia de sección.
+       * @param {string} section Clave de sección.
+       */
+      var goSection = function (section) {
+        state.section = section;
+        state.folder = null;
+        state.query = '';
+        $('#tpl-fm-search').value = '';
+        state.selected.clear();
+        $$('[data-section]').forEach(function (b) { Materix.getInstance(b).selected = b.getAttribute('data-section') === section; });
+        render();
+      };
+      var openFolder = function (id) {
+        state.section = 'files';
+        state.folder = id || null;
+        state.query = '';
+        $('#tpl-fm-search').value = '';
+        state.selected.clear();
+        render();
+        main.focus({ preventScroll: true });
+      };
+
+      $$('[data-section]').forEach(function (btn) {
+        btn.addEventListener('click', function () { goSection(btn.getAttribute('data-section')); });
+      });
+
+      // Búsqueda
+      var searchTimer;
+      $('#tpl-fm-search').addEventListener('input', function (e) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function () { state.query = e.target.value; state.selected.clear(); render(); }, 150);
+      });
+
+      // Vista y orden
+      viewGroup.addEventListener('mtx:toggle-button-group:change', function (e) { state.view = e.detail.value; render(); });
+      /**
+       * Aplica un criterio de orden y actualiza el botón.
+       * @param {string} value Clave de orden.
+       */
+      var setSort = function (value) {
+        state.sort = value;
+        $('#tpl-fm-sort-label').textContent = SORT_LABELS[value];
+        $('#tpl-fm-sort-btn').setAttribute('aria-label', 'Sort by: ' + SORT_LABELS[value]);
+      };
+      $('#tpl-fm-sort-menu').addEventListener('mtx:menu:select', function (e) { setSort(e.detail.item.getAttribute('data-value')); render(); });
+
+      // Selección: tarjetas (casillas) y tabla (selección integrada)
+      content.addEventListener('change', function (e) {
+        var id = e.target.getAttribute && e.target.getAttribute('data-select');
+        if (!id) return;
+        if (e.target.checked) state.selected.add(id); else state.selected.delete(id);
+        updateSelection();
+      });
+      content.addEventListener('mtx:table:selection-change', function (e) {
+        state.selected = new Set(e.detail.selected);
+        updateSelection();
+      });
+
+      // Apertura de carpetas y menú contextual
+      var menuTarget = null;
+      content.addEventListener('click', function (e) {
+        var open = e.target.closest('[data-open]');
+        if (open) { openFolder(open.getAttribute('data-open')); return; }
+        var more = e.target.closest('[data-more]');
+        if (more) prepareItemMenu(findItem(more.getAttribute('data-more')));
+      });
+      content.addEventListener('dblclick', function (e) {
+        var row = e.target.closest('[data-item], tr[data-id]');
+        if (!row || e.target.closest('button, input, label')) return;
+        var item = findItem(row.getAttribute('data-item') || row.getAttribute('data-id'));
+        if (item && item.type === 'folder' && !item.trashed) openFolder(item.id);
+      });
+      crumbsEl.addEventListener('mtx:breadcrumbs:navigate', function (e) {
+        e.preventDefault();
+        if (state.query) { goSection(state.section); return; }
+        openFolder(e.detail.item.data.folder);
+      });
+
+      /**
+       * Ajusta las opciones del menú de acciones al elemento elegido (el menú lo abre la librería).
+       * @param {Object} item Elemento.
+       */
+      var prepareItemMenu = function (item) {
+        if (!item) return;
+        menuTarget = item;
+        var setItem = function (value, enabled) {
+          var el = $('#tpl-fm-item-menu [data-value="' + value + '"]');
+          el.classList.toggle('mtx-menu-item--disabled', !enabled);
+          if (enabled) el.removeAttribute('aria-disabled'); else el.setAttribute('aria-disabled', 'true');
+        };
+        var trashed = item.trashed;
+        setItem('open', !trashed && item.type === 'folder');
+        setItem('rename', !trashed);
+        setItem('download', !trashed && item.type !== 'folder');
+        setItem('star', !trashed);
+        setItem('restore', trashed);
+        $('#tpl-fm-item-menu [data-tpl-star-label]').textContent = item.starred ? 'Remove from starred' : 'Add to starred';
+        $('#tpl-fm-item-menu [data-tpl-delete-label]').textContent = trashed ? 'Delete forever' : 'Move to trash';
+      };
+      $('#tpl-fm-item-menu').addEventListener('mtx:menu:select', function (e) {
+        var action = e.detail.item.getAttribute('data-value');
+        var item = menuTarget;
+        if (!item) return;
+        if (action === 'open') openFolder(item.id);
+        else if (action === 'rename') openRename(item);
+        else if (action === 'download') download([item]);
+        else if (action === 'star') toggleStar([item], !item.starred);
+        else if (action === 'restore') restore([item]);
+        else if (action === 'delete') confirmDelete([item]);
+      });
+
+      /**
+       * Simula o ejecuta la descarga de elementos.
+       * @param {Object[]} list Elementos.
+       */
+      var download = function (list) {
+        var files = list.filter(function (i) { return i.type !== 'folder'; });
+        if (!files.length) { notify('Folders can’t be downloaded yet'); return; }
+        files.forEach(function (i) {
+          if (!i.file) return;
+          var url = URL.createObjectURL(i.file);
+          var a = document.createElement('a');
+          a.href = url; a.download = i.name;
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        });
+        notify(files.length === 1 ? 'Downloading “' + files[0].name + '”' : 'Preparing ' + files.length + ' files for download');
+      };
+      var toggleStar = function (list, on) {
+        list.forEach(function (i) { i.starred = on; });
+        render();
+        notify(on ? (list.length === 1 ? 'Added to starred' : list.length + ' items added to starred') : 'Removed from starred');
+      };
+      var restore = function (list) {
+        list.forEach(function (i) { withDescendants(i).forEach(function (d) { d.trashed = false; }); });
+        render();
+        updateStorage();
+        notify(list.length === 1 ? '“' + list[0].name + '” restored' : list.length + ' items restored');
+      };
+
+      // Borrado
+      var deleteDialogEl = $('#tpl-fm-delete-dialog');
+      var deleteDialog = Materix.getInstance(deleteDialogEl);
+      deleteDialog.paper.setAttribute('role', 'alertdialog');
+      var confirmDelete = function (list) {
+        if (!list.length) return;
+        pending = list;
+        var forever = list[0].trashed;
+        var subject = list.length === 1 ? '“' + list[0].name + '”' : list.length + ' items';
+        $('.mtx-dialog__title', deleteDialogEl).textContent = forever ? 'Delete forever?' : 'Move to trash?';
+        $('.mtx-dialog__content-text', deleteDialogEl).textContent = forever
+          ? subject + ' will be deleted forever. This action cannot be undone.'
+          : subject + ' will be moved to the trash. You can restore ' + (list.length === 1 ? 'it' : 'them') + ' within 30 days.';
+        $('#tpl-fm-delete-confirm').textContent = forever ? 'Delete forever' : 'Move to trash';
+        deleteDialog.open();
+      };
+      $('#tpl-fm-delete-confirm').addEventListener('click', function () {
+        var list = pending || [];
+        pending = null;
+        deleteDialog.close('confirm');
+        if (!list.length) return;
+        if (list[0].trashed) {
+          var remove = new Set();
+          list.forEach(function (i) { withDescendants(i).forEach(function (d) { remove.add(d.id); }); });
+          items = items.filter(function (i) { return !remove.has(i.id); });
+          state.selected.clear();
+          render();
+          notify(list.length === 1 ? '“' + list[0].name + '” deleted forever' : list.length + ' items deleted forever');
+          return;
+        }
+        var affected = [];
+        list.forEach(function (i) { withDescendants(i).forEach(function (d) { if (!d.trashed) { d.trashed = true; affected.push(d); } }); });
+        state.selected.clear();
+        render();
+        updateStorage();
+        notify(list.length === 1 ? '“' + list[0].name + '” moved to trash' : list.length + ' items moved to trash', function () {
+          affected.forEach(function (d) { d.trashed = false; });
+          render();
+          updateStorage();
+        });
+      });
+
+      // Renombrar / nueva carpeta
+      var renameDialogEl = $('#tpl-fm-rename-dialog');
+      var renameDialog = Materix.getInstance(renameDialogEl);
+      var renameField = Materix.getInstance($('#tpl-fm-rename-input').closest('.mtx-text-field'));
+      var renameMode = null;
+      /**
+       * Abre el diálogo de nombre en modo renombrar o crear carpeta.
+       * @param {Object|null} item Elemento a renombrar o null para carpeta nueva.
+       */
+      var openRename = function (item) {
+        renameMode = item ? { type: 'rename', item: item } : { type: 'folder' };
+        $('.mtx-dialog__title', renameDialogEl).textContent = item ? 'Rename' : 'New folder';
+        $('#tpl-fm-rename-submit').textContent = item ? 'Rename' : 'Create';
+        renameField.clearError();
+        renameField.value = item ? item.name : 'Untitled folder';
+        renameDialog.open();
+        var input = renameField.input;
+        var dot = item && item.type !== 'folder' ? item.name.lastIndexOf('.') : -1;
+        input.setSelectionRange(0, dot > 0 ? dot : input.value.length);
+      };
+      renameField.input.addEventListener('input', function () { renameField.clearError(); });
+      $('#tpl-fm-rename-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = renameField.value.trim();
+        var parent = renameMode && renameMode.type === 'rename' ? renameMode.item.parent : state.folder;
+        var self = renameMode && renameMode.item;
+        var fail = function (msg) { renameField.setError(msg); renameField.focus(); };
+        if (!name) { fail('Enter a name.'); return; }
+        if (/[\\/:*?"<>|]/.test(name)) { fail('Names can’t contain \\ / : * ? " < > |'); return; }
+        var clash = items.some(function (i) { return i !== self && !i.trashed && i.parent === parent && i.name.toLowerCase() === name.toLowerCase(); });
+        if (clash) { fail('An item named “' + name + '” already exists here.'); return; }
+        renameDialog.close('confirm');
+        if (renameMode.type === 'rename') {
+          var old = self.name;
+          self.name = name;
+          self.modified = new Date().toISOString();
+          render();
+          notify('Renamed to “' + name + '”', function () { self.name = old; render(); });
+        } else {
+          if (state.section !== 'files' || state.query) goSection('files');
+          var folder = makeItem({ name: name, type: 'folder', parent: state.folder, modified: new Date().toISOString() });
+          items.push(folder);
+          render();
+          notify('Folder “' + name + '” created', function () { items = items.filter(function (i) { return i !== folder; }); render(); });
+        }
+      });
+
+      $('#tpl-fm-new-menu').addEventListener('mtx:menu:select', function (e) {
+        if (e.detail.item.getAttribute('data-value') === 'folder') openRename(null);
+        else fileInput.click();
+      });
+
+      // Acciones en lote
+      var selectedItems = function () { return items.filter(function (i) { return state.selected.has(i.id); }); };
+      $('[data-tpl-clear-selection]').addEventListener('click', function () {
+        var table = tableInstance();
+        if (table) table.clearSelection(); else { state.selected.clear(); updateSelection(); }
+      });
+      $('[data-tpl-select-all]').addEventListener('click', function () {
+        var table = tableInstance();
+        if (table) table.selectAll(); else { visibleItems().forEach(function (i) { state.selected.add(i.id); }); updateSelection(); }
+      });
+      $('[data-tpl-bulk-download]').addEventListener('click', function () { download(selectedItems()); });
+      $('[data-tpl-bulk-star]').addEventListener('click', function () { toggleStar(selectedItems(), true); });
+      $('[data-tpl-bulk-delete]').addEventListener('click', function () { confirmDelete(selectedItems()); });
+
+      // Subida
+      var fileInput = $('#tpl-fm-file-input');
+      /**
+       * Añade archivos subidos a la carpeta actual.
+       * @param {FileList|File[]} fileList Archivos.
+       */
+      var addFiles = function (fileList) {
+        var files = Array.prototype.slice.call(fileList || []);
+        if (!files.length) return;
+        if (state.section !== 'files' || state.query) goSection('files');
+        var added = files.map(function (f) {
+          var ext = (f.name.split('.').pop() || '').toLowerCase();
+          var name = f.name;
+          var n = 1;
+          while (items.some(function (i) { return !i.trashed && i.parent === state.folder && i.name === name; })) {
+            name = f.name.replace(/(\.[^.]*)?$/, function (m) { return ' (' + n + ')' + m; });
+            n++;
+          }
+          return makeItem({ name: name, type: EXT_TYPES[ext] || 'file', size: f.size, parent: state.folder, modified: new Date().toISOString(), uploaded: true, file: f });
+        });
+        items = items.concat(added);
+        setSort('modified');
+        Materix.getInstance($('#tpl-fm-sort-menu [data-value="modified"]')).checked = true;
+        render();
+        updateStorage();
+        notify(added.length === 1 ? '“' + added[0].name + '” uploaded' : added.length + ' files uploaded', function () {
+          items = items.filter(function (i) { return added.indexOf(i) === -1; });
+          render();
+          updateStorage();
+        });
+      };
+      $$('[data-tpl-upload]').forEach(function (btn) { btn.addEventListener('click', function () { fileInput.click(); }); });
+      fileInput.addEventListener('change', function () { addFiles(fileInput.files); fileInput.value = ''; });
+
+      var dragDepth = 0;
+      var hasFiles = function (e) { return e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') !== -1; };
+      /**
+       * Muestra u oculta el estado de arrastre sobre el contenido.
+       * @param {boolean} on Activo.
+       */
+      var setDragging = function (on) {
+        overlay.hidden = !on;
+        dropzone.classList.toggle('mtx-border-primary', on);
+        dropzone.classList.toggle('mtx-bg-action-hover', on);
+      };
+      main.addEventListener('dragenter', function (e) {
+        if (!hasFiles(e)) return;
+        e.preventDefault();
+        dragDepth++;
+        var folder = state.folder ? findItem(state.folder).name : 'My files';
+        $('#tpl-fm-overlay-text').textContent = 'Drop files to upload to “' + folder + '”';
+        setDragging(true);
+      });
+      main.addEventListener('dragover', function (e) { if (hasFiles(e)) { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; } });
+      main.addEventListener('dragleave', function () { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) setDragging(false); });
+      main.addEventListener('drop', function (e) {
+        if (!hasFiles(e)) return;
+        e.preventDefault();
+        dragDepth = 0;
+        setDragging(false);
+        addFiles(e.dataTransfer.files);
+      });
+
+      $('[data-tpl-get-storage]').addEventListener('click', function () { notify('Storage plans are available in Account settings'); });
+
+      goSection('files');
+      updateStorage();
+      window.tplFileManager = { addFiles: addFiles, state: state };
+    });
+  </script>
+</body>
+</html>

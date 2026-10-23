@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divider · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Data display</span>
+        <h1>Divider</h1>
+        <p class="demo-lead">A thin line that separates and groups content in lists, menus and layouts, horizontally or vertically and optionally with text.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#orientation">Vertical orientation</a>
+      <a href="#with-text">With text</a>
+      <a href="#in-lists">In lists</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>An <code>&lt;hr&gt;</code> with <code>data-mtx="divider"</code>: a 1px line in the theme's <code>divider</code> color with an implicit separator role.</p>
+      <div class="demo-panel">
+        <span>Content of the first section.</span>
+        <hr data-mtx="divider" class="demo-wide">
+        <span>Content of the second section.</span>
+      </div>
+      <pre class="demo-code"><code>&lt;hr data-mtx="divider"&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>Without <code>data-variant</code> it spans the full width; <code>middle</code> leaves 16px on each side; <code>inset</code> leaves 72px on the left to align with the text of lists with icons.</p>
+      <div class="demo-group">
+        <span class="demo-label">Full width</span>
+        <hr data-mtx="divider">
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Middle · 16px on each side</span>
+        <hr data-mtx="divider" data-variant="middle">
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Inset · 72px on the left</span>
+        <hr data-mtx="divider" data-variant="inset">
+      </div>
+    </section>
+
+    <section class="demo-section" id="orientation">
+      <h2>Vertical orientation</h2>
+      <p><code>data-orientation="vertical"</code> creates a line that stretches to the height of its flex row. Use a <code>&lt;div&gt;</code>: the component adds <code>role="separator"</code> and <code>aria-orientation="vertical"</code> for you (like MUI).</p>
+      <div class="demo-group">
+        <span class="demo-label">Between icon buttons</span>
+        <div class="demo-row" role="toolbar" aria-label="Text formatting">
+          <button data-mtx="icon-button" data-icon="format_bold" aria-label="Bold"></button>
+          <button data-mtx="icon-button" data-icon="format_italic" aria-label="Italic"></button>
+          <div data-mtx="divider" data-orientation="vertical" data-flex-item></div>
+          <button data-mtx="icon-button" data-icon="format_align_left" aria-label="Align left"></button>
+          <button data-mtx="icon-button" data-icon="format_align_center" aria-label="Center"></button>
+          <button data-mtx="icon-button" data-icon="format_align_right" aria-label="Align right"></button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Between text</span>
+        <div class="demo-row">
+          <span>Home</span>
+          <div data-mtx="divider" data-orientation="vertical"></div>
+          <span>Products</span>
+          <div data-mtx="divider" data-orientation="vertical"></div>
+          <span>Contact</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-text">
+      <h2>With text</h2>
+      <p>Write the text as the content of a <code>&lt;div&gt;</code> or use <code>data-text</code>. <code>data-text-align</code> moves it to <code>left</code> or <code>right</code>; it is centered by default.</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">Centered (element content)</span>
+          <div data-mtx="divider">CENTER</div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Left (data-text-align="left")</span>
+          <div data-mtx="divider" data-text="LEFT" data-text-align="left"></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Right (data-text-align="right")</span>
+          <div data-mtx="divider" data-text="RIGHT" data-text-align="right"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="in-lists">
+      <h2>In lists</h2>
+      <p>Use an <code>&lt;li&gt;</code> as the divider to keep the HTML valid; <code>inset</code> aligns the line with the text. Inside a list the component keeps the <code>&lt;li&gt;</code> as a list item (no <code>role="separator"</code>, which a list can't contain) and hides the empty one from screen readers with <code>aria-hidden="true"</code>. Alternatively, <code>data-divider</code> on each <code>list-item</code> draws a bottom border.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Inset divider between items</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" aria-label="Mailbox">
+              <li data-mtx="list-item" data-icon="inbox">Inbox</li>
+              <li data-mtx="divider" data-variant="inset"></li>
+              <li data-mtx="list-item" data-icon="drafts">Drafts</li>
+              <li data-mtx="divider" data-variant="inset"></li>
+              <li data-mtx="list-item" data-icon="send">Sent</li>
+            </ul>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-divider on the items</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" aria-label="Folders">
+              <li data-mtx="list-item" data-icon="folder" data-divider>Documents</li>
+              <li data-mtx="list-item" data-icon="image" data-divider>Photos</li>
+              <li data-mtx="list-item" data-icon="videocam">Videos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>An "or" separator between a social sign-in and the sign-in form.</p>
+      <div class="demo-panel">
+        <div class="demo-stack demo-fixed-width">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button">Continue with Google</button>
+          <div data-mtx="divider">or</div>
+          <input data-mtx="text-field" data-label="Email" data-variant="outlined" type="email" />
+          <button class="mtx-button mtx-button--contained" data-mtx="button">Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>Metrics in <code>mtx-grid</code> with a horizontal divider between the figure and its description.</p>
+      <div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div data-mtx="paper" data-variant="outlined">
+              <div class="demo-panel">
+                <strong>1,284</strong>
+                <hr data-mtx="divider" class="demo-wide">
+                <span>Orders this month</span>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div data-mtx="paper" data-variant="outlined">
+              <div class="demo-panel">
+                <strong>96%</strong>
+                <hr data-mtx="divider" class="demo-wide">
+                <span>On-time deliveries</span>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="4">
+            <div data-mtx="paper" data-variant="outlined">
+              <div class="demo-panel">
+                <strong>4.8</strong>
+                <hr data-mtx="divider" class="demo-wide">
+                <span>Average rating</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Divider has no methods or events; you only need to initialize the ones created dynamically with <code>Materix.init(el, 'divider')</code>.</p>
+      <div class="demo-stack">
+        <div class="demo-row">
+          <button id="divider-add" class="mtx-button mtx-button--outlined" data-mtx="button">Add divider with text</button>
+        </div>
+        <div id="divider-target" class="demo-stack"></div>
+        <pre id="divider-log" class="demo-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The classes work without JavaScript; the component only adds them from the attributes and generates the text <code>&lt;span&gt;</code>.</p>
+      <div class="demo-stack">
+        <hr class="mtx-divider mtx-divider--middle" data-mtx="divider">
+        <div class="mtx-divider mtx-divider--text mtx-divider--text-left" data-mtx="divider" role="separator">
+          <span class="mtx-divider__text">BEM section</span>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;hr class="mtx-divider mtx-divider--middle"&gt;
+&lt;div class="mtx-divider mtx-divider--text mtx-divider--text-left" role="separator"&gt;
+  &lt;span class="mtx-divider__text"&gt;BEM section&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const target = document.getElementById('divider-target');
+      const log = document.getElementById('divider-log');
+      let count = 0;
+      document.getElementById('divider-add').addEventListener('click', () => {
+        count += 1;
+        const divider = document.createElement('div');
+        divider.setAttribute('role', 'separator');
+        divider.setAttribute('data-text', `Block ${count}`);
+        if (count % 2 === 0) divider.setAttribute('data-text-align', 'left');
+        target.appendChild(divider);
+        const instance = Materix.init(divider, 'divider');
+        log.textContent += `Materix.init(div, 'divider') → Divider instance: ${instance instanceof Materix.Divider}, classes: ${divider.className}\n`;
+        log.scrollTop = log.scrollHeight;
+      });
+    });
+  </script>
+</body>
+</html>

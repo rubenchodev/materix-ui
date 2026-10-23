@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Materix UI — Divider
+   Línea divisoria basada en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-divider {
+  margin: 0;
+  flex-shrink: 0;
+  border: none;
+  background-color: var(--mtx-color-divider);
+  height: 1px;
+}
+
+/* División vertical (dentro de un contenedor flex) */
+.mtx-divider--vertical {
+  width: 1px;
+  height: auto;
+  align-self: stretch;
+}
+
+/* flexItem: permite que un divider vertical funcione en un contenedor flex */
+.mtx-divider--flex-item {
+  height: auto;
+  align-self: stretch;
+}
+
+/* Divider con texto (children de MUI): línea — texto — línea */
+.mtx-divider--text {
+  display: flex;
+  align-items: center;
+  height: auto;
+  background-color: transparent;
+  white-space: nowrap;
+  text-align: center;
+}
+.mtx-divider--text::before,
+.mtx-divider--text::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background-color: var(--mtx-color-divider);
+}
+.mtx-divider__text {
+  display: inline-block;
+  padding: 0 var(--mtx-spacing-1_5);
+  font: var(--mtx-type-body2);
+  color: var(--mtx-color-text-secondary);
+}
+/* Alineación del texto (prop `textAlign` de MUI) */
+.mtx-divider--text.mtx-divider--text-left::before { flex: 0 0 10%; }
+.mtx-divider--text.mtx-divider--text-right::after { flex: 0 0 10%; }
+
+/* Modificadores de posición horizontal según MUI */
+.mtx-divider--inset {
+  margin-left: 72px;
+}
+
+.mtx-divider--middle {
+  margin-left: 16px;
+  margin-right: 16px;
+}

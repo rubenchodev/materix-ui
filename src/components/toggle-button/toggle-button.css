@@ -1,0 +1,176 @@
+/* ==========================================================================
+   Materix UI — Toggle Button / Toggle Button Group
+   Basado en ToggleButton y ToggleButtonGroup de Material UI (MUI).
+   Alturas: small 40px · medium 48px · large 56px (icono 24px + padding 7/11/15px + borde).
+   ========================================================================== */
+.mtx-toggle-button {
+  /* Color del estado seleccionado (standard = texto primario, como MUI). */
+  --mtx-tb-color: var(--mtx-color-text-primary);
+  --mtx-tb-size: 48px;
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  gap: var(--mtx-spacing-1);
+  min-width: var(--mtx-tb-size);
+  min-height: var(--mtx-tb-size);
+  margin: 0;
+  padding: 0 11px;
+  border: 1px solid var(--mtx-color-divider);
+  border-radius: var(--mtx-shape-radius);
+  background-color: transparent;
+  color: var(--mtx-color-action-active);
+  font: var(--mtx-type-button);
+  line-height: 1;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--mtx-duration-shortest) var(--mtx-easing-standard),
+    color var(--mtx-duration-shortest) var(--mtx-easing-standard);
+}
+
+/* Iconos en su cuadrícula nativa de 24px (AGENTS.md §2.1) */
+.mtx-toggle-button .material-icons,
+.mtx-toggle-button .material-symbols-outlined {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mtx-toggle-button svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  fill: currentColor;
+  display: block;
+}
+
+.mtx-toggle-button:hover {
+  background-color: var(--mtx-color-action-hover);
+}
+
+.mtx-toggle-button:focus-visible {
+  z-index: 1;
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: -1px;
+}
+
+/* Seleccionado (aria-pressed es la única fuente de verdad del estado) */
+.mtx-toggle-button[aria-pressed="true"] {
+  color: var(--mtx-tb-color);
+  background-color: color-mix(in srgb, var(--mtx-tb-color) 8%, transparent);
+}
+
+.mtx-toggle-button[aria-pressed="true"]:hover {
+  background-color: color-mix(in srgb, var(--mtx-tb-color) 12%, transparent);
+}
+
+[data-mtx-theme="dark"] .mtx-toggle-button[aria-pressed="true"] {
+  background-color: color-mix(in srgb, var(--mtx-tb-color) 16%, transparent);
+}
+
+[data-mtx-theme="dark"] .mtx-toggle-button[aria-pressed="true"]:hover {
+  background-color: color-mix(in srgb, var(--mtx-tb-color) 24%, transparent);
+}
+
+/* Colores de la paleta para el estado seleccionado */
+.mtx-toggle-button--primary   { --mtx-tb-color: var(--mtx-color-primary-text); }
+.mtx-toggle-button--secondary { --mtx-tb-color: var(--mtx-color-secondary-text); }
+.mtx-toggle-button--error     { --mtx-tb-color: var(--mtx-color-error-text); }
+.mtx-toggle-button--warning   { --mtx-tb-color: var(--mtx-color-warning-text); }
+.mtx-toggle-button--info      { --mtx-tb-color: var(--mtx-color-info-text); }
+.mtx-toggle-button--success   { --mtx-tb-color: var(--mtx-color-success-text); }
+
+/* Tamaños (padding MUI 7 / 11 / 15px) */
+.mtx-toggle-button--small {
+  --mtx-tb-size: 40px;
+  padding: 0 7px;
+  font-size: 0.8125rem;
+}
+
+.mtx-toggle-button--large {
+  --mtx-tb-size: 56px;
+  padding: 0 15px;
+  font-size: 0.9375rem;
+}
+
+/* Deshabilitado */
+.mtx-toggle-button:disabled,
+.mtx-toggle-button[aria-disabled="true"] {
+  color: var(--mtx-color-action-disabled);
+  border-color: var(--mtx-color-action-disabled-background);
+  background-color: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+
+.mtx-toggle-button[aria-pressed="true"]:disabled,
+.mtx-toggle-button[aria-pressed="true"][aria-disabled="true"] {
+  background-color: var(--mtx-color-action-disabled-background);
+}
+
+/* ------------------------------------------------------------------
+   Grupo: bordes unidos como MUI
+   ------------------------------------------------------------------ */
+.mtx-toggle-button-group {
+  display: inline-flex;
+  vertical-align: middle;
+  border-radius: var(--mtx-shape-radius);
+  max-width: 100%;
+}
+
+.mtx-toggle-button-group--vertical {
+  flex-direction: column;
+}
+
+.mtx-toggle-button-group--full-width {
+  display: flex;
+  width: 100%;
+}
+
+.mtx-toggle-button-group--full-width > .mtx-toggle-button {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Horizontal */
+.mtx-toggle-button-group:not(.mtx-toggle-button-group--vertical) > .mtx-toggle-button:not(:first-child) {
+  margin-inline-start: -1px;
+  border-inline-start-color: transparent;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.mtx-toggle-button-group:not(.mtx-toggle-button-group--vertical) > .mtx-toggle-button:not(:last-child) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+/* Vertical */
+.mtx-toggle-button-group--vertical > .mtx-toggle-button:not(:first-child) {
+  margin-top: -1px;
+  border-top-color: transparent;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.mtx-toggle-button-group--vertical > .mtx-toggle-button:not(:last-child) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-toggle-button {
+    transition: none;
+  }
+}

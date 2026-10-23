@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Sample boxes to visualize columns */
+    .demo-grid-item {
+      box-sizing: border-box;
+      min-height: 48px;
+      padding: var(--mtx-spacing-1_5) var(--mtx-spacing-1);
+      border: 1px solid color-mix(in srgb, var(--mtx-color-primary) 45%, transparent);
+      border-radius: var(--mtx-shape-radius);
+      background-color: color-mix(in srgb, var(--mtx-color-primary) 10%, transparent);
+      color: var(--mtx-color-text-primary);
+      font: var(--mtx-type-body2);
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+    .demo-grid-item--alt {
+      border-color: color-mix(in srgb, var(--mtx-color-secondary) 45%, transparent);
+      background-color: color-mix(in srgb, var(--mtx-color-secondary) 10%, transparent);
+    }
+    .demo-grid-item--tall { min-height: 96px; }
+    .demo-grid-stat { margin: 0; font: var(--mtx-type-h5); }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Layout</span>
+        <h1>Grid</h1>
+        <p class="demo-lead">A 12-column flexbox grid with five breakpoints (xs–xl), gap-based spacing in multiples of 8px (also per breakpoint) and alignment, for responsive layouts.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#columns">Columns</a>
+      <a href="#breakpoints">Breakpoints</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#auto-layout">Auto-layout</a>
+      <a href="#alignment">Alignment</a>
+      <a href="#direction">Direction</a>
+      <a href="#nested">Nested</a>
+      <a href="#real-world">Real-world</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>data-mtx="grid"</code> container with <code>data-spacing</code> and items with columns per breakpoint. Resize the window: 1 column on mobile, 2 on tablet and 4 on desktop.</p>
+      <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"><div class="demo-grid-item">xs=12 sm=6 md=3</div></div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"><div class="demo-grid-item">xs=12 sm=6 md=3</div></div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"><div class="demo-grid-item">xs=12 sm=6 md=3</div></div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"><div class="demo-grid-item">xs=12 sm=6 md=3</div></div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="grid" data-spacing="2"&gt;
+  &lt;div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"&gt;…&lt;/div&gt;
+  &lt;div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"&gt;…&lt;/div&gt;
+  &lt;div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"&gt;…&lt;/div&gt;
+  &lt;div data-mtx="grid" data-xs="12" data-sm="6" data-md="3"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="columns">
+      <h2>Columns</h2>
+      <p>Each item takes <code>n/12</code> of the width. When the sum exceeds 12, the next items wrap to a new line.</p>
+      <div class="demo-group">
+        <span class="demo-label">12 · 6+6 · 4+4+4 · 3×4 · 8+4</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="1">
+          <div data-mtx="grid" data-xs="12"><div class="demo-grid-item">12</div></div>
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item">6</div></div>
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item">6</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">4</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">4</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">4</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">3</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">3</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">3</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">3</div></div>
+          <div data-mtx="grid" data-xs="8"><div class="demo-grid-item demo-grid-item--alt">8</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item demo-grid-item--alt">4</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Pairs that add up to 12: n + (12 − n)</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="1">
+          <div data-mtx="grid" data-xs="1"><div class="demo-grid-item">1</div></div>
+          <div data-mtx="grid" data-xs="11"><div class="demo-grid-item demo-grid-item--alt">11</div></div>
+          <div data-mtx="grid" data-xs="2"><div class="demo-grid-item">2</div></div>
+          <div data-mtx="grid" data-xs="10"><div class="demo-grid-item demo-grid-item--alt">10</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">3</div></div>
+          <div data-mtx="grid" data-xs="9"><div class="demo-grid-item demo-grid-item--alt">9</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">4</div></div>
+          <div data-mtx="grid" data-xs="8"><div class="demo-grid-item demo-grid-item--alt">8</div></div>
+          <div data-mtx="grid" data-xs="5"><div class="demo-grid-item">5</div></div>
+          <div data-mtx="grid" data-xs="7"><div class="demo-grid-item demo-grid-item--alt">7</div></div>
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item">6</div></div>
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item demo-grid-item--alt">6</div></div>
+          <div data-mtx="grid" data-xs="7"><div class="demo-grid-item">7</div></div>
+          <div data-mtx="grid" data-xs="5"><div class="demo-grid-item demo-grid-item--alt">5</div></div>
+          <div data-mtx="grid" data-xs="8"><div class="demo-grid-item">8</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item demo-grid-item--alt">4</div></div>
+          <div data-mtx="grid" data-xs="9"><div class="demo-grid-item">9</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item demo-grid-item--alt">3</div></div>
+          <div data-mtx="grid" data-xs="10"><div class="demo-grid-item">10</div></div>
+          <div data-mtx="grid" data-xs="2"><div class="demo-grid-item demo-grid-item--alt">2</div></div>
+          <div data-mtx="grid" data-xs="11"><div class="demo-grid-item">11</div></div>
+          <div data-mtx="grid" data-xs="1"><div class="demo-grid-item demo-grid-item--alt">1</div></div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="breakpoints">
+      <h2>Breakpoints</h2>
+      <p>Mobile-first: each value applies from its minimum width upwards. xs 0px · sm 600px · md 900px · lg 1200px · xl 1536px. Always declare <code>data-xs</code> as the base.</p>
+      <div class="demo-group">
+        <span class="demo-label">xs=12 · sm=6 · md=4 · lg=3 · xl=2</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4" data-lg="3" data-xl="2"><div class="demo-grid-item">A</div></div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4" data-lg="3" data-xl="2"><div class="demo-grid-item">B</div></div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4" data-lg="3" data-xl="2"><div class="demo-grid-item">C</div></div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4" data-lg="3" data-xl="2"><div class="demo-grid-item">D</div></div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4" data-lg="3" data-xl="2"><div class="demo-grid-item">E</div></div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4" data-lg="3" data-xl="2"><div class="demo-grid-item">F</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Content + sidebar · xs=12 / md=8 + md=4</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-md="8"><div class="demo-grid-item demo-grid-item--tall">Content · md=8</div></div>
+          <div data-mtx="grid" data-xs="12" data-md="4"><div class="demo-grid-item demo-grid-item--tall demo-grid-item--alt">Sidebar · md=4</div></div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="spacing">
+      <h2>Spacing</h2>
+      <p><code>data-spacing="n"</code> separates rows and columns by <code>n × 8px</code> using <code>gap</code> (like MUI Grid v2): no negative margins or padding on the items, so the grid never overflows its parent. Values: any integer from 0 to 12 and the half steps <code>0.5</code>, <code>1.5</code> and <code>2.5</code> from the utility scale (also <code>0_5</code>, <code>1_5</code>, <code>2_5</code>). Each column width subtracts its proportional share of the gap, so 12 columns always add up to 100%.</p>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="0" · 0px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="0">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">0</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">0</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">0</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="1" · 8px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="1">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">1</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">1</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">1</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="0.5" · 4px (half step)</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="0.5">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">0.5</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">0.5</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">0.5</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="1.5" · 12px (half step)</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="1.5">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">1.5</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">1.5</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">1.5</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="2.5" · 20px (half step)</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2.5">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">2.5</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">2.5</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">2.5</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="2" · 16px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">2</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">2</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">2</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="3" · 24px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="3">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">3</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">3</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">3</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="4" · 32px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="4">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">4</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">4</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">4</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="5" · 40px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="5">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">5</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">5</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">5</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="6" · 48px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="6">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">6</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">6</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">6</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="8" · 64px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="8">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">8</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">8</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">8</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="10" · 80px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="10">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">10</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">10</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">10</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="12" · 96px</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="12">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">12</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">12</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">12</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-spacing="7" · 56px (previously missing)</span>
+        <div data-mtx="grid" data-spacing="7">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">7</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">7</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">7</div></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-row-spacing="1" · data-column-spacing="4"</span>
+        <div data-mtx="grid" data-row-spacing="1" data-column-spacing="4">
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item">rows 8px</div></div>
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item">columns 32px</div></div>
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item demo-grid-item--alt">rows 8px</div></div>
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item demo-grid-item--alt">columns 32px</div></div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Responsive · data-spacing="1" data-spacing-md="3" data-spacing-lg="5"</span>
+        <div data-mtx="grid" data-spacing="1" data-spacing-md="3" data-spacing-lg="5">
+          <div data-mtx="grid" data-xs="6" data-md="3"><div class="demo-grid-item">8 → 24 → 40px</div></div>
+          <div data-mtx="grid" data-xs="6" data-md="3"><div class="demo-grid-item">8 → 24 → 40px</div></div>
+          <div data-mtx="grid" data-xs="6" data-md="3"><div class="demo-grid-item">8 → 24 → 40px</div></div>
+          <div data-mtx="grid" data-xs="6" data-md="3"><div class="demo-grid-item">8 → 24 → 40px</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="auto-layout">
+      <h2>Auto-layout</h2>
+      <p><code>true</code> makes the item grow and share the remaining space with the other growing items. <code>auto</code> sizes the item to its content width (<code>flex: 0 0 auto</code>), like MUI's <code>size="auto"</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Three true items</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="true"><div class="demo-grid-item">true</div></div>
+          <div data-mtx="grid" data-xs="true"><div class="demo-grid-item">true</div></div>
+          <div data-mtx="grid" data-xs="true"><div class="demo-grid-item">true</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">auto (content width) · xs=6 · true (remaining)</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="auto"><div class="demo-grid-item">auto</div></div>
+          <div data-mtx="grid" data-xs="6"><div class="demo-grid-item demo-grid-item--alt">xs=6</div></div>
+          <div data-mtx="grid" data-xs="true"><div class="demo-grid-item">true</div></div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="alignment">
+      <h2>Alignment</h2>
+      <p><code>data-justify</code> distributes the items horizontally and <code>data-align</code> aligns them vertically when they have different heights.</p>
+      <div class="demo-group">
+        <span class="demo-label">data-justify="flex-start"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-justify="flex-start">
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">flex-start</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">flex-start</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-justify="center"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-justify="center">
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">center</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">center</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-justify="flex-end"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-justify="flex-end">
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">flex-end</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">flex-end</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-justify="space-between"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-justify="space-between">
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">space-between</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">space-between</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-justify="space-around"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-justify="space-around">
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">space-around</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">space-around</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-justify="space-evenly"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-justify="space-evenly">
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">space-evenly</div></div>
+          <div data-mtx="grid" data-xs="3"><div class="demo-grid-item">space-evenly</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-align="flex-start"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-align="flex-start">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">short</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item demo-grid-item--tall demo-grid-item--alt">tall</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">short</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-align="center"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-align="center">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">short</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item demo-grid-item--tall demo-grid-item--alt">tall</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">short</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-align="flex-end"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-align="flex-end">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">short</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item demo-grid-item--tall demo-grid-item--alt">tall</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">short</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-align="stretch"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-align="stretch">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">short</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item demo-grid-item--tall demo-grid-item--alt">tall</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">short</div></div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="direction">
+      <h2>Direction</h2>
+      <p><code>data-direction</code> changes the flow direction. Reading and tab order still follow the HTML.</p>
+      <div class="demo-group">
+        <span class="demo-label">data-direction="row-reverse"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2" data-direction="row-reverse">
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">1</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">2</div></div>
+          <div data-mtx="grid" data-xs="4"><div class="demo-grid-item">3</div></div>
+        </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-direction="column"</span>
+        <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="1" data-direction="column">
+          <div data-mtx="grid" data-xs="12"><div class="demo-grid-item">1</div></div>
+          <div data-mtx="grid" data-xs="12"><div class="demo-grid-item">2</div></div>
+          <div data-mtx="grid" data-xs="12"><div class="demo-grid-item">3</div></div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="nested">
+      <h2>Nested grids</h2>
+      <p>An item with <code>data-container</code> is also a container: inside it there are 12 columns again.</p>
+      <div class="demo-grid-clip">
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-md="8" data-container data-spacing="1">
+            <div data-mtx="grid" data-xs="6"><div class="demo-grid-item">nested · 6</div></div>
+            <div data-mtx="grid" data-xs="6"><div class="demo-grid-item">nested · 6</div></div>
+            <div data-mtx="grid" data-xs="12"><div class="demo-grid-item">nested · 12</div></div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="4"><div class="demo-grid-item demo-grid-item--alt demo-grid-item--tall">md=4</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world use cases</h2>
+      <p>A dashboard with metrics (1 → 2 → 4 columns) and a main block with a sidebar, plus a form that stacks on mobile.</p>
+      <div class="demo-group">
+        <span class="demo-label">Dashboard</span>
+        <div class="demo-surface">
+          <div data-mtx="grid" data-spacing="2">
+            <div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3">
+              <div data-mtx="card"><div data-mtx="card-content"><span data-mtx="typography" data-variant="overline">Sales</span><p class="demo-grid-stat">$24,300</p></div></div>
+            </div>
+            <div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3">
+              <div data-mtx="card"><div data-mtx="card-content"><span data-mtx="typography" data-variant="overline">Orders</span><p class="demo-grid-stat">1,284</p></div></div>
+            </div>
+            <div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3">
+              <div data-mtx="card"><div data-mtx="card-content"><span data-mtx="typography" data-variant="overline">Customers</span><p class="demo-grid-stat">312</p></div></div>
+            </div>
+            <div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3">
+              <div data-mtx="card"><div data-mtx="card-content"><span data-mtx="typography" data-variant="overline">Conversion</span><p class="demo-grid-stat">3.4%</p></div></div>
+            </div>
+            <div data-mtx="grid" data-xs="12" data-md="8">
+              <div data-mtx="card"><div data-mtx="card-content"><h3 data-mtx="typography" data-variant="h6" data-gutter-bottom>Recent activity</h3><p data-mtx="typography" data-variant="body2">Main block: 8 of 12 columns from 900px.</p></div></div>
+            </div>
+            <div data-mtx="grid" data-xs="12" data-md="4">
+              <div data-mtx="card"><div data-mtx="card-content"><h3 data-mtx="typography" data-variant="h6" data-gutter-bottom>Tasks</h3><p data-mtx="typography" data-variant="body2">Sidebar: 4 columns on desktop.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Form</span>
+        <form onsubmit="event.preventDefault();">
+          <div data-mtx="grid" data-spacing="2">
+            <div data-mtx="grid" data-xs="12" data-sm="6"><input data-mtx="text-field" data-label="First name" data-variant="outlined" type="text" name="name"></div>
+            <div data-mtx="grid" data-xs="12" data-sm="6"><input data-mtx="text-field" data-label="Last name" data-variant="outlined" type="text" name="lastname"></div>
+            <div data-mtx="grid" data-xs="12" data-md="5"><input data-mtx="text-field" data-label="Email" data-variant="outlined" type="email" name="email"></div>
+            <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><input data-mtx="text-field" data-label="Phone" data-variant="outlined" type="tel" name="phone"></div>
+            <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3">
+              <select data-mtx="native-select" data-label="Role" data-variant="outlined" name="role">
+                <option value="admin">Administrator</option>
+                <option value="editor">Editor</option>
+                <option value="user">User</option>
+              </select>
+            </div>
+            <div data-mtx="grid" data-xs="12" data-container data-justify="flex-end" data-spacing="1">
+              <div data-mtx="grid" data-item><button type="button" class="mtx-button mtx-button--outlined" data-mtx="button">Cancel</button></div>
+              <div data-mtx="grid" data-item><button type="submit" class="mtx-button mtx-button--contained" data-mtx="button">Save</button></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The <code>setSpacing(n, bp?)</code>, <code>setRowSpacing()</code>, <code>setColumnSpacing()</code>, <code>setJustifyContent()</code>, <code>setAlignItems()</code> and <code>setDirection()</code> methods replace the corresponding class. New items are registered with <code>Materix.init()</code>. Grid emits no events: the log shows the resulting classes.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-grid-spacing="0">spacing 0</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-grid-spacing="2">spacing 2</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-grid-spacing="4">spacing 4</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-grid-justify="center">justify center</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-grid-justify="flex-start">justify flex-start</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="grid-reverse">direction reverse</button>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" type="button" id="grid-add">Add item</button>
+      </div>
+      <div class="demo-grid-clip">
+        <div id="grid-api" data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="6" data-md="3"><div class="demo-grid-item">1</div></div>
+          <div data-mtx="grid" data-xs="6" data-md="3"><div class="demo-grid-item">2</div></div>
+          <div data-mtx="grid" data-xs="6" data-md="3"><div class="demo-grid-item">3</div></div>
+        </div>
+      </div>
+      <pre class="demo-log" id="grid-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const grid = Materix.getInstance(document.getElementById('grid-api'));
+grid.setSpacing(4);
+grid.setJustifyContent('center');
+grid.setDirection('row-reverse');
+
+const item = document.createElement('div');
+item.setAttribute('data-xs', '6');
+grid.element.append(item);
+Materix.init(item, 'grid');</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>With the classes written by hand the grid works without JavaScript.</p>
+      <div class="demo-grid-clip">
+        <div class="mtx-grid mtx-grid--container mtx-grid--spacing-2 mtx-grid--justify-center">
+          <div class="mtx-grid mtx-grid--item mtx-grid--xs-12 mtx-grid--md-5"><div class="demo-grid-item">mtx-grid--xs-12 mtx-grid--md-5</div></div>
+          <div class="mtx-grid mtx-grid--item mtx-grid--xs-12 mtx-grid--md-5"><div class="demo-grid-item">mtx-grid--xs-12 mtx-grid--md-5</div></div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-grid mtx-grid--container mtx-grid--spacing-2 mtx-grid--justify-center"&gt;
+  &lt;div class="mtx-grid mtx-grid--item mtx-grid--xs-12 mtx-grid--md-5"&gt;…&lt;/div&gt;
+  &lt;div class="mtx-grid mtx-grid--item mtx-grid--xs-12 mtx-grid--md-5"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var gridEl = document.getElementById('grid-api');
+      var grid = Materix.getInstance(gridEl);
+      var log = document.getElementById('grid-log');
+      var reversed = false;
+      var count = 3;
+
+      /**
+       * Escribe en el registro la operación y las clases del contenedor.
+       * @param {string} op Operación ejecutada.
+       */
+      function write(op) {
+        var cls = Array.prototype.filter.call(gridEl.classList, function (c) { return c.indexOf('mtx-grid--') === 0; });
+        log.textContent += op + ' → ' + cls.join(' ') + '\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.querySelectorAll('[data-grid-spacing]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          grid.setSpacing(Number(btn.getAttribute('data-grid-spacing')));
+          write('setSpacing(' + btn.getAttribute('data-grid-spacing') + ')');
+        });
+      });
+      document.querySelectorAll('[data-grid-justify]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          grid.setJustifyContent(btn.getAttribute('data-grid-justify'));
+          write("setJustifyContent('" + btn.getAttribute('data-grid-justify') + "')");
+        });
+      });
+      document.getElementById('grid-reverse').addEventListener('click', function () {
+        reversed = !reversed;
+        grid.setDirection(reversed ? 'row-reverse' : 'row');
+        write("setDirection('" + (reversed ? 'row-reverse' : 'row') + "')");
+      });
+      document.getElementById('grid-add').addEventListener('click', function () {
+        var item = document.createElement('div');
+        count += 1;
+        item.setAttribute('data-xs', '6');
+        item.setAttribute('data-md', '3');
+        item.innerHTML = '<div class="demo-grid-item demo-grid-item--alt">' + count + '</div>';
+        gridEl.appendChild(item);
+        var instance = Materix.init(item, 'grid');
+        write('init(item ' + count + ') isItem=' + instance.isItem);
+      });
+    });
+  </script>
+</body>
+</html>

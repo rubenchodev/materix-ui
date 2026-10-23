@@ -1,0 +1,45 @@
+{{/* Cabecera de página de componente: ruta, título, descripción, enlaces y uso declarativo. */}}
+{{ $example := .Params.example }}
+{{ $groupKey := .Params.group | default "" }}
+<header class="doc-page-header">
+  <nav class="doc-breadcrumb" aria-label="{{ i18n "breadcrumb" }}">
+    <ol>
+      {{ with site.GetPage "/components" }}<li><a href="{{ .RelPermalink }}">{{ i18n "components" }}</a></li>{{ end }}
+      {{ with $groupKey }}<li><span>{{ i18n (printf "group_%s" .) | default . }}</span></li>{{ end }}
+    </ol>
+  </nav>
+
+  <h1 class="doc-title">{{ .Title }}</h1>
+  {{ with .Description }}<p class="doc-lead">{{ . }}</p>{{ end }}
+
+  <div class="doc-page-links">
+    {{ with $example }}
+      {{ $base := partial "resolve-base.html" (site.Params.examplesURL | default "../examples/") }}
+      <a class="doc-chip-link" href="{{ printf "%s%s/index.html" $base . }}" target="_blank" rel="noopener">
+        <span class="material-icons" aria-hidden="true">play_circle</span>{{ i18n "live_example" }}
+      </a>
+      {{ with site.Params.repoURL }}
+      <a class="doc-chip-link" href="{{ printf "%s/src/components/%s" . $example }}" target="_blank" rel="noopener">
+        <span class="material-icons" aria-hidden="true">code</span>{{ i18n "source_code" }}
+      </a>
+      {{ end }}
+    {{ end }}
+    {{ with .Params.mui }}
+      <a class="doc-chip-link" href="{{ . }}" target="_blank" rel="noopener">
+        <span class="material-icons" aria-hidden="true">open_in_new</span>{{ i18n "mui_reference" }}
+      </a>
+    {{ end }}
+  </div>
+
+  {{ with $example }}
+    {{ $alias := index (site.Params.dataMtxAlias | default dict) . }}
+    {{ $attr := printf "data-mtx=\"%s\"" ($alias | default .) }}
+    <div class="doc-usage">
+      <span class="doc-usage-label">{{ i18n "declarative_init" }}</span>
+      <code class="doc-usage-code">{{ $attr }}</code>
+      <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-copy-text="{{ $attr }}" aria-label="{{ i18n "copy" }} {{ $attr }}" title="{{ i18n "copy" }}">
+        <span class="material-icons" aria-hidden="true">content_copy</span>
+      </button>
+    </div>
+  {{ end }}
+</header>

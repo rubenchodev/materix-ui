@@ -1,0 +1,356 @@
+/* ==========================================================================
+   Materix UI — Button
+   Basado en Material UI (MUI)
+   ========================================================================== */
+
+/* Clases base del botón */
+.mtx-button {
+  --mtx-btn-bg: var(--mtx-color-primary);
+  --mtx-btn-hover: var(--mtx-color-primary-dark);
+  --mtx-btn-fg: var(--mtx-color-primary-contrast);
+  --mtx-btn-color: var(--mtx-color-primary-text);
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  gap: var(--mtx-spacing-1);
+  min-width: 64px;
+  height: var(--mtx-size-medium-height);
+  min-height: var(--mtx-size-medium-height);
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--mtx-shape-radius);
+  font: var(--mtx-type-button);
+  line-height: 1;
+  letter-spacing: 0.02857em;
+  text-decoration: none;
+  color: var(--mtx-btn-color);
+  background-color: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  transition:
+    background-color var(--mtx-duration-shorter) var(--mtx-easing-standard),
+    box-shadow var(--mtx-duration-shorter) var(--mtx-easing-standard),
+    border-color var(--mtx-duration-shorter) var(--mtx-easing-standard),
+    color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+
+/* Icono del botón */
+.mtx-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* Tamaño nativo de 24px (AGENTS.md §2.1): sin font-size forzado */
+  line-height: 1;
+}
+
+/* startIcon / endIcon de MUI: el icono se acerca al borde (-4px; -2px en small) */
+.mtx-button:not(.mtx-button--icon) > .mtx-button__icon--start {
+  margin-inline-start: -4px;
+}
+
+.mtx-button:not(.mtx-button--icon) > .mtx-button__icon--end {
+  margin-inline-end: -4px;
+}
+
+.mtx-button--small:not(.mtx-button--icon) > .mtx-button__icon--start {
+  margin-inline-start: -2px;
+}
+
+.mtx-button--small:not(.mtx-button--icon) > .mtx-button__icon--end {
+  margin-inline-end: -2px;
+}
+
+/* SVG en cuadrícula nativa de 24px (AGENTS.md §2.1) */
+.mtx-button__icon svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  fill: currentColor;
+  display: block;
+  shape-rendering: geometricPrecision;
+}
+
+.mtx-button__icon .material-icons,
+.mtx-button__icon .material-symbols-outlined {
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------------
+   Variantes visuales (Contained, Outlined, Text)
+   ------------------------------------------------------------------ */
+.mtx-button--contained {
+  color: var(--mtx-btn-fg);
+  background-color: var(--mtx-btn-bg);
+  box-shadow: var(--mtx-elevation-2);
+}
+
+.mtx-button--contained:hover {
+  background-color: var(--mtx-btn-hover);
+  box-shadow: var(--mtx-elevation-4);
+}
+
+.mtx-button--contained:active {
+  box-shadow: var(--mtx-elevation-8);
+}
+
+.mtx-button--contained:focus-visible {
+  box-shadow: var(--mtx-elevation-6);
+}
+
+.mtx-button--outlined {
+  border-color: color-mix(in srgb, currentColor 50%, transparent);
+  color: var(--mtx-btn-color);
+  background-color: transparent;
+}
+
+.mtx-button--outlined:hover {
+  border-color: currentColor;
+  background-color: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.mtx-button--outlined:focus-visible {
+  border-color: currentColor;
+  background-color: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.mtx-button--outlined:active {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.mtx-button--text {
+  color: var(--mtx-btn-color);
+  background-color: transparent;
+}
+
+.mtx-button--text:hover {
+  background-color: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.mtx-button--text:focus-visible {
+  background-color: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.mtx-button--text:active {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+/* ------------------------------------------------------------------
+   Colores (equivalente al prop `color` de MUI)
+   ------------------------------------------------------------------ */
+.mtx-button--secondary {
+  --mtx-btn-bg: var(--mtx-color-secondary);
+  --mtx-btn-hover: var(--mtx-color-secondary-dark);
+  --mtx-btn-fg: var(--mtx-color-secondary-contrast);
+  --mtx-btn-color: var(--mtx-color-secondary-text);
+}
+
+.mtx-button--error {
+  --mtx-btn-bg: var(--mtx-color-error);
+  --mtx-btn-hover: var(--mtx-color-error-dark);
+  --mtx-btn-fg: var(--mtx-color-error-contrast);
+  --mtx-btn-color: var(--mtx-color-error-text);
+}
+
+.mtx-button--warning {
+  --mtx-btn-bg: var(--mtx-color-warning);
+  --mtx-btn-hover: var(--mtx-color-warning-dark);
+  --mtx-btn-fg: var(--mtx-color-warning-contrast);
+  --mtx-btn-color: var(--mtx-color-warning-text);
+}
+
+.mtx-button--info {
+  --mtx-btn-bg: var(--mtx-color-info);
+  --mtx-btn-hover: var(--mtx-color-info-dark);
+  --mtx-btn-fg: var(--mtx-color-info-contrast);
+  --mtx-btn-color: var(--mtx-color-info-text);
+}
+
+.mtx-button--success {
+  --mtx-btn-bg: var(--mtx-color-success);
+  --mtx-btn-hover: var(--mtx-color-success-dark);
+  --mtx-btn-fg: var(--mtx-color-success-contrast);
+  --mtx-btn-color: var(--mtx-color-success-text);
+}
+
+/* Inherit (color="inherit" de MUI): text/outlined toman el color del contenedor,
+   útil sobre superficies oscuras o de color (AppBar, banners, CTA). Contained usa
+   el gris neutro de MUI (grey 300) con texto oscuro. */
+.mtx-button--inherit {
+  --mtx-btn-color: currentColor;
+  --mtx-btn-bg: var(--mtx-color-grey-300);
+  --mtx-btn-hover: var(--mtx-color-grey-400);
+  --mtx-btn-fg: rgba(0, 0, 0, 0.87);
+}
+
+/* Sobre superficie de color (data-surface): contained invertido (fondo papel + texto
+   del color) y text/outlined con el color del contenedor, como color="inherit". */
+.mtx-button--on-primary,
+.mtx-button--on-secondary {
+  --mtx-btn-color: currentColor;
+  --mtx-btn-bg: var(--mtx-color-background-paper);
+  --mtx-btn-fg: var(--mtx-color-primary-text);
+  --mtx-btn-hover: color-mix(in srgb, var(--mtx-btn-fg) 8%, var(--mtx-color-background-paper));
+}
+
+.mtx-button--on-secondary {
+  --mtx-btn-fg: var(--mtx-color-secondary-text);
+}
+
+/* Contraste AA (por defecto): con texto oscuro sobre el color, el hover aclara el fondo
+   en lugar de oscurecerlo para no bajar de 4.5:1. data-mtx-contrast="mui" lo excluye. */
+.mtx-button:is(.mtx-button--warning, .mtx-button--info):not([data-mtx-contrast='mui'] *),
+[data-mtx-contrast='mui'] [data-mtx-contrast='aa'] :is(.mtx-button--warning, .mtx-button--info),
+[data-mtx-theme='dark'] .mtx-button:not(.mtx-button--inherit, .mtx-button--on-primary, .mtx-button--on-secondary, [data-mtx-contrast='mui'] *),
+[data-mtx-theme='dark'] [data-mtx-contrast='mui'] [data-mtx-contrast='aa']
+  .mtx-button:not(.mtx-button--inherit, .mtx-button--on-primary, .mtx-button--on-secondary) {
+  --mtx-btn-hover: color-mix(in srgb, var(--mtx-btn-bg) 85%, #fff);
+}
+
+/* ------------------------------------------------------------------
+   Tamaños (large: 48px, medium: 40px, small: 32px)
+   ------------------------------------------------------------------ */
+.mtx-button--small {
+  font-size: 0.8125rem;
+  line-height: 1;
+  height: var(--mtx-size-small-height);
+  min-height: var(--mtx-size-small-height);
+  padding: 0 10px;
+}
+
+.mtx-button--medium {
+  font-size: 0.875rem;
+  line-height: 1;
+  height: var(--mtx-size-medium-height);
+  min-height: var(--mtx-size-medium-height);
+  padding: 0 16px;
+}
+
+.mtx-button--large {
+  font-size: 0.9375rem;
+  line-height: 1;
+  height: var(--mtx-size-large-height);
+  min-height: var(--mtx-size-large-height);
+  padding: 0 22px;
+}
+
+/* Ancho completo (prop `fullWidth` de MUI) */
+.mtx-button--full-width {
+  width: 100%;
+}
+
+/* Texto en mayúsculas opcional */
+.mtx-button--uppercase {
+  text-transform: uppercase;
+}
+
+/* Sin elevación (prop `disableElevation` de MUI) */
+.mtx-button--disable-elevation,
+.mtx-button--disable-elevation:hover,
+.mtx-button--disable-elevation:active,
+.mtx-button--disable-elevation:focus-visible {
+  box-shadow: none;
+}
+
+/* Botón solo icono */
+.mtx-button--icon {
+  width: var(--mtx-size-medium-height);
+  height: var(--mtx-size-medium-height);
+  min-width: var(--mtx-size-medium-height);
+  min-height: var(--mtx-size-medium-height);
+  padding: 0;
+  border-radius: var(--mtx-shape-full);
+}
+
+.mtx-button--icon.mtx-button--small {
+  width: var(--mtx-size-small-height);
+  height: var(--mtx-size-small-height);
+  min-width: var(--mtx-size-small-height);
+  min-height: var(--mtx-size-small-height);
+}
+
+.mtx-button--icon.mtx-button--large {
+  width: var(--mtx-size-large-height);
+  height: var(--mtx-size-large-height);
+  min-width: var(--mtx-size-large-height);
+  min-height: var(--mtx-size-large-height);
+}
+
+/* ------------------------------------------------------------------
+   Deshabilitado
+   ------------------------------------------------------------------ */
+.mtx-button:disabled,
+.mtx-button[aria-disabled="true"] {
+  color: var(--mtx-color-action-disabled);
+  background-color: transparent;
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.mtx-button--contained:disabled,
+.mtx-button--contained[aria-disabled="true"] {
+  background-color: var(--mtx-color-action-disabled-background);
+  color: var(--mtx-color-action-disabled);
+}
+
+.mtx-button--outlined:disabled,
+.mtx-button--outlined[aria-disabled="true"] {
+  border-color: var(--mtx-color-action-disabled-background);
+  color: var(--mtx-color-action-disabled);
+  background-color: transparent;
+}
+/* ------------------------------------------------------------------
+   Carga (loading de MUI): deshabilitado + indicador sin saltos de ancho
+   ------------------------------------------------------------------ */
+.mtx-button__loading-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.mtx-button:not(.mtx-button--loading) > .mtx-button__loading-indicator {
+  display: none;
+}
+
+/* start/end: ocupa la caja de 24px del icono que sustituye. */
+.mtx-button__loading-indicator--start:not(.mtx-button__loading-indicator--text),
+.mtx-button__loading-indicator--end:not(.mtx-button__loading-indicator--text) {
+  width: 24px;
+  height: 24px;
+}
+
+.mtx-button .mtx-button__icon--loading-hidden {
+  display: none;
+}
+
+/* center: el texto se vuelve transparente (conserva ancho y nombre accesible)
+   y el indicador se superpone centrado. */
+.mtx-button.mtx-button--loading-center {
+  color: transparent;
+}
+
+.mtx-button--loading-center > :not(.mtx-button__loading-indicator):not(.mtx-ripple-container) {
+  visibility: hidden;
+}
+
+.mtx-button__loading-indicator--center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--mtx-color-action-disabled);
+  white-space: nowrap;
+}

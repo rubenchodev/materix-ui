@@ -1,0 +1,44 @@
+{{ define "main" }}
+{{ $hasToc := and (ne .Section "components") (findRE "<li" .TableOfContents 1) }}
+<div class="doc-page{{ if $hasToc }} doc-page--toc{{ end }}">
+  <article class="doc-article">
+    {{ if not (findRE "<h1" .Content 1) }}
+    <header class="doc-page-header">
+      <h1 class="doc-title">{{ .Title }}</h1>
+      {{ with .Description }}<p class="doc-lead">{{ . }}</p>{{ end }}
+    </header>
+    {{ end }}
+
+    {{ if eq .Section "components" }}
+      <div class="doc-groups">
+        {{ partial "component-cards.html" . }}
+      </div>
+      {{ with .Content }}<div class="doc-content">{{ . }}</div>{{ end }}
+    {{ else }}
+      {{ with .Content }}<div class="doc-content">{{ . }}</div>{{ end }}
+      {{ with .Pages.ByWeight }}
+      <ul class="doc-card-grid">
+        {{ range . }}
+        <li>
+          <a class="doc-card" href="{{ .RelPermalink }}">
+            <span class="doc-card-icon" aria-hidden="true"><span class="material-icons">{{ .Params.icon | default "article" }}</span></span>
+            <span class="doc-card-text">
+              <span class="doc-card-title">{{ .LinkTitle }}</span>
+              {{ with .Description }}<span class="doc-card-desc">{{ . }}</span>{{ end }}
+            </span>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+      {{ end }}
+    {{ end }}
+  </article>
+
+  {{ if $hasToc }}
+  <aside class="doc-toc" aria-labelledby="doc-toc-title">
+    <p class="doc-toc-title" id="doc-toc-title">{{ i18n "on_this_page" }}</p>
+    {{ .TableOfContents }}
+  </aside>
+  {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Templates · Materix UI</title>
+  <meta name="description" content="Full-page templates built with Materix UI: authentication, dashboards, settings, checkout, marketing pages and more.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="shared/template.js"></script>
+  <style>
+    .tpl-gallery { min-height: 100vh; }
+    .tpl-gallery-appbar { border-bottom: 1px solid var(--mtx-color-divider); }
+    .tpl-gallery-appbar .mtx-toolbar { gap: 8px; }
+    .tpl-gallery-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--mtx-color-text-primary); text-decoration: none; font: var(--mtx-type-h6); }
+    .tpl-gallery-brand svg { width: 28px; height: 28px; display: block; }
+    .tpl-gallery-brand small { font: var(--mtx-type-body2); color: var(--mtx-color-text-secondary); }
+    .tpl-gallery-spacer { flex: 1; }
+
+    .tpl-gallery-hero {
+      padding: 64px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% -20%, color-mix(in srgb, var(--mtx-color-primary) 16%, transparent), transparent);
+    }
+    .tpl-gallery-hero h1 { margin: 0 0 12px; }
+    .tpl-gallery-hero p { margin: 0 auto; max-width: 640px; }
+    .tpl-gallery-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+
+    .tpl-gallery-main { max-width: 1280px; margin: 0 auto; padding: 8px 24px 72px; box-sizing: border-box; }
+    .tpl-gallery-count { margin: 0 0 16px; }
+    .tpl-gallery-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+      gap: 24px;
+    }
+    .tpl-gallery-grid > li[hidden] { display: none; }
+    .tpl-gallery-card { height: 100%; transition: box-shadow var(--mtx-duration-shorter) var(--mtx-easing-standard), transform var(--mtx-duration-shorter) var(--mtx-easing-standard); }
+    .tpl-gallery-card:hover { box-shadow: var(--mtx-elevation-8); }
+    .tpl-gallery-shot {
+      display: block;
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--mtx-color-action-hover);
+      border-bottom: 1px solid var(--mtx-color-divider);
+    }
+    .tpl-gallery-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform var(--mtx-duration-standard) var(--mtx-easing-standard); }
+    .tpl-gallery-card:hover .tpl-gallery-shot img { transform: scale(1.02); }
+    .tpl-gallery-shot-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--mtx-color-text-secondary);
+      font: var(--mtx-type-body2);
+    }
+    .tpl-gallery-shot[data-missing='true'] img { display: none; }
+    .tpl-gallery-shot[data-missing='true'] .tpl-gallery-shot-fallback { display: flex; }
+    .tpl-gallery-body { padding: 16px 16px 8px; flex: 1; }
+    .tpl-gallery-body h2 { margin: 0 0 6px; font: var(--mtx-type-h6); color: var(--mtx-color-text-primary); }
+    .tpl-gallery-body p { margin: 0; font: var(--mtx-type-body2); color: var(--mtx-color-text-secondary); }
+    .tpl-gallery-tag { margin-bottom: 10px; }
+    .tpl-gallery-actions { padding: 8px 16px 16px; display: flex; gap: 8px; align-items: center; }
+    .tpl-gallery-footer { text-align: center; padding: 24px; border-top: 1px solid var(--mtx-color-divider); font: var(--mtx-type-body2); color: var(--mtx-color-text-secondary); }
+    .tpl-gallery a.mtx-icon-button { text-decoration: none; }
+    @media (max-width: 599.98px) {
+      .tpl-gallery-hero { padding: 40px 16px 24px; }
+      .tpl-gallery-main { padding: 8px 16px 48px; }
+      .tpl-gallery-brand small { display: none; }
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <div class="tpl-gallery">
+    <header class="tpl-gallery-appbar" data-mtx="app-bar" data-position="sticky" data-color="default" data-elevation="0">
+      <div class="mtx-toolbar">
+        <a class="tpl-gallery-brand" href="./">
+          <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect width="32" height="32" rx="8" fill="var(--mtx-color-primary)" />
+            <path d="M8 23V9h3l5 7 5-7h3v14h-3.2v-8.6L16 20l-4.8-5.6V23H8Z" fill="var(--mtx-color-primary-contrast)" />
+          </svg>
+          Materix UI <small>Templates</small>
+        </a>
+        <div class="tpl-gallery-spacer"></div>
+        <a class="mtx-button mtx-button--text" data-mtx="button" href="../examples/index.html">Components</a>
+        <button type="button" data-mtx="icon-button" data-tpl-theme-toggle aria-label="Switch to dark theme">
+          <span class="material-icons" aria-hidden="true">dark_mode</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="tpl-gallery-hero" aria-labelledby="tpl-gallery-title">
+        <h1 id="tpl-gallery-title" data-mtx="typography" data-variant="h3">Templates</h1>
+        <p class="mtx-typography--text-secondary" data-mtx="typography" data-variant="subtitle1">Production-ready pages built only with Materix UI components and vanilla JavaScript. Open any template, check it in light and dark mode, and copy the HTML into your project.</p>
+        <div class="tpl-gallery-filters" role="group" aria-label="Filter templates by category">
+          <button type="button" data-mtx="chip" data-clickable data-color="primary" data-tpl-filter="all" aria-pressed="true">All</button>
+          <button type="button" data-mtx="chip" data-clickable data-variant="outlined" data-tpl-filter="auth" aria-pressed="false">Authentication</button>
+          <button type="button" data-mtx="chip" data-clickable data-variant="outlined" data-tpl-filter="app" aria-pressed="false">Application</button>
+          <button type="button" data-mtx="chip" data-clickable data-variant="outlined" data-tpl-filter="marketing" aria-pressed="false">Marketing</button>
+        </div>
+      </section>
+
+      <section class="tpl-gallery-main" aria-label="Template list">
+        <p id="tpl-gallery-count" class="tpl-gallery-count mtx-typography--text-secondary" data-mtx="typography" data-variant="body2" aria-live="polite">12 templates</p>
+        <ul class="tpl-gallery-grid" id="tpl-gallery-grid"></ul>
+      </section>
+    </main>
+
+    <footer class="tpl-gallery-footer">
+      Materix UI · MIT License · Templates use the real library from <code>dist/</code>.
+    </footer>
+  </div>
+
+  <script src="../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var TEMPLATES = [
+        { slug: 'sign-in', title: 'Sign in', category: 'auth', description: 'Sign-in page with email/password validation, remember me and social providers.' },
+        { slug: 'sign-up', title: 'Sign up', category: 'auth', description: 'Multi-field registration form with password rules, terms and validation.' },
+        { slug: 'forgot-password', title: 'Forgot password', category: 'auth', description: 'Password recovery flow: request link, code verification and new password.' },
+        { slug: 'dashboard', title: 'Dashboard', category: 'app', description: 'Admin dashboard with navigation drawer, KPI cards, charts and recent orders table.' },
+        { slug: 'settings', title: 'Account settings', category: 'app', description: 'Profile, security, notifications and billing settings organized with tabs.' },
+        { slug: 'checkout', title: 'Checkout', category: 'app', description: 'Checkout with shipping, payment and order summary, including validation.' },
+        { slug: 'file-manager', title: 'File manager', category: 'app', description: 'Drive-style file manager with folders, grid/list views, upload, rename and delete.' },
+        { slug: 'landing-page', title: 'Landing page', category: 'marketing', description: 'Marketing website with hero, features, testimonials, pricing teaser, FAQ and footer.' },
+        { slug: 'pricing', title: 'Pricing', category: 'marketing', description: 'Pricing plans with monthly/yearly toggle, comparison table and FAQ.' },
+        { slug: 'user-management', title: 'User management', category: 'app', description: 'CRUD admin table with search, filters, sorting, pagination, bulk actions and edit dialog.' },
+        { slug: 'mail', title: 'Mail', category: 'app', description: 'Email client with folders, message list, reading pane and compose dialog.' },
+        { slug: 'blog', title: 'Blog', category: 'marketing', description: 'Blog home with featured post, category tabs, article cards and newsletter signup.' }
+      ];
+      var CATEGORY_LABEL = { auth: 'Authentication', app: 'Application', marketing: 'Marketing' };
+      var grid = document.getElementById('tpl-gallery-grid');
+      var root = document.documentElement;
+
+      /**
+       * Devuelve la ruta de la captura según el tema activo.
+       * @param {string} slug Identificador de la plantilla.
+       * @returns {string} Ruta de la imagen.
+       */
+      var shotFor = function (slug) {
+        var theme = root.getAttribute('data-mtx-theme') === 'dark' ? 'dark' : 'light';
+        return '../docs/static/img/templates/' + slug + '-' + theme + '.png';
+      };
+
+      grid.innerHTML = TEMPLATES.map(function (t) {
+        return '<li data-category="' + t.category + '">' +
+          '<article class="tpl-gallery-card" data-mtx="card" data-variant="outlined" aria-labelledby="tpl-gallery-' + t.slug + '">' +
+            '<a class="tpl-gallery-shot" href="' + t.slug + '/" tabindex="-1" aria-hidden="true">' +
+              '<img src="../docs/static/img/templates/' + t.slug + '-light.png" data-slug="' + t.slug + '" alt="" loading="lazy" width="1440" height="900">' +
+              '<span class="tpl-gallery-shot-fallback"><span class="material-icons" aria-hidden="true">image</span>Preview coming soon</span>' +
+            '</a>' +
+            '<div class="tpl-gallery-body">' +
+              '<span class="tpl-gallery-tag" data-mtx="chip" data-size="small" data-variant="outlined">' + CATEGORY_LABEL[t.category] + '</span>' +
+              '<h2 id="tpl-gallery-' + t.slug + '">' + t.title + '</h2>' +
+              '<p>' + t.description + '</p>' +
+            '</div>' +
+            '<div class="tpl-gallery-actions">' +
+              '<a class="mtx-button mtx-button--contained mtx-button--small" data-mtx="button" href="' + t.slug + '/" aria-label="Preview ' + t.title + ' template">Preview</a>' +
+              '<a class="mtx-button mtx-button--text mtx-button--small" data-mtx="button" href="' + t.slug + '/?theme=dark" aria-label="Preview ' + t.title + ' template in dark mode">Dark mode</a>' +
+            '</div>' +
+          '</article></li>';
+      }).join('');
+      Materix.initAll(grid);
+
+      /** Sincroniza las capturas con el tema y marca las que faltan. */
+      var syncShots = function () {
+        grid.querySelectorAll('img[data-slug]').forEach(function (img) {
+          var wrap = img.parentElement;
+          img.onerror = function () { wrap.setAttribute('data-missing', 'true'); };
+          img.onload = function () { wrap.removeAttribute('data-missing'); };
+          var src = shotFor(img.getAttribute('data-slug'));
+          if (img.getAttribute('src') !== src) img.setAttribute('src', src);
+          else if (img.complete && img.naturalWidth === 0) wrap.setAttribute('data-missing', 'true');
+        });
+      };
+      syncShots();
+      new MutationObserver(syncShots).observe(root, { attributes: true, attributeFilter: ['data-mtx-theme'] });
+
+      // Filtros por categoría
+      var count = document.getElementById('tpl-gallery-count');
+      document.querySelectorAll('[data-tpl-filter]').forEach(function (chipEl) {
+        chipEl.addEventListener('mtx:chip:click', function () {
+          var filter = chipEl.getAttribute('data-tpl-filter');
+          document.querySelectorAll('[data-tpl-filter]').forEach(function (other) {
+            var active = other === chipEl;
+            other.setAttribute('aria-pressed', String(active));
+            other.classList.toggle('mtx-chip--outlined', !active);
+            other.classList.toggle('mtx-chip--filled', active);
+            other.classList.toggle('mtx-chip--primary', active);
+          });
+          var visible = 0;
+          grid.querySelectorAll('li[data-category]').forEach(function (li) {
+            var show = filter === 'all' || li.getAttribute('data-category') === filter;
+            li.hidden = !show;
+            if (show) visible++;
+          });
+          count.textContent = visible + (visible === 1 ? ' template' : ' templates');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

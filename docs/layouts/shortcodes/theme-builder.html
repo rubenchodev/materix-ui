@@ -1,0 +1,220 @@
+{{/*
+  theme-builder — Generador interactivo de tema (paleta MUI, modo, forma y tipografía).
+  Previsualiza componentes reales en un iframe aislado que carga dist/ y el CSS generado,
+  y produce el CSS de override (:root + [data-mtx-theme="dark"]) copiable y descargable.
+  Lógica en static/theme-builder.js; estilos en static/docs.css (.doc-tb-*).
+  Uso: {{< theme-builder >}}
+*/}}
+{{ $colors := slice "primary" "secondary" "error" "warning" "info" "success" }}
+{{ $fonts := slice
+  (dict "id" "roboto" "label" "Roboto" "family" "'Roboto', 'Helvetica', 'Arial', sans-serif" "google" "")
+  (dict "id" "inter" "label" "Inter" "family" "'Inter', 'Helvetica', 'Arial', sans-serif" "google" "Inter")
+  (dict "id" "open-sans" "label" "Open Sans" "family" "'Open Sans', 'Helvetica', 'Arial', sans-serif" "google" "Open+Sans")
+  (dict "id" "lato" "label" "Lato" "family" "'Lato', 'Helvetica', 'Arial', sans-serif" "google" "Lato")
+  (dict "id" "montserrat" "label" "Montserrat" "family" "'Montserrat', 'Helvetica', 'Arial', sans-serif" "google" "Montserrat")
+  (dict "id" "poppins" "label" "Poppins" "family" "'Poppins', 'Helvetica', 'Arial', sans-serif" "google" "Poppins")
+  (dict "id" "nunito" "label" "Nunito" "family" "'Nunito', 'Helvetica', 'Arial', sans-serif" "google" "Nunito")
+  (dict "id" "source-sans" "label" "Source Sans 3" "family" "'Source Sans 3', 'Helvetica', 'Arial', sans-serif" "google" "Source+Sans+3")
+  (dict "id" "system" "label" (i18n "tb_font_system") "family" "system-ui, -apple-system, 'Segoe UI', 'Helvetica', 'Arial', sans-serif" "google" "")
+}}
+{{ $strings := dict
+  "contrastOk" (i18n "tb_contrast_ok")
+  "contrastLow" (i18n "tb_contrast_low")
+  "onColor" (i18n "tb_on_color")
+  "onSurface" (i18n "tb_on_surface")
+  "invalidHex" (i18n "tb_invalid_hex")
+  "copied" (i18n "copied")
+  "copyFailed" (i18n "copy_failed")
+  "downloaded" (i18n "tb_downloaded")
+  "resetDone" (i18n "tb_reset_done")
+  "noWarnings" (i18n "tb_no_warnings")
+  "header" (i18n "tb_css_header")
+  "fontNote" (i18n "tb_css_font_note")
+  "cssContrastAa" (i18n "tb_css_contrast_aa")
+  "cssContrastMui" (i18n "tb_css_contrast_mui")
+  "lang" (site.Language.Locale | default site.Language.Lang)
+}}
+{{ $assets := dict
+  "css" ("dist/materix.min.css" | relURL)
+  "js" ("dist/materix.umd.js" | relURL)
+  "fonts" (slice
+    "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    "https://fonts.googleapis.com/icon?family=Material+Icons")
+}}
+<div class="doc-tb" data-doc-theme-builder>
+  <script type="application/json" data-doc-tb-config>{{ dict "strings" $strings "fonts" $fonts "assets" $assets | jsonify | safeJS }}</script>
+
+  <form class="doc-tb-controls" data-doc-tb-form aria-label="{{ i18n "tb_controls" }}" novalidate>
+    <fieldset class="doc-tb-fieldset">
+      <legend class="doc-tb-legend">{{ i18n "tb_mode" }}</legend>
+      <div class="doc-tb-segmented">
+        <label class="doc-tb-segment">
+          <input type="radio" name="tb-mode" value="light" data-doc-tb-mode checked>
+          <span><span class="material-icons" aria-hidden="true">light_mode</span>{{ i18n "tb_mode_light" }}</span>
+        </label>
+        <label class="doc-tb-segment">
+          <input type="radio" name="tb-mode" value="dark" data-doc-tb-mode>
+          <span><span class="material-icons" aria-hidden="true">dark_mode</span>{{ i18n "tb_mode_dark" }}</span>
+        </label>
+      </div>
+      <p class="doc-tb-hint">{{ i18n "tb_mode_hint" }}</p>
+    </fieldset>
+
+    <fieldset class="doc-tb-fieldset">
+      <legend class="doc-tb-legend">{{ i18n "tb_contrast" }}</legend>
+      <div class="doc-tb-segmented">
+        <label class="doc-tb-segment">
+          <input type="radio" name="tb-contrast" value="aa" data-doc-tb-contrast checked>
+          <span><span class="material-icons" aria-hidden="true">accessibility_new</span>{{ i18n "tb_contrast_aa" }}</span>
+        </label>
+        <label class="doc-tb-segment">
+          <input type="radio" name="tb-contrast" value="mui" data-doc-tb-contrast>
+          <span><span class="material-icons" aria-hidden="true">palette</span>{{ i18n "tb_contrast_mui" }}</span>
+        </label>
+      </div>
+      <p class="doc-tb-hint">{{ i18n "tb_contrast_hint" }}</p>
+    </fieldset>
+
+    <fieldset class="doc-tb-fieldset">
+      <legend class="doc-tb-legend">{{ i18n "tb_palette" }}</legend>
+      <ul class="doc-tb-palette">
+        {{ range $colors }}
+        <li class="doc-tb-color" data-doc-tb-color="{{ . }}">
+          <div class="doc-tb-color-head">
+            <label class="doc-tb-color-name" for="doc-tb-hex-{{ . }}">{{ i18n (printf "tb_color_%s" .) }}</label>
+            <span class="doc-tb-badge" data-doc-tb-badge></span>
+          </div>
+          <div class="doc-tb-color-inputs">
+            <input type="color" class="doc-tb-picker" data-doc-tb-picker aria-label="{{ i18n "tb_pick_color" (dict "Color" (i18n (printf "tb_color_%s" .))) }}">
+            <input type="text" class="doc-tb-hex" id="doc-tb-hex-{{ . }}" data-doc-tb-hex
+              inputmode="text" autocomplete="off" spellcheck="false" maxlength="7"
+              pattern="#[0-9a-fA-F]{6}" aria-describedby="doc-tb-err-{{ . }}">
+            <span class="doc-tb-swatches" aria-hidden="true">
+              <span class="doc-tb-swatch" data-doc-tb-swatch="light" title="light"></span>
+              <span class="doc-tb-swatch" data-doc-tb-swatch="main" title="main"></span>
+              <span class="doc-tb-swatch" data-doc-tb-swatch="dark" title="dark"></span>
+              <span class="doc-tb-swatch doc-tb-swatch--text" data-doc-tb-swatch="contrast" title="contrast">Aa</span>
+            </span>
+          </div>
+          <p class="doc-tb-error" id="doc-tb-err-{{ . }}" data-doc-tb-error></p>
+        </li>
+        {{ end }}
+      </ul>
+    </fieldset>
+
+    <fieldset class="doc-tb-fieldset">
+      <legend class="doc-tb-legend">{{ i18n "tb_shape_typography" }}</legend>
+      <div class="doc-tb-field">
+        <label for="doc-tb-radius">{{ i18n "tb_radius" }}</label>
+        <div class="doc-tb-range">
+          <input type="range" id="doc-tb-radius" min="0" max="24" step="1" value="4" data-doc-tb-radius aria-describedby="doc-tb-radius-out">
+          <output id="doc-tb-radius-out" for="doc-tb-radius" data-doc-tb-radius-out>4px</output>
+        </div>
+      </div>
+      <div class="doc-tb-field">
+        <label for="doc-tb-font">{{ i18n "tb_font" }}</label>
+        <select id="doc-tb-font" class="doc-tb-select" data-doc-tb-font>
+          {{ range $fonts }}<option value="{{ .id }}">{{ .label }}</option>{{ end }}
+        </select>
+      </div>
+    </fieldset>
+
+    <div class="doc-tb-actions">
+      <button type="button" class="doc-tb-btn" data-doc-tb-reset>
+        <span class="material-icons" aria-hidden="true">restart_alt</span>{{ i18n "tb_reset" }}
+      </button>
+    </div>
+  </form>
+
+  <section class="doc-tb-output" aria-labelledby="doc-tb-preview-title">
+    <div class="doc-tb-panel">
+      <div class="doc-tb-panel-head">
+        <h2 class="doc-tb-panel-title" id="doc-tb-preview-title">{{ i18n "tb_preview" }}</h2>
+        <span class="doc-tb-mode-chip" data-doc-tb-mode-label aria-hidden="true"></span>
+      </div>
+      <iframe class="doc-tb-frame" data-doc-tb-frame title="{{ i18n "tb_preview_frame" }}"></iframe>
+    </div>
+
+    <div class="doc-tb-panel" role="region" aria-labelledby="doc-tb-warn-title">
+      <div class="doc-tb-panel-head">
+        <h2 class="doc-tb-panel-title" id="doc-tb-warn-title">{{ i18n "tb_accessibility" }}</h2>
+      </div>
+      <ul class="doc-tb-warnings" data-doc-tb-warnings aria-live="polite"></ul>
+    </div>
+
+    <div class="doc-tb-panel">
+      <div class="doc-tb-panel-head">
+        <h2 class="doc-tb-panel-title" id="doc-tb-css-title">{{ i18n "tb_generated_css" }}</h2>
+        <span class="doc-tb-status" role="status" data-doc-tb-status></span>
+        <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-tb-copy aria-label="{{ i18n "tb_copy_css" }}" title="{{ i18n "tb_copy_css" }}">
+          <span class="material-icons" aria-hidden="true">content_copy</span>
+        </button>
+        <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-tb-download aria-label="{{ i18n "tb_download_css" }}" title="{{ i18n "tb_download_css" }}">
+          <span class="material-icons" aria-hidden="true">download</span>
+        </button>
+      </div>
+      <pre class="doc-tb-css" tabindex="0" aria-labelledby="doc-tb-css-title"><code data-doc-tb-css></code></pre>
+    </div>
+  </section>
+
+  {{/* Contenido de la vista previa: componentes reales con sintaxis simplificada. */}}
+  <template data-doc-tb-preview>
+    <div class="mtx-stack mtx-stack--col mtx-stack--spacing-3">
+      <div class="mtx-stack mtx-stack--row mtx-stack--wrap mtx-stack--spacing-1">
+        <button class="mtx-button mtx-button--contained" data-mtx="button">{{ i18n "tb_pv_save" }}</button>
+        <button class="mtx-button mtx-button--contained mtx-button--secondary" data-mtx="button" data-start-icon="favorite">{{ i18n "tb_pv_like" }}</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button">{{ i18n "tb_pv_outlined" }}</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button">{{ i18n "tb_pv_text" }}</button>
+        <button class="mtx-button mtx-button--contained mtx-button--error" data-mtx="button" data-start-icon="delete">{{ i18n "tb_pv_delete" }}</button>
+        <button class="mtx-button mtx-button--contained mtx-button--success" data-mtx="button">{{ i18n "tb_pv_confirm" }}</button>
+      </div>
+      <div class="mtx-stack mtx-stack--row mtx-stack--wrap mtx-stack--spacing-2">
+        <input data-mtx="text-field" data-label="{{ i18n "tb_pv_name" }}" data-variant="outlined" type="text" value="Ada Lovelace" />
+        <input data-mtx="text-field" data-label="{{ i18n "tb_pv_email" }}" data-variant="filled" data-start-icon="mail" type="email" />
+      </div>
+      <div class="mtx-stack mtx-stack--row mtx-stack--wrap mtx-stack--spacing-2">
+        <input type="checkbox" data-mtx="switch" data-label="{{ i18n "tb_pv_notifications" }}" checked />
+        <input type="checkbox" data-mtx="checkbox" data-label="{{ i18n "tb_pv_remember" }}" checked />
+        <div data-mtx="badge" data-content="4" data-color="secondary"><span class="material-icons" aria-hidden="true">mail</span></div>
+        <div data-mtx="avatar" data-color="primary">AL</div>
+      </div>
+      <div class="mtx-stack mtx-stack--row mtx-stack--wrap mtx-stack--spacing-1">
+        <div data-mtx="chip" data-label="{{ i18n "tb_color_primary" }}" data-color="primary"></div>
+        <div data-mtx="chip" data-label="{{ i18n "tb_color_secondary" }}" data-color="secondary" data-variant="outlined"></div>
+        <div data-mtx="chip" data-label="{{ i18n "tb_color_success" }}" data-color="success" data-icon="check"></div>
+        <div data-mtx="chip" data-label="{{ i18n "tb_color_warning" }}" data-color="warning"></div>
+        <div data-mtx="chip" data-label="{{ i18n "tb_color_info" }}" data-color="info" data-variant="outlined"></div>
+      </div>
+      <div class="mtx-tabs-container">
+        <div data-mtx="tabs">
+          <button data-mtx="tab" data-panel="#tb-tab-1" data-active>{{ i18n "tb_pv_tab_overview" }}</button>
+          <button data-mtx="tab" data-panel="#tb-tab-2">{{ i18n "tb_pv_tab_activity" }}</button>
+          <button data-mtx="tab" data-panel="#tb-tab-3">{{ i18n "tb_pv_tab_settings" }}</button>
+        </div>
+        <div class="mtx-tab-panel" id="tb-tab-1">{{ i18n "tb_pv_tab_text" }}</div>
+        <div class="mtx-tab-panel" id="tb-tab-2" hidden>{{ i18n "tb_pv_tab_text" }}</div>
+        <div class="mtx-tab-panel" id="tb-tab-3" hidden>{{ i18n "tb_pv_tab_text" }}</div>
+      </div>
+      <div class="mtx-grid mtx-grid--container mtx-grid--spacing-2">
+        <div class="mtx-grid mtx-grid--xs-12 mtx-grid--sm-6">
+          <div data-mtx="card" data-avatar="M" data-title="{{ i18n "tb_pv_card_title" }}" data-subheader="{{ i18n "tb_pv_card_sub" }}">
+            <div data-mtx="card-content">{{ i18n "tb_pv_card_text" }}</div>
+            <div data-mtx="card-actions">
+              <button class="mtx-button mtx-button--text" data-mtx="button">{{ i18n "tb_pv_card_action" }}</button>
+            </div>
+          </div>
+        </div>
+        <div class="mtx-grid mtx-grid--xs-12 mtx-grid--sm-6">
+          <div class="mtx-stack mtx-stack--col mtx-stack--spacing-1">
+            <div data-mtx="alert" data-severity="success">{{ i18n "tb_pv_alert_success" }}</div>
+            <div data-mtx="alert" data-severity="info" data-variant="outlined">{{ i18n "tb_pv_alert_info" }}</div>
+            <div data-mtx="alert" data-severity="warning" data-variant="filled">{{ i18n "tb_pv_alert_warning" }}</div>
+            <div data-mtx="alert" data-severity="error">{{ i18n "tb_pv_alert_error" }}</div>
+            <div data-mtx="linear-progress" data-value="60" aria-label="{{ i18n "tb_pv_progress" }}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</div>
+<script src="{{ "theme-builder.js" | relURL }}" defer></script>

@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Materix UI — Menu
+   Basado en Material UI (MUI)
+   ========================================================================== */
+.mtx-menu__popper {
+  position: fixed;
+  margin: 0;
+  z-index: var(--mtx-z-index-modal);
+  pointer-events: auto;
+}
+.mtx-menu__paper {
+  max-height: inherit;
+  min-width: 112px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 0;
+  margin: 0;
+  border-radius: var(--mtx-shape-radius);
+  background-color: var(--mtx-color-background-paper);
+  color: var(--mtx-color-text-primary);
+  box-shadow: var(--mtx-elevation-8);
+  background-image: var(--mtx-overlay-elevation-8);
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Materix UI — MenuItem
+   ========================================================================== */
+.mtx-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  width: 100%;
+  min-height: 48px;
+  padding: 6px 16px;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  font-family: var(--mtx-font-family);
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  color: var(--mtx-color-text-primary);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+.mtx-menu-item--dense {
+  min-height: 32px;
+  padding: 2px 16px;
+}
+.mtx-menu-item--divider {
+  min-height: 0;
+  height: 1px;
+  padding: 0;
+  margin: 8px 0;
+  border: none;
+  background-color: var(--mtx-color-divider);
+  pointer-events: none;
+}
+.mtx-menu-item--disable-gutters { padding-right: 0; padding-left: 0; }
+.mtx-menu-item:hover {
+  background-color: var(--mtx-color-action-hover);
+}
+.mtx-menu-item:focus-visible {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: -2px;
+  background-color: var(--mtx-color-action-hover);
+}
+.mtx-menu-item--selected {
+  background-color: var(--mtx-color-action-selected);
+}
+.mtx-menu-item--selected:hover {
+  background-color: color-mix(in srgb, var(--mtx-color-action-selected) 50%, var(--mtx-color-action-hover));
+}
+.mtx-menu-item--disabled,
+.mtx-menu-item[aria-disabled="true"] {
+  color: var(--mtx-color-text-disabled);
+  cursor: default;
+  pointer-events: none;
+}
+/* Icono inicial (ListItemIcon dentro de MenuItem en MUI: 36px de ancho mínimo) */
+.mtx-menu-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  min-width: 36px;
+  line-height: 1;
+  color: var(--mtx-color-action-active);
+}
+.mtx-menu-item__icon .material-icons,
+.mtx-menu-item__icon .material-symbols-outlined {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.mtx-menu-item__icon svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  display: block;
+}
+.mtx-menu-item--disabled .mtx-menu-item__icon { color: inherit; }
+.mtx-menu-item__image {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-right: 12px;
+  border-radius: var(--mtx-shape-radius);
+  object-fit: cover;
+}
+.mtx-menu-item__check {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+  padding-left: 16px;
+  color: var(--mtx-color-action-active);
+}
+.mtx-menu-item__expand {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+  padding-left: 16px;
+  color: var(--mtx-color-action-active);
+}
+/* La marca solo se ve en ítems marcados (menuitemcheckbox / menuitemradio) */
+.mtx-menu-item[aria-checked="false"] > .mtx-menu-item__check {
+  visibility: hidden;
+}

@@ -1,0 +1,61 @@
+{{ $page := . }}
+<header class="doc-topbar">
+  <button type="button" class="doc-icon-btn doc-menu-btn" data-doc-menu aria-controls="doc-sidebar" aria-expanded="false" aria-label="{{ i18n "nav_open" }}">
+    <span class="material-icons" aria-hidden="true">menu</span>
+  </button>
+
+  {{/* Sin aria-label: el nombre accesible parte del texto visible (WCAG 2.5.3, label in name). */}}
+  <a class="doc-brand" href="{{ site.Home.RelPermalink }}">
+    <span class="doc-brand-mark" aria-hidden="true">M</span>
+    <span class="doc-brand-name">{{ site.Title }}</span><span class="doc-visually-hidden">, {{ i18n "brand_home_suffix" }}</span>
+  </a>
+  {{ with site.Params.version }}<span class="doc-version" title="{{ i18n "library_version" }}">v{{ . }}</span>{{ end }}
+
+  <div class="doc-topbar-spacer"></div>
+
+  <button type="button" class="doc-search-btn" data-doc-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K" title="{{ i18n "search_open" }}">
+    <span class="material-icons" aria-hidden="true">search</span>
+    <span class="doc-search-btn-label">{{ i18n "search_button" }}</span>
+    <kbd class="doc-kbd" aria-hidden="true">Ctrl K</kbd>
+  </button>
+
+  {{/* Selector de idioma: enlaza a la traducción de la página actual o, si no existe, a la home de ese idioma. */}}
+  {{ $homes := site.Home.AllTranslations }}
+  {{ if gt (len $homes) 1 }}
+  <div class="doc-lang" data-doc-lang>
+    <button type="button" class="doc-lang-btn" data-doc-lang-toggle aria-expanded="false" aria-controls="doc-lang-menu"
+      aria-label="{{ upper site.Language.Lang }}, {{ i18n "language_change" }}: {{ site.Language.Label }}" title="{{ i18n "language" }}">
+      <span class="material-icons" aria-hidden="true">translate</span>
+      <span class="doc-lang-code" aria-hidden="true">{{ upper site.Language.Lang }}</span>
+      <span class="material-icons doc-lang-caret" aria-hidden="true">expand_more</span>
+    </button>
+    <ul class="doc-lang-menu" id="doc-lang-menu" hidden>
+      {{ range $homes }}
+        {{ $lang := .Language.Lang }}
+        {{ $target := . }}
+        {{ range $page.AllTranslations }}{{ if eq .Language.Lang $lang }}{{ $target = . }}{{ end }}{{ end }}
+        {{ $current := eq $lang site.Language.Lang }}
+        <li>
+          <a class="doc-lang-option{{ if $current }} is-active{{ end }}" href="{{ $target.RelPermalink }}"
+            hreflang="{{ .Language.Locale | default $lang }}" lang="{{ .Language.Locale | default $lang }}"{{ if $current }} aria-current="true"{{ end }}>
+            <span class="doc-lang-option-code" aria-hidden="true">{{ upper $lang }}</span>
+            <span>{{ .Language.Label }}</span>
+            {{ if $current }}<span class="material-icons doc-lang-check" aria-hidden="true">check</span>{{ end }}
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+
+  <button type="button" class="doc-icon-btn" data-doc-theme aria-label="{{ i18n "theme_to_dark" }}" title="{{ i18n "theme_toggle" }}">
+    <span class="material-icons doc-theme-icon-light" aria-hidden="true">dark_mode</span>
+    <span class="material-icons doc-theme-icon-dark" aria-hidden="true">light_mode</span>
+  </button>
+
+  {{ with site.Params.repoURL }}
+  <a class="doc-icon-btn" href="{{ . }}" target="_blank" rel="noopener" aria-label="{{ i18n "github_repo" }} {{ i18n "opens_new_tab" }}" title="GitHub">
+    <svg class="doc-github" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.27a11 11 0 0 0-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2.16 2.16 0 0 1 .64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 0 1 0-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 0 1 0 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0 0 12 1.27"/></svg>
+  </a>
+  {{ end }}
+</header>

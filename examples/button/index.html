@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Button</h1>
+        <p class="demo-lead">Action button with text, outlined and contained variants, three canonical heights (48/40/32px), palette colors and icons.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#loading">Loading</a>
+      <a href="#full-width">Full width</a>
+      <a href="#elevation">No elevation</a>
+      <a href="#uppercase">Uppercase</a>
+      <a href="#as-link">As a link</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;button&gt;</code> with the variant class and <code>data-mtx="button"</code>. The library adds the ripple and manages the disabled state; there is no inner structure to write.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button">Save</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button">Preview</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button">Cancel</button>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--contained" data-mtx="button"&gt;Save&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>Visual hierarchy is expressed with the variant: <code>contained</code> for the primary action, <code>outlined</code> for medium-emphasis secondary actions and <code>text</code> for low-emphasis actions (dialogs, cards).</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Contained · high emphasis</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--contained" data-mtx="button">Contained</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Outlined · medium emphasis</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button">Outlined</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Text · low emphasis</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--text" data-mtx="button">Text</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Three canonical heights with <code>data-size</code>: <strong>large 48px</strong>, <strong>medium 40px</strong> (default) and <strong>small 32px</strong>. Each row aligns the button with other controls of the same height to check that they share the baseline.</p>
+      <div class="demo-group">
+        <span class="demo-label">Large · 48px — next to IconButton large and FAB medium (48px)</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="large">Search</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="large">Filters</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-size="large">Clear</button>
+          <button data-mtx="icon-button" data-icon="tune" data-size="large" aria-label="Search settings"></button>
+          <button data-mtx="fab" data-icon="add" data-size="medium" aria-label="Create"></button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 40px (default) — next to TextField small (40px)</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Email" data-size="small" type="email" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button">Subscribe</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button">Skip</button>
+          <button data-mtx="icon-button" data-icon="help_outline" aria-label="Help"></button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 32px — next to IconButton small and Chip (32px)</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="small">Filter</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small">Export</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-size="small">Reset</button>
+          <button data-mtx="icon-button" data-icon="more_vert" data-size="small" aria-label="More options"></button>
+          <div data-mtx="chip" data-label="Active" data-variant="outlined"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With icons</h2>
+      <p>With <code>data-start-icon</code> / <code>data-end-icon</code> (like MUI's <code>startIcon</code> / <code>endIcon</code>) the Material icon name is enough: the button generates <code>&lt;span class="mtx-button__icon mtx-button__icon--start material-icons" aria-hidden="true"&gt;</code> (or <code>--end</code>). The icons are decorative because the text already names the action, and they move 4px closer to the edge (2px in small) as in MUI.</p>
+      <div class="demo-group">
+        <span class="demo-label">No icon</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button">Send</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button">Delete</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Start icon</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-start-icon="add">New</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--error" data-mtx="button" data-start-icon="delete">Delete</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-start-icon="download">Download</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">SVG icon (24px)</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button">
+            <span class="mtx-button__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg></span>
+            Continue with GitHub
+          </button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">End icon</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-end-icon="send">Send</button>
+          <a class="mtx-button mtx-button--outlined" data-mtx="button" href="#colors" data-end-icon="arrow_forward">Next</a>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Start and end · three sizes (48 / 40 / 32px)</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="large" data-start-icon="save" data-end-icon="expand_more">Large</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="save" data-end-icon="expand_more">Medium</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-size="small" data-start-icon="save" data-end-icon="expand_more">Small</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon only · mtx-button--icon (48 / 40 / 32px)</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained mtx-button--icon" data-mtx="button" data-size="large" aria-label="Large favorite">
+            <span class="mtx-button__icon material-icons" aria-hidden="true">star</span>
+          </button>
+          <button class="mtx-button mtx-button--contained mtx-button--icon" data-mtx="button" aria-label="Favorite">
+            <span class="mtx-button__icon material-icons" aria-hidden="true">star</span>
+          </button>
+          <button class="mtx-button mtx-button--contained mtx-button--icon" data-mtx="button" data-size="small" aria-label="Small favorite">
+            <span class="mtx-button__icon material-icons" aria-hidden="true">star</span>
+          </button>
+        </div>
+      </div>
+      <p>For icon-only actions without a background (toolbars, cards) use <a class="mtx-link" data-mtx="link" href="../icon-button/index.html">IconButton</a>; for the screen's primary floating action, <a class="mtx-link" data-mtx="link" href="../fab/index.html">FAB</a>.</p>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p>Primary is the default color. The <code>mtx-button--{color}</code> modifiers apply any palette color in all three variants.</p>
+      <div class="demo-group">
+        <span class="demo-label">Contained</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button">Primary</button>
+          <button class="mtx-button mtx-button--contained mtx-button--secondary" data-mtx="button">Secondary</button>
+          <button class="mtx-button mtx-button--contained mtx-button--success" data-mtx="button">Success</button>
+          <button class="mtx-button mtx-button--contained mtx-button--error" data-mtx="button">Error</button>
+          <button class="mtx-button mtx-button--contained mtx-button--warning" data-mtx="button">Warning</button>
+          <button class="mtx-button mtx-button--contained mtx-button--info" data-mtx="button">Info</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Outlined</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button">Primary</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--secondary" data-mtx="button">Secondary</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--success" data-mtx="button">Success</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--error" data-mtx="button">Error</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--warning" data-mtx="button">Warning</button>
+          <button class="mtx-button mtx-button--outlined mtx-button--info" data-mtx="button">Info</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Text</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--text" data-mtx="button">Primary</button>
+          <button class="mtx-button mtx-button--text mtx-button--secondary" data-mtx="button">Secondary</button>
+          <button class="mtx-button mtx-button--text mtx-button--success" data-mtx="button">Success</button>
+          <button class="mtx-button mtx-button--text mtx-button--error" data-mtx="button">Error</button>
+          <button class="mtx-button mtx-button--text mtx-button--warning" data-mtx="button">Warning</button>
+          <button class="mtx-button mtx-button--text mtx-button--info" data-mtx="button">Info</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Inherit · data-color="inherit" on a colored surface</span>
+        <div class="mtx-bg-primary mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-2 mtx-p-2 mtx-rounded">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-color="inherit">Later</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-color="inherit">See plans</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-color="inherit">Get started</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">On a colored surface · data-surface="primary"</span>
+        <div class="mtx-bg-primary mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-2 mtx-p-2 mtx-rounded">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-surface="primary">Start free trial</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-surface="primary">Book a demo</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-surface="primary">Later</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Exact MUI colors · data-mtx-contrast="mui" (opt-out of the default AA contrast; warning and info text 3–3.9:1)</span>
+        <div class="demo-row" data-mtx-contrast="mui">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-color="warning">Warning</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-color="info">Info</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-color="warning">Warning</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-color="info">Info</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-color="warning">Warning</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-color="info">Info</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-color (simplified syntax)</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-color="success">Approve</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-color="error">Reject</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover to see the hover state, press to see the ripple and use <kbd>Tab</kbd> to see the visible focus. The native <code>disabled</code> attribute dims the button and removes it from the tab order.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Enabled · hover, focus and press</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--contained" data-mtx="button">Contained</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button">Outlined</button>
+            <button class="mtx-button mtx-button--text" data-mtx="button">Text</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled · disabled</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--contained" data-mtx="button" disabled>Contained</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" disabled>Outlined</button>
+            <button class="mtx-button mtx-button--text" data-mtx="button" disabled>Text</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="loading">
+      <h2>Loading</h2>
+      <p>With <code>data-loading</code> the button is disabled, gets <code>aria-busy="true"</code> and shows a decorative CircularProgress, like MUI's <code>loading</code>. <code>data-loading-position</code> chooses where: <code>center</code> (hides the text and keeps the width), <code>start</code> or <code>end</code> (replace the start or end icon). <code>data-loading-indicator</code> shows a text instead of the spinner. Click any button to see it load for 2 seconds.</p>
+      <div class="demo-group">
+        <span class="demo-label">Static · data-loading</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-loading>Save</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-loading data-loading-position="start" data-start-icon="save">Save</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-loading data-loading-position="end" data-end-icon="send">Send</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-loading data-loading-indicator="Loading…">Download</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Interactive · click → 2 s loading</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-demo-loading>Save</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-demo-loading data-loading-position="start" data-start-icon="save">Save</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-loading data-loading-position="end" data-end-icon="send">Send</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-loading data-loading-indicator="Paying…">Pay $49</button>
+          <button class="mtx-button mtx-button--contained mtx-button--small" data-mtx="button" data-demo-loading>Small</button>
+          <button class="mtx-button mtx-button--contained mtx-button--large" data-mtx="button" data-demo-loading>Large</button>
+        </div>
+        <p class="demo-status" id="button-loading-status" role="status" aria-live="polite"></p>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-loading&gt;Save&lt;/button&gt;
+&lt;button class="mtx-button mtx-button--outlined" data-mtx="button" data-loading data-loading-position="start" data-start-icon="save"&gt;Save&lt;/button&gt;
+
+const button = Materix.getInstance(el);
+button.setLoading(true);   // or: button.loading = true
+await save();
+button.setLoading(false);  // restores the previous disabled state</code></pre>
+    </section>
+
+    <section class="demo-section" id="full-width">
+      <h2>Full width</h2>
+      <p><code>mtx-button--full-width</code> takes 100% of the container (equivalent to MUI's <code>fullWidth</code>). Useful in narrow forms and on mobile.</p>
+      <div class="demo-stack demo-fixed-width">
+        <button class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" data-size="large">Sign in</button>
+        <button class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button" data-size="large">Create account</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="elevation">
+      <h2>No elevation</h2>
+      <p><code>mtx-button--disable-elevation</code> removes the shadow of the contained variant in all its states (equivalent to MUI's <code>disableElevation</code>).</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button">With elevation</button>
+        <button class="mtx-button mtx-button--contained mtx-button--disable-elevation" data-mtx="button">No elevation</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="uppercase">
+      <h2>Uppercase</h2>
+      <p>The text is shown as written. Add <code>mtx-button--uppercase</code> for the uppercase style characteristic of Material Design 2.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button">Text as written</button>
+        <button class="mtx-button mtx-button--contained mtx-button--uppercase" data-mtx="button">Uppercase</button>
+        <button class="mtx-button mtx-button--outlined mtx-button--uppercase" data-mtx="button">Outlined</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="as-link">
+      <h2>As a link</h2>
+      <p>If the action navigates to another page, use an <code>&lt;a href&gt;</code> with the same classes: it keeps link semantics (open in a new tab, copy URL) with the look of a button.</p>
+      <div class="demo-row">
+        <a class="mtx-button mtx-button--contained" data-mtx="button" href="#as-link">See plans</a>
+        <a class="mtx-button mtx-button--outlined" data-mtx="button" href="#as-link">Documentation</a>
+        <a class="mtx-button mtx-button--text" data-mtx="button" href="#as-link">Learn more</a>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>Common compositions: a single contained primary action per block, with the secondary actions in outlined or text next to it.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Form footer</span>
+          <div class="demo-panel">
+            <input data-mtx="text-field" data-label="Project name" type="text" />
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--text" data-mtx="button">Cancel</button>
+              <button class="mtx-button mtx-button--contained" data-mtx="button" data-start-icon="check">Create project</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Table action bar</span>
+          <div class="demo-panel">
+            <div class="demo-row">
+              <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="small" data-start-icon="add">Add</button>
+              <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-start-icon="file_download">Export</button>
+              <button class="mtx-button mtx-button--text mtx-button--error" data-mtx="button" data-size="small">Delete selection</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>Inside <code>mtx-grid</code>, combine <code>mtx-button--full-width</code> with responsive columns: on mobile the buttons stack at full width and from 600px they spread into columns.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--outlined mtx-button--full-width" data-mtx="button">Previous</button>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--text mtx-button--full-width" data-mtx="button">Save draft</button>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <button class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Get the instance with <code>Materix.getInstance(el)</code> to call <code>disable()</code> and <code>enable()</code>, or create new buttons with <code>Materix.init(el)</code>. Button does not emit its own events: listen to the native <code>click</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Controlled button</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" id="button-target">Controlled button</button>
+        </div>
+        <p class="demo-status" id="button-status">disabled: false</p>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" id="button-disable">disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" id="button-enable">enable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" id="button-create">Materix.init(new)</button>
+        </div>
+        <div class="demo-row" id="button-dynamic"></div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="button-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR or fine-grained control you can write the size classes directly (<code>mtx-button--large</code>, <code>--small</code>) instead of <code>data-size</code>, and the icon nested as <code>material-icons</code> inside <code>mtx-button__icon</code> (with <code>mtx-button__icon--start</code> / <code>--end</code> for the MUI offset). The instance binds without duplicating anything: <code>data-start-icon</code> does not add a second icon if one already exists on that side.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained mtx-button--large" data-mtx="button" type="button">
+          <span class="mtx-button__icon mtx-button__icon--start" aria-hidden="true"><span class="material-icons">save</span></span>
+          Save
+        </button>
+        <button class="mtx-button mtx-button--outlined mtx-button--medium" data-mtx="button" type="button">Medium</button>
+        <button class="mtx-button mtx-button--text mtx-button--small" data-mtx="button" type="button">Small</button>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--contained mtx-button--large" data-mtx="button" type="button"&gt;
+  &lt;span class="mtx-button__icon" aria-hidden="true"&gt;&lt;span class="material-icons"&gt;save&lt;/span&gt;&lt;/span&gt;
+  Save
+&lt;/button&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Carga: clic → 2 s de carga, anunciada en una región aria-live.
+      var loadingStatus = document.getElementById('button-loading-status');
+      document.querySelectorAll('[data-demo-loading]').forEach(function (el) {
+        el.addEventListener('click', function () {
+          var btn = Materix.getInstance(el);
+          btn.setLoading(true);
+          loadingStatus.textContent = 'Saving…';
+          setTimeout(function () {
+            btn.setLoading(false);
+            loadingStatus.textContent = 'Changes saved';
+          }, 2000);
+        });
+      });
+      var logEl = document.getElementById('button-log');
+      var statusEl = document.getElementById('button-status');
+      var target = document.getElementById('button-target');
+      var dynamic = document.getElementById('button-dynamic');
+      var count = 0;
+
+      /** Añade una línea al registro de eventos. */
+      function log(message) {
+        var time = new Date().toLocaleTimeString();
+        logEl.textContent = '[' + time + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      /** Refleja la propiedad disabled de la instancia. */
+      function syncStatus() {
+        statusEl.textContent = 'disabled: ' + Materix.getInstance(target).disabled;
+      }
+
+      target.addEventListener('click', function () { log('click on "Controlled button"'); });
+
+      document.getElementById('button-disable').addEventListener('click', function () {
+        Materix.getInstance(target).disable();
+        log('button.disable()');
+        syncStatus();
+      });
+
+      document.getElementById('button-enable').addEventListener('click', function () {
+        Materix.getInstance(target).enable();
+        log('button.enable()');
+        syncStatus();
+      });
+
+      document.getElementById('button-create').addEventListener('click', function () {
+        var el = document.createElement('button');
+        el.className = 'mtx-button mtx-button--outlined';
+        el.setAttribute('data-size', 'small');
+        el.textContent = 'New #' + (++count);
+        dynamic.appendChild(el);
+        var instance = Materix.init(el, 'button');
+        log('Materix.init(el, "button") → Materix.Button instance: ' + (instance instanceof Materix.Button));
+      });
+    });
+  </script>
+</body>
+</html>

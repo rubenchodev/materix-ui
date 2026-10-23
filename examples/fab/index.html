@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fab · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Simulated bottom bar to demonstrate mtx-fab--absolute-center */
+    .demo-fab-bottom-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 56px;
+      background-color: var(--mtx-color-primary);
+    }
+
+    .demo-fab-bottom-bar .mtx-fab {
+      --mtx-fab-bg: var(--mtx-color-secondary);
+      --mtx-fab-fg: var(--mtx-color-secondary-contrast);
+      --mtx-fab-hover: var(--mtx-color-secondary-dark);
+    }
+
+    .demo-fab-content {
+      padding: var(--mtx-spacing-2);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Fab</h1>
+        <p class="demo-lead">Floating action button for a screen's primary action: circular (56/48/40px) or extended with text (48px).</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#position">Position</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>An empty <code>&lt;button&gt;</code> with <code>data-icon</code> generates a circular FAB; add <code>data-label</code> and it becomes extended. The circular FAB needs an <code>aria-label</code> because it only shows an icon.</p>
+      <div class="demo-row">
+        <button data-mtx="fab" data-icon="add" aria-label="Create"></button>
+        <button data-mtx="fab" data-icon="edit" data-color="secondary" aria-label="Edit"></button>
+        <button data-mtx="fab" data-icon="navigation" data-label="Navigate"></button>
+      </div>
+      <pre class="demo-code"><code>&lt;button data-mtx="fab" data-icon="add" aria-label="Create"&gt;&lt;/button&gt;
+&lt;button data-mtx="fab" data-icon="navigation" data-label="Navigate"&gt;&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>The <strong>circular</strong> FAB is the standard shape. The <strong>extended</strong> one adds a text label to make the action more explicit; enable it with <code>data-label</code>, or with <code>data-variant="extended"</code> if you write the content yourself.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Circular</span>
+          <div class="demo-row">
+            <button data-mtx="fab" data-icon="add" aria-label="Create"></button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Extended · data-label</span>
+          <div class="demo-row">
+            <button data-mtx="fab" data-icon="add" data-label="New ticket"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>With <code>data-size</code>: <strong>large 56px</strong> (default), <strong>medium 48px</strong> and <strong>small 40px</strong>. The extended FAB is 48px by default, 40px in medium and 34px in small. Each row aligns it with controls of the same height.</p>
+      <div class="demo-group">
+        <span class="demo-label">Large · 56px (default) — next to a medium TextField (56px)</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Type a message" type="text" />
+          </div>
+          <button data-mtx="fab" data-icon="send" aria-label="Send message"></button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 48px — next to a large Button, a large IconButton and an extended FAB</span>
+        <div class="demo-row">
+          <button data-mtx="fab" data-icon="add" data-size="medium" aria-label="Create"></button>
+          <button data-mtx="fab" data-icon="add" data-label="Create"></button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="large">Import</button>
+          <button data-mtx="icon-button" data-icon="more_vert" data-size="large" aria-label="More options"></button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 40px and medium extended (40px) — next to a small TextField and a medium Button</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="New task" data-size="small" type="text" />
+          </div>
+          <button data-mtx="fab" data-icon="add" data-size="small" aria-label="Add task"></button>
+          <button data-mtx="fab" data-icon="add" data-label="Add" data-size="medium"></button>
+          <button class="mtx-button mtx-button--text" data-mtx="button">Cancel</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small extended · 34px</span>
+        <div class="demo-row">
+          <button data-mtx="fab" data-icon="edit" data-label="Edit" data-size="small"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With icons</h2>
+      <p>Combine <code>data-icon</code> and <code>data-label</code> depending on what you need to communicate. The generated icon is always decorative (<code>aria-hidden="true"</code>).</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Icon only</span>
+          <div class="demo-row">
+            <button data-mtx="fab" data-icon="favorite" aria-label="Like"></button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Icon and text</span>
+          <div class="demo-row">
+            <button data-mtx="fab" data-icon="shopping_cart" data-label="Buy"></button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Text only</span>
+          <div class="demo-row">
+            <button data-mtx="fab" data-label="Continue"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p>Primary is the default. <code>data-color</code> accepts any palette color plus <code>default</code>, a neutral surface with a border for screens where the primary color is already very present.</p>
+      <div class="demo-row">
+        <button data-mtx="fab" data-icon="add" aria-label="Primary"></button>
+        <button data-mtx="fab" data-icon="edit" data-color="secondary" aria-label="Secondary"></button>
+        <button data-mtx="fab" data-icon="favorite" data-color="default" aria-label="Default"></button>
+        <button data-mtx="fab" data-icon="check" data-color="success" aria-label="Success"></button>
+        <button data-mtx="fab" data-icon="delete" data-color="error" aria-label="Error"></button>
+        <button data-mtx="fab" data-icon="warning" data-color="warning" aria-label="Warning"></button>
+        <button data-mtx="fab" data-icon="info" data-color="info" aria-label="Info"></button>
+      </div>
+      <div class="demo-row">
+        <button data-mtx="fab" data-icon="support_agent" data-label="Support" data-color="secondary"></button>
+        <button data-mtx="fab" data-icon="filter_list" data-label="Filter" data-color="default"></button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover to see the elevation rise, press to see the ripple and use <kbd>Tab</kbd> to see the focus ring. With <code>disabled</code> it loses its elevation and color.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Enabled · hover, focus and press</span>
+          <div class="demo-row">
+            <button data-mtx="fab" data-icon="add" aria-label="Create"></button>
+            <button data-mtx="fab" data-icon="add" data-label="Create"></button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled · disabled</span>
+          <div class="demo-row">
+            <button data-mtx="fab" data-icon="add" aria-label="Create" disabled></button>
+            <button data-mtx="fab" data-icon="add" data-label="Create" disabled></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="position">
+      <h2>Position</h2>
+      <p><code>mtx-fab--fixed-br</code> and <code>mtx-fab--fixed-bl</code> pin the FAB 24px from the bottom-right or bottom-left corner of the window. <code>mtx-fab--absolute-center</code> centers it over the top edge of its positioned container, as in a bottom bar.</p>
+      <div class="demo-group">
+        <span class="demo-label">absolute-center over a bottom bar</span>
+        <div class="demo-panel demo-panel--tall">
+          <p class="demo-fab-content">Screen content. The FAB stays centered and sits on top of the bar.</p>
+          <div class="demo-fab-bottom-bar">
+            <button data-mtx="fab" data-icon="add" class="mtx-fab--absolute-center" aria-label="Create post"></button>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;!-- Fixed to the bottom-right corner of the window --&gt;
+&lt;button data-mtx="fab" data-icon="add" class="mtx-fab--fixed-br" aria-label="Create"&gt;&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>Inside a grid the FAB keeps its size; use it as the primary action of each card or column.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <div class="demo-panel">
+            <span class="demo-label">Notes</span>
+            <button data-mtx="fab" data-icon="note_add" data-size="small" aria-label="New note"></button>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <div class="demo-panel">
+            <span class="demo-label">Events</span>
+            <button data-mtx="fab" data-icon="event" data-size="small" data-color="secondary" aria-label="New event"></button>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <div class="demo-panel">
+            <span class="demo-label">Contacts</span>
+            <button data-mtx="fab" data-icon="person_add" data-size="small" data-color="success" aria-label="New contact"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The <code>size</code> and <code>color</code> properties are read-write: assigning them swaps the modifier classes. It also has <code>disable()</code> and <code>enable()</code>. Fab emits no events of its own: listen to the native <code>click</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Controlled FAB</span>
+        <div class="demo-row">
+          <button data-mtx="fab" data-icon="bolt" aria-label="Quick action" id="fab-target"></button>
+          <span class="demo-status" id="fab-status">size: large · color: primary · disabled: false</span>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-fab-size="small">size = 'small'</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-fab-size="medium">size = 'medium'</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-fab-size="large">size = 'large'</button>
+        </div>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-fab-color="primary">color = 'primary'</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-fab-color="secondary">color = 'secondary'</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-fab-color="success">color = 'success'</button>
+        </div>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" id="fab-disable">disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" id="fab-enable">enable()</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="fab-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The full structure writes the base class, the modifiers and the content (icon and label) by hand. The instance binds to it without duplicating anything.</p>
+      <div class="demo-row">
+        <button class="mtx-fab mtx-fab--secondary" data-mtx="fab" type="button" aria-label="Edit">
+          <span class="material-icons" aria-hidden="true">edit</span>
+        </button>
+        <button class="mtx-fab mtx-fab--extended" data-mtx="fab" type="button">
+          <span class="material-icons" aria-hidden="true">add</span>
+          <span>New ticket</span>
+        </button>
+        <button class="mtx-fab mtx-fab--small" data-mtx="fab" type="button" aria-label="Add">
+          <span class="material-icons" aria-hidden="true">add</span>
+        </button>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-fab mtx-fab--extended" data-mtx="fab" type="button"&gt;
+  &lt;span class="material-icons" aria-hidden="true"&gt;add&lt;/span&gt;
+  &lt;span&gt;New ticket&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var logEl = document.getElementById('fab-log');
+      var statusEl = document.getElementById('fab-status');
+      var target = document.getElementById('fab-target');
+      var fab = Materix.getInstance(target);
+
+      /** Añade una línea al registro de eventos. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      /** Refleja el estado actual de la instancia. */
+      function syncStatus() {
+        statusEl.textContent = 'size: ' + fab.size + ' · color: ' + fab.color + ' · disabled: ' + fab.disabled;
+      }
+
+      target.addEventListener('click', function () { log('click on "Quick action"'); });
+
+      document.querySelectorAll('[data-fab-size]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          fab.size = btn.getAttribute('data-fab-size');
+          log("fab.size = '" + fab.size + "'");
+          syncStatus();
+        });
+      });
+
+      document.querySelectorAll('[data-fab-color]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          fab.color = btn.getAttribute('data-fab-color');
+          log("fab.color = '" + fab.color + "'");
+          syncStatus();
+        });
+      });
+
+      document.getElementById('fab-disable').addEventListener('click', function () {
+        fab.disable();
+        log('fab.disable()');
+        syncStatus();
+      });
+
+      document.getElementById('fab-enable').addEventListener('click', function () {
+        fab.enable();
+        log('fab.enable()');
+        syncStatus();
+      });
+    });
+  </script>
+</body>
+</html>

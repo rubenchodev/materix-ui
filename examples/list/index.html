@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Scrollable container to demonstrate sticky subheaders. */
+    .demo-list-scroll { max-height: 240px; overflow: auto; }
+    .demo-list-scroll:focus-visible { outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color); outline-offset: 2px; }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Data display</span>
+        <h1>List</h1>
+        <p class="demo-lead">Continuous vertical list of text, icons or avatars, with static or interactive items, subheaders, density and selection.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#row-content">Row content</a>
+      <a href="#density">Density</a>
+      <a href="#interactive">Interactive rows</a>
+      <a href="#states">States</a>
+      <a href="#subheaders">Subheaders</a>
+      <a href="#nested">Nested</a>
+      <a href="#secondary-actions">Secondary actions</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>&lt;ul data-mtx="list"&gt;</code> with <code>data-mtx="list-item"</code> rows. <code>data-icon</code> adds the icon and <code>data-secondary</code> the secondary text.</p>
+      <div data-mtx="paper" data-variant="outlined" class="demo-fixed-width">
+        <ul data-mtx="list" aria-label="Mail">
+          <li data-mtx="list-item" data-icon="inbox" data-secondary="3 new messages">Inbox</li>
+          <li data-mtx="list-item" data-icon="drafts" data-secondary="Saved 2 hours ago">Drafts</li>
+          <li data-mtx="list-item" data-icon="send">Sent</li>
+        </ul>
+      </div>
+      <pre class="demo-code"><code>&lt;ul data-mtx="list" aria-label="Mail"&gt;
+  &lt;li data-mtx="list-item" data-icon="inbox" data-secondary="3 new messages"&gt;Inbox&lt;/li&gt;
+  &lt;li data-mtx="list-item" data-icon="send"&gt;Sent&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="row-content">
+      <h2>Row content</h2>
+      <p>Text only, with an icon, with an avatar and with primary and secondary text. An avatar is set with <code>data-avatar="url"</code> or by writing the <code>data-mtx="avatar"</code> inside the row: the component wraps it in <code>mtx-list-item-avatar</code> (56px, like <code>ListItemAvatar</code>). <code>data-align-start</code> aligns the avatar with the first line of long texts.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Without icon · with icon</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" aria-label="Without and with icon">
+              <li data-mtx="list-item">Text only</li>
+              <li data-mtx="list-item" data-secondary="With secondary text">Text only</li>
+              <li data-mtx="list-item" data-icon="star">With icon</li>
+              <li data-mtx="list-item" data-icon="star" data-secondary="With secondary text">With icon</li>
+            </ul>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Avatar · top alignment</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" aria-label="Contacts">
+              <li data-mtx="list-item" data-avatar="https://i.pravatar.cc/120?img=5" data-secondary="anna@example.com">Anna Garcia</li>
+              <li data-mtx="list-item" data-secondary="charles@example.com"><span data-mtx="avatar" data-color="primary">CR</span>Charles Reed</li>
+              <li data-mtx="list-item" data-align-start data-secondary="Here is the meeting summary with the agreements, owners and due dates."><span data-mtx="avatar" data-color="secondary">LM</span>Monday recap</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="density">
+      <h2>Density</h2>
+      <p><code>data-dense</code> on the list reduces the vertical padding of its rows from 8px to 4px.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Normal · 8px</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" aria-label="Files">
+              <li data-mtx="list-item" data-icon="folder">Documents</li>
+              <li data-mtx="list-item" data-icon="image">Photos</li>
+              <li data-mtx="list-item" data-icon="videocam">Videos</li>
+            </ul>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Dense · 4px</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" data-dense aria-label="Files (dense)">
+              <li data-mtx="list-item" data-icon="folder">Documents</li>
+              <li data-mtx="list-item" data-icon="image">Photos</li>
+              <li data-mtx="list-item" data-icon="videocam">Videos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="interactive">
+      <h2>Interactive rows</h2>
+      <p><code>list-item-button</code> on a <code>&lt;button&gt;</code> adds hover, focus, ripple and selection: clicking a row selects it and unselects the previous one. With <code>data-selectable="false"</code> the rows only run their action.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Selectable</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" aria-label="Settings">
+              <li><button data-mtx="list-item-button" data-icon="person" data-secondary="Name, photo and email">Profile</button></li>
+              <li><button data-mtx="list-item-button" data-icon="settings" data-secondary="Theme and language" data-selected>Preferences</button></li>
+              <li><button data-mtx="list-item-button" data-icon="lock">Security</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">No selection (data-selectable="false")</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" data-selectable="false" aria-label="Actions">
+              <li><button data-mtx="list-item-button" data-icon="file_download">Download</button></li>
+              <li><button data-mtx="list-item-button" data-icon="share">Share</button></li>
+              <li><button data-mtx="list-item-button" data-icon="print">Print</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover to see the hover state and use Tab for focus. <code>data-disabled</code> disables the row (<code>disabled</code> attribute on buttons, <code>aria-disabled</code> on links).</p>
+      <div data-mtx="paper" data-variant="outlined" class="demo-fixed-width">
+        <ul data-mtx="list" aria-label="States">
+          <li><button data-mtx="list-item-button" data-icon="radio_button_unchecked">Normal</button></li>
+          <li><button data-mtx="list-item-button" data-icon="check_circle" data-selected>Selected</button></li>
+          <li><button data-mtx="list-item-button" data-icon="block" data-disabled>Disabled button</button></li>
+          <li><a href="#states" data-mtx="list-item-button" data-icon="link_off" data-disabled>Disabled link</a></li>
+          <li data-mtx="list-item" data-icon="block" data-disabled>Disabled static row</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="demo-section" id="subheaders">
+      <h2>Subheaders</h2>
+      <p><code>list-subheader</code> (with the <code>mtx-list-subheader</code> class) titles groups. <code>data-inset</code> aligns the title with the text; <code>data-sticky</code> pins it while the list scrolls.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Inset</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" aria-label="Settings by category">
+              <li class="mtx-list-subheader" data-mtx="list-subheader" data-inset>General</li>
+              <li data-mtx="list-item" data-icon="account_circle">Account</li>
+              <li data-mtx="list-item" data-icon="security">Privacy</li>
+              <li class="mtx-list-subheader" data-mtx="list-subheader" data-inset>Communications</li>
+              <li data-mtx="list-item" data-icon="notifications">Notifications</li>
+            </ul>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Sticky (scroll the list)</span>
+          <div data-mtx="paper" data-variant="outlined">
+            <ul data-mtx="list" class="demo-list-scroll" aria-label="Contacts by letter" tabindex="0">
+              <li class="mtx-list-subheader" data-mtx="list-subheader" data-sticky>A</li>
+              <li data-mtx="list-item">Anna Garcia</li>
+              <li data-mtx="list-item">Andrew Lopez</li>
+              <li data-mtx="list-item">Ariana Stone</li>
+              <li class="mtx-list-subheader" data-mtx="list-subheader" data-sticky>C</li>
+              <li data-mtx="list-item">Charles Reed</li>
+              <li data-mtx="list-item">Carmen Vidal</li>
+              <li class="mtx-list-subheader" data-mtx="list-subheader" data-sticky>L</li>
+              <li data-mtx="list-item">Lucy Mendez</li>
+              <li data-mtx="list-item">Luis Perez</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="nested">
+      <h2>Nested</h2>
+      <p>A list with <code>data-nested</code> inside an item indents its rows by 48px. Here the page adds the expand/collapse behavior: the parent row toggles <code>hidden</code> and <code>aria-expanded</code>.</p>
+      <div data-mtx="paper" data-variant="outlined" class="demo-fixed-width">
+        <ul data-mtx="list" aria-label="Folders">
+          <li>
+            <button id="list-nested-toggle" data-mtx="list-item-button" data-icon="inbox" data-no-select aria-expanded="true" aria-controls="list-nested">Inbox</button>
+            <ul id="list-nested" data-mtx="list" data-nested aria-label="Subfolders">
+              <li><button data-mtx="list-item-button" data-icon="star_border">Starred</button></li>
+              <li><button data-mtx="list-item-button" data-icon="label">Invoices</button></li>
+            </ul>
+          </li>
+          <li><button data-mtx="list-item-button" data-icon="send">Sent</button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="demo-section" id="secondary-actions">
+      <h2>Secondary actions</h2>
+      <p>Wrap the action in <code>mtx-list-item-secondary-action</code> (<code>ListItemSecondaryAction</code>): it is aligned to the end, accepts several actions of any width, and a trailing IconButton snaps to the edge (<code>edge="end"</code>). With the simplified syntax, <code>data-icon</code> and <code>data-secondary</code> build the text without touching the action. For a clickable row with a separate action, use an <code>&lt;li data-mtx="list-item" data-disable-padding&gt;</code> with the <code>list-item-button</code> and the action as siblings.</p>
+      <div data-mtx="paper" data-variant="outlined" class="demo-wide">
+        <ul data-mtx="list" aria-label="Documents">
+          <li data-mtx="list-item" data-icon="description" data-secondary="2.4 MB" data-divider>
+            Annual report.pdf
+            <span class="mtx-list-item-secondary-action">
+              <button data-mtx="icon-button" data-icon="file_download" aria-label="Download Annual report.pdf"></button>
+              <button data-mtx="icon-button" data-icon="delete" aria-label="Delete Annual report.pdf"></button>
+            </span>
+          </li>
+          <li data-mtx="list-item" data-icon="description" data-secondary="310 KB" data-divider>
+            Budget.xlsx
+            <span class="mtx-list-item-secondary-action">
+              <input type="checkbox" data-mtx="checkbox" aria-label="Mark Budget.xlsx" />
+            </span>
+          </li>
+          <li data-mtx="list-item" data-icon="laptop_mac" data-secondary="London · active now" data-divider>
+            MacBook Pro
+            <span class="mtx-list-item-secondary-action">
+              <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small">Sign out</button>
+            </span>
+          </li>
+          <li data-mtx="list-item" data-disable-padding>
+            <button data-mtx="list-item-button" data-icon="folder" data-secondary="12 files" data-no-select>Project Atlas</button>
+            <span class="mtx-list-item-secondary-action">
+              <button data-mtx="icon-button" data-icon="more_vert" aria-label="Project Atlas options"></button>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <pre class="demo-code"><code>&lt;li data-mtx="list-item" data-icon="description" data-secondary="2.4 MB"&gt;
+  Annual report.pdf
+  &lt;span class="mtx-list-item-secondary-action"&gt;
+    &lt;button data-mtx="icon-button" data-icon="delete" aria-label="Delete Annual report.pdf"&gt;&lt;/button&gt;
+  &lt;/span&gt;
+&lt;/li&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>Side navigation with links: the selected row gets <code>aria-current="page"</code> (on a <code>&lt;button&gt;</code>, <code>aria-current="true"</code>; <code>aria-selected</code> only with <code>role="option"</code> or <code>role="tab"</code>). Links are not underlined and inherit the list's color.</p>
+      <nav data-mtx="paper" data-variant="outlined" class="demo-fixed-width" aria-label="Sections">
+        <ul data-mtx="list">
+          <li><a href="#use-cases" data-mtx="list-item-button" data-icon="dashboard" data-selected aria-current="page">Overview</a></li>
+          <li><a href="#use-cases" data-mtx="list-item-button" data-icon="shopping_bag">Orders</a></li>
+          <li><a href="#use-cases" data-mtx="list-item-button" data-icon="people">Customers</a></li>
+          <li class="mtx-list-subheader" data-mtx="list-subheader">Reports</li>
+          <li><a href="#use-cases" data-mtx="list-item-button" data-icon="bar_chart">Sales</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Two lists in <code>mtx-grid</code>: stacked on mobile and side by side from <code>md</code>.</p>
+      <div>
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <div data-mtx="paper" data-variant="outlined">
+              <ul data-mtx="list" aria-label="To do">
+                <li class="mtx-list-subheader" data-mtx="list-subheader">To do</li>
+                <li data-mtx="list-item" data-icon="schedule" data-secondary="Due tomorrow">Review contract</li>
+                <li data-mtx="list-item" data-icon="schedule" data-secondary="Due Friday">Send invoice</li>
+              </ul>
+            </div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <div data-mtx="paper" data-variant="outlined">
+              <ul data-mtx="list" aria-label="Completed">
+                <li class="mtx-list-subheader" data-mtx="list-subheader">Completed</li>
+                <li data-mtx="list-item" data-icon="task_alt" data-secondary="Yesterday">Team meeting</li>
+                <li data-mtx="list-item" data-icon="task_alt" data-secondary="Monday">Supplier onboarding</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Click a row to see the real <code>mtx:list:select</code> event (with <code>detail.item</code>). The buttons use the <code>ListItemButton</code> API: <code>selected</code>, <code>disable()</code> and <code>enable()</code> on the “Calendar” row.</p>
+      <div class="demo-stack">
+        <div data-mtx="paper" data-variant="outlined" class="demo-fixed-width">
+          <ul id="list-api" data-mtx="list" aria-label="Views">
+            <li><button data-mtx="list-item-button" data-icon="view_list">List</button></li>
+            <li><button data-mtx="list-item-button" data-icon="grid_view">Grid</button></li>
+            <li><button id="list-api-target" data-mtx="list-item-button" data-icon="calendar_month">Calendar</button></li>
+          </ul>
+        </div>
+        <div class="demo-row">
+          <button id="list-select" class="mtx-button mtx-button--outlined" data-mtx="button">selected = true</button>
+          <button id="list-unselect" class="mtx-button mtx-button--outlined" data-mtx="button">selected = false</button>
+          <button id="list-disable" class="mtx-button mtx-button--outlined" data-mtx="button">disable()</button>
+          <button id="list-enable" class="mtx-button mtx-button--outlined" data-mtx="button">enable()</button>
+        </div>
+        <pre id="list-log" class="demo-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>With the full structure rendered on the server, the component doesn't duplicate nodes.</p>
+      <div data-mtx="paper" data-variant="outlined" class="demo-fixed-width">
+        <ul class="mtx-list" data-mtx="list" aria-label="BEM">
+          <li class="mtx-list-subheader" data-mtx="list-subheader">Mail</li>
+          <li class="mtx-list-item" data-mtx="list-item">
+            <span class="mtx-list-item-icon" data-mtx="list-item-icon"><span class="material-icons" aria-hidden="true">inbox</span></span>
+            <span class="mtx-list-item-text" data-mtx="list-item-text">
+              <span class="mtx-list-item-text__primary">Inbox</span>
+              <span class="mtx-list-item-text__secondary">Rendered on the server</span>
+            </span>
+          </li>
+          <li class="mtx-list-item" data-mtx="list-item">
+            <span class="mtx-list-item-avatar" data-mtx="list-item-avatar"><span class="mtx-avatar" data-mtx="avatar">AG</span></span>
+            <span class="mtx-list-item-text" data-mtx="list-item-text">
+              <span class="mtx-list-item-text__primary">Anna Garcia</span>
+            </span>
+            <span class="mtx-list-item-secondary-action" data-mtx="list-item-secondary-action">
+              <button class="mtx-icon-button" data-mtx="icon-button" aria-label="Email Anna Garcia"><span class="material-icons" aria-hidden="true">mail</span></button>
+            </span>
+          </li>
+          <li>
+            <button class="mtx-list-item mtx-list-item-button mtx-list-item--selected" data-mtx="list-item-button">
+              <span class="mtx-list-item-text"><span class="mtx-list-item-text__primary">Settings</span></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <pre class="demo-code"><code>&lt;ul class="mtx-list" data-mtx="list"&gt;
+  &lt;li class="mtx-list-subheader" data-mtx="list-subheader"&gt;Mail&lt;/li&gt;
+  &lt;li class="mtx-list-item" data-mtx="list-item"&gt;
+    &lt;span class="mtx-list-item-icon"&gt;&lt;span class="material-icons" aria-hidden="true"&gt;inbox&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="mtx-list-item-text"&gt;
+      &lt;span class="mtx-list-item-text__primary"&gt;Inbox&lt;/span&gt;
+      &lt;span class="mtx-list-item-text__secondary"&gt;Rendered on the server&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/li&gt;
+  &lt;li class="mtx-list-item" data-mtx="list-item"&gt;
+    &lt;span class="mtx-list-item-avatar"&gt;&lt;span class="mtx-avatar" data-mtx="avatar"&gt;AG&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="mtx-list-item-text"&gt;&lt;span class="mtx-list-item-text__primary"&gt;Anna Garcia&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="mtx-list-item-secondary-action"&gt;
+      &lt;button class="mtx-icon-button" data-mtx="icon-button" aria-label="Email Anna Garcia"&gt;…&lt;/button&gt;
+    &lt;/span&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Expandir/contraer la lista anidada (comportamiento de la página, no del componente).
+      const toggle = document.getElementById('list-nested-toggle');
+      const nested = document.getElementById('list-nested');
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(open));
+        nested.hidden = !open;
+      });
+
+      // Uso programático.
+      const log = document.getElementById('list-log');
+      const write = (text) => { log.textContent += `${text}\n`; log.scrollTop = log.scrollHeight; };
+      const row = () => Materix.getInstance(document.getElementById('list-api-target'));
+      document.getElementById('list-api').addEventListener('mtx:list:select', (event) => {
+        write(`mtx:list:select  detail.item: "${event.detail.item.textContent.trim()}"`);
+      });
+      const aria = () => document.getElementById('list-api-target').getAttribute('aria-current');
+      document.getElementById('list-select').addEventListener('click', () => { row().selected = true; write(`row.selected = true → ${row().selected} · aria-current="${aria()}"`); });
+      document.getElementById('list-unselect').addEventListener('click', () => { row().selected = false; write(`row.selected = false → ${row().selected} · aria-current=${aria()}`); });
+      document.getElementById('list-disable').addEventListener('click', () => { row().disable(); write(`row.disable() → disabled: ${row().disabled}`); });
+      document.getElementById('list-enable').addEventListener('click', () => { row().enable(); write(`row.enable() → disabled: ${row().disabled}`); });
+    });
+  </script>
+</body>
+</html>

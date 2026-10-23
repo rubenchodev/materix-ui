@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Bar · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Container with its own scroll to demo sticky / elevate / hide. */
+    .demo-app-bar-scroll {
+      position: relative;
+      height: 280px;
+      overflow-y: auto;
+      border: 1px solid var(--mtx-color-divider);
+      border-radius: var(--mtx-shape-radius);
+      background-color: var(--mtx-color-background-default);
+    }
+    /* transform creates a containing block: the fixed bar stays inside the frame. */
+    .demo-app-bar-frame {
+      transform: translateZ(0);
+    }
+    .demo-app-bar-body {
+      padding: var(--mtx-spacing-2);
+      color: var(--mtx-color-text-secondary);
+      font: var(--mtx-type-body2);
+    }
+    .demo-app-bar-body p {
+      margin: 0 0 var(--mtx-spacing-2);
+    }
+    .demo-app-bar-body--bottom {
+      padding-bottom: calc(64px + var(--mtx-spacing-2));
+    }
+    .demo-app-bar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--mtx-spacing-1);
+      margin-right: var(--mtx-spacing-3);
+      color: inherit;
+      font: 700 1.25rem/1 var(--mtx-font-family);
+      letter-spacing: 0.2rem;
+      text-decoration: none;
+    }
+    .demo-app-bar-desktop {
+      display: none;
+      gap: var(--mtx-spacing-1);
+      flex: 1;
+    }
+    @media (min-width: 720px) {
+      .demo-app-bar-desktop { display: flex; }
+      .demo-app-bar-mobile { display: none; }
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Surfaces</span>
+        <h1>App Bar</h1>
+        <p class="demo-lead">Top bar with the title, navigation and primary actions of the current screen.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#colors">Colors</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With and without icons</a>
+      <a href="#position">Position</a>
+      <a href="#search-menu">Menu and search</a>
+      <a href="#scroll">Scroll</a>
+      <a href="#responsive">Responsive</a>
+      <a href="#drawer">With Drawer</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>&lt;header data-mtx="app-bar"&gt;</code> with <code>data-title</code>, <code>data-start-icon</code> and <code>data-end-icon</code> generates the Toolbar, the title and the IconButtons. Children are placed after the title. These examples use <code>data-position="static"</code> so the bar stays inside the page.</p>
+      <header data-mtx="app-bar" data-position="static" data-color="primary" data-title="News" data-start-icon="menu">
+        <button class="mtx-button mtx-button--text" data-mtx="button">Login</button>
+      </header>
+      <pre class="demo-code"><code>&lt;header data-mtx="app-bar" data-position="static" data-color="primary"
+        data-title="News" data-start-icon="menu"&gt;
+  &lt;button class="mtx-button mtx-button--text" data-mtx="button"&gt;Login&lt;/button&gt;
+&lt;/header&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> accepts <code>primary</code>, <code>secondary</code>, <code>default</code> (paper surface, the default value), <code>transparent</code> and <code>inherit</code>. <code>data-elevation</code> changes the shadow (4 by default); with <code>data-elevation="0"</code> the bar gets <code>mtx-app-bar--flat</code> and, in <code>default</code>, a single bottom divider. <code>transparent</code> never has a shadow.</p>
+      <div class="demo-group">
+        <span class="demo-label">Primary</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-title="Primary" data-start-icon="menu" data-end-icon="more_vert"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Secondary</span>
+        <header data-mtx="app-bar" data-position="static" data-color="secondary" data-title="Secondary" data-start-icon="menu" data-end-icon="more_vert"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Default</span>
+        <header data-mtx="app-bar" data-position="static" data-color="default" data-title="Default" data-start-icon="menu" data-end-icon="more_vert" data-end-icon-label="More options"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Default · elevation 0 (divider)</span>
+        <header data-mtx="app-bar" data-position="static" data-color="default" data-elevation="0" data-title="Flat default" data-start-icon="menu"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Transparent · elevation 0</span>
+        <header data-mtx="app-bar" data-position="static" data-color="transparent" data-elevation="0" data-title="Transparent" data-start-icon="menu" data-end-icon="more_vert"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Primary · elevation 0</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-elevation="0" data-title="No shadow" data-start-icon="menu"></header>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>The regular Toolbar is 56px tall on mobile and 64px from 600px. <code>data-dense</code> reduces it to 48px for dense desktop interfaces.</p>
+      <div class="demo-group">
+        <span class="demo-label">Regular · 56 / 64px</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-title="Regular" data-start-icon="menu" data-end-icon="search"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Dense · 48px</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-dense data-title="Dense" data-start-icon="menu" data-end-icon="search"></header>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p><code>data-start-icon</code> adds the navigation icon and <code>data-end-icon</code> a trailing action. Their accessible labels are set with <code>data-start-icon-label</code> and <code>data-end-icon-label</code> (the <code>menu</code> icon uses "Open navigation" / "Abrir navegación" from the i18n dictionary). For several actions, write the buttons yourself as children.</p>
+      <div class="demo-group">
+        <span class="demo-label">No icons</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-title="Title only"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Start icon</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-title="With navigation" data-start-icon="arrow_back" data-start-icon-label="Back"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Start and end icon</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-title="Start and end" data-start-icon="menu" data-end-icon="account_circle" data-end-icon-label="User account"></header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Custom buttons with aria-label</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary">
+          <button class="mtx-toolbar__navigation-icon" data-mtx="icon-button" data-icon="menu" aria-label="Open navigation"></button>
+          <span class="mtx-toolbar__title">Photos</span>
+          <button data-mtx="icon-button" data-icon="search" aria-label="Search"></button>
+          <button data-mtx="icon-button" data-icon="favorite" aria-label="Favorites"></button>
+          <button data-mtx="icon-button" data-icon="more_vert" aria-label="More options"></button>
+        </header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Buttons in the bar · text/outlined inherit the color, contained keeps its contrast</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-title="Materix">
+          <div class="mtx-d-flex mtx-align-items-center mtx-gap-1">
+            <button class="mtx-button mtx-button--text mtx-d-none mtx-d-sm-inline-flex" data-mtx="button">Docs</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button">Login</button>
+            <button class="mtx-button mtx-button--contained" data-mtx="button" data-color="secondary" data-start-icon="rocket_launch">Get started</button>
+          </div>
+        </header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Default bar with contained primary</span>
+        <header data-mtx="app-bar" data-position="static" data-color="default" data-title="Materix">
+          <div class="mtx-d-flex mtx-align-items-center mtx-gap-1">
+            <button class="mtx-button mtx-button--text" data-mtx="button">Docs</button>
+            <button class="mtx-button mtx-button--contained" data-mtx="button" data-end-icon="arrow_forward">Sign up</button>
+          </div>
+        </header>
+      </div>
+    </section>
+
+    <section class="demo-section" id="position">
+      <h2>Position</h2>
+      <p><code>data-position</code>: <code>fixed</code> (default, fixed to the top of the window), <code>sticky</code>, <code>static</code>, <code>absolute</code> and <code>relative</code>. Scroll each frame: the <code>fixed</code> one uses <code>transform</code> to contain the bar; on a real page it stays fixed to the window. Place a <code>&lt;div class="mtx-toolbar-offset"&gt;</code> at the start of the content to reserve its height (56px on mobile, 64px from 600px; <code>--dense</code> 48px).</p>
+      <p><strong>Anchors:</strong> with a <code>fixed</code> or <code>sticky</code> AppBar on the page, <code>&lt;html&gt;</code> automatically gets <code>scroll-padding-top: var(--mtx-app-bar-height)</code>, so a <code>#anchor</code> link leaves the target below the bar (adjustable with <code>--mtx-scroll-padding-top</code>, can be disabled with <code>&lt;html data-mtx-scroll-padding="false"&gt;</code>; for specific targets, <code>mtx-scroll-mt-app-bar</code>). Try it: <a class="mtx-link" data-mtx="link" href="#scroll">go to "Scroll"</a>.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Fixed</span>
+          <div class="demo-app-bar-frame demo-app-bar-scroll" tabindex="0" role="region" aria-label="Fixed position demo">
+            <header data-mtx="app-bar" data-color="primary" data-title="Fixed"></header>
+            <div class="mtx-toolbar-offset"></div>
+            <div class="demo-app-bar-body">
+              <p>The content scrolls beneath the fixed bar.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Sticky</span>
+          <div class="demo-app-bar-scroll" tabindex="0" role="region" aria-label="Sticky position demo">
+            <div class="demo-app-bar-body"><p>This paragraph sits above the bar: as you scroll down, the bar sticks to the top.</p></div>
+            <header data-mtx="app-bar" data-position="sticky" data-color="secondary" data-title="Sticky"></header>
+            <div class="demo-app-bar-body">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Static</span>
+          <div class="demo-app-bar-scroll" tabindex="0" role="region" aria-label="Static position demo">
+            <header data-mtx="app-bar" data-position="static" data-color="default" data-title="Static"></header>
+            <div class="demo-app-bar-body">
+              <p>The bar is part of the flow and scrolls with the content.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Absolute · bottom (mtx-app-bar--bottom)</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-app-bar-body demo-app-bar-body--bottom"><p>Bottom bar anchored to the positioned container, typical of mobile apps.</p></div>
+            <header data-mtx="app-bar" data-position="absolute" data-color="primary" class="mtx-app-bar--bottom">
+              <button class="mtx-toolbar__navigation-icon" data-mtx="icon-button" data-icon="menu" aria-label="Open navigation"></button>
+              <span class="mtx-toolbar__spacer"></span>
+              <button data-mtx="icon-button" data-icon="search" aria-label="Search"></button>
+              <button data-mtx="icon-button" data-icon="more_vert" aria-label="More options"></button>
+            </header>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="search-menu">
+      <h2>Menu and search</h2>
+      <p>Actions open a <a href="../menu/index.html">Menu</a> with <code>data-open-menu="#id"</code>. For search, use the <code>.mtx-app-bar-search</code> pattern (40px tall; its colors derive from the bar color, in the dark theme too) or a <a href="../text-field/index.html">TextField</a> with <code>data-variant="no-label"</code> and <code>data-size="small"</code>. <code>.mtx-app-bar-search--grow</code> fills the free space (up to 560px, <code>--mtx-app-bar-search-max-width</code>) without changing width on focus.</p>
+      <div class="demo-group">
+        <span class="demo-label">Account menu</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary">
+          <button class="mtx-toolbar__navigation-icon" data-mtx="icon-button" data-icon="menu" aria-label="Open navigation"></button>
+          <span class="mtx-toolbar__title">Photos</span>
+          <button data-mtx="icon-button" data-icon="account_circle" aria-label="User account" data-open-menu="#app-bar-account-menu"></button>
+        </header>
+        <div data-mtx="menu" id="app-bar-account-menu">
+          <div data-mtx="menu-item" data-icon="person">Profile</div>
+          <div data-mtx="menu-item" data-icon="manage_accounts">My account</div>
+          <div data-mtx="menu-item" data-icon="logout">Logout</div>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Search (.mtx-app-bar-search)</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary">
+          <button class="mtx-toolbar__navigation-icon" data-mtx="icon-button" data-icon="menu" aria-label="Open navigation"></button>
+          <span class="mtx-toolbar__title">Dashboard</span>
+          <div class="mtx-app-bar-search mtx-app-bar-search--right" role="search">
+            <span class="material-icons" aria-hidden="true">search</span>
+            <input type="search" placeholder="Search…" aria-label="Search" />
+          </div>
+          <div data-mtx="badge" data-content="4" data-color="error">
+            <button data-mtx="icon-button" data-icon="notifications" aria-label="4 notifications"></button>
+          </div>
+        </header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Centered search · default color</span>
+        <header data-mtx="app-bar" data-position="static" data-color="default">
+          <span class="mtx-toolbar__title">Drive</span>
+          <div class="mtx-app-bar-search mtx-app-bar-search--centered" role="search">
+            <span class="material-icons" aria-hidden="true">search</span>
+            <input type="search" placeholder="Search in Drive" aria-label="Search in Drive" />
+          </div>
+          <button data-mtx="icon-button" data-icon="settings" aria-label="Settings"></button>
+        </header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Growing search (--grow) · primary</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-start-icon="menu" data-title="Orders">
+          <div class="mtx-app-bar-search mtx-app-bar-search--grow" role="search">
+            <span class="material-icons" aria-hidden="true">search</span>
+            <input type="search" placeholder="Search orders or customers…" aria-label="Search orders or customers" />
+          </div>
+          <button data-mtx="icon-button" data-icon="notifications" aria-label="Notifications"></button>
+        </header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Growing search (--grow) · flat default</span>
+        <header data-mtx="app-bar" data-position="static" data-color="default" data-elevation="0" data-start-icon="menu" data-title="Files">
+          <div class="mtx-app-bar-search mtx-app-bar-search--grow" role="search">
+            <span class="material-icons" aria-hidden="true">search</span>
+            <input type="search" placeholder="Search in Drive" aria-label="Search in Drive" />
+          </div>
+          <button data-mtx="icon-button" data-icon="settings" aria-label="Settings"></button>
+        </header>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">TextField no-label · small</span>
+        <header data-mtx="app-bar" data-position="static" data-color="primary">
+          <span class="mtx-toolbar__title">Catalog</span>
+          <input data-mtx="text-field" data-variant="no-label" data-size="small" data-start-icon="search" placeholder="Search products…" aria-label="Search products" type="search" />
+          <button data-mtx="icon-button" data-icon="shopping_cart" aria-label="Cart"></button>
+        </header>
+      </div>
+    </section>
+
+    <section class="demo-section" id="scroll">
+      <h2>Scroll</h2>
+      <p><code>data-elevate-on-scroll</code> starts without a shadow and adds it on scroll; <code>data-hide-on-scroll</code> hides the bar when scrolling down (past 50px) and shows it when scrolling up. <code>data-scroll-target</code> sets the observed container (the window by default). Scroll each box.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Elevate on scroll</span>
+          <div class="demo-app-bar-scroll" id="app-bar-scroll-elevate" tabindex="0" role="region" aria-label="Elevate on scroll demo">
+            <header data-mtx="app-bar" data-position="sticky" data-color="default" data-elevate-on-scroll data-scroll-target="#app-bar-scroll-elevate" data-title="Elevates on scroll" data-start-icon="menu"></header>
+            <div class="demo-app-bar-body">
+              <p>At the very top the bar is flat. When scrolling it gets elevation 4.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Hide on scroll</span>
+          <div class="demo-app-bar-scroll" id="app-bar-scroll-hide" tabindex="0" role="region" aria-label="Hide on scroll demo">
+            <header data-mtx="app-bar" data-position="sticky" data-color="primary" data-hide-on-scroll data-scroll-target="#app-bar-scroll-hide" data-title="Hides on scroll" data-start-icon="menu"></header>
+            <div class="demo-app-bar-body">
+              <p>Scroll down to hide the bar; scroll up to bring it back.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="responsive">
+      <h2>Responsive</h2>
+      <p>The Toolbar changes height and margins at 600px. For navigation, show text links on wide screens and an icon with a Menu on narrow ones (resize the window below 720px).</p>
+      <header data-mtx="app-bar" data-position="static" data-color="primary">
+        <span class="demo-app-bar-mobile">
+          <button class="mtx-toolbar__navigation-icon" data-mtx="icon-button" data-icon="menu" aria-label="Open navigation" data-open-menu="#app-bar-responsive-menu"></button>
+        </span>
+        <a href="#responsive" class="demo-app-bar-brand"><span class="material-icons" aria-hidden="true">adb</span>LOGO</a>
+        <nav class="demo-app-bar-desktop" aria-label="Sections">
+          <button class="mtx-button mtx-button--text" data-mtx="button">Products</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button">Pricing</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button">Blog</button>
+        </nav>
+        <span class="mtx-toolbar__spacer demo-app-bar-mobile"></span>
+        <button data-mtx="icon-button" data-open-menu="#app-bar-avatar-menu">
+          <span data-mtx="avatar" data-size="small" data-color="secondary" aria-hidden="true">RS</span>
+          <span class="mtx-visually-hidden">Open account settings</span>
+        </button>
+      </header>
+      <div data-mtx="menu" id="app-bar-responsive-menu">
+        <div data-mtx="menu-item" data-icon="inventory_2">Products</div>
+        <div data-mtx="menu-item" data-icon="payments">Pricing</div>
+        <div data-mtx="menu-item" data-icon="article">Blog</div>
+      </div>
+      <div data-mtx="menu" id="app-bar-avatar-menu">
+        <div data-mtx="menu-item" data-icon="account_circle">Profile</div>
+        <div data-mtx="menu-item" data-icon="dashboard">Dashboard</div>
+        <div data-mtx="menu-item" data-icon="logout">Logout</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="drawer">
+      <h2>With Drawer</h2>
+      <p>With <code>data-drawer="id"</code> the generated navigation icon toggles the <a href="../drawer/index.html">Drawer</a> (equivalent to writing a button with <code>data-mtx-drawer-toggle="id"</code>), with <code>aria-controls</code> and <code>aria-expanded</code> kept in sync. If the drawer is <code>responsive</code>, the icon is hidden while it is permanent. For the full layout (fixed AppBar + responsive drawer + <code>.mtx-toolbar-offset</code>) open <a href="../drawer/dashboard.html">the app shell</a>.</p>
+      <header data-mtx="app-bar" data-position="static" data-color="primary" data-start-icon="menu" data-drawer="app-bar-drawer" data-title="Dashboard with Drawer">
+        <button data-mtx="icon-button" data-icon="notifications" aria-label="Notifications"></button>
+      </header>
+      <div data-mtx="drawer" id="app-bar-drawer" data-anchor="left" data-title="Dashboard">
+        <ul data-mtx="list" aria-label="Main navigation">
+          <li data-mtx="list-item-button" data-icon="dashboard">Overview</li>
+          <li data-mtx="list-item-button" data-icon="analytics">Analytics</li>
+          <li data-mtx="list-item-button" data-icon="settings">Settings</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid layout</h2>
+      <p>The bar takes 100% of its container's width; the screen content is laid out below it with <code>mtx-grid</code>.</p>
+      <div class="demo-panel demo-panel--tall">
+        <header data-mtx="app-bar" data-position="static" data-color="primary" data-dense data-title="Sales · October" data-start-icon="menu"></header>
+        <div class="demo-app-bar-body">
+          <div data-mtx="grid" data-spacing="2">
+            <div data-mtx="grid" data-xs="12" data-sm="4"><div data-mtx="paper" class="demo-app-bar-body">Revenue: $12,480</div></div>
+            <div data-mtx="grid" data-xs="12" data-sm="4"><div data-mtx="paper" class="demo-app-bar-body">Orders: 326</div></div>
+            <div data-mtx="grid" data-xs="12" data-sm="4"><div data-mtx="paper" class="demo-app-bar-body">Returns: 4</div></div>
+            <div data-mtx="grid" data-xs="12"><div data-mtx="paper" class="demo-app-bar-body">Monthly chart</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>setColor(color)</code> and <code>setPosition(position)</code>. AppBar emits no events: the log shows each call and the resulting classes.</p>
+      <header data-mtx="app-bar" data-position="static" data-color="primary" data-title="Dynamic bar" data-start-icon="palette" id="app-bar-api"></header>
+      <div class="demo-group">
+        <span class="demo-label">setColor()</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-color="primary">primary</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-color="secondary">secondary</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-color="default">default</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-color="inherit">inherit</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">setPosition()</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-position="static">static</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-position="sticky">sticky</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-demo-position="relative">relative</button>
+        </div>
+      </div>
+      <pre class="demo-log" id="app-bar-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const appBar = Materix.getInstance(document.getElementById('app-bar-api'));
+appBar.setColor('secondary');
+appBar.setPosition('sticky');</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>If the bar already contains a <code>.mtx-toolbar</code> it is not auto-scaffolded. The full syntax allows variants without an attribute, such as the 128px <code>prominent</code> Toolbar or several Toolbars.</p>
+      <header class="mtx-app-bar mtx-app-bar--static mtx-app-bar--primary" data-mtx="app-bar">
+        <div class="mtx-toolbar mtx-toolbar--prominent">
+          <button class="mtx-icon-button mtx-toolbar__navigation-icon" data-mtx="icon-button" aria-label="Open navigation"><span class="material-icons" aria-hidden="true">menu</span></button>
+          <span class="mtx-toolbar__title">Prominent title</span>
+          <button class="mtx-icon-button" data-mtx="icon-button" aria-label="Search"><span class="material-icons" aria-hidden="true">search</span></button>
+          <button class="mtx-icon-button" data-mtx="icon-button" aria-label="More options"><span class="material-icons" aria-hidden="true">more_vert</span></button>
+        </div>
+      </header>
+      <pre class="demo-code"><code>&lt;header class="mtx-app-bar mtx-app-bar--static mtx-app-bar--primary" data-mtx="app-bar"&gt;
+  &lt;div class="mtx-toolbar mtx-toolbar--prominent"&gt;
+    &lt;button class="mtx-icon-button mtx-toolbar__navigation-icon" data-mtx="icon-button" aria-label="Open navigation"&gt;
+      &lt;span class="material-icons" aria-hidden="true"&gt;menu&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;span class="mtx-toolbar__title"&gt;Prominent title&lt;/span&gt;
+    &lt;button class="mtx-icon-button" data-mtx="icon-button" aria-label="Search"&gt;...&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var el = document.getElementById('app-bar-api');
+      var appBar = Materix.getInstance(el);
+      var log = document.getElementById('app-bar-log');
+      var write = function (call) {
+        log.textContent += call + '  →  ' + el.className.replace(/\s+/g, ' ').trim() + '\n';
+        log.scrollTop = log.scrollHeight;
+      };
+      document.querySelectorAll('[data-demo-color]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var color = btn.getAttribute('data-demo-color');
+          appBar.setColor(color);
+          write('setColor("' + color + '")');
+        });
+      });
+      document.querySelectorAll('[data-demo-position]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var position = btn.getAttribute('data-demo-position');
+          appBar.setPosition(position);
+          write('setPosition("' + position + '")');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

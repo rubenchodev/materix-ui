@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Surfaces</span>
+        <h1>Card</h1>
+        <p class="demo-lead">A surface that groups content and actions about a single subject: header, image, text and buttons.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#header">Header</a>
+      <a href="#media">Media</a>
+      <a href="#actions">Actions</a>
+      <a href="#actions-alignment">Actions alignment</a>
+      <a href="#action-area">Action area</a>
+      <a href="#states">States</a>
+      <a href="#dark-theme">Dark theme</a>
+      <a href="#grid-layout">Product grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>With <code>data-title</code>, <code>data-subheader</code>, <code>data-avatar</code> and <code>data-image</code> the card generates the header and the image. The content and actions are declared with <code>data-mtx="card-content"</code> and <code>data-mtx="card-actions"</code>.</p>
+      <div class="demo-surface">
+        <div data-mtx="card" class="demo-fixed-width"
+             data-avatar="R"
+             data-title="Shrimp and Chorizo Paella"
+             data-subheader="September 14, 2026"
+             data-action-icon="more_vert"
+             data-image="https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+          <div data-mtx="card-content">A Mediterranean dish with bomba rice, saffron, free-range chicken and fresh vegetables, perfect for sharing.</div>
+          <div data-mtx="card-actions">
+            <button data-mtx="icon-button" data-icon="favorite" aria-label="Add to favorites"></button>
+            <button data-mtx="icon-button" data-icon="share" aria-label="Share"></button>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="card" data-avatar="R" data-title="Shrimp and Chorizo Paella"
+     data-subheader="September 14, 2026" data-action-icon="more_vert"
+     data-image="paella.jpg"&gt;
+  &lt;div data-mtx="card-content"&gt;A Mediterranean dish with bomba rice...&lt;/div&gt;
+  &lt;div data-mtx="card-actions"&gt;
+    &lt;button data-mtx="icon-button" data-icon="favorite" aria-label="Add to favorites"&gt;&lt;/button&gt;
+    &lt;button data-mtx="icon-button" data-icon="share" aria-label="Share"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p>By default the card has elevation 1. <code>data-variant="outlined"</code> outlines it with a border, <code>data-raised</code> raises it to 8, <code>data-elevation</code> accepts 0–8, 12, 16 and 24, and <code>data-square</code> removes the radius.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">Elevation (1)</span>
+          <div data-mtx="card"><div data-mtx="card-content"><h3>Default</h3><p>Elevation 1 shadow.</p></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <div data-mtx="card" data-variant="outlined"><div data-mtx="card-content"><h3>Outlined</h3><p>Border, no shadow.</p></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Raised (8)</span>
+          <div data-mtx="card" data-raised><div data-mtx="card-content"><h3>Raised</h3><p>Prominent shadow.</p></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Elevation 4 · square</span>
+          <div data-mtx="card" data-elevation="4" data-square><div data-mtx="card-content"><h3>Square</h3><p>No radius.</p></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Custom typography (mtx-typography--*)</span>
+          <div data-mtx="card"><div data-mtx="card-content"><h2 class="mtx-typography--h5 mtx-mb-1">$48,290</h2><p class="mtx-typography--caption">The content's h1–h6 and p styles have zero specificity: the typography class wins.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="header">
+      <h2>Header</h2>
+      <p>The header is generated when there is a <code>data-title</code>, <code>data-subheader</code> or <code>data-avatar</code> (text of a primary Avatar). <code>data-action-icon</code> adds an IconButton on the right.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">Title only</span>
+          <div data-mtx="card" data-title="Quarterly report" class="demo-fixed-width">
+            <div data-mtx="card-content">Third-quarter results.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Avatar, title and subheader</span>
+          <div data-mtx="card" data-avatar="AM" data-title="Anna Miller" data-subheader="Product design" class="demo-fixed-width">
+            <div data-mtx="card-content">Available for reviews this week.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">With action icon</span>
+          <div data-mtx="card" data-avatar="JS" data-title="Modern JavaScript" data-subheader="Course · 12 lessons" data-action-icon="more_vert" class="demo-fixed-width">
+            <div data-mtx="card-content">Modules, async code and patterns.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="media">
+      <h2>Media</h2>
+      <p><code>data-image</code> generates a full-bleed 194px <code>.mtx-card__media</code>. By default it goes below the header; <code>data-media-top</code> places it at the top and <code>data-media-height</code> changes the height in pixels.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">Below the header</span>
+          <div data-mtx="card" data-title="Moscow" data-subheader="Russia" class="demo-fixed-width"
+               data-image="https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+            <div data-mtx="card-content">Saint Basil's Cathedral and Red Square.</div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Top · 140px</span>
+          <div data-mtx="card" data-variant="outlined" data-media-top data-media-height="140" data-title="Green lizard" data-subheader="Reptilia · Squamata" class="demo-fixed-width"
+               data-image="https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+            <div data-mtx="card-content">More than 6,000 species on every continent except Antarctica.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="actions">
+      <h2>Actions</h2>
+      <p><code>card-actions</code> is a row with 8px of padding and spacing; its buttons take MUI's compact size and are right-aligned by default. Use <code>mtx-card__actions-end</code> to push an element to the right end while the rest stays at the start, and <code>data-disable-spacing</code> to remove the spacing.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">Text buttons</span>
+          <div data-mtx="card" class="demo-fixed-width">
+            <div data-mtx="card-content"><h3>Pro plan</h3><p>Unlimited projects and priority support.</p></div>
+            <div data-mtx="card-actions">
+              <button class="mtx-button mtx-button--text" data-mtx="button">Compare</button>
+              <button class="mtx-button mtx-button--text" data-mtx="button">Choose plan</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Icons and an action at the end</span>
+          <div data-mtx="card" class="demo-fixed-width">
+            <div data-mtx="card-content"><h3>Saved recipe</h3><p>Prep time: 45 minutes.</p></div>
+            <div data-mtx="card-actions">
+              <button data-mtx="icon-button" data-icon="favorite_border" aria-label="Like"></button>
+              <button data-mtx="icon-button" data-icon="share" aria-label="Share"></button>
+              <button class="mtx-button mtx-button--contained mtx-card__actions-end" data-mtx="button">Cook</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">No spacing</span>
+          <div data-mtx="card" class="demo-fixed-width">
+            <div data-mtx="card-content"><h3>Compact</h3><p>Actions side by side.</p></div>
+            <div data-mtx="card-actions" data-disable-spacing>
+              <button data-mtx="icon-button" data-icon="thumb_up" aria-label="Helpful"></button>
+              <button data-mtx="icon-button" data-icon="thumb_down" aria-label="Not helpful"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="actions-alignment">
+      <h2>Actions alignment</h2>
+      <p>Materix aligns card actions to the <strong>right</strong> by default, just like dialog actions. This is a deliberate deviation from MUI, whose <code>CardActions</code> keeps them on the left: use <code>data-align="start"</code> to get that style back. It also accepts <code>center</code> and <code>between</code>, and <code>data-actions-align</code> on the card sets the alignment of all its actions.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">end (default)</span>
+          <div data-mtx="card" class="demo-fixed-width">
+            <div data-mtx="card-content"><h3>Backup</h3><p>Last backup 2 hours ago.</p></div>
+            <div data-mtx="card-actions">
+              <button class="mtx-button mtx-button--text" data-mtx="button">View history</button>
+              <button class="mtx-button mtx-button--text" data-mtx="button">Restore</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">start (MUI style)</span>
+          <div data-mtx="card" class="demo-fixed-width">
+            <div data-mtx="card-content"><h3>Backup</h3><p>Last backup 2 hours ago.</p></div>
+            <div data-mtx="card-actions" data-align="start">
+              <button class="mtx-button mtx-button--text" data-mtx="button">View history</button>
+              <button class="mtx-button mtx-button--text" data-mtx="button">Restore</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">center</span>
+          <div data-mtx="card" class="demo-fixed-width">
+            <div data-mtx="card-content"><h3>Free plan</h3><p>Up to 3 projects.</p></div>
+            <div data-mtx="card-actions" data-align="center">
+              <button class="mtx-button mtx-button--contained" data-mtx="button">Get started</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">between</span>
+          <div data-mtx="card" class="demo-fixed-width" data-actions-align="between">
+            <div data-mtx="card-content"><h3>Order #1042</h3><p>Out for delivery. Arrives tomorrow.</p></div>
+            <div data-mtx="card-actions">
+              <button data-mtx="icon-button" data-icon="more_vert" aria-label="More options"></button>
+              <button class="mtx-button mtx-button--contained" data-mtx="button">Track shipment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="card-actions"&gt;…&lt;/div&gt;                     &lt;!-- right (default) --&gt;
+&lt;div data-mtx="card-actions" data-align="start"&gt;…&lt;/div&gt;   &lt;!-- left, like MUI --&gt;
+&lt;div data-mtx="card-actions" data-align="center"&gt;…&lt;/div&gt;
+&lt;div data-mtx="card" data-actions-align="between"&gt;…&lt;/div&gt; &lt;!-- every action row in the card --&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="action-area">
+      <h2>Action area</h2>
+      <p><code>data-mtx="card-action-area"</code> turns the image and text into a single clickable zone with ripple, hover and focus, without affecting the actions. With <code>data-clickable</code> the whole card becomes interactive (<code>role="button"</code>, Enter and Space). Hover or use Tab.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">CardActionArea</span>
+          <div data-mtx="card" class="demo-fixed-width">
+            <button data-mtx="card-action-area" id="card-action-area">
+              <div data-mtx="card-media" data-height="140" data-alt="Colorful domes of Saint Basil's Cathedral"
+                   data-image="https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&amp;fit=crop&amp;w=800&amp;q=80"></div>
+              <div data-mtx="card-content">
+                <div class="mtx-card__title">Discover Moscow</div>
+                <div>Colorful domes, museums and the most ornate subway in the world.</div>
+              </div>
+            </button>
+            <div data-mtx="card-actions">
+              <button class="mtx-button mtx-button--text" data-mtx="button">Book</button>
+              <button class="mtx-button mtx-button--text" data-mtx="button">Save</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Clickable card</span>
+          <div data-mtx="card" data-variant="outlined" data-clickable data-title="Settings" data-subheader="Account, privacy and notifications" data-avatar="S" id="card-clickable" class="demo-fixed-width">
+            <div data-mtx="card-content">The whole card responds to clicks and the keyboard.</div>
+          </div>
+        </div>
+      </div>
+      <p class="demo-status" id="card-click-status" role="status"></p>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Normal, hover and focus (hover or use Tab) and disabled. <code>data-disabled</code> disables clickable cards and action areas: reduced opacity, no pointer and out of the tab order.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">Clickable · normal</span>
+          <div data-mtx="card" data-clickable data-title="Normal" data-subheader="Hover raises to 4" class="demo-fixed-width"><div data-mtx="card-content">Interactive.</div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Clickable · disabled</span>
+          <div data-mtx="card" data-clickable data-disabled data-title="Disabled" data-subheader="aria-disabled=true" class="demo-fixed-width"><div data-mtx="card-content">Not interactive.</div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">ActionArea · disabled</span>
+          <div data-mtx="card" class="demo-fixed-width">
+            <button data-mtx="card-action-area" data-disabled>
+              <div data-mtx="card-content"><div class="mtx-card__title">Disabled area</div><div>The native button is disabled.</div></div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="dark-theme">
+      <h2>Elevation in the dark theme</h2>
+      <p>In dark mode, as in MUI, each elevation adds a white overlay (<code>--mtx-overlay-elevation-N</code>): the card raised to 8 looks lighter than the elevation 1 card, and <code>outlined</code> has no overlay.</p>
+      <div class="demo-surface" data-mtx-theme="dark">
+        <div data-mtx="card" data-title="Elevation 1" data-subheader="Default" class="demo-fixed-width"><div data-mtx="card-content">5% white overlay.</div></div>
+        <div data-mtx="card" data-elevation="8" data-title="Elevation 8" data-subheader="data-elevation=&quot;8&quot;" class="demo-fixed-width"><div data-mtx="card-content">12% white overlay.</div></div>
+        <div data-mtx="card" data-variant="outlined" data-title="Outlined" data-subheader="No overlay" class="demo-fixed-width"><div data-mtx="card-content">Border only.</div></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Product grid</h2>
+      <p>Cards take the width of their column. With <code>mtx-grid</code> they spread into 1, 2 or 3 columns depending on the screen width.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div data-mtx="card" data-media-top data-media-height="160"
+               data-image="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+            <div data-mtx="card-content"><h3>Classic watch</h3><p>Leather strap and white dial. $89.00</p></div>
+            <div data-mtx="card-actions">
+              <button class="mtx-button mtx-button--contained" data-mtx="button">Add to cart</button>
+              <button data-mtx="icon-button" data-icon="favorite_border" aria-label="Save classic watch" class="mtx-card__actions-end"></button>
+            </div>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div data-mtx="card" data-media-top data-media-height="160"
+               data-image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+            <div data-mtx="card-content"><h3>Headphones</h3><p>Noise cancelling, 30 h battery. $149.00</p></div>
+            <div data-mtx="card-actions">
+              <button class="mtx-button mtx-button--contained" data-mtx="button">Add to cart</button>
+              <button data-mtx="icon-button" data-icon="favorite_border" aria-label="Save headphones" class="mtx-card__actions-end"></button>
+            </div>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div data-mtx="card" data-media-top data-media-height="160"
+               data-image="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+            <div data-mtx="card-content"><h3>Sneakers</h3><p>Light and breathable. $75.00</p></div>
+            <div data-mtx="card-actions">
+              <button class="mtx-button mtx-button--contained" data-mtx="button">Add to cart</button>
+              <button data-mtx="icon-button" data-icon="favorite_border" aria-label="Save sneakers" class="mtx-card__actions-end"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Card and CardActionArea expose <code>disable()</code>, <code>enable()</code>, <code>focus()</code> and the <code>disabled</code> getter; CardMedia exposes the <code>image</code> property. They do not emit their own events: listen to the native <code>click</code> (also fired by Enter and Space).</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="card-api-disable">Card.disable()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="card-api-enable">Card.enable()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="card-api-focus">Card.focus()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="area-api-toggle">ActionArea disable/enable</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="media-api-swap">CardMedia.image</button>
+      </div>
+      <pre class="demo-log" id="card-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const card = Materix.getInstance(document.getElementById('card-clickable'));
+card.disable();          // aria-disabled="true", tabindex=-1
+card.enable();
+card.focus();
+
+const media = Materix.getInstance(document.querySelector('#card-action-area [data-mtx="card-media"]'));
+media.image = 'new.jpg';</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR or fine-grained composition, write each part with its classes. If <code>.mtx-card__header</code> or <code>.mtx-card__media</code> already exists, the card does not generate it.</p>
+      <div class="demo-surface">
+        <article class="mtx-card demo-fixed-width" data-mtx="card">
+          <header class="mtx-card__header" data-mtx="card-header">
+            <div class="mtx-card__header-avatar">
+              <div class="mtx-avatar mtx-avatar--secondary" data-mtx="avatar">JS</div>
+            </div>
+            <div class="mtx-card__header-content">
+              <span class="mtx-card__title">Modern web development</span>
+              <span class="mtx-card__subheader">Clean architecture in JavaScript</span>
+            </div>
+            <div class="mtx-card__header-action">
+              <button class="mtx-icon-button" data-mtx="icon-button" aria-label="Course options"><span class="material-icons" aria-hidden="true">more_vert</span></button>
+            </div>
+          </header>
+          <div class="mtx-card__media" data-mtx="card-media" data-height="160" data-alt="Laptop with code on screen"
+               data-image="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=800&amp;q=80"></div>
+          <div class="mtx-card__content" data-mtx="card-content">Build component libraries without frameworks using standard CSS and JavaScript.</div>
+          <div class="mtx-card__actions" data-mtx="card-actions">
+            <button class="mtx-button mtx-button--text" data-mtx="button">View project</button>
+            <button class="mtx-button mtx-button--text" data-mtx="button">Documentation</button>
+          </div>
+        </article>
+      </div>
+      <pre class="demo-code"><code>&lt;article class="mtx-card" data-mtx="card"&gt;
+  &lt;header class="mtx-card__header" data-mtx="card-header"&gt;
+    &lt;div class="mtx-card__header-avatar"&gt;&lt;div class="mtx-avatar" data-mtx="avatar"&gt;JS&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="mtx-card__header-content"&gt;
+      &lt;span class="mtx-card__title"&gt;Modern web development&lt;/span&gt;
+      &lt;span class="mtx-card__subheader"&gt;Clean architecture in JavaScript&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="mtx-card__header-action"&gt;...&lt;/div&gt;
+  &lt;/header&gt;
+  &lt;div class="mtx-card__media" data-mtx="card-media" data-image="..." data-height="160" data-alt="..."&gt;&lt;/div&gt;
+  &lt;div class="mtx-card__content" data-mtx="card-content"&gt;...&lt;/div&gt;
+  &lt;div class="mtx-card__actions" data-mtx="card-actions"&gt;...&lt;/div&gt;
+&lt;/article&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var log = document.getElementById('card-log');
+      var write = function (text) {
+        log.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        log.scrollTop = log.scrollHeight;
+      };
+      var clickable = document.getElementById('card-clickable');
+      var area = document.getElementById('card-action-area');
+      var status = document.getElementById('card-click-status');
+
+      clickable.addEventListener('click', function () {
+        status.textContent = 'Clicked the clickable card.';
+        write('click  #card-clickable');
+      });
+      area.addEventListener('click', function () {
+        status.textContent = 'Clicked the action area.';
+        write('click  #card-action-area');
+      });
+
+      var card = Materix.getInstance(clickable);
+      var areaInstance = Materix.getInstance(area);
+      document.getElementById('card-api-disable').addEventListener('click', function () {
+        card.disable();
+        write('card.disable() → disabled=' + card.disabled);
+      });
+      document.getElementById('card-api-enable').addEventListener('click', function () {
+        card.enable();
+        write('card.enable() → disabled=' + card.disabled);
+      });
+      document.getElementById('card-api-focus').addEventListener('click', function () {
+        card.focus();
+        write('card.focus() → activeElement=#' + document.activeElement.id);
+      });
+      document.getElementById('area-api-toggle').addEventListener('click', function () {
+        if (areaInstance.disabled) areaInstance.enable(); else areaInstance.disable();
+        write('actionArea.' + (areaInstance.disabled ? 'disable()' : 'enable()') + ' → disabled=' + areaInstance.disabled);
+      });
+
+      var media = Materix.getInstance(area.querySelector('[data-mtx="card-media"]'));
+      var images = [
+        'https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80'
+      ];
+      var index = 0;
+      document.getElementById('media-api-swap').addEventListener('click', function () {
+        index = (index + 1) % images.length;
+        media.image = images[index];
+        write('media.image = "…' + media.image.slice(34, 60) + '…"');
+      });
+    });
+  </script>
+</body>
+</html>

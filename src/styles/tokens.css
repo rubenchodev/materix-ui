@@ -1,0 +1,508 @@
+/* ==========================================================================
+   Materix UI — Design Tokens
+   Basados en Material UI (MUI), que a su vez se inspira en Material Design 2.
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------
+     Paleta de colores — Light theme
+     ------------------------------------------------------------------ */
+  --mtx-color-primary: #4818d0;
+  --mtx-color-primary-light: #e0d8f0;
+  --mtx-color-primary-dark: #3813a6;
+  --mtx-color-primary-contrast: #ffffff;
+
+  --mtx-color-secondary: #9c27b0;
+  --mtx-color-secondary-light: #ba68c8;
+  --mtx-color-secondary-dark: #7b1fa2;
+  --mtx-color-secondary-contrast: #ffffff;
+
+  --mtx-color-error: #d32f2f;
+  --mtx-color-error-light: #ef5350;
+  --mtx-color-error-dark: #c62828;
+  --mtx-color-error-contrast: #ffffff;
+
+  --mtx-color-warning: #ed6c02;
+  --mtx-color-warning-light: #ff9800;
+  --mtx-color-warning-dark: #e65100;
+  --mtx-color-warning-contrast: rgba(0, 0, 0, 0.87);
+
+  --mtx-color-info: #0288d1;
+  --mtx-color-info-light: #03a9f4;
+  --mtx-color-info-dark: #01579b;
+  --mtx-color-info-contrast: rgba(0, 0, 0, 0.87);
+
+  --mtx-color-success: #2e7d32;
+  --mtx-color-success-light: #4caf50;
+  --mtx-color-success-dark: #1b5e20;
+  --mtx-color-success-contrast: #ffffff;
+
+  /* Color de texto accesible por paleta (texto/iconos sobre el fondo), ≥ 4.5:1 (WCAG AA).
+     Equivale a contrastThreshold: 4.5 de MUI; data-mtx-contrast="mui" restaura el color principal. */
+  --mtx-color-primary-text: var(--mtx-color-primary);
+  --mtx-color-secondary-text: var(--mtx-color-secondary);
+  --mtx-color-error-text: var(--mtx-color-error-dark);
+  --mtx-color-warning-text: color-mix(in srgb, var(--mtx-color-warning-dark) 75%, #000);
+  --mtx-color-info-text: var(--mtx-color-info-dark);
+  --mtx-color-success-text: var(--mtx-color-success-dark);
+
+  /* Texto */
+  --mtx-color-text-primary: rgba(0, 0, 0, 0.87);
+  --mtx-color-text-secondary: rgba(0, 0, 0, 0.6);
+  --mtx-color-text-disabled: rgba(0, 0, 0, 0.38);
+
+  /* Fondo y divisores */
+  --mtx-color-background-default: #f8fafc;
+  --mtx-color-background-paper: #ffffff;
+  --mtx-color-divider: rgba(0, 0, 0, 0.12);
+
+  /* Campo de texto */
+  --mtx-color-input-filled: rgba(0, 0, 0, 0.06);
+  --mtx-color-input-filled-hover: rgba(0, 0, 0, 0.09);
+
+  /* ==========================================================================
+     Alturas globales estandarizadas para componentes (Control Heights)
+     ========================================================================== */
+  /* Botones (Button / IconButton) — Estándar MUI */
+  --mtx-size-large-height: 48px;   /* Grande (48px) — Prominente / Touch */
+  --mtx-size-medium-height: 40px;  /* Mediano (40px) — Estándar por defecto */
+  --mtx-size-small-height: 32px;   /* Pequeño (32px) — Compacto */
+
+  /* Campos de texto y Selectores (TextField / Select) — Estándar Canónico MUI/MD2 */
+  --mtx-field-height-medium: 56px; /* Altura canónica estándar de Material UI (56px) */
+  --mtx-field-height-small: 40px;  /* Altura densa / compacta de Material UI (40px) */
+
+  /* Alias de control */
+  --mtx-control-height-large: var(--mtx-field-height-medium);
+  --mtx-control-height-medium: var(--mtx-field-height-medium);
+  --mtx-control-height-small: var(--mtx-field-height-small);
+
+  --mtx-control-height-outlined: var(--mtx-field-height-medium);
+  --mtx-control-height-outlined-medium: var(--mtx-field-height-medium);
+  --mtx-control-height-outlined-small: var(--mtx-field-height-small);
+
+  --mtx-control-height-filled: var(--mtx-field-height-medium);
+  --mtx-control-height-filled-medium: var(--mtx-field-height-medium);
+  --mtx-control-height-filled-small: var(--mtx-field-height-small);
+
+  --mtx-control-height-standard: var(--mtx-field-height-medium);
+  --mtx-control-height-standard-medium: var(--mtx-field-height-medium);
+  --mtx-control-height-standard-small: var(--mtx-field-height-small);
+
+  --mtx-control-height-borderless: var(--mtx-field-height-medium);
+
+  /* Estados (action) */
+  --mtx-color-action-active: rgba(0, 0, 0, 0.54);
+  --mtx-color-action-hover: rgba(0, 0, 0, 0.04);
+  --mtx-color-action-selected: rgba(0, 0, 0, 0.08);
+  --mtx-color-action-focus: rgba(0, 0, 0, 0.12);
+  --mtx-color-action-disabled: rgba(0, 0, 0, 0.26);
+  --mtx-color-action-disabled-background: rgba(0, 0, 0, 0.12);
+
+  /* Common (paleta MUI): blanco y negro puros, iguales en ambos temas */
+  --mtx-color-common-white: #fff;
+  --mtx-color-common-black: #000;
+
+  /* Grises auxiliares (iguales en ambos temas) */
+  --mtx-color-grey-50: #fafafa;
+  --mtx-color-grey-100: #f5f5f5;
+  --mtx-color-grey-200: #eeeeee;
+  --mtx-color-grey-300: #e0e0e0;
+  --mtx-color-grey-400: #bdbdbd;
+  --mtx-color-grey-600: #757575;
+  --mtx-color-grey-700: #616161;
+  --mtx-color-grey-800: #424242;
+
+  /* Avatar por defecto: grey 600 + blanco (4.6:1, AA). Desviación de MUI (grey 400 + fondo). */
+  --mtx-avatar-default-bg: var(--mtx-color-grey-600);
+  --mtx-avatar-default-color: #ffffff;
+
+  /* Switch (interruptor) */
+  --mtx-switch-track: rgba(0, 0, 0, 0.38);
+  --mtx-switch-track-checked: rgba(0, 0, 0, 0.5);
+  --mtx-switch-track-disabled: rgba(0, 0, 0, 0.12);
+  --mtx-switch-thumb: #ffffff;
+  --mtx-switch-thumb-disabled: #fafafa;
+
+  /* ------------------------------------------------------------------
+     Chip (MUI spec)
+     ------------------------------------------------------------------ */
+  --mtx-chip-height: 32px;
+  --mtx-chip-height-small: 24px;
+  --mtx-chip-radius: 16px;
+  --mtx-chip-radius-small: 12px;
+  --mtx-chip-font-size: 0.8125rem;
+  --mtx-chip-font-size-small: 0.75rem;
+  --mtx-chip-label-padding: 0 12px;
+  --mtx-chip-label-padding-small: 0 8px;
+  --mtx-chip-delete-size: 22px;
+  --mtx-chip-delete-size-small: 16px;
+  --mtx-chip-bg: var(--mtx-color-grey-300);
+  --mtx-chip-bg-hover: color-mix(in srgb, var(--mtx-color-grey-300) 50%, var(--mtx-color-grey-400));
+  --mtx-chip-text: var(--mtx-color-text-primary);
+  --mtx-chip-delete-color: rgba(0, 0, 0, 0.26);
+  --mtx-chip-delete-color-hover: rgba(0, 0, 0, 0.4);
+
+  /* Alert (MUI: texto main oscurecido 60 %, fondo main aclarado 90 %) */
+  --mtx-alert-text-mix: #000;
+  --mtx-alert-bg-mix: #fff;
+
+  /* Skeleton (MUI: text.primary al 11 %; la ola usa action.hover) */
+  --mtx-skeleton-bg: rgba(0, 0, 0, 0.11);
+  --mtx-skeleton-wave: rgba(0, 0, 0, 0.04);
+
+  /* Backdrop (MUI: rgba(0, 0, 0, 0.5) en ambos temas; contenido claro) */
+  --mtx-backdrop-bg: rgba(0, 0, 0, 0.5);
+  --mtx-backdrop-color: #ffffff;
+  --mtx-backdrop-z-index: calc(var(--mtx-z-index-drawer) + 1);
+
+  /* Snackbar (MUI: emphasize(background.default, 0.8)) */
+  --mtx-snackbar-bg: color-mix(in srgb, var(--mtx-color-background-default) 20%, #000);
+  --mtx-snackbar-color: #ffffff;
+  --mtx-snackbar-action-color: color-mix(in srgb, var(--mtx-color-primary) 45%, #fff);
+
+  /* Accordion: cabecera en negrita y diferenciada al expandir (data-summary-style="plain" lo anula) */
+  --mtx-accordion-summary-font-weight: 500;
+  --mtx-accordion-summary-expanded-bg: var(--mtx-color-action-selected);
+  --mtx-accordion-summary-expanded-divider: var(--mtx-color-divider);
+
+  /* Breadcrumbs: botón de colapso (MUI: grey 100 / grey 700) */
+  --mtx-breadcrumbs-collapse-bg: var(--mtx-color-grey-100);
+  --mtx-breadcrumbs-collapse-bg-hover: var(--mtx-color-grey-200);
+  --mtx-breadcrumbs-collapse-color: var(--mtx-color-grey-700);
+
+  /* Rating: iconos llenos (MUI: #faaf00, igual en ambos temas) */
+  --mtx-rating-color: #faaf00;
+
+  /* ------------------------------------------------------------------
+     Drawer
+     ------------------------------------------------------------------ */
+  --mtx-drawer-width: 300px;
+  --mtx-drawer-width-tablet: 280px;
+  --mtx-drawer-width-mobile: min(85vw, 320px);
+  --mtx-drawer-width-narrow: 200px;
+  --mtx-drawer-width-wide: 360px;
+  --mtx-drawer-elevation: var(--mtx-elevation-16);
+
+  /* ------------------------------------------------------------------
+     Typography (escala MUI)
+     ------------------------------------------------------------------ */
+  --mtx-font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+  --mtx-type-h1: 300 6rem/1.167 var(--mtx-font-family);
+  --mtx-type-h2: 300 3.75rem/1.2 var(--mtx-font-family);
+  --mtx-type-h3: 400 3rem/1.167 var(--mtx-font-family);
+  --mtx-type-h4: 400 2.125rem/1.235 var(--mtx-font-family);
+  --mtx-type-h5: 400 1.5rem/1.334 var(--mtx-font-family);
+  --mtx-type-h6: 500 1.25rem/1.6 var(--mtx-font-family);
+  --mtx-type-subtitle1: 400 1rem/1.75 var(--mtx-font-family);
+  --mtx-type-subtitle2: 500 0.875rem/1.57 var(--mtx-font-family);
+  --mtx-type-body1: 400 1rem/1.5 var(--mtx-font-family);
+  --mtx-type-body2: 400 0.875rem/1.43 var(--mtx-font-family);
+  --mtx-type-button: 500 0.875rem/1.75 var(--mtx-font-family);
+  --mtx-type-caption: 400 0.75rem/1.66 var(--mtx-font-family);
+  --mtx-type-overline: 400 0.75rem/2.66 var(--mtx-font-family);
+
+  /* ------------------------------------------------------------------
+     Shape
+     ------------------------------------------------------------------ */
+  --mtx-shape-radius: 4px;
+  --mtx-shape-small: 8px;
+  --mtx-shape-full: 50%;
+
+  /* ------------------------------------------------------------------
+     Elevación (sombras MUI)
+     ------------------------------------------------------------------ */
+  --mtx-elevation-0: none;
+  --mtx-elevation-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-3: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-4: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-5: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-6: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-7: 0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-12: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-16: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+  --mtx-elevation-24: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+
+  /* Overlay de elevación (solo tema oscuro, como MUI); en claro no hay overlay. */
+  --mtx-overlay-elevation-0: none;
+  --mtx-overlay-elevation-1: none;
+  --mtx-overlay-elevation-2: none;
+  --mtx-overlay-elevation-3: none;
+  --mtx-overlay-elevation-4: none;
+  --mtx-overlay-elevation-5: none;
+  --mtx-overlay-elevation-6: none;
+  --mtx-overlay-elevation-7: none;
+  --mtx-overlay-elevation-8: none;
+  --mtx-overlay-elevation-9: none;
+  --mtx-overlay-elevation-10: none;
+  --mtx-overlay-elevation-11: none;
+  --mtx-overlay-elevation-12: none;
+  --mtx-overlay-elevation-13: none;
+  --mtx-overlay-elevation-14: none;
+  --mtx-overlay-elevation-15: none;
+  --mtx-overlay-elevation-16: none;
+  --mtx-overlay-elevation-17: none;
+  --mtx-overlay-elevation-18: none;
+  --mtx-overlay-elevation-19: none;
+  --mtx-overlay-elevation-20: none;
+  --mtx-overlay-elevation-21: none;
+  --mtx-overlay-elevation-22: none;
+  --mtx-overlay-elevation-23: none;
+  --mtx-overlay-elevation-24: none;
+
+  /* ------------------------------------------------------------------
+     Spacing (unidad base 8px)
+     ------------------------------------------------------------------ */
+  --mtx-spacing-unit: 8px;
+  --mtx-spacing-0: 0px;
+  --mtx-spacing-0_5: 4px;
+  --mtx-spacing-1: 8px;
+  --mtx-spacing-1_5: 12px;
+  --mtx-spacing-2: 16px;
+  --mtx-spacing-2_5: 20px;
+  --mtx-spacing-3: 24px;
+  --mtx-spacing-4: 32px;
+  --mtx-spacing-5: 40px;
+  --mtx-spacing-6: 48px;
+  --mtx-spacing-8: 64px;
+  --mtx-spacing-10: 80px;
+
+  /* ------------------------------------------------------------------
+     Motion (duraciones y easing MUI)
+     ------------------------------------------------------------------ */
+  --mtx-duration-shortest: 150ms;
+  --mtx-duration-shorter: 200ms;
+  --mtx-duration-short: 250ms;
+  --mtx-duration-standard: 300ms;
+  --mtx-duration-complex: 375ms;
+  --mtx-duration-ripple: 550ms;
+
+  --mtx-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --mtx-easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --mtx-easing-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ------------------------------------------------------------------
+     Tooltip (MUI: grey[700] al 92%, igual en claro y oscuro)
+     ------------------------------------------------------------------ */
+  --mtx-tooltip-bg: rgba(97, 97, 97, 0.92);
+  --mtx-tooltip-color: #ffffff;
+  --mtx-tooltip-font-size: 0.6875rem;
+  --mtx-tooltip-font-size-touch: 0.875rem;
+  --mtx-tooltip-max-width: 300px;
+
+  /* ------------------------------------------------------------------
+     Disabled
+     ------------------------------------------------------------------ */
+  --mtx-disabled-opacity: 0.38;
+
+  /* ------------------------------------------------------------------
+     Focus
+     ------------------------------------------------------------------ */
+  --mtx-focus-ring-width: 2px;
+  --mtx-focus-ring-color: var(--mtx-color-primary);
+
+  /* ------------------------------------------------------------------
+     Z-Index (Escala canónica Material UI)
+     ------------------------------------------------------------------ */
+  --mtx-z-index-mobile-stepper: 1000;
+  --mtx-z-index-speed-dial: 1050;
+  --mtx-z-index-app-bar: 1100;
+  --mtx-z-index-drawer: 1200;
+  --mtx-z-index-modal: 1300;
+  --mtx-z-index-snackbar: 1400;
+  --mtx-z-index-tooltip: 1500;
+
+  /* ------------------------------------------------------------------
+     Layout: altura de la App Bar (56px móvil, 64px ≥ sm, como el Toolbar MUI)
+     ------------------------------------------------------------------ */
+  --mtx-app-bar-height: 56px;
+}
+
+@media (min-width: 600px) {
+  :root {
+    --mtx-app-bar-height: 64px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Dark theme
+   ------------------------------------------------------------------ */
+[data-mtx-theme='dark'] {
+  --mtx-color-primary: #b388ff;
+  --mtx-color-primary-light: #e3d5ff;
+  --mtx-color-primary-dark: #7c4dff;
+  --mtx-color-primary-contrast: rgba(0, 0, 0, 0.87);
+
+  --mtx-color-secondary: #ce93d8;
+  --mtx-color-secondary-light: #f3e5f5;
+  --mtx-color-secondary-dark: #ab47bc;
+  --mtx-color-secondary-contrast: rgba(0, 0, 0, 0.87);
+
+  --mtx-color-error: #f44336;
+  --mtx-color-error-light: #e57373;
+  --mtx-color-error-dark: #d32f2f;
+  --mtx-color-error-contrast: rgba(0, 0, 0, 0.87);
+
+  --mtx-color-warning: #ffa726;
+  --mtx-color-warning-light: #ffb74d;
+  --mtx-color-warning-dark: #f57c00;
+  --mtx-color-warning-contrast: rgba(0, 0, 0, 0.87);
+
+  --mtx-color-info: #64b5f6;
+  --mtx-color-info-light: #90caf9;
+  --mtx-color-info-dark: #42a5f5;
+  --mtx-color-info-contrast: rgba(0, 0, 0, 0.87);
+
+  --mtx-color-success: #66bb6a;
+  --mtx-color-success-light: #81c784;
+  --mtx-color-success-dark: #388e3c;
+  --mtx-color-success-contrast: rgba(0, 0, 0, 0.87);
+
+  /* Color de texto accesible por paleta (texto/iconos sobre el fondo), ≥ 4.5:1 (WCAG AA).
+     Equivale a contrastThreshold: 4.5 de MUI; data-mtx-contrast="mui" restaura el color principal. */
+  --mtx-color-primary-text: var(--mtx-color-primary);
+  --mtx-color-secondary-text: var(--mtx-color-secondary);
+  --mtx-color-error-text: color-mix(in srgb, var(--mtx-color-error-light) 70%, #fff);
+  --mtx-color-warning-text: var(--mtx-color-warning);
+  --mtx-color-info-text: var(--mtx-color-info);
+  --mtx-color-success-text: var(--mtx-color-success);
+
+  --mtx-color-text-primary: #ffffff;
+  --mtx-color-text-secondary: rgba(255, 255, 255, 0.7);
+  --mtx-color-text-disabled: rgba(255, 255, 255, 0.5);
+
+  --mtx-color-background-default: #121212;
+  --mtx-color-background-paper: #1e1e1e;
+  --mtx-color-divider: rgba(255, 255, 255, 0.12);
+
+  /* Campo de texto */
+  --mtx-color-input-filled: rgba(255, 255, 255, 0.09);
+  --mtx-color-input-filled-hover: rgba(255, 255, 255, 0.13);
+
+  --mtx-color-action-active: rgba(255, 255, 255, 0.56);
+  --mtx-color-action-hover: rgba(255, 255, 255, 0.08);
+  --mtx-color-action-selected: rgba(255, 255, 255, 0.16);
+  --mtx-color-action-focus: rgba(255, 255, 255, 0.12);
+  --mtx-color-action-disabled: rgba(255, 255, 255, 0.3);
+  --mtx-color-action-disabled-background: rgba(255, 255, 255, 0.12);
+
+  /* Switch (interruptor) */
+  --mtx-switch-track: rgba(255, 255, 255, 0.3);
+  --mtx-switch-track-checked: rgba(255, 255, 255, 0.5);
+  --mtx-switch-track-disabled: rgba(255, 255, 255, 0.2);
+  --mtx-switch-thumb: #e0e0e0;
+  --mtx-switch-thumb-disabled: #757575;
+
+  /* Chip (MUI spec) */
+  --mtx-chip-bg: var(--mtx-color-grey-800);
+  --mtx-chip-bg-hover: color-mix(in srgb, var(--mtx-color-grey-800) 50%, var(--mtx-color-grey-700));
+  --mtx-chip-text: var(--mtx-color-text-primary);
+  --mtx-chip-delete-color: rgba(255, 255, 255, 0.26);
+  --mtx-chip-delete-color-hover: rgba(255, 255, 255, 0.4);
+
+  /* Accordion: se re-resuelven sobre los colores de acción del tema oscuro */
+  --mtx-accordion-summary-expanded-bg: var(--mtx-color-action-selected);
+  --mtx-accordion-summary-expanded-divider: var(--mtx-color-divider);
+
+  /* Breadcrumbs: botón de colapso (MUI oscuro: grey 700 / grey 600 con texto grey 100) */
+  --mtx-breadcrumbs-collapse-bg: var(--mtx-color-grey-700);
+  --mtx-breadcrumbs-collapse-bg-hover: var(--mtx-color-grey-600);
+  --mtx-breadcrumbs-collapse-color: var(--mtx-color-grey-100);
+
+  /* Alert (MUI oscuro: texto main aclarado 60 %, fondo main oscurecido 90 %) */
+  --mtx-alert-text-mix: #fff;
+  --mtx-alert-bg-mix: #000;
+
+  /* Skeleton (MUI oscuro: text.primary al 13 %) */
+  --mtx-skeleton-bg: rgba(255, 255, 255, 0.13);
+  --mtx-skeleton-wave: rgba(255, 255, 255, 0.08);
+
+  /* Snackbar (MUI oscuro: superficie clara con texto oscuro) */
+  --mtx-snackbar-bg: color-mix(in srgb, var(--mtx-color-background-default) 20%, #fff);
+  --mtx-snackbar-color: rgba(0, 0, 0, 0.87);
+  --mtx-snackbar-action-color: color-mix(in srgb, var(--mtx-color-primary) 55%, #000);
+
+  /* Avatar por defecto en oscuro: grey 600 + blanco (4.6:1, AA). */
+  --mtx-avatar-default-bg: var(--mtx-color-grey-600);
+  --mtx-avatar-default-color: #ffffff;
+
+  /* Overlay blanco por elevación (MUI: alpha = (4.5·ln(N+1) + 2) / 100). */
+  /* Capa MUI ajustada: MUI parte de #121212 y nuestro papel oscuro es #1e1e1e; alpha = (237·a_MUI − 12) / 225. */
+  --mtx-overlay-elevation-0: none;
+  --mtx-overlay-elevation-1: none;
+  --mtx-overlay-elevation-2: linear-gradient(rgba(255, 255, 255, 0.020), rgba(255, 255, 255, 0.020));
+  --mtx-overlay-elevation-3: linear-gradient(rgba(255, 255, 255, 0.031), rgba(255, 255, 255, 0.031));
+  --mtx-overlay-elevation-4: linear-gradient(rgba(255, 255, 255, 0.041), rgba(255, 255, 255, 0.041));
+  --mtx-overlay-elevation-5: linear-gradient(rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.052));
+  --mtx-overlay-elevation-6: linear-gradient(rgba(255, 255, 255, 0.063), rgba(255, 255, 255, 0.063));
+  --mtx-overlay-elevation-7: linear-gradient(rgba(255, 255, 255, 0.063), rgba(255, 255, 255, 0.063));
+  --mtx-overlay-elevation-8: linear-gradient(rgba(255, 255, 255, 0.073), rgba(255, 255, 255, 0.073));
+  --mtx-overlay-elevation-9: linear-gradient(rgba(255, 255, 255, 0.073), rgba(255, 255, 255, 0.073));
+  --mtx-overlay-elevation-10: linear-gradient(rgba(255, 255, 255, 0.084), rgba(255, 255, 255, 0.084));
+  --mtx-overlay-elevation-11: linear-gradient(rgba(255, 255, 255, 0.084), rgba(255, 255, 255, 0.084));
+  --mtx-overlay-elevation-12: linear-gradient(rgba(255, 255, 255, 0.094), rgba(255, 255, 255, 0.094));
+  --mtx-overlay-elevation-13: linear-gradient(rgba(255, 255, 255, 0.094), rgba(255, 255, 255, 0.094));
+  --mtx-overlay-elevation-14: linear-gradient(rgba(255, 255, 255, 0.094), rgba(255, 255, 255, 0.094));
+  --mtx-overlay-elevation-15: linear-gradient(rgba(255, 255, 255, 0.094), rgba(255, 255, 255, 0.094));
+  --mtx-overlay-elevation-16: linear-gradient(rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.105));
+  --mtx-overlay-elevation-17: linear-gradient(rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.105));
+  --mtx-overlay-elevation-18: linear-gradient(rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.105));
+  --mtx-overlay-elevation-19: linear-gradient(rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.105));
+  --mtx-overlay-elevation-20: linear-gradient(rgba(255, 255, 255, 0.115), rgba(255, 255, 255, 0.115));
+  --mtx-overlay-elevation-21: linear-gradient(rgba(255, 255, 255, 0.115), rgba(255, 255, 255, 0.115));
+  --mtx-overlay-elevation-22: linear-gradient(rgba(255, 255, 255, 0.115), rgba(255, 255, 255, 0.115));
+  --mtx-overlay-elevation-23: linear-gradient(rgba(255, 255, 255, 0.115), rgba(255, 255, 255, 0.115));
+  --mtx-overlay-elevation-24: linear-gradient(rgba(255, 255, 255, 0.115), rgba(255, 255, 255, 0.115));
+}
+
+/* ------------------------------------------------------------------
+   Contraste: AA por defecto (bloques :root y oscuro). data-mtx-contrast="mui" (en <html> o
+   en un contenedor) restaura los valores exactos de MUI: -text = color principal y texto
+   blanco sobre warning/info (claro) y error (oscuro), entre 3 y 3.9:1.
+   data-mtx-contrast="aa" se acepta como alias del valor por defecto (vuelve a AA dentro de
+   un contenedor "mui").
+   ------------------------------------------------------------------ */
+[data-mtx-contrast='mui'] {
+  --mtx-color-error-text: var(--mtx-color-error);
+  --mtx-color-warning-text: var(--mtx-color-warning);
+  --mtx-color-info-text: var(--mtx-color-info);
+  --mtx-color-success-text: var(--mtx-color-success);
+  --mtx-color-warning-contrast: #ffffff;
+  --mtx-color-info-contrast: #ffffff;
+}
+
+[data-mtx-contrast='mui'][data-mtx-theme='dark'],
+[data-mtx-contrast='mui'] [data-mtx-theme='dark'],
+[data-mtx-theme='dark'] [data-mtx-contrast='mui'] {
+  --mtx-color-error-text: var(--mtx-color-error);
+  --mtx-color-warning-text: var(--mtx-color-warning);
+  --mtx-color-info-text: var(--mtx-color-info);
+  --mtx-color-success-text: var(--mtx-color-success);
+  --mtx-color-error-contrast: #ffffff;
+  --mtx-color-warning-contrast: rgba(0, 0, 0, 0.87);
+  --mtx-color-info-contrast: rgba(0, 0, 0, 0.87);
+}
+
+[data-mtx-contrast='aa'] {
+  --mtx-color-error-text: var(--mtx-color-error-dark);
+  --mtx-color-warning-text: color-mix(in srgb, var(--mtx-color-warning-dark) 75%, #000);
+  --mtx-color-info-text: var(--mtx-color-info-dark);
+  --mtx-color-success-text: var(--mtx-color-success-dark);
+  --mtx-color-warning-contrast: rgba(0, 0, 0, 0.87);
+  --mtx-color-info-contrast: rgba(0, 0, 0, 0.87);
+}
+
+[data-mtx-contrast='aa'][data-mtx-theme='dark'],
+[data-mtx-contrast='aa'] [data-mtx-theme='dark'],
+[data-mtx-theme='dark'] [data-mtx-contrast='aa'] {
+  --mtx-color-error-text: color-mix(in srgb, var(--mtx-color-error-light) 70%, #fff);
+  --mtx-color-warning-text: var(--mtx-color-warning);
+  --mtx-color-info-text: var(--mtx-color-info);
+  --mtx-color-success-text: var(--mtx-color-success);
+  --mtx-color-error-contrast: rgba(0, 0, 0, 0.87);
+  --mtx-color-warning-contrast: rgba(0, 0, 0, 0.87);
+  --mtx-color-info-contrast: rgba(0, 0, 0, 0.87);
+}

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tooltip · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Data display</span>
+        <h1>Tooltip</h1>
+        <p class="demo-lead">Short informative label shown on hover, keyboard focus or long press. Add data-mtx-tooltip to any element: no initialization required.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#placement">Placement</a>
+      <a href="#arrow">Arrow</a>
+      <a href="#with-icons">With and without icons</a>
+      <a href="#states">States</a>
+      <a href="#delays">Delays</a>
+      <a href="#follow-cursor">Follow cursor</a>
+      <a href="#long-text">Long text</a>
+      <a href="#accessibility">Accessibility</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Advanced usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Add <code>data-mtx-tooltip="Text"</code> to any element: nothing needs to be initialized (global delegation, also for content added later). Hover or use <kbd>Tab</kbd>; <kbd>Escape</kbd> hides it.</p>
+      <div class="demo-row">
+        <button data-mtx="icon-button" data-icon="delete" data-mtx-tooltip="Delete"></button>
+        <button data-mtx="icon-button" data-icon="favorite" data-color="error" data-mtx-tooltip="Add to favorites"></button>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-tooltip="Saved to your account">Save</button>
+        <a href="#basic-usage" data-mtx="link" data-mtx-tooltip="Back to the top of the section">Link with tooltip</a>
+      </div>
+      <pre class="demo-code"><code>&lt;button data-mtx="icon-button" data-icon="delete" data-mtx-tooltip="Delete"&gt;&lt;/button&gt;
+&lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-tooltip="Saved to your account"&gt;Save&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="placement">
+      <h2>Placement</h2>
+      <p><code>data-tooltip-placement</code> accepts 12 positions (<code>top|bottom|left|right</code> with <code>-start|-end</code>). Defaults to <code>bottom</code>. If it doesn't fit, it flips to the opposite side and shifts to stay on screen.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Top</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="top-start" data-mtx-tooltip="top-start">top-start</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="top" data-mtx-tooltip="top">top</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="top-end" data-mtx-tooltip="top-end">top-end</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Bottom</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="bottom-start" data-mtx-tooltip="bottom-start">bottom-start</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="bottom" data-mtx-tooltip="bottom">bottom</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="bottom-end" data-mtx-tooltip="bottom-end">bottom-end</button>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Left and right</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="left-start" data-mtx-tooltip="left-start">left-start</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="left" data-mtx-tooltip="left">left</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="left-end" data-mtx-tooltip="left-end">left-end</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="right-start" data-mtx-tooltip="right-start">right-start</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="right" data-mtx-tooltip="right">right</button>
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-tooltip-placement="right-end" data-mtx-tooltip="right-end">right-end</button>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--outlined" data-mtx="button"
+        data-mtx-tooltip="top-start" data-tooltip-placement="top-start"&gt;top-start&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="arrow">
+      <h2>Arrow</h2>
+      <p><code>data-tooltip-arrow</code> adds an arrow that points at the center of the trigger, even when the tooltip shifts to fit.</p>
+      <div class="demo-row">
+        <button data-mtx="icon-button" data-icon="add" data-mtx-tooltip="Add" data-tooltip-arrow></button>
+        <button data-mtx="icon-button" data-icon="edit" data-mtx-tooltip="Edit" data-tooltip-arrow data-tooltip-placement="top"></button>
+        <button data-mtx="icon-button" data-icon="arrow_back" data-mtx-tooltip="Back" data-tooltip-arrow data-tooltip-placement="left"></button>
+        <button data-mtx="icon-button" data-icon="arrow_forward" data-mtx-tooltip="Next" data-tooltip-arrow data-tooltip-placement="right"></button>
+      </div>
+      <pre class="demo-code"><code>&lt;button data-mtx="icon-button" data-icon="add" data-mtx-tooltip="Add" data-tooltip-arrow&gt;&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p>It works on text buttons, buttons with a start or end icon and, above all, on icon-only buttons, where it also provides the accessible name.</p>
+      <div class="demo-group">
+        <span class="demo-label">No icon</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-tooltip="Discards your changes">Cancel</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Start / end icon</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="upload" data-mtx-tooltip="PDF or PNG, 5 MB max.">Upload</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-end-icon="send" data-mtx-tooltip="Will be sent to 3 recipients">Send</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon only · IconButton and Fab</span>
+        <div class="demo-row">
+          <button data-mtx="icon-button" data-icon="share" data-size="small" data-mtx-tooltip="Share"></button>
+          <button data-mtx="icon-button" data-icon="share" data-mtx-tooltip="Share"></button>
+          <button data-mtx="icon-button" data-icon="share" data-size="large" data-mtx-tooltip="Share"></button>
+          <button data-mtx="fab" data-icon="add" data-mtx-tooltip="New document" data-tooltip-placement="right"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Disabled elements don't receive pointer or focus events: wrap them with <code>data-mtx="tooltip"</code> (a <code>&lt;span&gt;</code> with <code>data-title</code>) to keep explaining why they are unavailable, as MUI recommends.</p>
+      <div class="demo-row">
+        <span data-mtx="tooltip" data-title="Fill in the required fields to continue">
+          <button class="mtx-button mtx-button--contained" data-mtx="button" disabled>Continue</button>
+        </span>
+        <span data-mtx="tooltip" data-title="You don't have permission to delete">
+          <button data-mtx="icon-button" data-icon="delete" aria-label="Delete" disabled></button>
+        </span>
+      </div>
+      <pre class="demo-code"><code>&lt;span data-mtx="tooltip" data-title="Fill in the required fields to continue"&gt;
+  &lt;button class="mtx-button mtx-button--contained" data-mtx="button" disabled&gt;Continue&lt;/button&gt;
+&lt;/span&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="delays">
+      <h2>Delays</h2>
+      <p>By default it appears after 100 ms (as in MUI) and disappears on leave. <code>data-tooltip-enter-delay</code> and <code>data-tooltip-leave-delay</code> change both timings. After one closes, the next one appears with no delay for 800 ms, ideal for toolbars.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-tooltip="Appears after 100 ms">Default</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-tooltip="Appears after 500 ms" data-tooltip-enter-delay="500">enter 500 ms</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-tooltip="Stays 1 s after you leave" data-tooltip-leave-delay="1000">leave 1000 ms</button>
+      </div>
+      <pre class="demo-code"><code>&lt;button … data-mtx-tooltip="Appears after 500 ms" data-tooltip-enter-delay="500"&gt;…&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="follow-cursor">
+      <h2>Follow cursor</h2>
+      <p><code>data-tooltip-follow-cursor</code> anchors the tooltip to the pointer while it moves over the trigger.</p>
+      <div class="demo-panel" data-mtx-tooltip="I follow the cursor" data-tooltip-follow-cursor>
+        <p>Move the cursor around this area.</p>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx-tooltip="I follow the cursor" data-tooltip-follow-cursor&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="long-text">
+      <h2>Long text</h2>
+      <p>The maximum width is 300 px (<code>--mtx-tooltip-max-width</code>) and the text wraps onto several lines.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-mtx-tooltip="Issued invoices are archived automatically when the fiscal year closes and can be viewed in Reports → History for ten years.">Default width</button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="accessibility">
+      <h2>Accessibility</h2>
+      <p>If the trigger has no accessible name (an icon-only button without <code>aria-label</code>), the text is applied as <code>aria-label</code>. If it already has one, the tooltip describes it with <code>aria-describedby</code> while visible. It is hoverable (you can move the cursor over it) and is dismissed with <kbd>Escape</kbd>. On touch screens it appears with a long press (700 ms) and hides 1.5 s after release.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">No name → aria-label</span>
+          <div class="demo-row">
+            <button data-mtx="icon-button" data-icon="print" data-mtx-tooltip="Print" id="tooltip-a11y-label"></button>
+            <span class="demo-status" id="tooltip-a11y-label-status"></span>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">With name → aria-describedby</span>
+          <div class="demo-row">
+            <button data-mtx="icon-button" data-icon="print" aria-label="Print invoice" data-mtx-tooltip="Uses the default printer" id="tooltip-a11y-desc"></button>
+            <span class="demo-status">aria-label="Print invoice"</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>An editor's formatting bar: tooltips with the keyboard shortcut and instant opening as you move across the buttons.</p>
+      <div class="demo-row" role="toolbar" aria-label="Text formatting">
+        <button data-mtx="icon-button" data-icon="format_bold" data-size="small" aria-label="Bold" data-mtx-tooltip="Bold (Ctrl+B)"></button>
+        <button data-mtx="icon-button" data-icon="format_italic" data-size="small" aria-label="Italic" data-mtx-tooltip="Italic (Ctrl+I)"></button>
+        <button data-mtx="icon-button" data-icon="format_underlined" data-size="small" aria-label="Underline" data-mtx-tooltip="Underline (Ctrl+U)"></button>
+        <button data-mtx="icon-button" data-icon="format_list_bulleted" data-size="small" data-mtx-tooltip="Bulleted list"></button>
+        <button data-mtx="icon-button" data-icon="link" data-size="small" data-mtx-tooltip="Insert link (Ctrl+K)" aria-label="Insert link"></button>
+      </div>
+      <p>Extra information next to a value in a table or card:</p>
+      <div class="demo-row">
+        <span>Available balance: <strong>$1,240.50</strong></span>
+        <button data-mtx="icon-button" data-icon="info" data-size="small" data-mtx-tooltip="Includes payments pending confirmation" data-tooltip-arrow data-tooltip-placement="right"></button>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Tooltips are portaled to <code>&lt;body&gt;</code>: containers with <code>overflow</code> or narrow columns don't clip them.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <div data-mtx="paper" data-variant="outlined" class="mtx-p-2 mtx-d-flex mtx-align-items-center mtx-justify-content-between">
+            <span>Sales</span>
+            <button data-mtx="icon-button" data-icon="help_outline" data-size="small" data-mtx-tooltip="Total invoiced this month"></button>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <div data-mtx="paper" data-variant="outlined" class="mtx-p-2 mtx-d-flex mtx-align-items-center mtx-justify-content-between">
+            <span>Orders</span>
+            <button data-mtx="icon-button" data-icon="help_outline" data-size="small" data-mtx-tooltip="Confirmed and paid orders"></button>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="4">
+          <div data-mtx="paper" data-variant="outlined" class="mtx-p-2 mtx-d-flex mtx-align-items-center mtx-justify-content-between">
+            <span>Returns</span>
+            <button data-mtx="icon-button" data-icon="help_outline" data-size="small" data-mtx-tooltip="Requests from the last 30 days"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>Materix.tooltip.show(el)</code> / <code>hide(el)</code> control any trigger; <code>Materix.tooltip.get(el)</code> returns the instance with <code>open()</code>, <code>close()</code> and <code>setTitle()</code>. Events <code>mtx:tooltip:open</code> and <code>mtx:tooltip:close</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Trigger</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="content_copy" id="tooltip-api-target" data-mtx-tooltip="Copy link" data-tooltip-placement="top">Copy</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-size="small" data-tooltip-action="show">tooltip.show()</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-size="small" data-tooltip-action="hide">tooltip.hide()</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-size="small" data-tooltip-action="title">setTitle('Copied!')</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="tooltip-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Advanced usage</h2>
+      <p><code>data-mtx="tooltip"</code> creates a registered instance (<code>Materix.getInstance</code>) on a container; it reads <code>data-title</code> and the unprefixed options (<code>data-placement</code>, <code>data-arrow</code>, <code>data-enter-delay</code>, <code>data-leave-delay</code>, <code>data-follow-cursor</code>). The generated surface is <code>.mtx-tooltip</code> with <code>role="tooltip"</code>.</p>
+      <div class="demo-row">
+        <span data-mtx="tooltip" data-title="Export to CSV" data-placement="right" data-arrow id="tooltip-advanced">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="download">Export</button>
+        </span>
+      </div>
+      <pre class="demo-code"><code>&lt;span data-mtx="tooltip" data-title="Export to CSV" data-placement="right" data-arrow&gt;
+  &lt;button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="download"&gt;Export&lt;/button&gt;
+&lt;/span&gt;
+
+&lt;!-- Generated surface (portaled to body) --&gt;
+&lt;div class="mtx-tooltip mtx-tooltip--open mtx-tooltip--arrow" role="tooltip" id="mtx-tooltip-1" data-side="right"&gt;
+  &lt;span class="mtx-tooltip__label"&gt;Export to CSV&lt;/span&gt;
+  &lt;span class="mtx-tooltip__arrow" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var target = document.getElementById('tooltip-api-target');
+      var logEl = document.getElementById('tooltip-log');
+
+      /** Añade una línea al registro. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      target.addEventListener('mtx:tooltip:open', function () { log('mtx:tooltip:open'); });
+      target.addEventListener('mtx:tooltip:close', function () { log('mtx:tooltip:close'); });
+
+      document.querySelectorAll('[data-tooltip-action]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var action = button.getAttribute('data-tooltip-action');
+          if (action === 'show') Materix.tooltip.show(target);
+          if (action === 'hide') Materix.tooltip.hide(target);
+          if (action === 'title') {
+            Materix.tooltip.get(target).setTitle('Copied!');
+            Materix.tooltip.show(target);
+          }
+        });
+      });
+
+      var labelled = document.getElementById('tooltip-a11y-label');
+      document.getElementById('tooltip-a11y-label-status').textContent = 'aria-label="' + labelled.getAttribute('aria-label') + '"';
+    });
+  </script>
+</body>
+</html>

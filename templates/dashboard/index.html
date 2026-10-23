@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard · Materix UI Templates</title>
+  <meta name="description" content="Admin dashboard with navigation drawer, KPI cards, charts and recent orders table.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="../shared/template.js"></script>
+  <style>
+    /* Solo diseño propio: logo y gráficos SVG (leyenda, trazos y tooltip). */
+    .tpl-dash-logo { width: 28px; height: 28px; display: block; flex-shrink: 0; }
+
+    .tpl-dash-legend { display: flex; gap: 16px; list-style: none; margin: 8px 0 0; padding: 0; font: var(--mtx-type-caption); color: var(--mtx-color-text-secondary); }
+    .tpl-dash-legend li { display: inline-flex; align-items: center; gap: 6px; }
+    .tpl-dash-swatch { width: 16px; height: 2px; border-radius: 1px; background: var(--mtx-color-primary); }
+    .tpl-dash-swatch--prev { background: none; border-top: 2px dashed var(--mtx-color-text-disabled); height: 0; }
+
+    .tpl-dash-chart { position: relative; flex: 1; min-height: 240px; margin-top: 8px; }
+    .tpl-dash-chart svg { display: block; width: 100%; overflow: visible; }
+    .tpl-dash-grid-line { stroke: var(--mtx-color-divider); stroke-width: 1; }
+    .tpl-dash-axis, .tpl-dash-bar-label, .tpl-dash-bar-value { fill: var(--mtx-color-text-secondary); font-size: 12px; font-family: var(--mtx-font-family); }
+    .tpl-dash-bar-label { fill: var(--mtx-color-text-primary); font-size: 13px; }
+    .tpl-dash-bar-value { font-size: 13px; font-variant-numeric: tabular-nums; }
+    .tpl-dash-line { fill: none; stroke: var(--mtx-color-primary); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .tpl-dash-line--prev { stroke: var(--mtx-color-text-disabled); stroke-dasharray: 4 4; }
+    .tpl-dash-area { fill: var(--mtx-color-primary); opacity: 0.08; }
+    .tpl-dash-cross { stroke: var(--mtx-color-text-disabled); stroke-width: 1; }
+    .tpl-dash-dot { fill: var(--mtx-color-primary); stroke: var(--mtx-color-background-paper); stroke-width: 2; }
+    .tpl-dash-dot--prev { fill: var(--mtx-color-text-secondary); }
+    .tpl-dash-bar { fill: var(--mtx-color-primary); transition: opacity var(--mtx-duration-shortest) linear; }
+    .tpl-dash-bar-track { fill: var(--mtx-color-action-hover); }
+    .tpl-dash-bar-hit:hover + .tpl-dash-bar, .tpl-dash-bar[data-active='true'] { opacity: 0.8; }
+    .tpl-dash-tooltip {
+      position: absolute; top: 0; left: 0; z-index: 2; pointer-events: none; white-space: nowrap;
+      padding: 8px 12px; border: 1px solid var(--mtx-color-divider); border-radius: var(--mtx-shape-radius);
+      background: var(--mtx-color-background-paper); box-shadow: var(--mtx-elevation-4);
+      font: var(--mtx-type-caption); color: var(--mtx-color-text-secondary);
+      opacity: 0; transition: opacity var(--mtx-duration-shortest) linear;
+    }
+    .tpl-dash-tooltip[data-visible='true'] { opacity: 1; }
+    .tpl-dash-tooltip strong { display: block; color: var(--mtx-color-text-primary); font: var(--mtx-type-subtitle2); margin-bottom: 2px; }
+    .tpl-dash-tooltip span { display: flex; align-items: center; gap: 6px; }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#overview">Skip to content</a>
+
+  <header data-mtx="app-bar" data-position="fixed" data-color="default" data-elevation="0" data-start-icon="menu" data-drawer="tpl-dash-nav">
+    <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1 mtx-me-3 mtx-typography--h6 mtx-color-inherit mtx-text-decoration-none mtx-text-nowrap" href="../index.html" aria-label="Lumen – all templates">
+      <svg class="tpl-dash-logo" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <rect width="32" height="32" rx="8" fill="var(--mtx-color-primary)" />
+        <path d="M9 22.5V9.5h3.2v10.2H22v2.8H9Z" fill="var(--mtx-color-primary-contrast)" />
+        <circle cx="21" cy="12" r="3" fill="var(--mtx-color-primary-contrast)" opacity="0.7" />
+      </svg>
+      <span class="mtx-d-none mtx-d-sm-inline">Lumen</span>
+    </a>
+    <div class="mtx-app-bar-search mtx-app-bar-search--grow mtx-d-none mtx-d-sm-flex" role="search">
+      <span class="material-icons" aria-hidden="true">search</span>
+      <input id="tpl-dash-search" type="search" placeholder="Search orders or customers…" aria-label="Search orders or customers" />
+    </div>
+    <span class="mtx-toolbar__spacer"></span>
+    <button type="button" data-mtx="icon-button" data-mtx-theme-toggle aria-label="Dark theme">
+      <span class="material-icons" aria-hidden="true">dark_mode</span>
+    </button>
+    <button type="button" id="tpl-dash-notif-btn" data-mtx="icon-button" aria-label="Notifications, 3 unread" data-open-menu="#tpl-dash-notif-menu">
+      <span id="tpl-dash-notif-badge" data-mtx="badge" data-content="3" data-color="error">
+        <span class="material-icons" aria-hidden="true">notifications</span>
+      </span>
+    </button>
+    <button type="button" class="mtx-p-0" data-mtx="icon-button" data-edge="end" data-open-menu="#tpl-dash-user-menu">
+      <span data-mtx="avatar" data-color="primary" data-size="32" aria-hidden="true">OM</span>
+      <span class="mtx-visually-hidden">Account menu for Olivia Martin</span>
+    </button>
+  </header>
+
+  <div id="tpl-dash-notif-menu" data-mtx="menu">
+    <div data-mtx="menu-item" data-icon="shopping_bag" class="mtx-text-wrap" data-value="order"><span>New order #10492 from Ethan Brooks<span class="mtx-d-block mtx-typography--caption mtx-color-text-secondary">2 minutes ago</span></span></div>
+    <div data-mtx="menu-item" data-icon="inventory_2" class="mtx-text-wrap" data-value="stock"><span>Aurora Desk Lamp is low on stock (8 left)<span class="mtx-d-block mtx-typography--caption mtx-color-text-secondary">1 hour ago</span></span></div>
+    <div data-mtx="menu-item" data-icon="rate_review" class="mtx-text-wrap" data-value="review"><span>Sofia Ramirez left a 5-star review<span class="mtx-d-block mtx-typography--caption mtx-color-text-secondary">Yesterday</span></span></div>
+    <div data-mtx="menu-item" data-divider></div>
+    <div data-mtx="menu-item" data-icon="done_all" data-value="read-all">Mark all as read</div>
+  </div>
+
+  <div id="tpl-dash-user-menu" data-mtx="menu">
+    <div data-mtx="menu-item" data-icon="person" data-value="../settings/">Profile</div>
+    <div data-mtx="menu-item" data-icon="settings" data-value="../settings/">Account settings</div>
+    <div data-mtx="menu-item" data-icon="shopping_cart_checkout" data-value="../checkout/">Checkout demo</div>
+    <div data-mtx="menu-item" data-divider></div>
+    <div data-mtx="menu-item" data-icon="logout" data-value="../sign-in/">Sign out</div>
+  </div>
+
+  <div class="mtx-d-flex">
+    <!-- Un solo Drawer: temporal por debajo de 900px y permanente (bajo la AppBar) desde 900px -->
+    <div data-mtx="drawer" id="tpl-dash-nav" data-variant="responsive" data-breakpoint="md" data-clipped
+         data-width="240px" data-title="Lumen" data-header="temporary" aria-label="Main navigation">
+      <nav aria-label="Main navigation">
+        <div data-mtx="list">
+          <a data-mtx="list-item-button" data-icon="dashboard" href="#overview" data-selected aria-current="page" data-mtx-drawer-close>Overview</a>
+          <a data-mtx="list-item-button" data-icon="receipt_long" href="#orders" data-mtx-drawer-close>Orders</a>
+          <a data-mtx="list-item-button" data-icon="people" href="#customers" data-mtx-drawer-close>Customers</a>
+          <a data-mtx="list-item-button" data-icon="inventory_2" href="#products" data-mtx-drawer-close>Products</a>
+          <a data-mtx="list-item-button" data-icon="insights" href="#analytics" data-mtx-drawer-close>Analytics</a>
+          <a data-mtx="list-item-button" data-icon="mail" href="#messages" data-mtx-drawer-close>Messages <span data-mtx="badge" data-standalone data-content="4" data-color="primary" data-label="{0} unread" class="mtx-ms-auto"></span></a>
+        </div>
+        <hr data-mtx="divider">
+        <div data-mtx="list">
+          <a data-mtx="list-item-button" data-icon="settings" href="../settings/">Settings</a>
+          <a data-mtx="list-item-button" data-icon="help_outline" href="#help" data-mtx-drawer-close>Help center</a>
+        </div>
+      </nav>
+      <aside class="mtx-mt-auto mtx-p-2" aria-labelledby="tpl-dash-upgrade-title">
+        <div data-mtx="card" data-variant="outlined">
+          <div class="mtx-p-2 mtx-pb-0">
+            <h2 id="tpl-dash-upgrade-title" class="mtx-typography--subtitle2 mtx-mb-0_5">Upgrade to Pro</h2>
+            <p class="mtx-typography--body2 mtx-color-text-secondary">Unlock advanced reports and up to 10 team seats.</p>
+          </div>
+          <div class="mtx-card__actions">
+            <a class="mtx-button mtx-button--contained mtx-button--small mtx-button--full-width" data-mtx="button" href="../checkout/">Upgrade</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <main id="overview" class="mtx-flex-1 mtx-min-w-0" tabindex="-1">
+      <div class="mtx-toolbar-offset"></div>
+      <div data-mtx="container" data-max-width="xl" class="mtx-pt-3 mtx-pb-4">
+        <div class="mtx-d-flex mtx-flex-column mtx-flex-sm-row mtx-align-items-stretch mtx-align-items-sm-end mtx-justify-content-between mtx-gap-2 mtx-mb-3">
+          <div>
+            <ol data-mtx="breadcrumbs" class="mtx-mb-0_5">
+              <li><a href="../index.html">Home</a></li>
+              <li>Dashboard</li>
+            </ol>
+            <h1 class="mtx-typography--h4">Overview</h1>
+          </div>
+          <div class="mtx-d-flex mtx-align-items-center mtx-gap-1_5">
+            <div class="mtx-flex-1">
+              <select id="tpl-dash-range" data-mtx="native-select" data-variant="outlined" data-size="small" aria-label="Date range">
+                <option value="7">Last 7 days</option>
+                <option value="30" selected>Last 30 days</option>
+                <option value="90">Last 90 days</option>
+              </select>
+            </div>
+            <button type="button" id="tpl-dash-export" class="mtx-button mtx-button--outlined" data-mtx="button">
+              <span class="mtx-button__icon material-icons" aria-hidden="true">file_download</span>
+              Export
+            </button>
+          </div>
+        </div>
+
+        <div data-mtx="grid" data-spacing="2">
+          <section data-mtx="grid" data-xs="12" data-sm="6" data-lg="3" aria-labelledby="tpl-dash-kpi-revenue">
+            <div data-mtx="card" data-variant="outlined" class="mtx-h-100">
+              <div class="mtx-px-2_5 mtx-py-2 mtx-d-flex mtx-flex-column mtx-gap-0_5">
+                <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-mb-0_5"><h2 id="tpl-dash-kpi-revenue" class="mtx-typography--subtitle2 mtx-color-text-secondary">Revenue</h2><span data-mtx="avatar" data-variant="rounded" data-icon="payments" data-size="40"></span></div>
+                <p class="mtx-typography--h4 mtx-tabular-nums" data-kpi="revenue">$48,294</p>
+                <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-1 mtx-typography--caption mtx-color-text-secondary"><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="success" data-icon="trending_up" data-kpi-trend="revenue">+12.4%</span><span data-kpi-period>vs. previous 30 days</span></div>
+              </div>
+            </div>
+          </section>
+          <section data-mtx="grid" data-xs="12" data-sm="6" data-lg="3" aria-labelledby="tpl-dash-kpi-orders">
+            <div data-mtx="card" data-variant="outlined" class="mtx-h-100">
+              <div class="mtx-px-2_5 mtx-py-2 mtx-d-flex mtx-flex-column mtx-gap-0_5">
+                <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-mb-0_5"><h2 id="tpl-dash-kpi-orders" class="mtx-typography--subtitle2 mtx-color-text-secondary">Orders</h2><span data-mtx="avatar" data-variant="rounded" data-icon="shopping_bag" data-size="40"></span></div>
+                <p class="mtx-typography--h4 mtx-tabular-nums" data-kpi="orders">1,284</p>
+                <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-1 mtx-typography--caption mtx-color-text-secondary"><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="success" data-icon="trending_up" data-kpi-trend="orders">+8.1%</span><span data-kpi-period>vs. previous 30 days</span></div>
+              </div>
+            </div>
+          </section>
+          <section data-mtx="grid" data-xs="12" data-sm="6" data-lg="3" aria-labelledby="tpl-dash-kpi-customers">
+            <div data-mtx="card" data-variant="outlined" class="mtx-h-100">
+              <div class="mtx-px-2_5 mtx-py-2 mtx-d-flex mtx-flex-column mtx-gap-0_5">
+                <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-mb-0_5"><h2 id="tpl-dash-kpi-customers" class="mtx-typography--subtitle2 mtx-color-text-secondary">New customers</h2><span data-mtx="avatar" data-variant="rounded" data-icon="person_add" data-size="40"></span></div>
+                <p class="mtx-typography--h4 mtx-tabular-nums" data-kpi="customers">342</p>
+                <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-1 mtx-typography--caption mtx-color-text-secondary"><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="error" data-icon="trending_down" data-kpi-trend="customers">−3.2%</span><span data-kpi-period>vs. previous 30 days</span></div>
+              </div>
+            </div>
+          </section>
+          <section data-mtx="grid" data-xs="12" data-sm="6" data-lg="3" aria-labelledby="tpl-dash-kpi-conversion">
+            <div data-mtx="card" data-variant="outlined" class="mtx-h-100">
+              <div class="mtx-px-2_5 mtx-py-2 mtx-d-flex mtx-flex-column mtx-gap-0_5">
+                <div class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-mb-0_5"><h2 id="tpl-dash-kpi-conversion" class="mtx-typography--subtitle2 mtx-color-text-secondary">Conversion rate</h2><span data-mtx="avatar" data-variant="rounded" data-icon="percent" data-size="40"></span></div>
+                <p class="mtx-typography--h4 mtx-tabular-nums" data-kpi="conversion">3.64%</p>
+                <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-1 mtx-typography--caption mtx-color-text-secondary"><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="success" data-icon="trending_up" data-kpi-trend="conversion">+0.6 pts</span><span data-kpi-period>vs. previous 30 days</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section data-mtx="grid" data-xs="12" data-lg="8" aria-labelledby="tpl-dash-revenue-title" id="analytics">
+            <div data-mtx="card" data-variant="outlined" class="mtx-h-100">
+              <div class="mtx-p-2_5 mtx-d-flex mtx-flex-column mtx-h-100">
+                <div class="mtx-d-flex mtx-flex-wrap mtx-align-items-start mtx-justify-content-between mtx-gap-1_5 mtx-mb-1">
+                  <div>
+                    <h2 id="tpl-dash-revenue-title" class="mtx-typography--h6">Revenue</h2>
+                    <p class="mtx-typography--body2 mtx-color-text-secondary">Monthly revenue, January – October</p>
+                  </div>
+                  <p class="mtx-typography--h5 mtx-d-flex mtx-flex-wrap mtx-align-items-center mtx-gap-1">$376.3k <span data-mtx="chip" data-size="small" data-variant="outlined" data-color="success" data-icon="trending_up">+28.6%</span></p>
+                </div>
+                <ul class="tpl-dash-legend">
+                  <li><span class="tpl-dash-swatch" aria-hidden="true"></span>2026</li>
+                  <li><span class="tpl-dash-swatch tpl-dash-swatch--prev" aria-hidden="true"></span>2025</li>
+                </ul>
+                <div class="tpl-dash-chart" id="tpl-dash-line-chart">
+                  <svg role="img" aria-labelledby="tpl-dash-line-title tpl-dash-line-desc" height="260">
+                    <title id="tpl-dash-line-title">Monthly revenue 2026 compared with 2025</title>
+                    <desc id="tpl-dash-line-desc">Revenue grew from $28.4k in January to $48.3k in October 2026, above 2025 in every month. The detailed values are in the table that follows.</desc>
+                    <g data-layer="plot"></g>
+                  </svg>
+                  <div class="tpl-dash-tooltip" aria-hidden="true"></div>
+                </div>
+                <table class="mtx-visually-hidden" id="tpl-dash-line-table">
+                  <caption>Monthly revenue in thousands of US dollars</caption>
+                  <thead><tr><th scope="col">Month</th><th scope="col">2026</th><th scope="col">2025</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section data-mtx="grid" data-xs="12" data-lg="4" aria-labelledby="tpl-dash-channel-title">
+            <div data-mtx="card" data-variant="outlined" class="mtx-h-100">
+              <div class="mtx-p-2_5 mtx-d-flex mtx-flex-column mtx-h-100">
+                <h2 id="tpl-dash-channel-title" class="mtx-typography--h6">Orders by channel</h2>
+                <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-1">Last 30 days</p>
+                <div class="tpl-dash-chart" id="tpl-dash-bar-chart">
+                  <svg role="img" aria-labelledby="tpl-dash-bar-title tpl-dash-bar-desc" height="260">
+                    <title id="tpl-dash-bar-title">Orders by sales channel, last 30 days</title>
+                    <desc id="tpl-dash-bar-desc">Online store 512 orders, mobile app 384, marketplace 221, social 108 and in-store 59.</desc>
+                    <g data-layer="plot"></g>
+                  </svg>
+                  <div class="tpl-dash-tooltip" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section data-mtx="grid" data-xs="12" data-lg="8" aria-labelledby="tpl-dash-orders-title" id="orders">
+            <div data-mtx="card" data-variant="outlined" class="mtx-h-100">
+              <div class="mtx-d-flex mtx-align-items-start mtx-justify-content-between mtx-gap-1_5 mtx-px-2_5 mtx-pt-2_5 mtx-pb-1">
+                <div>
+                  <h2 id="tpl-dash-orders-title" class="mtx-typography--h6">Recent orders</h2>
+                  <p id="tpl-dash-orders-sub" class="mtx-typography--body2 mtx-color-text-secondary" aria-live="polite">12 orders in the last 7 days</p>
+                </div>
+                <a class="mtx-button mtx-button--text mtx-button--small" data-mtx="button" href="#orders">View all</a>
+              </div>
+              <div data-mtx="table-container">
+                <table id="tpl-dash-orders" data-mtx="table" data-hover aria-labelledby="tpl-dash-orders-title">
+                  <thead>
+                    <tr>
+                      <th><button data-mtx="table-sort-label" data-key="id">Order</button></th>
+                      <th><button data-mtx="table-sort-label" data-key="customer">Customer</button></th>
+                      <th><button data-mtx="table-sort-label" data-key="date" data-active data-direction="desc">Date</button></th>
+                      <th>Status</th>
+                      <th data-align="right"><button data-mtx="table-sort-label" data-key="total">Total</button></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div id="tpl-dash-pagination" data-mtx="table-pagination" data-table="#tpl-dash-orders" data-rows-per-page="5" data-rows-per-page-options="5,10,-1"></div>
+            </div>
+          </section>
+
+          <section data-mtx="grid" data-xs="12" data-lg="4" aria-labelledby="tpl-dash-products-title" id="products">
+            <div data-mtx="card" data-variant="outlined" class="mtx-h-100">
+              <div class="mtx-p-2_5">
+                <div class="mtx-d-flex mtx-align-items-start mtx-justify-content-between mtx-gap-1_5 mtx-mb-1">
+                  <div>
+                    <h2 id="tpl-dash-products-title" class="mtx-typography--h6">Top products</h2>
+                    <p class="mtx-typography--body2 mtx-color-text-secondary">Units sold this month</p>
+                  </div>
+                  <button type="button" data-mtx="icon-button" data-icon="more_vert" data-edge="end" aria-label="Top products options" data-open-menu="#tpl-dash-products-menu"></button>
+                </div>
+                <div data-mtx="stack" data-spacing="2" role="list" id="tpl-dash-products-list"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="tpl-dash-products-menu" data-mtx="menu">
+    <div data-mtx="menu-item" data-icon="sort" data-value="units">Sort by units</div>
+    <div data-mtx="menu-item" data-icon="sort_by_alpha" data-value="name">Sort by name</div>
+  </div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      var $ = function (id) { return document.getElementById(id); };
+      var usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+      /**
+       * Crea un nodo SVG con atributos.
+       * @param {string} tag Etiqueta.
+       * @param {Object} attrs Atributos.
+       * @returns {SVGElement} Nodo creado.
+       */
+      var svgEl = function (tag, attrs) {
+        var node = document.createElementNS(SVG_NS, tag);
+        Object.keys(attrs || {}).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+        return node;
+      };
+
+      /**
+       * Posiciona y rellena el tooltip de un gráfico.
+       * @param {HTMLElement} tip Tooltip.
+       * @param {string} html Contenido.
+       * @param {number} x Posición X en px.
+       * @param {number} y Posición Y en px.
+       * @param {number} maxX Ancho del contenedor.
+       */
+      var showTip = function (tip, html, x, y, maxX) {
+        tip.innerHTML = html;
+        var w = tip.offsetWidth;
+        var left = x + 12 + w > maxX ? x - w - 12 : x + 12;
+        tip.style.transform = 'translate(' + Math.max(0, left) + 'px,' + Math.max(0, y) + 'px)';
+        tip.setAttribute('data-visible', 'true');
+      };
+
+      // ---------------- Gráfico de líneas ----------------
+      var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
+      var CURRENT = [28.4, 31.2, 29.8, 35.6, 38.1, 36.9, 41.3, 44.0, 42.7, 48.3];
+      var PREVIOUS = [22.1, 24.0, 25.3, 26.8, 29.4, 30.2, 31.0, 33.5, 34.1, 36.2];
+      var lineBox = $('tpl-dash-line-chart');
+      var lineSvg = lineBox.querySelector('svg');
+      var lineTip = lineBox.querySelector('.tpl-dash-tooltip');
+
+      $('tpl-dash-line-table').querySelector('tbody').innerHTML = MONTHS.map(function (m, i) {
+        return '<tr><th scope="row">' + m + '</th><td>$' + CURRENT[i].toFixed(1) + 'k</td><td>$' + PREVIOUS[i].toFixed(1) + 'k</td></tr>';
+      }).join('');
+
+      /** Dibuja el gráfico de líneas al ancho actual. */
+      var drawLine = function () {
+        var plot = lineSvg.querySelector('[data-layer="plot"]');
+        plot.innerHTML = '';
+        var W = lineBox.clientWidth;
+        var H = 260;
+        var pad = { top: 12, right: 12, bottom: 28, left: 44 };
+        var iw = W - pad.left - pad.right;
+        var ih = H - pad.top - pad.bottom;
+        var max = 50;
+        var x = function (i) { return pad.left + (iw * i) / (MONTHS.length - 1); };
+        var y = function (v) { return pad.top + ih - (ih * v) / max; };
+        lineSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+
+        [0, 10, 20, 30, 40, 50].forEach(function (v) {
+          plot.appendChild(svgEl('line', { class: 'tpl-dash-grid-line', x1: pad.left, x2: W - pad.right, y1: y(v), y2: y(v) }));
+          var t = svgEl('text', { class: 'tpl-dash-axis', x: pad.left - 8, y: y(v) + 4, 'text-anchor': 'end' });
+          t.textContent = '$' + v + 'k';
+          plot.appendChild(t);
+        });
+        var step = W < 480 ? 2 : 1;
+        MONTHS.forEach(function (m, i) {
+          if (i % step) return;
+          var t = svgEl('text', { class: 'tpl-dash-axis', x: x(i), y: H - 8, 'text-anchor': 'middle' });
+          t.textContent = m;
+          plot.appendChild(t);
+        });
+
+        var path = function (data) { return data.map(function (v, i) { return (i ? 'L' : 'M') + x(i) + ' ' + y(v); }).join(' '); };
+        plot.appendChild(svgEl('path', { class: 'tpl-dash-area', d: path(CURRENT) + ' L' + x(CURRENT.length - 1) + ' ' + y(0) + ' L' + x(0) + ' ' + y(0) + ' Z' }));
+        plot.appendChild(svgEl('path', { class: 'tpl-dash-line tpl-dash-line--prev', d: path(PREVIOUS) }));
+        plot.appendChild(svgEl('path', { class: 'tpl-dash-line', d: path(CURRENT) }));
+
+        var cross = svgEl('line', { class: 'tpl-dash-cross', y1: pad.top, y2: pad.top + ih, visibility: 'hidden' });
+        var dotPrev = svgEl('circle', { class: 'tpl-dash-dot tpl-dash-dot--prev', r: 5, visibility: 'hidden' });
+        var dotCur = svgEl('circle', { class: 'tpl-dash-dot', r: 5, visibility: 'hidden' });
+        plot.appendChild(cross);
+        plot.appendChild(dotPrev);
+        plot.appendChild(dotCur);
+        var hit = svgEl('rect', { x: pad.left, y: pad.top, width: iw, height: ih, fill: 'transparent' });
+        plot.appendChild(hit);
+
+        var hide = function () {
+          [cross, dotPrev, dotCur].forEach(function (n) { n.setAttribute('visibility', 'hidden'); });
+          lineTip.setAttribute('data-visible', 'false');
+        };
+        var move = function (event) {
+          var rect = lineSvg.getBoundingClientRect();
+          var px = event.clientX - rect.left;
+          var i = Math.max(0, Math.min(MONTHS.length - 1, Math.round(((px - pad.left) / iw) * (MONTHS.length - 1))));
+          cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i));
+          dotCur.setAttribute('cx', x(i)); dotCur.setAttribute('cy', y(CURRENT[i]));
+          dotPrev.setAttribute('cx', x(i)); dotPrev.setAttribute('cy', y(PREVIOUS[i]));
+          [cross, dotPrev, dotCur].forEach(function (n) { n.setAttribute('visibility', 'visible'); });
+          var change = ((CURRENT[i] / PREVIOUS[i] - 1) * 100).toFixed(1);
+          showTip(lineTip, '<strong>' + MONTHS[i] + '</strong><span>2026: $' + CURRENT[i].toFixed(1) + 'k</span><span>2025: $' + PREVIOUS[i].toFixed(1) + 'k</span><span>Change: +' + change + '%</span>', x(i), y(CURRENT[i]) - 20, W);
+        };
+        hit.addEventListener('pointermove', move);
+        hit.addEventListener('pointerleave', hide);
+      };
+
+      // ---------------- Gráfico de barras ----------------
+      var CHANNELS = [['Online store', 512], ['Mobile app', 384], ['Marketplace', 221], ['Social', 108], ['In-store', 59]];
+      var barBox = $('tpl-dash-bar-chart');
+      var barSvg = barBox.querySelector('svg');
+      var barTip = barBox.querySelector('.tpl-dash-tooltip');
+      var totalOrders = CHANNELS.reduce(function (s, c) { return s + c[1]; }, 0);
+
+      /** Dibuja el gráfico de barras horizontales al ancho actual. */
+      var drawBars = function () {
+        var plot = barSvg.querySelector('[data-layer="plot"]');
+        plot.innerHTML = '';
+        var W = barBox.clientWidth;
+        var H = 260;
+        var rowH = H / CHANNELS.length;
+        var barH = 10;
+        var max = CHANNELS[0][1];
+        barSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        CHANNELS.forEach(function (c, i) {
+          var top = i * rowH + 8;
+          var label = svgEl('text', { class: 'tpl-dash-bar-label', x: 0, y: top + 12 });
+          label.textContent = c[0];
+          var value = svgEl('text', { class: 'tpl-dash-bar-value', x: W, y: top + 12, 'text-anchor': 'end' });
+          value.textContent = c[1].toLocaleString('en-US');
+          var by = top + 22;
+          var track = svgEl('rect', { class: 'tpl-dash-bar-track', x: 0, y: by, width: W, height: barH, rx: 4 });
+          var hitArea = svgEl('rect', { class: 'tpl-dash-bar-hit', x: 0, y: top, width: W, height: rowH - 4, fill: 'transparent' });
+          var bar = svgEl('rect', { class: 'tpl-dash-bar', x: 0, y: by, width: Math.max(8, (W * c[1]) / max), height: barH, rx: 4 });
+          [label, value, track, hitArea, bar].forEach(function (n) { plot.appendChild(n); });
+          hitArea.addEventListener('pointermove', function () {
+            bar.setAttribute('data-active', 'true');
+            showTip(barTip, '<strong>' + c[0] + '</strong><span>' + c[1] + ' orders · ' + Math.round((c[1] / totalOrders) * 100) + '% of total</span>', Math.min(W - 10, (W * c[1]) / max), by - 52, W);
+          });
+          hitArea.addEventListener('pointerleave', function () {
+            bar.removeAttribute('data-active');
+            barTip.setAttribute('data-visible', 'false');
+          });
+        });
+      };
+
+      var redraw = function () { drawLine(); drawBars(); };
+      redraw();
+      if (window.ResizeObserver) {
+        var pending = null;
+        new ResizeObserver(function () {
+          window.cancelAnimationFrame(pending);
+          pending = window.requestAnimationFrame(redraw);
+        }).observe(lineBox);
+      }
+
+      // ---------------- Pedidos recientes ----------------
+      var STATUS = {
+        Delivered: 'success',
+        Shipped: 'info',
+        Processing: 'warning',
+        Cancelled: 'error',
+        Refunded: 'default'
+      };
+      var ORDERS = [
+        { id: 10492, customer: 'Ethan Brooks', email: 'ethan.brooks@mail.com', date: '2026-10-19', status: 'Processing', total: 249.00 },
+        { id: 10491, customer: 'Sofia Ramirez', email: 'sofia.r@outlook.com', date: '2026-10-18', status: 'Shipped', total: 1189.50 },
+        { id: 10490, customer: 'Liam Chen', email: 'liam.chen@gmail.com', date: '2026-10-18', status: 'Delivered', total: 89.99 },
+        { id: 10489, customer: 'Amara Okafor', email: 'amara@okafor.co', date: '2026-10-17', status: 'Delivered', total: 432.10 },
+        { id: 10488, customer: 'Noah Fischer', email: 'noah.fischer@web.de', date: '2026-10-17', status: 'Cancelled', total: 64.00 },
+        { id: 10487, customer: 'Isabella Rossi', email: 'isa.rossi@gmail.com', date: '2026-10-16', status: 'Shipped', total: 315.75 },
+        { id: 10486, customer: 'Lucas Silva', email: 'lucas.silva@uol.com.br', date: '2026-10-15', status: 'Delivered', total: 158.20 },
+        { id: 10485, customer: 'Mia Johansson', email: 'mia.j@proton.me', date: '2026-10-15', status: 'Refunded', total: 79.00 },
+        { id: 10484, customer: 'Arjun Patel', email: 'arjun.patel@yahoo.com', date: '2026-10-14', status: 'Delivered', total: 642.30 },
+        { id: 10483, customer: 'Chloé Martin', email: 'chloe.martin@free.fr', date: '2026-10-14', status: 'Processing', total: 210.00 },
+        { id: 10482, customer: 'Daniel Kim', email: 'dkim@icloud.com', date: '2026-10-13', status: 'Delivered', total: 97.45 },
+        { id: 10481, customer: 'Hannah Walsh', email: 'hannah.walsh@gmail.com', date: '2026-10-13', status: 'Shipped', total: 503.60 }
+      ];
+      var AVATAR_COLORS = ['primary', 'secondary', 'success'];
+      var ordersTable = $('tpl-dash-orders');
+      var tbody = ordersTable.querySelector('tbody');
+      var pagination = Materix.getInstance($('tpl-dash-pagination'));
+      var sortState = { key: 'date', direction: 'desc' };
+      var query = '';
+
+      /**
+       * Escapa texto para insertarlo como HTML.
+       * @param {string} text Texto.
+       * @returns {string} Texto escapado.
+       */
+      var esc = function (text) {
+        return String(text).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
+      };
+
+      /** Renderiza las filas filtradas y ordenadas (la tabla las decora) y reinicia la paginación. */
+      var renderOrders = function () {
+        var rows = ORDERS.filter(function (o) {
+          return !query || (o.customer + ' ' + o.email + ' #' + o.id).toLowerCase().indexOf(query) !== -1;
+        }).sort(function (a, b) {
+          var av = a[sortState.key];
+          var bv = b[sortState.key];
+          var cmp = typeof av === 'number' ? av - bv : String(av).localeCompare(String(bv));
+          return sortState.direction === 'asc' ? cmp : -cmp;
+        });
+        tbody.innerHTML = rows.length ? rows.map(function (o) {
+          var initials = o.customer.split(' ').map(function (p) { return p.charAt(0); }).join('');
+          var date = new Date(o.date + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          return '<tr>' +
+            '<td class="mtx-text-nowrap">#' + o.id + '</td>' +
+            '<td><div class="mtx-d-flex mtx-align-items-center mtx-gap-1_5 mtx-text-nowrap"><span data-mtx="avatar" data-size="32" data-color="' + AVATAR_COLORS[o.id % AVATAR_COLORS.length] + '" aria-hidden="true">' + esc(initials) + '</span><div>' + esc(o.customer) + '<span class="mtx-d-block mtx-typography--caption mtx-color-text-secondary">' + esc(o.email) + '</span></div></div></td>' +
+            '<td class="mtx-text-nowrap">' + date + '</td>' +
+            '<td><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="' + STATUS[o.status] + '">' + o.status + '</span></td>' +
+            '<td data-align="right" class="mtx-text-nowrap">' + usd.format(o.total) + '</td>' +
+            '</tr>';
+        }).join('') : '<tr><td colspan="5" class="mtx-text-center mtx-color-text-secondary mtx-py-4">No orders match “' + esc(query) + '”.</td></tr>';
+        Materix.initAll(tbody);
+        pagination.count = rows.length;
+        pagination.page = 0;
+        $('tpl-dash-orders-sub').textContent = query
+          ? rows.length + ' of ' + ORDERS.length + ' orders match your search'
+          : ORDERS.length + ' orders in the last 7 days';
+      };
+
+      ordersTable.addEventListener('mtx:table:sort', function (event) {
+        sortState = { key: event.detail.key, direction: event.detail.direction };
+        renderOrders();
+      });
+
+      var searchTimer = null;
+      $('tpl-dash-search').addEventListener('input', function (event) {
+        window.clearTimeout(searchTimer);
+        searchTimer = window.setTimeout(function () {
+          query = event.target.value.trim().toLowerCase();
+          renderOrders();
+        }, 150);
+      });
+
+      renderOrders();
+
+      // ---------------- Productos ----------------
+      var PRODUCTS = [['Aurora Desk Lamp', 842], ['Nimbus Wireless Earbuds', 731], ['Terra Ceramic Mug Set', 588], ['Pulse Fitness Band', 446], ['Drift Linen Throw', 302]];
+      var productsList = $('tpl-dash-products-list');
+
+      /**
+       * Renderiza la lista de productos con barras LinearProgress.
+       * @param {string} by Criterio: 'units' o 'name'.
+       */
+      var renderProducts = function (by) {
+        var max = Math.max.apply(null, PRODUCTS.map(function (p) { return p[1]; }));
+        var items = PRODUCTS.slice().sort(function (a, b) { return by === 'name' ? a[0].localeCompare(b[0]) : b[1] - a[1]; });
+        productsList.innerHTML = items.map(function (p) {
+          return '<div role="listitem"><div class="mtx-d-flex mtx-justify-content-between mtx-gap-1 mtx-typography--body2 mtx-mb-1"><span>' + p[0] + '</span><span class="mtx-color-text-secondary mtx-tabular-nums">' + p[1].toLocaleString('en-US') + ' units</span></div>' +
+            '<div data-mtx="linear-progress" data-rounded data-max="' + max + '" data-value="' + p[1] + '" data-label="' + p[0] + ' sales relative to best seller"></div></div>';
+        }).join('');
+        Materix.initAll(productsList);
+      };
+      renderProducts('units');
+      $('tpl-dash-products-menu').addEventListener('mtx:menu:select', function (event) {
+        renderProducts(event.detail.item.getAttribute('data-value'));
+      });
+
+      // ---------------- Rango de fechas ----------------
+      var RANGES = {
+        7: { revenue: '$11,862', orders: '296', customers: '87', conversion: '3.71%', trends: ['+4.9%', '+3.3%', '+1.2%', '+0.2 pts'], up: [true, true, true, true] },
+        30: { revenue: '$48,294', orders: '1,284', customers: '342', conversion: '3.64%', trends: ['+12.4%', '+8.1%', '−3.2%', '+0.6 pts'], up: [true, true, false, true] },
+        90: { revenue: '$137,580', orders: '3,702', customers: '1,019', conversion: '3.48%', trends: ['+21.7%', '+15.0%', '+6.4%', '−0.1 pts'], up: [true, true, true, false] }
+      };
+      var KEYS = ['revenue', 'orders', 'customers', 'conversion'];
+      $('tpl-dash-range').addEventListener('change', function (event) {
+        var days = event.target.value;
+        var data = RANGES[days];
+        KEYS.forEach(function (key, i) {
+          document.querySelector('[data-kpi="' + key + '"]').textContent = data[key];
+          var chipEl = document.querySelector('[data-kpi-trend="' + key + '"]');
+          Materix.getInstance(chipEl).label = data.trends[i];
+          chipEl.classList.toggle('mtx-chip--success', data.up[i]);
+          chipEl.classList.toggle('mtx-chip--error', !data.up[i]);
+          var icon = chipEl.querySelector('.material-icons');
+          if (icon) icon.textContent = data.up[i] ? 'trending_up' : 'trending_down';
+        });
+        document.querySelectorAll('[data-kpi-period]').forEach(function (el) { el.textContent = 'vs. previous ' + days + ' days'; });
+      });
+
+      // ---------------- Menús y acciones ----------------
+      $('tpl-dash-user-menu').addEventListener('mtx:menu:select', function (event) {
+        window.location.href = event.detail.item.getAttribute('data-value');
+      });
+      $('tpl-dash-notif-menu').addEventListener('mtx:menu:select', function (event) {
+        var value = event.detail.item.getAttribute('data-value');
+        if (value === 'read-all') {
+          Materix.getInstance($('tpl-dash-notif-badge')).content = '0';
+          $('tpl-dash-notif-btn').setAttribute('aria-label', 'Notifications, none unread');
+          Materix.snackbar.show('All notifications marked as read');
+        } else if (value === 'order') {
+          $('tpl-dash-search').value = '10492';
+          query = '10492';
+          renderOrders();
+          $('orders').scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+      $('tpl-dash-export').addEventListener('click', function () {
+        var csv = 'Order,Customer,Email,Date,Status,Total\n' + ORDERS.map(function (o) {
+          return [o.id, o.customer, o.email, o.date, o.status, o.total.toFixed(2)].join(',');
+        }).join('\n');
+        var url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = 'lumen-orders-2026-10.csv';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        Materix.snackbar.show('Exported ' + ORDERS.length + ' orders to CSV');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Materix UI — Backdrop
+   Capa a pantalla completa basada en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-backdrop {
+  position: fixed;
+  inset: 0;
+  /* Sin márgenes heredados del contexto (p. ej. `* + *` del contenedor) */
+  margin: 0;
+  z-index: var(--mtx-backdrop-z-index);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: var(--mtx-backdrop-bg);
+  color: var(--mtx-backdrop-color);
+  -webkit-tap-highlight-color: transparent;
+  opacity: 0;
+  visibility: hidden;
+  /* Salida MUI (leavingScreen 195ms) */
+  transition:
+    opacity 195ms var(--mtx-easing-standard),
+    visibility 0s linear 195ms;
+}
+
+.mtx-backdrop--open {
+  opacity: 1;
+  visibility: visible;
+  /* Entrada MUI (enteringScreen 225ms) */
+  transition:
+    opacity 225ms var(--mtx-easing-standard),
+    visibility 0s;
+}
+
+.mtx-backdrop--invisible {
+  background-color: transparent;
+}
+
+.mtx-backdrop[hidden] {
+  display: none;
+}
+
+.mtx-backdrop > * {
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-backdrop,
+  .mtx-backdrop--open {
+    transition: none;
+  }
+}

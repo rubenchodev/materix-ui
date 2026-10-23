@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Demo frame: shows the container area and its gutters */
+    .demo-container-frame {
+      padding: var(--mtx-spacing-1) 0;
+      border: 1px dashed var(--mtx-color-divider);
+      border-radius: var(--mtx-shape-radius);
+      overflow: hidden;
+    }
+    .demo-container-frame .mtx-container {
+      background-color: color-mix(in srgb, var(--mtx-color-primary) 8%, transparent);
+      outline: 1px dashed color-mix(in srgb, var(--mtx-color-primary) 50%, transparent);
+    }
+    .demo-container-box {
+      padding: var(--mtx-spacing-1_5);
+      border-radius: var(--mtx-shape-radius);
+      background-color: var(--mtx-color-background-paper);
+      color: var(--mtx-color-text-primary);
+      font: var(--mtx-type-body2);
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Layout</span>
+        <h1>Container</h1>
+        <p class="demo-lead">Centers page content with a per-breakpoint max width and responsive side gutters (16px on mobile, 24px from 600px).</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#max-width">Max width</a>
+      <a href="#fixed">Fixed</a>
+      <a href="#gutters">Gutters</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#real-world">Real-world use cases</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single element with <code>data-mtx="container"</code>. Without <code>data-max-width</code> the cap is <code>lg</code> (1200px), as in MUI. The shaded area is the container; the inner strip, its gutters.</p>
+      <div class="demo-container-frame">
+        <div data-mtx="container">
+          <div class="demo-container-box">Centered content · max. 1200px</div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;main data-mtx="container"&gt;…&lt;/main&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="max-width">
+      <h2>Max width</h2>
+      <p><code>data-max-width</code> sets the cap: <code>xs</code> 444px, <code>sm</code> 600px, <code>md</code> 900px, <code>lg</code> 1200px, <code>xl</code> 1536px or <code>false</code> to take the full width.</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">data-max-width="xs" · 444px</span>
+          <div class="demo-container-frame"><div data-mtx="container" data-max-width="xs"><div class="demo-container-box">xs</div></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-max-width="sm" · 600px</span>
+          <div class="demo-container-frame"><div data-mtx="container" data-max-width="sm"><div class="demo-container-box">sm</div></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-max-width="md" · 900px</span>
+          <div class="demo-container-frame"><div data-mtx="container" data-max-width="md"><div class="demo-container-box">md</div></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-max-width="lg" · 1200px (default)</span>
+          <div class="demo-container-frame"><div data-mtx="container" data-max-width="lg"><div class="demo-container-box">lg</div></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-max-width="false" · fluid</span>
+          <div class="demo-container-frame"><div data-mtx="container" data-max-width="false"><div class="demo-container-box">false</div></div></div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="container" data-max-width="sm"&gt;…&lt;/div&gt;
+&lt;div data-mtx="container" data-max-width="false"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="fixed">
+      <h2>Fixed</h2>
+      <p><code>data-fixed</code> makes the max width jump to the minimum of each breakpoint (600, 900, 1200, 1536px) instead of growing fluidly. Useful when the design targets specific widths. Resize the window to see it.</p>
+      <div class="demo-container-frame">
+        <div data-mtx="container" data-fixed>
+          <div class="demo-container-box">data-fixed</div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="container" data-fixed&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="gutters">
+      <h2>Gutters</h2>
+      <p>By default the container adds 16px of side padding on mobile and 24px from 600px. <code>data-disable-gutters</code> removes them, for example to make an image or a table touch the edges.</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">With gutters</span>
+          <div class="demo-container-frame"><div data-mtx="container" data-max-width="sm"><div class="demo-container-box">16px / 24px on each side</div></div></div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-disable-gutters</span>
+          <div class="demo-container-frame"><div data-mtx="container" data-max-width="sm" data-disable-gutters><div class="demo-container-box">No side padding</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Container bounds the width and Grid splits the columns inside it. No wrapper with <code>overflow</code> is needed: Grid spaces items with <code>gap</code>.</p>
+      <div class="demo-container-frame">
+        <div data-mtx="container" data-max-width="md">
+          <div data-mtx="grid" data-spacing="2">
+            <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><div class="demo-container-box">xs=12 sm=6 md=4</div></div>
+            <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4"><div class="demo-container-box">xs=12 sm=6 md=4</div></div>
+            <div data-mtx="grid" data-xs="12" data-md="4"><div class="demo-container-box">xs=12 md=4</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world use cases</h2>
+      <p>An article page: a full-width header and a reading body capped at <code>sm</code> to keep a comfortable line length.</p>
+      <div class="demo-container-frame">
+        <div class="mtx-bg-primary mtx-py-4">
+          <div data-mtx="container" data-max-width="md">
+            <h3 class="mtx-typography--h5 mtx-typography--gutter-bottom mtx-color-inherit">What's new in version 0.1</h3>
+            <p class="mtx-typography--body2">Layout utilities, Container and Stack.</p>
+          </div>
+        </div>
+        <article data-mtx="container" data-max-width="sm" class="mtx-py-3">
+          <p class="mtx-typography--body1 mtx-mb-2">Materix ships a mobile-first utility system for building layouts without writing your own CSS. Container centers the content and Stack stacks blocks with even spacing.</p>
+          <div data-mtx="stack" data-direction="row" data-spacing="1">
+            <button class="mtx-button mtx-button--contained" data-mtx="button" type="button">Read more</button>
+            <button class="mtx-button mtx-button--text" data-mtx="button" type="button">Share</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>setMaxWidth()</code>, <code>setFixed()</code> and <code>setGutters()</code> replace the matching class. Container emits no events: the log shows the resulting classes.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-container-max="xs">xs</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-container-max="sm">sm</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-container-max="md">md</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-container-max="false">false</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="container-gutters">Toggle gutters</button>
+      </div>
+      <div class="demo-container-frame">
+        <div id="container-api" data-mtx="container" data-max-width="sm">
+          <div class="demo-container-box">Container controlled by the API</div>
+        </div>
+      </div>
+      <pre class="demo-log" id="container-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const container = Materix.getInstance(document.getElementById('container-api'));
+container.setMaxWidth('md');   // 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false
+container.setGutters(false);
+container.setFixed(true);
+
+// ES modules
+import { Container } from 'materix-ui';
+new Container(document.querySelector('#main'));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The classes work without JavaScript.</p>
+      <div class="demo-container-frame">
+        <div class="mtx-container mtx-container--sm mtx-container--disable-gutters">
+          <div class="demo-container-box">mtx-container mtx-container--sm mtx-container--disable-gutters</div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-container mtx-container--md mtx-container--fixed"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var el = document.getElementById('container-api');
+      var container = Materix.getInstance(el);
+      var log = document.getElementById('container-log');
+      var gutters = true;
+
+      /**
+       * Escribe la operación y las clases resultantes en el registro.
+       * @param {string} op Operación ejecutada.
+       */
+      function write(op) {
+        log.textContent += op + ' → ' + el.className + '\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.querySelectorAll('[data-container-max]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var value = btn.getAttribute('data-container-max');
+          container.setMaxWidth(value === 'false' ? false : value);
+          write("setMaxWidth(" + (value === 'false' ? 'false' : "'" + value + "'") + ")");
+        });
+      });
+      document.getElementById('container-gutters').addEventListener('click', function () {
+        gutters = !gutters;
+        container.setGutters(gutters);
+        write('setGutters(' + gutters + ')');
+      });
+    });
+  </script>
+</body>
+</html>

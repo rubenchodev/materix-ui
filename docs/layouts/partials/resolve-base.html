@@ -1,0 +1,11 @@
+{{/*
+  resolve-base — Resuelve una base de enlaces externos al sitio (examplesURL, templatesURL).
+  Las URL absolutas (http/https) o que empiezan por "/" se respetan; las relativas se anclan
+  a la raíz del sitio con relURL (sin prefijo de idioma), así funcionan igual en / y en /es/.
+*/}}
+{{ $base := . | default "" }}
+{{ if not (or (hasPrefix $base "http://") (hasPrefix $base "https://") (hasPrefix $base "/")) }}
+  {{ $base = printf "%s%s" ("" | relURL) $base }}
+{{ end }}
+{{ if not (hasSuffix $base "/") }}{{ $base = printf "%s/" $base }}{{ end }}
+{{ return $base }}

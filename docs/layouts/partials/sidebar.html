@@ -1,0 +1,86 @@
+{{/* Navegación lateral: solo páginas del idioma actual (site = sitio del idioma). */}}
+{{ $cur := . }}
+<nav class="doc-nav">
+  {{/* Guía: tolera que la sección aún no exista en este idioma. */}}
+  {{ with site.GetPage "/guide" }}
+    {{ $guide := .RegularPages.ByWeight }}
+    {{ if $guide }}
+    <div class="doc-nav-section">
+      <p class="doc-nav-heading" id="doc-nav-guide">{{ i18n "guide" }}</p>
+      <ul class="doc-nav-list" aria-labelledby="doc-nav-guide">
+        {{ range $guide }}
+          {{ $active := eq $cur.RelPermalink .RelPermalink }}
+          <li>
+            <a class="doc-nav-link{{ if $active }} is-active{{ end }}" href="{{ .RelPermalink }}"{{ if $active }} aria-current="page"{{ end }}>
+              {{ with .Params.icon }}<span class="material-icons" aria-hidden="true">{{ . }}</span>{{ end }}
+              <span>{{ .LinkTitle }}</span>
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+  {{ end }}
+
+  {{ with site.GetPage "/templates" }}
+  {{ $active := eq $cur.RelPermalink .RelPermalink }}
+  <div class="doc-nav-section">
+    <p class="doc-nav-heading" id="doc-nav-templates">{{ i18n "templates" }}</p>
+    <ul class="doc-nav-list" aria-labelledby="doc-nav-templates">
+      <li>
+        <a class="doc-nav-link{{ if $active }} is-active{{ end }}" href="{{ .RelPermalink }}"{{ if $active }} aria-current="page"{{ end }}>
+          <span class="material-icons" aria-hidden="true">{{ .Params.icon | default "dashboard_customize" }}</span>
+          <span>{{ i18n "template_gallery" }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  {{ end }}
+
+  {{ with site.GetPage "/components" }}
+  {{ $overview := eq $cur.RelPermalink .RelPermalink }}
+  <div class="doc-nav-section">
+    <p class="doc-nav-heading" id="doc-nav-components">{{ i18n "components" }}</p>
+    <ul class="doc-nav-list" aria-labelledby="doc-nav-components">
+      <li>
+        <a class="doc-nav-link{{ if $overview }} is-active{{ end }}" href="{{ .RelPermalink }}"{{ if $overview }} aria-current="page"{{ end }}>
+          <span class="material-icons" aria-hidden="true">apps</span>
+          <span>{{ i18n "all_components" }}</span>
+        </a>
+      </li>
+    </ul>
+    {{ range $g := partialCached "component-groups.html" . "doc-groups" site.Language.Lang }}
+      <p class="doc-nav-subheading" id="doc-nav-group-{{ $g.key }}">{{ $g.name }}</p>
+      <ul class="doc-nav-list" aria-labelledby="doc-nav-group-{{ $g.key }}">
+        {{ range $g.pages }}
+          {{ $active := eq $cur.RelPermalink .RelPermalink }}
+          <li>
+            <a class="doc-nav-link{{ if $active }} is-active{{ end }}" href="{{ .RelPermalink }}"{{ if $active }} aria-current="page"{{ end }}>
+              <span class="material-icons" aria-hidden="true">{{ .Params.icon | default "widgets" }}</span>
+              <span>{{ .LinkTitle }}</span>
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{ $project := (where site.RegularPages "Section" "").ByWeight }}
+  {{ if $project }}
+  <div class="doc-nav-section">
+    <p class="doc-nav-heading" id="doc-nav-project">{{ i18n "project" }}</p>
+    <ul class="doc-nav-list" aria-labelledby="doc-nav-project">
+      {{ range $project }}
+        {{ $active := eq $cur.RelPermalink .RelPermalink }}
+        <li>
+          <a class="doc-nav-link{{ if $active }} is-active{{ end }}" href="{{ .RelPermalink }}"{{ if $active }} aria-current="page"{{ end }}>
+            <span class="material-icons" aria-hidden="true">{{ .Params.icon | default "article" }}</span>
+            <span>{{ .LinkTitle }}</span>
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+</nav>

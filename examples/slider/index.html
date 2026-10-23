@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Slider</h1>
+        <p class="demo-lead">Lets users pick a value or a range by dragging along a track, built on accessible native range inputs.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#value-label">Value label</a>
+      <a href="#marks">Marks</a>
+      <a href="#marks-inset">Edge labels</a>
+      <a href="#range">Range</a>
+      <a href="#track">Track</a>
+      <a href="#vertical">Vertical</a>
+      <a href="#rtl">RTL</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;input type="range" data-mtx="slider"&gt;</code> generates the rail, track, thumb and value label. It keeps <code>min</code>, <code>max</code>, <code>step</code>, <code>value</code> and <code>name</code>, so it is submitted with the form; <code>data-label</code> provides the accessible name.</p>
+      <div class="demo-fixed-width">
+        <input type="range" data-mtx="slider" name="volume" min="0" max="100" value="30" data-label="Volume">
+      </div>
+      <pre class="demo-code"><code>&lt;input type="range" data-mtx="slider" name="volume" min="0" max="100" value="30" data-label="Volume"&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Like MUI: medium (4px rail, 20px thumb) and small (2px rail, 12px thumb, no shadow).</p>
+      <div class="demo-group demo-fixed-width">
+        <span class="demo-label">Medium (default)</span>
+        <input type="range" data-mtx="slider" value="50" data-label="Medium size" data-value-label-display="auto">
+      </div>
+      <div class="demo-group demo-fixed-width">
+        <span class="demo-label">Small · data-size="small"</span>
+        <input type="range" data-mtx="slider" value="50" data-size="small" data-label="Small size" data-value-label-display="auto">
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With icons</h2>
+      <p>The slider fills the available width, so it is combined with decorative icons inside a horizontal <code>Stack</code> (MUI's "Volume" pattern).</p>
+      <div class="demo-group demo-fixed-width">
+        <span class="demo-label">Without icons</span>
+        <input type="range" data-mtx="slider" value="40" data-label="Brightness">
+      </div>
+      <div class="demo-group demo-fixed-width">
+        <span class="demo-label">Start and end icon</span>
+        <div data-mtx="stack" data-direction="row" data-spacing="2" data-align="center">
+          <span class="material-icons mtx-color-text-secondary" aria-hidden="true">volume_down</span>
+          <input type="range" data-mtx="slider" value="60" data-label="Volume with icons">
+          <span class="material-icons mtx-color-text-secondary" aria-hidden="true">volume_up</span>
+        </div>
+      </div>
+      <div class="demo-group demo-fixed-width">
+        <span class="demo-label">Start icon only</span>
+        <div data-mtx="stack" data-direction="row" data-spacing="2" data-align="center">
+          <span class="material-icons mtx-color-text-secondary" aria-hidden="true">light_mode</span>
+          <input type="range" data-mtx="slider" value="25" data-size="small" data-label="Light">
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> accepts the MUI palette: primary, secondary, error, warning, info and success.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group"><span class="demo-label">primary</span><input type="range" data-mtx="slider" value="60" data-label="Primary"></div>
+        <div class="demo-group"><span class="demo-label">secondary</span><input type="range" data-mtx="slider" value="60" data-color="secondary" data-label="Secondary"></div>
+        <div class="demo-group"><span class="demo-label">error</span><input type="range" data-mtx="slider" value="60" data-color="error" data-label="Error"></div>
+        <div class="demo-group"><span class="demo-label">warning</span><input type="range" data-mtx="slider" value="60" data-color="warning" data-label="Warning"></div>
+        <div class="demo-group"><span class="demo-label">info</span><input type="range" data-mtx="slider" value="60" data-color="info" data-label="Info"></div>
+        <div class="demo-group"><span class="demo-label">success</span><input type="range" data-mtx="slider" value="60" data-color="success" data-label="Success"></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover the thumb to see the 8px halo, use <kbd>Tab</kbd> and the arrow keys for the visible focus, and drag for the 14px halo (pressed). <code>data-disabled</code> disables it in grey.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group"><span class="demo-label">Interactive</span><input type="range" data-mtx="slider" value="35" data-label="Interactive" data-value-label-display="auto"></div>
+        <div class="demo-group"><span class="demo-label">Disabled · data-disabled</span><input type="range" data-mtx="slider" value="35" data-disabled data-label="Disabled"></div>
+        <div class="demo-group"><span class="demo-label">Disabled range</span><input type="range" data-mtx="slider" data-range data-value="20,70" data-disabled data-label="Disabled range"></div>
+        <div class="demo-group"><span class="demo-label">Disabled with marks</span><input type="range" data-mtx="slider" value="40" step="10" data-marks="true" data-disabled data-label="Disabled with marks"></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="value-label">
+      <h2>Value label</h2>
+      <p>The value label is drop-shaped (Material Design 2). <code>data-value-label-display</code>: <code>off</code> (default), <code>auto</code> (on hover, focus and drag) or <code>on</code> (always). <code>data-value-label-format</code> replaces <code>{value}</code> and is also used as <code>aria-valuetext</code>.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group"><span class="demo-label">auto</span><div class="mtx-pt-5"><input type="range" data-mtx="slider" value="30" data-value-label-display="auto" data-label="Auto label"></div></div>
+        <div class="demo-group"><span class="demo-label">on</span><div class="mtx-pt-5"><input type="range" data-mtx="slider" value="55" data-value-label-display="on" data-label="Always visible label"></div></div>
+        <div class="demo-group"><span class="demo-label">on + format "{value} °C"</span><div class="mtx-pt-5"><input type="range" data-mtx="slider" min="-10" max="40" value="21" data-value-label-display="on" data-value-label-format="{value} °C" data-label="Temperature"></div></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="marks">
+      <h2>Marks</h2>
+      <p><code>data-marks="true"</code> marks every <code>step</code>; a <code>"value:label,…"</code> list creates labeled marks. With <code>data-marks-only</code> the value can only land on the marks (equivalent to MUI's <code>step={null}</code>).</p>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">One mark per step · step="10"</span>
+        <input type="range" data-mtx="slider" value="30" step="10" data-marks="true" data-value-label-display="auto" data-label="Steps of 10">
+      </div>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">Labeled marks</span>
+        <input type="range" data-mtx="slider" value="20" data-marks="0:0 °C,20:20 °C,37:37 °C,100:100 °C" data-value-label-display="auto" data-value-label-format="{value} °C" data-label="Temperature with marks">
+      </div>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">Marked values only · data-marks-only</span>
+        <input type="range" data-mtx="slider" value="37" data-marks="0:0 °C,20:20 °C,37:37 °C,100:100 °C" data-marks-only data-value-label-display="auto" data-value-label-format="{value} °C" data-label="Restricted temperature">
+      </div>
+    </section>
+
+    <section class="demo-section" id="marks-inset">
+      <h2>Edge mark labels</h2>
+      <p>As in MUI, the labels of the first and last marks are centered on their mark, so long texts overflow the rail by a few pixels. In narrow containers (cards, side panels) add <code>data-marks-inset</code>: the first label aligns to the start of the rail and the last one to the end, while the intermediate labels stay centered.</p>
+      <div data-mtx="container" data-max-width="xs" data-disable-gutters>
+        <div data-mtx="card" data-variant="outlined">
+          <div data-mtx="card-content">
+            <span class="demo-label">Default (centered, like MUI)</span>
+            <input type="range" data-mtx="slider" value="37" data-marks="0:0 °C,20:20 °C,37:37 °C,100:100 °C" data-label="Temperature, centered edge labels">
+            <span class="demo-label">data-marks-inset</span>
+            <input type="range" data-mtx="slider" value="37" data-marks="0:0 °C,20:20 °C,37:37 °C,100:100 °C" data-marks-inset data-label="Temperature, inset edge labels">
+            <span class="demo-label">data-marks-inset · long labels</span>
+            <input type="range" data-mtx="slider" value="2" min="1" max="3" data-marks="1:Minimum,2:Medium,3:Maximum" data-marks-only data-marks-inset data-label="Quality">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="range">
+      <h2>Range</h2>
+      <p><code>data-range</code> with <code>data-value="20,60"</code> generates two thumbs, each with its own native input (<code>{name}-start</code> and <code>{name}-end</code>) and its accessible label "Minimum"/"Maximum". When they cross, the thumbs swap as in MUI; <code>data-disable-swap</code> locks them and <code>data-min-distance</code> enforces a minimum gap.</p>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">Basic range</span>
+        <input type="range" data-mtx="slider" name="price" data-range data-value="20,60" data-value-label-display="auto" data-label="Price">
+      </div>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">No swapping · data-disable-swap</span>
+        <input type="range" data-mtx="slider" data-range data-value="30,50" data-disable-swap data-value-label-display="auto" data-label="No swapping">
+      </div>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">Minimum distance 10 · data-min-distance="10"</span>
+        <input type="range" data-mtx="slider" data-range data-value="30,50" data-min-distance="10" data-value-label-display="auto" data-label="Minimum distance">
+      </div>
+    </section>
+
+    <section class="demo-section" id="track">
+      <h2>Track</h2>
+      <p><code>data-track</code>: <code>normal</code> (default), <code>inverted</code> (highlights the part after the value) or <code>false</code> (no track, useful with marks).</p>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">inverted</span>
+        <input type="range" data-mtx="slider" value="30" data-track="inverted" data-marks="0:0,25:25,50:50,75:75,100:100" data-label="Inverted track">
+      </div>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">inverted · range</span>
+        <input type="range" data-mtx="slider" data-range data-value="20,37" data-track="inverted" data-label="Inverted range">
+      </div>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">false</span>
+        <input type="range" data-mtx="slider" value="37" data-track="false" data-marks="0:0 °C,20:20 °C,37:37 °C,100:100 °C" data-label="No track">
+      </div>
+    </section>
+
+    <section class="demo-section" id="vertical">
+      <h2>Vertical</h2>
+      <p><code>data-orientation="vertical"</code> grows from bottom to top (200px by default; adjustable with <code>--mtx-slider-vertical-length</code>). The up/down arrow keys change the value and the input exposes <code>aria-orientation</code>.</p>
+      <div class="demo-row">
+        <input type="range" data-mtx="slider" data-orientation="vertical" value="30" data-value-label-display="auto" data-label="Vertical">
+        <input type="range" data-mtx="slider" data-orientation="vertical" data-range data-value="20,70" data-value-label-display="auto" data-label="Vertical range">
+        <input type="range" data-mtx="slider" data-orientation="vertical" value="37" data-color="secondary" data-marks="0:0 °C,20:20 °C,37:37 °C,100:100 °C" data-label="Vertical temperature">
+        <input type="range" data-mtx="slider" data-orientation="vertical" value="60" data-size="small" data-label="Small vertical">
+      </div>
+    </section>
+
+    <section class="demo-section" id="rtl">
+      <h2>RTL</h2>
+      <p>Inside a <code>dir="rtl"</code> container the value grows from right to left; the left arrow key increments it.</p>
+      <div class="demo-wide" dir="rtl">
+        <input type="range" data-mtx="slider" value="30" data-marks="0:0,50:50,100:100" data-value-label-display="auto" data-label="RTL slider">
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>A price range filter, fields kept in sync through the <code>mtx:slider:input</code> events, and form submission with the native inputs.</p>
+      <form class="demo-stack demo-wide" id="slider-filter-form" aria-label="Product filter">
+        <span class="mtx-typography--subtitle2" id="slider-filter-label">Price (USD)</span>
+        <input type="range" data-mtx="slider" id="slider-filter" name="price" min="0" max="1000" step="10" data-range data-value="200,700" data-min-distance="50" data-value-label-display="auto" data-value-label-format="${value}" aria-labelledby="slider-filter-label">
+        <div class="demo-row">
+          <span class="demo-status" id="slider-filter-range" aria-live="polite">$200 – $700</span>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Apply filter</button>
+        </div>
+        <span class="demo-status" id="slider-filter-status" role="status"></span>
+      </form>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Equalizer settings spread across responsive <code>mtx-grid</code> columns.</p>
+      <div data-mtx="grid" data-spacing="3">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div class="demo-group"><span class="demo-label" id="grid-bass">Bass</span><input type="range" data-mtx="slider" min="-12" max="12" value="4" data-value-label-display="auto" data-value-label-format="{value} dB" aria-labelledby="grid-bass"></div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div class="demo-group"><span class="demo-label" id="grid-mid">Mids</span><input type="range" data-mtx="slider" min="-12" max="12" value="0" data-value-label-display="auto" data-value-label-format="{value} dB" aria-labelledby="grid-mid"></div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="12" data-md="4">
+          <div class="demo-group"><span class="demo-label" id="grid-treble">Treble</span><input type="range" data-mtx="slider" min="-12" max="12" value="-3" data-value-label-display="auto" data-value-label-format="{value} dB" aria-labelledby="grid-treble"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>value</code> (a number or <code>[a, b]</code>, without events), <code>min</code>, <code>max</code>, <code>step</code>, <code>disable()</code>, <code>enable()</code>, <code>focus()</code> and <code>destroy()</code>. It emits <code>mtx:slider:input</code> while dragging and <code>mtx:slider:change</code> on release, both with <code>detail.value</code>.</p>
+      <div class="demo-group demo-wide">
+        <span class="demo-label">Controlled slider</span>
+        <input type="range" data-mtx="slider" id="slider-target" value="40" data-value-label-display="auto" data-label="Controlled slider">
+        <span class="demo-status" id="slider-status">value: 40</span>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-slider-action="set">value = 75</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-slider-action="max">max = 200</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-slider-action="step">step = 10</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-slider-action="disable">disable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-slider-action="enable">enable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-slider-action="focus">focus()</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="slider-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>For SSR you can write the full structure: a <code>.mtx-slider</code> container, rail, track and one <code>.mtx-slider__thumb</code> per input. The library reuses the nodes and adds the value label if it is missing.</p>
+      <div class="demo-fixed-width">
+        <span class="mtx-slider" data-mtx="slider" data-value-label-display="auto">
+          <span class="mtx-slider__rail"></span>
+          <span class="mtx-slider__track"></span>
+          <span class="mtx-slider__thumb">
+            <input type="range" class="mtx-slider__input" name="bem-brightness" min="0" max="10" value="4" aria-label="Brightness (BEM)">
+          </span>
+        </span>
+      </div>
+      <pre class="demo-code"><code>&lt;span class="mtx-slider" data-mtx="slider" data-value-label-display="auto"&gt;
+  &lt;span class="mtx-slider__rail"&gt;&lt;/span&gt;
+  &lt;span class="mtx-slider__track"&gt;&lt;/span&gt;
+  &lt;span class="mtx-slider__thumb"&gt;
+    &lt;input type="range" class="mtx-slider__input" name="brightness" min="0" max="10" value="4" aria-label="Brightness"&gt;
+  &lt;/span&gt;
+&lt;/span&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Filtro de precio.
+      var filterEl = document.getElementById('slider-filter');
+      var filter = Materix.getInstance(filterEl);
+      var rangeText = document.getElementById('slider-filter-range');
+      var form = document.getElementById('slider-filter-form');
+      function showRange(value) { rangeText.textContent = '$' + value[0] + ' – $' + value[1]; }
+      filter.element.addEventListener('mtx:slider:input', function (event) { showRange(event.detail.value); });
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var data = new FormData(form);
+        document.getElementById('slider-filter-status').textContent = 'Filter applied: price-start=' + data.get('price-start') + ', price-end=' + data.get('price-end');
+      });
+
+      // Uso programático.
+      var slider = Materix.getInstance(document.getElementById('slider-target'));
+      var logEl = document.getElementById('slider-log');
+      var statusEl = document.getElementById('slider-status');
+
+      /** Añade una línea al registro de eventos. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      /** Refleja el estado actual. */
+      function syncStatus() {
+        statusEl.textContent = 'value: ' + slider.value + ' · max: ' + slider.max + ' · step: ' + slider.step + (slider.disabled ? ' · disabled' : '');
+      }
+
+      slider.element.addEventListener('mtx:slider:input', function (event) { syncStatus(); statusEl.textContent += ' (input)'; });
+      slider.element.addEventListener('mtx:slider:change', function (event) {
+        log('mtx:slider:change → ' + event.detail.value);
+        syncStatus();
+      });
+
+      document.querySelectorAll('[data-slider-action]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var action = button.getAttribute('data-slider-action');
+          if (action === 'set') slider.value = 75;
+          if (action === 'max') slider.max = 200;
+          if (action === 'step') slider.step = 10;
+          if (action === 'disable') slider.disable();
+          if (action === 'enable') slider.enable();
+          if (action === 'focus') slider.focus();
+          log(button.textContent);
+          syncStatus();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

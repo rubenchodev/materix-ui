@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Area for the context menu */
+    .demo-menu-context {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      cursor: context-menu;
+      color: var(--mtx-color-text-secondary);
+      font: var(--mtx-type-body2);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Navigation</span>
+        <h1>Menu</h1>
+        <p class="demo-lead">Temporary list of options anchored to a trigger: icons, dividers, selection, submenus, context menu and full keyboard navigation.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#triggers">Triggers</a>
+      <a href="#density">Density</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#dividers">Dividers</a>
+      <a href="#states">States</a>
+      <a href="#checkable">Checkable options</a>
+      <a href="#positioning">Positioning</a>
+      <a href="#long-scroll">Long scroll</a>
+      <a href="#submenus">Submenus</a>
+      <a href="#context-menu">Context menu</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A trigger with <code>data-open-menu="#id"</code> and a <code>data-mtx="menu"</code> with <code>data-mtx="menu-item"</code> items. It closes when an option is chosen, on a click outside, with <kbd>Escape</kbd> or with <kbd>Tab</kbd>.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-open-menu="#menu-basic">Open menu</button>
+        <div data-mtx="menu" id="menu-basic">
+          <div data-mtx="menu-item">Profile</div>
+          <div data-mtx="menu-item">My account</div>
+          <div data-mtx="menu-item">Sign out</div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-open-menu="#menu-basic"&gt;Open menu&lt;/button&gt;
+&lt;div data-mtx="menu" id="menu-basic"&gt;
+  &lt;div data-mtx="menu-item"&gt;Profile&lt;/div&gt;
+  &lt;div data-mtx="menu-item"&gt;My account&lt;/div&gt;
+  &lt;div data-mtx="menu-item"&gt;Sign out&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="triggers">
+      <h2>Triggers</h2>
+      <p>The menu needs an <code>id</code> and an explicit trigger (the previous sibling is no longer used): <code>data-open-menu="#id"</code> or its alias <code>data-mtx-menu-trigger</code>, <code>aria-controls="id"</code>, or <code>data-anchor</code> on the menu. <code>data-open-menu</code> triggers added later work through delegation: click “Add row” and open the new row's menu.</p>
+      <div class="demo-stack">
+        <div data-mtx="paper" data-variant="outlined" class="demo-wide">
+          <ul data-mtx="list" id="menu-rows" aria-label="Files">
+            <li data-mtx="list-item" data-icon="description" data-secondary="2.4 MB">
+              Annual report.pdf
+              <span class="mtx-list-item-secondary-action">
+                <button data-mtx="icon-button" data-icon="more_vert" aria-label="Actions for Annual report.pdf" data-open-menu="#menu-row-actions"></button>
+              </span>
+            </li>
+            <li data-mtx="list-item" data-icon="description" data-secondary="310 KB">
+              Budget.xlsx
+              <span class="mtx-list-item-secondary-action">
+                <button data-mtx="icon-button" data-icon="more_vert" aria-label="Actions for Budget.xlsx" aria-controls="menu-row-actions"></button>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div data-mtx="menu" id="menu-row-actions">
+          <div data-mtx="menu-item" data-icon="edit" data-value="rename">Rename</div>
+          <div data-mtx="menu-item" data-icon="content_copy" data-value="duplicate">Duplicate</div>
+          <div data-mtx="menu-item" data-divider></div>
+          <div data-mtx="menu-item" data-icon="delete" data-value="delete">Delete</div>
+        </div>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="menu-rows-add">
+            <span class="mtx-button__icon material-icons" aria-hidden="true">add</span>
+            Add row
+          </button>
+        </div>
+        <pre class="demo-log" id="menu-rows-log" aria-live="polite"></pre>
+      </div>
+      <pre class="demo-code"><code>&lt;button data-mtx="icon-button" data-icon="more_vert" aria-label="Actions" data-open-menu="#menu-row-actions"&gt;&lt;/button&gt;
+&lt;div data-mtx="menu" id="menu-row-actions"&gt;
+  &lt;div data-mtx="menu-item" data-icon="edit"&gt;Rename&lt;/div&gt;
+  &lt;div data-mtx="menu-item" data-divider&gt;&lt;/div&gt;
+  &lt;div data-mtx="menu-item" data-icon="delete"&gt;Delete&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="density">
+      <h2>Density</h2>
+      <p>Items have a minimum height of 48px; with <code>data-dense</code>, 32px. <code>data-disable-gutters</code> removes the side padding.</p>
+      <div class="demo-row">
+        <div class="demo-group">
+          <span class="demo-label">Normal · 48px</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-normal">Normal</button>
+            <div data-mtx="menu" id="menu-normal">
+              <div data-mtx="menu-item">Single</div>
+              <div data-mtx="menu-item">1.5</div>
+              <div data-mtx="menu-item">Double</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Dense · 32px</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-dense">Dense</button>
+            <div data-mtx="menu" id="menu-dense">
+              <div data-mtx="menu-item" data-dense>Single</div>
+              <div data-mtx="menu-item" data-dense>1.5</div>
+              <div data-mtx="menu-item" data-dense>Double</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p><code>data-icon</code> inserts the icon before the text. The icon-only trigger (<code>more_vert</code>) has an <code>aria-label</code>.</p>
+      <div class="demo-row">
+        <div class="demo-group">
+          <span class="demo-label">Without icon</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-noicon">Options</button>
+            <div data-mtx="menu" id="menu-noicon">
+              <div data-mtx="menu-item">Edit</div>
+              <div data-mtx="menu-item">Duplicate</div>
+              <div data-mtx="menu-item">Delete</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">With icon</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-icons">Options</button>
+            <div data-mtx="menu" id="menu-icons">
+              <div data-mtx="menu-item" data-icon="edit">Edit</div>
+              <div data-mtx="menu-item" data-icon="content_copy">Duplicate</div>
+              <div data-mtx="menu-item" data-icon="delete">Delete</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Icon-only trigger</span>
+          <div class="demo-row">
+            <button class="mtx-icon-button" data-mtx="icon-button" data-icon="more_vert" aria-label="More options" data-open-menu="#menu-kebab"></button>
+            <div data-mtx="menu" id="menu-kebab">
+              <div data-mtx="menu-item" data-icon="share">Share</div>
+              <div data-mtx="menu-item" data-icon="download">Download</div>
+              <div data-mtx="menu-item" data-icon="flag">Report</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="dividers">
+      <h2>Dividers</h2>
+      <p>Group options with <code>&lt;div data-mtx="menu-item" data-divider&gt;</code> (simplified syntax) or with <code>&lt;hr class="mtx-menu-item--divider"&gt;</code>: both are separators (<code>role="separator"</code>) that the keyboard doesn't focus.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-divider">File</button>
+        <div data-mtx="menu" id="menu-divider">
+          <div data-mtx="menu-item" data-icon="description">New</div>
+          <div data-mtx="menu-item" data-icon="folder_open">Open…</div>
+          <div data-mtx="menu-item" data-divider></div>
+          <div data-mtx="menu-item" data-icon="save">Save</div>
+          <div data-mtx="menu-item" data-icon="print">Print</div>
+          <hr class="mtx-menu-item--divider">
+          <div data-mtx="menu-item" data-icon="logout">Close</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Normal, selected (<code>data-selected</code>, receives focus when opened with the keyboard) and disabled (<code>data-disabled</code>). Hover for the hover state; open with <kbd>Enter</kbd> and move with the arrow keys for focus.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-states">View: List</button>
+        <div data-mtx="menu" id="menu-states">
+          <div data-mtx="menu-item" data-icon="view_list" data-selected>List</div>
+          <div data-mtx="menu-item" data-icon="grid_view">Grid</div>
+          <div data-mtx="menu-item" data-icon="view_timeline" data-disabled>Timeline (coming soon)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="checkable">
+      <h2>Checkable options</h2>
+      <p><code>role="menuitemcheckbox"</code> toggles <code>aria-checked</code> on click; <code>role="menuitemradio"</code> checks the option and unchecks the others in its <code>role="group"</code>. <code>data-checked</code> sets the initial state and the check mark is only shown on checked options.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-checkable">View</button>
+        <div data-mtx="menu" id="menu-checkable">
+          <div data-mtx="menu-item" role="menuitemcheckbox" data-checked data-value="ruler">Ruler</div>
+          <div data-mtx="menu-item" role="menuitemcheckbox" data-value="grid">Grid</div>
+          <div data-mtx="menu-item" data-divider></div>
+          <div role="group" aria-label="Density">
+            <div data-mtx="menu-item" role="menuitemradio" data-checked data-value="comfortable">Comfortable</div>
+            <div data-mtx="menu-item" role="menuitemradio" data-value="compact">Compact</div>
+          </div>
+        </div>
+        <span class="demo-status" id="menu-checkable-status" aria-live="polite">Ruler: yes · Density: Comfortable</span>
+      </div>
+    </section>
+
+    <section class="demo-section" id="positioning">
+      <h2>Positioning</h2>
+      <p>It opens below the anchor, left-aligned; if it doesn't fit, upwards. It follows the anchor when the page scrolls. <code>data-anchor</code> uses another element as the anchor and <code>data-match-width</code> matches its width.</p>
+      <div class="demo-row">
+        <div class="demo-group">
+          <span class="demo-label">data-match-width</span>
+          <div class="demo-row">
+            <button class="mtx-button mtx-button--contained" data-mtx="button" data-open-menu="#menu-match">Sort by: relevance</button>
+            <div data-mtx="menu" id="menu-match" data-match-width>
+              <div data-mtx="menu-item" data-selected>Relevance</div>
+              <div data-mtx="menu-item">Newest</div>
+              <div data-mtx="menu-item">Price</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-anchor="#menu-anchor-target"</span>
+          <div class="demo-row">
+            <span class="mtx-chip mtx-chip--outlined" data-mtx="chip" data-label="Filter: all" id="menu-anchor-target" tabindex="0" role="button"></span>
+            <div data-mtx="menu" id="menu-anchor" data-anchor="#menu-anchor-target">
+              <div data-mtx="menu-item">All</div>
+              <div data-mtx="menu-item">Active</div>
+              <div data-mtx="menu-item">Archived</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="long-scroll">
+      <h2>Long scroll</h2>
+      <p>With many options the height is limited to the available space and the content scrolls. Type a letter to jump to the next option that starts with it.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-long">Country</button>
+        <div data-mtx="menu" id="menu-long">
+          <div data-mtx="menu-item" data-dense>Argentina</div>
+          <div data-mtx="menu-item" data-dense>Bolivia</div>
+          <div data-mtx="menu-item" data-dense>Brazil</div>
+          <div data-mtx="menu-item" data-dense>Chile</div>
+          <div data-mtx="menu-item" data-dense>Colombia</div>
+          <div data-mtx="menu-item" data-dense>Costa Rica</div>
+          <div data-mtx="menu-item" data-dense>Cuba</div>
+          <div data-mtx="menu-item" data-dense>Dominican Republic</div>
+          <div data-mtx="menu-item" data-dense>Ecuador</div>
+          <div data-mtx="menu-item" data-dense>El Salvador</div>
+          <div data-mtx="menu-item" data-dense>Guatemala</div>
+          <div data-mtx="menu-item" data-dense>Honduras</div>
+          <div data-mtx="menu-item" data-dense>Mexico</div>
+          <div data-mtx="menu-item" data-dense>Nicaragua</div>
+          <div data-mtx="menu-item" data-dense>Panama</div>
+          <div data-mtx="menu-item" data-dense>Paraguay</div>
+          <div data-mtx="menu-item" data-dense>Peru</div>
+          <div data-mtx="menu-item" data-dense>Puerto Rico</div>
+          <div data-mtx="menu-item" data-dense>Spain</div>
+          <div data-mtx="menu-item" data-dense>Uruguay</div>
+          <div data-mtx="menu-item" data-dense>Venezuela</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="submenus">
+      <h2>Submenus</h2>
+      <p>An item with <code>data-submenu-trigger</code> and <code>data-open-menu</code> opens a <code>data-submenu</code> menu next to it: on hover, on click or with <kbd>→</kbd>; <kbd>←</kbd> goes back.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-menu="#menu-nested">Insert</button>
+        <div data-mtx="menu" id="menu-nested">
+          <div data-mtx="menu-item" data-icon="image">Image</div>
+          <div data-mtx="menu-item" data-icon="table_chart">Table</div>
+          <div data-mtx="menu-item" data-icon="share" data-submenu-trigger data-open-menu="#menu-nested-share">Share</div>
+        </div>
+        <div data-mtx="menu" id="menu-nested-share" data-submenu>
+          <div data-mtx="menu-item" data-icon="mail">By email</div>
+          <div data-mtx="menu-item" data-icon="link">Copy link</div>
+          <div data-mtx="menu-item" data-submenu-trigger data-open-menu="#menu-nested-social">Social networks</div>
+        </div>
+        <div data-mtx="menu" id="menu-nested-social" data-submenu>
+          <div data-mtx="menu-item">Mastodon</div>
+          <div data-mtx="menu-item">LinkedIn</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="context-menu">
+      <h2>Context menu</h2>
+      <p><code>Materix.Menu.createContextMenu(selector, items)</code> builds the menu from JSON and opens it on right-click at the pointer position.</p>
+      <div class="demo-panel demo-menu-context" id="menu-context-area">Right-click here</div>
+      <pre class="demo-code"><code>Materix.Menu.createContextMenu('#menu-context-area', [
+  { label: 'Copy', icon: 'content_copy', action: () =&gt; {} },
+  { label: 'Paste', icon: 'content_paste', disabled: true },
+  { label: 'Share', icon: 'share', submenu: [
+    { label: 'Email', icon: 'mail', action: () =&gt; {} },
+  ] },
+]);</code></pre>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>Account menu in an app bar and row actions in a list.</p>
+      <div class="demo-group">
+        <span class="demo-label">Account menu</span>
+        <header data-mtx="app-bar" data-position="static" data-title="My app">
+          <button class="mtx-icon-button" data-mtx="icon-button" data-icon="account_circle" aria-label="Anna Garcia's account" data-open-menu="#menu-account"></button>
+        </header>
+        <div data-mtx="menu" id="menu-account">
+          <div data-mtx="menu-item" data-icon="person">Profile</div>
+          <div data-mtx="menu-item" data-icon="settings">Settings</div>
+          <hr class="mtx-menu-item--divider">
+          <div data-mtx="menu-item" data-icon="logout">Sign out</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>In a grid</h2>
+      <p>Cards in <code>mtx-grid</code> with their own actions menu; the menu is mounted in a portal and is not clipped by the card.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div data-mtx="card" data-variant="outlined">
+            <div data-mtx="card-content">
+              <div class="demo-row">
+                <span data-mtx="typography" data-variant="subtitle1">Q1 report</span>
+                <button class="mtx-icon-button mtx-ml-auto" data-mtx="icon-button" data-icon="more_vert" aria-label="Actions for Q1 report" data-open-menu="#menu-card-1"></button>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="menu" id="menu-card-1">
+            <div data-mtx="menu-item" data-icon="edit">Rename</div>
+            <div data-mtx="menu-item" data-icon="delete">Delete</div>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div data-mtx="card" data-variant="outlined">
+            <div data-mtx="card-content">
+              <div class="demo-row">
+                <span data-mtx="typography" data-variant="subtitle1">Q2 report</span>
+                <button class="mtx-icon-button mtx-ml-auto" data-mtx="icon-button" data-icon="more_vert" aria-label="Actions for Q2 report" data-open-menu="#menu-card-2"></button>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="menu" id="menu-card-2">
+            <div data-mtx="menu-item" data-icon="edit">Rename</div>
+            <div data-mtx="menu-item" data-icon="delete">Delete</div>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+          <div data-mtx="card" data-variant="outlined">
+            <div data-mtx="card-content">
+              <div class="demo-row">
+                <span data-mtx="typography" data-variant="subtitle1">Q3 report</span>
+                <button class="mtx-icon-button mtx-ml-auto" data-mtx="icon-button" data-icon="more_vert" aria-label="Actions for Q3 report" data-open-menu="#menu-card-3"></button>
+              </div>
+            </div>
+          </div>
+          <div data-mtx="menu" id="menu-card-3">
+            <div data-mtx="menu-item" data-icon="edit">Rename</div>
+            <div data-mtx="menu-item" data-icon="delete">Delete</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>open()</code> and <code>close()</code> control the menu; the log shows the real <code>mtx:menu:open</code>, <code>mtx:menu:select</code> and <code>mtx:menu:close</code> events.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="menu-api-anchor">Menu anchor</button>
+        <div data-mtx="menu" id="menu-api" data-anchor="#menu-api-anchor">
+          <div data-mtx="menu-item" data-value="save" data-icon="save">Save</div>
+          <div data-mtx="menu-item" data-value="export" data-icon="file_download">Export</div>
+        </div>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" type="button" id="menu-api-open">menu.open()</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="menu-api-state">Read isOpen</button>
+      </div>
+      <pre class="demo-log" id="menu-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const menu = Materix.getInstance(document.getElementById('menu-api'));
+menu.open();
+menu.close({ restoreFocus: false });
+menu.element.addEventListener('mtx:menu:select', (e) =&gt; console.log(e.detail.item));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Full structure with classes and icons written by hand, a selection check mark and a divider.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--text" data-mtx="button" data-open-menu="#menu-bem">Actions</button>
+        <div class="mtx-menu" id="menu-bem" data-mtx="menu">
+          <button type="button" class="mtx-menu-item" data-mtx="menu-item" data-value="edit">
+            <span class="mtx-menu-item__icon material-icons" aria-hidden="true">edit</span>Edit
+          </button>
+          <button type="button" class="mtx-menu-item mtx-menu-item--selected" data-mtx="menu-item" data-value="view">
+            <span class="mtx-menu-item__icon material-icons" aria-hidden="true">visibility</span>View
+            <span class="mtx-menu-item__check material-icons" aria-hidden="true">check</span>
+          </button>
+          <hr class="mtx-menu-item--divider">
+          <button type="button" class="mtx-menu-item mtx-menu-item--disabled" data-mtx="menu-item" aria-disabled="true">Archive</button>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-menu" id="menu-bem" data-mtx="menu"&gt;
+  &lt;button type="button" class="mtx-menu-item" data-mtx="menu-item"&gt;
+    &lt;span class="mtx-menu-item__icon material-icons" aria-hidden="true"&gt;edit&lt;/span&gt;Edit
+  &lt;/button&gt;
+  &lt;button type="button" class="mtx-menu-item mtx-menu-item--selected" data-mtx="menu-item"&gt;
+    &lt;span class="mtx-menu-item__icon material-icons" aria-hidden="true"&gt;visibility&lt;/span&gt;View
+    &lt;span class="mtx-menu-item__check material-icons" aria-hidden="true"&gt;check&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;hr class="mtx-menu-item--divider"&gt;
+  &lt;button type="button" class="mtx-menu-item mtx-menu-item--disabled" data-mtx="menu-item" aria-disabled="true"&gt;Archive&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var log = document.getElementById('menu-log');
+      var el = document.getElementById('menu-api');
+      var menu = Materix.getInstance(el);
+
+      /**
+       * Añade una línea al registro.
+       * @param {string} text Línea a registrar.
+       */
+      function write(text) {
+        log.textContent += text + '\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.getElementById('menu-api-open').addEventListener('click', function (event) {
+        event.stopPropagation();
+        menu.open();
+      });
+      document.getElementById('menu-api-state').addEventListener('click', function () {
+        write('isOpen → ' + menu.isOpen + ' · menuItems.length → ' + menu.menuItems.length);
+      });
+      el.addEventListener('mtx:menu:open', function () { write('mtx:menu:open'); });
+      el.addEventListener('mtx:menu:close', function () { write('mtx:menu:close'); });
+      el.addEventListener('mtx:menu:select', function (event) {
+        write('mtx:menu:select → detail.item[data-value="' + event.detail.item.getAttribute('data-value') + '"]');
+      });
+
+      // Disparadores por fila: las filas añadidas después funcionan por delegación.
+      var rowsLog = document.getElementById('menu-rows-log');
+      var rowCount = 2;
+      document.getElementById('menu-row-actions').addEventListener('mtx:menu:select', function (event) {
+        var opener = document.activeElement;
+        rowsLog.textContent += event.detail.item.getAttribute('data-value') + ' → ' + (opener && opener.getAttribute('aria-label') || '') + '\n';
+      });
+      document.getElementById('menu-rows-add').addEventListener('click', function () {
+        rowCount += 1;
+        var name = 'Document ' + rowCount + '.docx';
+        var li = document.createElement('li');
+        li.setAttribute('data-mtx', 'list-item');
+        li.setAttribute('data-icon', 'description');
+        li.setAttribute('data-secondary', 'Added just now');
+        li.textContent = name;
+        var action = document.createElement('span');
+        action.className = 'mtx-list-item-secondary-action';
+        var btn = document.createElement('button');
+        btn.setAttribute('data-mtx', 'icon-button');
+        btn.setAttribute('data-icon', 'more_vert');
+        btn.setAttribute('aria-label', 'Actions for ' + name);
+        btn.setAttribute('data-open-menu', '#menu-row-actions');
+        action.appendChild(btn);
+        li.appendChild(action);
+        document.getElementById('menu-rows').appendChild(li);
+        Materix.initAll(li.parentElement);
+      });
+
+      // Opciones marcables.
+      var checkStatus = document.getElementById('menu-checkable-status');
+      document.getElementById('menu-checkable').addEventListener('mtx:menu:select', function () {
+        var ruler = document.querySelector('#menu-checkable [data-value="ruler"]').getAttribute('aria-checked') === 'true';
+        var density = document.querySelector('#menu-checkable [role="menuitemradio"][aria-checked="true"]');
+        checkStatus.textContent = 'Ruler: ' + (ruler ? 'yes' : 'no') + ' · Density: ' + density.firstChild.textContent.trim();
+      });
+
+      var area = document.getElementById('menu-context-area');
+      Materix.Menu.createContextMenu('#menu-context-area', [
+        { label: 'Copy', icon: 'content_copy', action: function () { area.textContent = 'Action: copy'; } },
+        { label: 'Paste', icon: 'content_paste', disabled: true },
+        { divider: true },
+        { label: 'Share', icon: 'share', submenu: [
+          { label: 'Email', icon: 'mail', action: function () { area.textContent = 'Action: share by email'; } },
+          { label: 'Link', icon: 'link', action: function () { area.textContent = 'Action: copy link'; } }
+        ] },
+        { label: 'Delete', icon: 'delete', action: function () { area.textContent = 'Action: delete'; } }
+      ]);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popover · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Surfaces</span>
+        <h1>Popover</h1>
+        <p class="demo-lead">Floating Paper with arbitrary content anchored to a trigger. Closes on click away or Escape and returns focus to the trigger.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#placement">Placement</a>
+      <a href="#anchor-origins">Anchor origins</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#states">States</a>
+      <a href="#anchor-position">Position by coordinates</a>
+      <a href="#modal">Modal</a>
+      <a href="#dialog-from-popover">Dialog from a popover</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>An element with <code>data-mtx="popover"</code> and an <code>id</code>, plus a trigger with <code>data-open-popover="#id"</code>. It opens below the trigger, aligned to the start, on an elevation-8 Paper; focus moves to the first control (or to the panel) and returns to the trigger on close.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-open-popover="#popover-basic">Open popover</button>
+        <div data-mtx="popover" id="popover-basic" data-label="Basic popover" class="mtx-p-2">
+          The content of the popover.
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--contained" data-mtx="button" data-open-popover="#popover-basic"&gt;Open popover&lt;/button&gt;
+&lt;div data-mtx="popover" id="popover-basic" data-label="Basic popover" class="mtx-p-2"&gt;
+  The content of the popover.
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="placement">
+      <h2>Placement</h2>
+      <p><code>data-placement</code> uses the same engine as Tooltip (<code>top|bottom|left|right</code> with <code>-start|-end</code>; <code>bottom-start</code> by default), with automatic flip and shift. <code>data-offset</code> sets the gap in px (0 by default).</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-popover="#popover-top">top</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-popover="#popover-bottom-end">bottom-end</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-popover="#popover-right">right · offset 8</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-popover="#popover-left">left · offset 8</button>
+      </div>
+      <div data-mtx="popover" id="popover-top" data-placement="top" data-offset="8" data-label="Top" class="mtx-p-2">Above and centered.</div>
+      <div data-mtx="popover" id="popover-bottom-end" data-placement="bottom-end" data-label="Bottom end" class="mtx-p-2">Below, aligned to the end.</div>
+      <div data-mtx="popover" id="popover-right" data-placement="right" data-offset="8" data-label="Right" class="mtx-p-2">To the right.</div>
+      <div data-mtx="popover" id="popover-left" data-placement="left" data-offset="8" data-label="Left" class="mtx-p-2">To the left.</div>
+      <pre class="demo-code"><code>&lt;div data-mtx="popover" id="popover-top" data-placement="top" data-offset="8" data-label="Top" class="mtx-p-2"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="anchor-origins">
+      <h2>Anchor origins</h2>
+      <p>The MUI API: <code>data-anchor-origin="vertical horizontal"</code> (the point on the anchor) and <code>data-transform-origin</code> (the point on the popover attached to it). Values are <code>top|center|bottom</code> and <code>left|center|right</code>, or pixels. The popover stays 16 px away from the viewport edges.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-popover="#popover-origin-1">bottom left → top left</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-popover="#popover-origin-2">center center → center center</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-popover="#popover-origin-3">top right → bottom right</button>
+      </div>
+      <div data-mtx="popover" id="popover-origin-1" data-anchor-origin="bottom left" data-transform-origin="top left" data-label="Origin 1" class="mtx-p-2">anchor: bottom left · transform: top left</div>
+      <div data-mtx="popover" id="popover-origin-2" data-anchor-origin="center center" data-transform-origin="center center" data-label="Origin 2" class="mtx-p-2">anchor: center center · transform: center center</div>
+      <div data-mtx="popover" id="popover-origin-3" data-anchor-origin="top right" data-transform-origin="bottom right" data-label="Origin 3" class="mtx-p-2">anchor: top right · transform: bottom right</div>
+      <pre class="demo-code"><code>&lt;div data-mtx="popover" id="popover-origin-3"
+     data-anchor-origin="top right" data-transform-origin="bottom right"&gt;…&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With icons</h2>
+      <p>Any button can be a trigger; icon-only ones need an <code>aria-label</code> (or a <code>data-mtx-tooltip</code>, which provides it). The trigger gets <code>aria-haspopup="dialog"</code>, <code>aria-controls</code> and <code>aria-expanded</code>.</p>
+      <div class="demo-row">
+        <button data-mtx="icon-button" data-icon="info" data-mtx-tooltip="Order information" data-open-popover="#popover-info"></button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="tune" data-open-popover="#popover-info">Details</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" data-end-icon="expand_more" data-open-popover="#popover-info">More</button>
+      </div>
+      <div data-mtx="popover" id="popover-info" class="mtx-p-2 demo-fixed-width">
+        <h3 class="mtx-typography--subtitle2">Order #48213</h3>
+        <p class="mtx-typography--body2 mtx-color-text-secondary">Shipped on October 12 with estimated delivery in 48 h.</p>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>A disabled trigger does not open the popover. Buttons with <code>data-mtx-popover-close</code> inside the popover close it.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-open-popover="#popover-states" disabled>Disabled</button>
+        <button class="mtx-button mtx-button--contained" data-mtx="button" data-open-popover="#popover-states">With close button</button>
+      </div>
+      <div data-mtx="popover" id="popover-states" class="mtx-p-2">
+        <h3 class="mtx-typography--subtitle2 mtx-mb-1">Archive the project?</h3>
+        <p class="mtx-typography--body2 mtx-mb-2">You can restore it for 30 days.</p>
+        <div class="mtx-d-flex mtx-justify-content-end mtx-gap-1">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-popover-close>Cancel</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-popover-close>Archive</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="anchor-position">
+      <h2>Position by coordinates</h2>
+      <p><code>open({ x, y })</code> anchors the popover to a point in the viewport (MUI's <code>anchorPosition</code>). Right-click inside the area.</p>
+      <div class="demo-panel" id="popover-context-area" tabindex="0" aria-label="Area with a context menu">
+        <p>Right-click here to open a popover at the cursor.</p>
+      </div>
+      <div data-mtx="popover" id="popover-context" data-label="Point details" class="mtx-p-2"></div>
+    </section>
+
+    <section class="demo-section" id="modal">
+      <h2>Modal</h2>
+      <p>By default the popover is non-modal: tabbing out of it closes it. With <code>data-modal</code> it traps focus, locks scroll and sets <code>aria-modal="true"</code>, like MUI's Popover.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-open-popover="#popover-modal">Open modal</button>
+      </div>
+      <div data-mtx="popover" id="popover-modal" data-modal class="mtx-p-2">
+        <h3 class="mtx-typography--subtitle2 mtx-mb-2">Rename</h3>
+        <input data-mtx="text-field" data-label="Name" data-size="small" value="Q3 report" data-autofocus>
+        <div class="mtx-d-flex mtx-justify-content-end mtx-gap-1 mtx-mt-2">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-popover-close>Cancel</button>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-popover-close>Save</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="dialog-from-popover">
+      <h2>Dialog from a popover</h2>
+      <p>A button inside the popover opens a Dialog. Interacting with the dialog does not close the popover; the first <kbd>Escape</kbd> closes only the dialog (focus returns to the button) and the second one closes the popover.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="tune" data-open-popover="#popover-advanced" id="popover-advanced-btn">Options</button>
+      </div>
+      <div data-mtx="popover" id="popover-advanced" class="mtx-p-2" data-label="Options">
+        <input type="checkbox" data-mtx="checkbox" data-label="Only mine" checked>
+        <div class="mtx-d-flex mtx-justify-content-end mtx-mt-1">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-open="popover-advanced-dialog" id="popover-advanced-open">Advanced…</button>
+        </div>
+      </div>
+      <div data-mtx="dialog" id="popover-advanced-dialog" class="mtx-dialog--max-xs" data-title="Advanced options" data-description="Press Escape once to close this dialog; the popover stays open.">
+        <div data-mtx="dialog-actions">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Close</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="use-cases">
+      <h2>Use cases</h2>
+      <p>Table filters and a profile card opened from an avatar.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-start-icon="filter_list" data-open-popover="#popover-filters">Filters</button>
+        <button class="mtx-icon-button" data-mtx="icon-button" data-open-popover="#popover-profile">
+          <span data-mtx="avatar" data-size="small" data-color="primary" aria-hidden="true">LG</span>
+          <span class="mtx-visually-hidden">Laura Gomez's account</span>
+        </button>
+      </div>
+      <div data-mtx="popover" id="popover-filters" class="mtx-p-2">
+        <h3 class="mtx-typography--subtitle2 mtx-mb-1">Filter orders</h3>
+        <input type="checkbox" data-mtx="checkbox" data-label="Pending" checked>
+        <input type="checkbox" data-mtx="checkbox" data-label="Shipped">
+        <input type="checkbox" data-mtx="checkbox" data-label="Returned">
+        <div class="mtx-d-flex mtx-justify-content-end mtx-gap-1 mtx-mt-1">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-mtx-popover-close>Apply</button>
+        </div>
+      </div>
+      <div data-mtx="popover" id="popover-profile" data-placement="bottom-end" data-label="Account">
+        <div class="mtx-d-flex mtx-align-items-center mtx-gap-2 mtx-p-2">
+          <span data-mtx="avatar" data-color="primary" aria-hidden="true">LG</span>
+          <div>
+            <div class="mtx-typography--subtitle2">Laura Gomez</div>
+            <div class="mtx-typography--body2 mtx-color-text-secondary">laura@example.com</div>
+          </div>
+        </div>
+        <hr data-mtx="divider">
+        <div class="mtx-d-flex mtx-justify-content-end mtx-p-1">
+          <button class="mtx-button mtx-button--text" data-mtx="button" data-start-icon="logout" data-mtx-popover-close>Sign out</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>The popover is portaled to <code>&lt;body&gt;</code>, so columns and containers with <code>overflow</code> never clip it.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-sm="6">
+          <div data-mtx="paper" data-variant="outlined" class="mtx-p-2 mtx-d-flex mtx-align-items-center mtx-justify-content-between">
+            <span>Storage: 72%</span>
+            <button data-mtx="icon-button" data-icon="more_horiz" data-size="small" data-mtx-tooltip="Storage details" data-open-popover="#popover-grid"></button>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6">
+          <div data-mtx="paper" data-variant="outlined" class="mtx-p-2 mtx-d-flex mtx-align-items-center mtx-justify-content-between">
+            <span>Active users: 18</span>
+            <button data-mtx="icon-button" data-icon="more_horiz" data-size="small" data-mtx-tooltip="User details" data-open-popover="#popover-grid"></button>
+          </div>
+        </div>
+      </div>
+      <div data-mtx="popover" id="popover-grid" data-placement="bottom-end" data-label="Details" class="mtx-p-2 demo-fixed-width">Data updated 5 minutes ago.</div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The instance exposes <code>open(anchor?)</code>, <code>close()</code>, <code>toggle()</code>, <code>update()</code> and <code>isOpen</code>, and emits <code>mtx:popover:open</code> and <code>mtx:popover:close</code> (with <code>detail.reason</code>).</p>
+      <div class="demo-group">
+        <span class="demo-label">Actions</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" id="popover-api-anchor" data-popover-action="open">open(this)</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" data-popover-action="toggle">toggle()</button>
+        </div>
+      </div>
+      <div data-mtx="popover" id="popover-api" data-label="Programmatic popover" class="mtx-p-2">
+        <p class="mtx-mb-1">Opened from code.</p>
+        <button class="mtx-button mtx-button--text" data-mtx="button" data-size="small" data-popover-action="close">close()</button>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Event log</span>
+        <pre class="demo-log" id="popover-log" aria-live="polite"></pre>
+      </div>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>An initialized popover has this structure: the <code>mtx-popover</code> class (plus <code>mtx-popover--open</code> when open), <code>role="dialog"</code>, <code>tabindex="-1"</code> and an accessible name. You can write it as is for SSR; the component respects any existing <code>role</code>, <code>aria-label</code>/<code>aria-labelledby</code> and <code>tabindex</code>.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" aria-controls="popover-bem" aria-haspopup="dialog" aria-expanded="false">Open (aria-controls)</button>
+      </div>
+      <div class="mtx-popover mtx-p-2" data-mtx="popover" id="popover-bem" role="dialog" tabindex="-1" aria-labelledby="popover-bem-title">
+        <h3 class="mtx-typography--subtitle2" id="popover-bem-title">Full markup</h3>
+        <p class="mtx-typography--body2">Triggered through <code>aria-controls</code>.</p>
+      </div>
+      <pre class="demo-code"><code>&lt;button class="mtx-button mtx-button--outlined" data-mtx="button"
+        aria-controls="popover-bem" aria-haspopup="dialog" aria-expanded="false"&gt;Open&lt;/button&gt;
+&lt;div class="mtx-popover mtx-p-2" data-mtx="popover" id="popover-bem" role="dialog" tabindex="-1"
+     aria-labelledby="popover-bem-title"&gt;
+  &lt;h3 class="mtx-typography--subtitle2" id="popover-bem-title"&gt;Full markup&lt;/h3&gt;
+  …
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var logEl = document.getElementById('popover-log');
+      var apiEl = document.getElementById('popover-api');
+      var api = Materix.getInstance(apiEl);
+
+      /** Añade una línea al registro. */
+      function log(message) {
+        logEl.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message + '\n' + logEl.textContent;
+      }
+
+      apiEl.addEventListener('mtx:popover:open', function () { log('mtx:popover:open'); });
+      apiEl.addEventListener('mtx:popover:close', function (event) { log('mtx:popover:close → ' + event.detail.reason); });
+
+      document.querySelectorAll('[data-popover-action]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var action = button.getAttribute('data-popover-action');
+          if (action === 'open') api.open(document.getElementById('popover-api-anchor'));
+          if (action === 'toggle') api.toggle(button);
+          if (action === 'close') api.close();
+        });
+      });
+
+      var area = document.getElementById('popover-context-area');
+      var contextEl = document.getElementById('popover-context');
+      var context = Materix.getInstance(contextEl);
+      area.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+        contextEl.textContent = 'x: ' + event.clientX + ' · y: ' + event.clientY;
+        context.close({ restoreFocus: false });
+        context.open({ x: event.clientX, y: event.clientY });
+      });
+    });
+  </script>
+</body>
+</html>

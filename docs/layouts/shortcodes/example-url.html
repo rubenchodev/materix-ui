@@ -1,0 +1,4 @@
+{{/*
+  example-url — URL de un archivo de /examples resuelta con examplesURL (igual en / y en /es/).
+  Uso: [dashboard]({{< example-url "drawer/dashboard.html" >}})
+*/}}{{- $base := partial "resolve-base.html" (site.Params.examplesURL | default "../examples/") -}}{{- printf "%s%s" $base (.Get 0) -}}

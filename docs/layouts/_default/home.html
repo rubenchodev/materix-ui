@@ -1,0 +1,104 @@
+{{ define "main" }}
+{{ $version := site.Params.version | default "latest" }}
+{{/* Enlaces del idioma actual (con respaldo si la página aún no está traducida). */}}
+{{ $installURL := "guide/installation/" | relLangURL }}
+{{ with site.GetPage "/guide/installation" }}{{ $installURL = .RelPermalink }}{{ end }}
+{{ $componentsURL := "components/" | relLangURL }}
+{{ with site.GetPage "/components" }}{{ $componentsURL = .RelPermalink }}{{ end }}
+<div class="doc-home">
+
+  <section class="doc-hero" aria-labelledby="doc-hero-title">
+    <div class="doc-hero-text">
+      <p class="doc-overline">{{ i18n "home_overline" }} · v{{ $version }}</p>
+      <h1 id="doc-hero-title" class="doc-hero-title">{{ i18n "home_hero_title" | safeHTML }}</h1>
+      <p class="doc-hero-lead">{{ .Description }}</p>
+      <div class="doc-hero-actions">
+        <a class="mtx-button mtx-button--contained mtx-button--large" data-mtx="button" href="{{ $installURL }}">
+          {{ i18n "home_get_started" }}
+          <span class="mtx-button__icon material-icons" aria-hidden="true">arrow_forward</span>
+        </a>
+        <a class="mtx-button mtx-button--outlined mtx-button--large" data-mtx="button" href="{{ $componentsURL }}">{{ i18n "home_view_components" }}</a>
+      </div>
+
+      <div class="doc-install">
+        <p class="doc-install-label" id="doc-install-npm">{{ i18n "home_install_npm" }}</p>
+        {{ highlight "npm install materix-ui" "bash" "" }}
+        <p class="doc-install-label" id="doc-install-cdn">{{ i18n "home_install_cdn" }}</p>
+        {{ $cdn := printf "<link rel=\"stylesheet\" href=\"https://unpkg.com/materix-ui@%s/dist/materix.min.css\">\n<script src=\"https://unpkg.com/materix-ui@%s/dist/materix.umd.js\"></script>" $version $version }}
+        {{ highlight $cdn "html" "" }}
+      </div>
+    </div>
+
+    <div class="doc-hero-demo" aria-label="{{ i18n "home_live_demo" }}">
+      <div class="doc-hero-card mtx-root">
+        <div class="doc-hero-card-head">
+          <span class="doc-hero-card-title">{{ i18n "home_demo_title" }}</span>
+          <span class="doc-hero-card-sub">{{ i18n "home_demo_subtitle" }}</span>
+        </div>
+        <input data-mtx="text-field" data-label="{{ i18n "home_demo_name" }}" data-variant="outlined" data-start-icon="person" type="text" value="Ada Lovelace" />
+        <input data-mtx="text-field" data-label="{{ i18n "home_demo_email" }}" data-variant="outlined" data-start-icon="email" type="email" />
+        <div class="doc-hero-chips">
+          <div data-mtx="chip" data-label="{{ i18n "home_demo_chip_design" }}" data-icon="palette" data-color="primary"></div>
+          <div data-mtx="chip" data-label="{{ i18n "home_demo_chip_frontend" }}" data-variant="outlined"></div>
+          <div data-mtx="chip" data-label="{{ i18n "home_demo_chip_a11y" }}" data-variant="outlined" data-deletable="true"></div>
+        </div>
+        <input type="checkbox" data-mtx="switch" data-label="{{ i18n "home_demo_newsletter" }}" checked />
+        <div class="doc-hero-card-actions">
+          <button type="button" class="mtx-button mtx-button--text" data-mtx="button">{{ i18n "home_demo_cancel" }}</button>
+          <button type="button" class="mtx-button mtx-button--contained" data-mtx="button">{{ i18n "home_demo_submit" }}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-home-section" aria-labelledby="doc-features-title">
+    <h2 id="doc-features-title" class="doc-home-heading">{{ i18n "home_why" }}</h2>
+    <ul class="doc-feature-grid">
+      {{ range $i, $icon := slice "code_off" "bolt" "palette" "accessibility_new" "dark_mode" "terminal" }}
+      {{ $n := add $i 1 }}
+      <li class="doc-feature">
+        <span class="doc-feature-icon" aria-hidden="true"><span class="material-icons">{{ $icon }}</span></span>
+        <h3>{{ i18n (printf "home_feature_%d_title" $n) }}</h3>
+        <p>{{ i18n (printf "home_feature_%d_desc" $n) | safeHTML }}</p>
+      </li>
+      {{ end }}
+    </ul>
+  </section>
+
+  {{ with .Content }}
+  <section class="doc-home-section doc-content">
+    {{ . }}
+  </section>
+  {{ end }}
+
+  {{/* Plantillas destacadas (params.featuredTemplates) con enlace a la galería. */}}
+  {{ with site.GetPage "/templates" }}
+  {{ $gallery := . }}
+  {{ $featured := site.Params.featuredTemplates | default slice }}
+  <section class="doc-home-section" aria-labelledby="doc-templates-title">
+    <div class="doc-home-heading-row">
+      <h2 id="doc-templates-title" class="doc-home-heading">{{ i18n "templates" }}</h2>
+      <a class="doc-text-link" href="{{ $gallery.RelPermalink }}">{{ i18n "template_gallery" }}<span class="material-icons" aria-hidden="true">chevron_right</span></a>
+    </div>
+    <p class="doc-home-lead">{{ i18n "home_templates_lead" }}</p>
+    <div class="doc-tpl-grid doc-tpl-grid--featured">
+      {{ range $slug := $featured }}
+        {{ range where hugo.Data.templates.items "slug" $slug }}
+          {{ partial "template-card.html" (dict "tpl" . "level" 3 "compact" true) }}
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  <section class="doc-home-section" aria-labelledby="doc-components-title">
+    <div class="doc-home-heading-row">
+      <h2 id="doc-components-title" class="doc-home-heading">{{ i18n "components" }}</h2>
+      <a class="doc-text-link" href="{{ $componentsURL }}">{{ i18n "view_all" }}<span class="material-icons" aria-hidden="true">chevron_right</span></a>
+    </div>
+    <div class="doc-groups">
+      {{ partial "component-cards.html" . }}
+    </div>
+  </section>
+</div>
+{{ end }}

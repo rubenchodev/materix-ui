@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Materix UI — Typography
+   Basado en Material UI (MUI)
+   ========================================================================== */
+.mtx-typography {
+  margin: 0;
+  font-family: var(--mtx-font-family);
+  color: var(--mtx-color-text-primary);
+}
+
+/* Variantes. Como en MUI, ninguna añade margen (usar --gutter-bottom o --paragraph).
+   Usadas como clase pura, utilities.css reinicia el margen del agente de usuario. */
+.mtx-typography--h1 { font: var(--mtx-type-h1); letter-spacing: -0.01562em; }
+.mtx-typography--h2 { font: var(--mtx-type-h2); letter-spacing: -0.00833em; }
+.mtx-typography--h3 { font: var(--mtx-type-h3); letter-spacing: 0; }
+.mtx-typography--h4 { font: var(--mtx-type-h4); letter-spacing: 0.00735em; }
+.mtx-typography--h5 { font: var(--mtx-type-h5); letter-spacing: 0; }
+.mtx-typography--h6 { font: var(--mtx-type-h6); letter-spacing: 0.0075em; }
+.mtx-typography--subtitle1 { font: var(--mtx-type-subtitle1); letter-spacing: 0.00938em; }
+.mtx-typography--subtitle2 { font: var(--mtx-type-subtitle2); letter-spacing: 0.00714em; }
+.mtx-typography--body1 { font: var(--mtx-type-body1); letter-spacing: 0.00938em; }
+.mtx-typography--body2 { font: var(--mtx-type-body2); letter-spacing: 0.01071em; }
+.mtx-typography--button { font: var(--mtx-type-button); text-transform: uppercase; letter-spacing: 0.02857em; }
+.mtx-typography--caption { font: var(--mtx-type-caption); letter-spacing: 0.03333em; }
+.mtx-typography--overline { font: var(--mtx-type-overline); text-transform: uppercase; letter-spacing: 0.08333em; }
+
+/* Alineación */
+.mtx-typography--left, .mtx-typography--align-left { text-align: left; }
+.mtx-typography--center, .mtx-typography--align-center { text-align: center; }
+.mtx-typography--right, .mtx-typography--align-right { text-align: right; }
+.mtx-typography--justify, .mtx-typography--align-justify { text-align: justify; }
+
+/* Colores de texto (alias históricos: --primary / --secondary = texto) */
+.mtx-typography--text-primary, .mtx-typography--color-text-primary { color: var(--mtx-color-text-primary); }
+.mtx-typography--text-secondary, .mtx-typography--color-text-secondary { color: var(--mtx-color-text-secondary); }
+.mtx-typography--primary { color: var(--mtx-color-text-primary); }
+.mtx-typography--secondary { color: var(--mtx-color-text-secondary); }
+.mtx-typography--disabled,
+.mtx-typography--color-disabled,
+.mtx-typography--color-text-disabled { color: var(--mtx-color-text-disabled); }
+.mtx-typography--color-inherit { color: inherit; }
+
+/* Colores de paleta (prop `color` de MUI; los aplica data-color) */
+.mtx-typography--color-primary { color: var(--mtx-color-primary-text); }
+.mtx-typography--color-secondary { color: var(--mtx-color-secondary-text); }
+.mtx-typography--error, .mtx-typography--color-error { color: var(--mtx-color-error-text); }
+.mtx-typography--warning, .mtx-typography--color-warning { color: var(--mtx-color-warning-text); }
+.mtx-typography--info, .mtx-typography--color-info { color: var(--mtx-color-info-text); }
+.mtx-typography--success, .mtx-typography--color-success { color: var(--mtx-color-success-text); }
+
+/* No wrap y truncado (MUI: nowrap con elipsis) */
+.mtx-typography--no-wrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mtx-typography--gutter-bottom { margin-bottom: 0.35em; }
+.mtx-typography--paragraph { margin-bottom: 16px; }
+
+/* ==========================================================================
+   Variantes responsive (mobile-first, breakpoints de Grid): la clase base fija
+   la variante en xs y `mtx-typography--{bp}-{variante}` la sustituye desde
+   ese breakpoint. Ej.: class="mtx-typography--h4 mtx-typography--md-h3".
+   ========================================================================== */
+@media (min-width: 600px) {
+  .mtx-typography--sm-h1 { font: var(--mtx-type-h1); letter-spacing: -0.01562em; text-transform: none; }
+  .mtx-typography--sm-h2 { font: var(--mtx-type-h2); letter-spacing: -0.00833em; text-transform: none; }
+  .mtx-typography--sm-h3 { font: var(--mtx-type-h3); letter-spacing: 0; text-transform: none; }
+  .mtx-typography--sm-h4 { font: var(--mtx-type-h4); letter-spacing: 0.00735em; text-transform: none; }
+  .mtx-typography--sm-h5 { font: var(--mtx-type-h5); letter-spacing: 0; text-transform: none; }
+  .mtx-typography--sm-h6 { font: var(--mtx-type-h6); letter-spacing: 0.0075em; text-transform: none; }
+  .mtx-typography--sm-subtitle1 { font: var(--mtx-type-subtitle1); letter-spacing: 0.00938em; text-transform: none; }
+  .mtx-typography--sm-subtitle2 { font: var(--mtx-type-subtitle2); letter-spacing: 0.00714em; text-transform: none; }
+  .mtx-typography--sm-body1 { font: var(--mtx-type-body1); letter-spacing: 0.00938em; text-transform: none; }
+  .mtx-typography--sm-body2 { font: var(--mtx-type-body2); letter-spacing: 0.01071em; text-transform: none; }
+  .mtx-typography--sm-button { font: var(--mtx-type-button); letter-spacing: 0.02857em; text-transform: uppercase; }
+  .mtx-typography--sm-caption { font: var(--mtx-type-caption); letter-spacing: 0.03333em; text-transform: none; }
+  .mtx-typography--sm-overline { font: var(--mtx-type-overline); letter-spacing: 0.08333em; text-transform: uppercase; }
+}
+@media (min-width: 900px) {
+  .mtx-typography--md-h1 { font: var(--mtx-type-h1); letter-spacing: -0.01562em; text-transform: none; }
+  .mtx-typography--md-h2 { font: var(--mtx-type-h2); letter-spacing: -0.00833em; text-transform: none; }
+  .mtx-typography--md-h3 { font: var(--mtx-type-h3); letter-spacing: 0; text-transform: none; }
+  .mtx-typography--md-h4 { font: var(--mtx-type-h4); letter-spacing: 0.00735em; text-transform: none; }
+  .mtx-typography--md-h5 { font: var(--mtx-type-h5); letter-spacing: 0; text-transform: none; }
+  .mtx-typography--md-h6 { font: var(--mtx-type-h6); letter-spacing: 0.0075em; text-transform: none; }
+  .mtx-typography--md-subtitle1 { font: var(--mtx-type-subtitle1); letter-spacing: 0.00938em; text-transform: none; }
+  .mtx-typography--md-subtitle2 { font: var(--mtx-type-subtitle2); letter-spacing: 0.00714em; text-transform: none; }
+  .mtx-typography--md-body1 { font: var(--mtx-type-body1); letter-spacing: 0.00938em; text-transform: none; }
+  .mtx-typography--md-body2 { font: var(--mtx-type-body2); letter-spacing: 0.01071em; text-transform: none; }
+  .mtx-typography--md-button { font: var(--mtx-type-button); letter-spacing: 0.02857em; text-transform: uppercase; }
+  .mtx-typography--md-caption { font: var(--mtx-type-caption); letter-spacing: 0.03333em; text-transform: none; }
+  .mtx-typography--md-overline { font: var(--mtx-type-overline); letter-spacing: 0.08333em; text-transform: uppercase; }
+}
+@media (min-width: 1200px) {
+  .mtx-typography--lg-h1 { font: var(--mtx-type-h1); letter-spacing: -0.01562em; text-transform: none; }
+  .mtx-typography--lg-h2 { font: var(--mtx-type-h2); letter-spacing: -0.00833em; text-transform: none; }
+  .mtx-typography--lg-h3 { font: var(--mtx-type-h3); letter-spacing: 0; text-transform: none; }
+  .mtx-typography--lg-h4 { font: var(--mtx-type-h4); letter-spacing: 0.00735em; text-transform: none; }
+  .mtx-typography--lg-h5 { font: var(--mtx-type-h5); letter-spacing: 0; text-transform: none; }
+  .mtx-typography--lg-h6 { font: var(--mtx-type-h6); letter-spacing: 0.0075em; text-transform: none; }
+  .mtx-typography--lg-subtitle1 { font: var(--mtx-type-subtitle1); letter-spacing: 0.00938em; text-transform: none; }
+  .mtx-typography--lg-subtitle2 { font: var(--mtx-type-subtitle2); letter-spacing: 0.00714em; text-transform: none; }
+  .mtx-typography--lg-body1 { font: var(--mtx-type-body1); letter-spacing: 0.00938em; text-transform: none; }
+  .mtx-typography--lg-body2 { font: var(--mtx-type-body2); letter-spacing: 0.01071em; text-transform: none; }
+  .mtx-typography--lg-button { font: var(--mtx-type-button); letter-spacing: 0.02857em; text-transform: uppercase; }
+  .mtx-typography--lg-caption { font: var(--mtx-type-caption); letter-spacing: 0.03333em; text-transform: none; }
+  .mtx-typography--lg-overline { font: var(--mtx-type-overline); letter-spacing: 0.08333em; text-transform: uppercase; }
+}
+@media (min-width: 1536px) {
+  .mtx-typography--xl-h1 { font: var(--mtx-type-h1); letter-spacing: -0.01562em; text-transform: none; }
+  .mtx-typography--xl-h2 { font: var(--mtx-type-h2); letter-spacing: -0.00833em; text-transform: none; }
+  .mtx-typography--xl-h3 { font: var(--mtx-type-h3); letter-spacing: 0; text-transform: none; }
+  .mtx-typography--xl-h4 { font: var(--mtx-type-h4); letter-spacing: 0.00735em; text-transform: none; }
+  .mtx-typography--xl-h5 { font: var(--mtx-type-h5); letter-spacing: 0; text-transform: none; }
+  .mtx-typography--xl-h6 { font: var(--mtx-type-h6); letter-spacing: 0.0075em; text-transform: none; }
+  .mtx-typography--xl-subtitle1 { font: var(--mtx-type-subtitle1); letter-spacing: 0.00938em; text-transform: none; }
+  .mtx-typography--xl-subtitle2 { font: var(--mtx-type-subtitle2); letter-spacing: 0.00714em; text-transform: none; }
+  .mtx-typography--xl-body1 { font: var(--mtx-type-body1); letter-spacing: 0.00938em; text-transform: none; }
+  .mtx-typography--xl-body2 { font: var(--mtx-type-body2); letter-spacing: 0.01071em; text-transform: none; }
+  .mtx-typography--xl-button { font: var(--mtx-type-button); letter-spacing: 0.02857em; text-transform: uppercase; }
+  .mtx-typography--xl-caption { font: var(--mtx-type-caption); letter-spacing: 0.03333em; text-transform: none; }
+  .mtx-typography--xl-overline { font: var(--mtx-type-overline); letter-spacing: 0.08333em; text-transform: uppercase; }
+}
+
+/* ==========================================================================
+   Escala fluida (equivale a responsiveFontSizes de MUI): en el elemento o en
+   cualquier ancestro (incluido <html>), h1–h6 escalan con clamp() entre su
+   tamaño móvil (≤600px) y el de escritorio (≥1200px). Redefine los tokens,
+   así que también afecta a componentes que los consumen.
+   ========================================================================== */
+.mtx-typography--responsive {
+  --mtx-type-h1: 300 clamp(3.5rem, 1rem + 6.6667vw, 6rem)/1.167 var(--mtx-font-family);
+  --mtx-type-h2: 300 clamp(2.375rem, 1rem + 3.6667vw, 3.75rem)/1.2 var(--mtx-font-family);
+  --mtx-type-h3: 400 clamp(2rem, 1rem + 2.6667vw, 3rem)/1.167 var(--mtx-font-family);
+  --mtx-type-h4: 400 clamp(1.5625rem, 1rem + 1.5vw, 2.125rem)/1.235 var(--mtx-font-family);
+  --mtx-type-h5: 400 clamp(1.25rem, 1rem + 0.6667vw, 1.5rem)/1.334 var(--mtx-font-family);
+  --mtx-type-h6: 500 clamp(1.125rem, 1rem + 0.3333vw, 1.25rem)/1.6 var(--mtx-font-family);
+}

@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Materix UI — Skeleton
+   Placeholder de carga basado en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-skeleton {
+  display: block;
+  box-sizing: border-box;
+  height: 1.2em;
+  background-color: var(--mtx-skeleton-bg);
+}
+
+/* text: ocupa la altura de línea de la tipografía y se reduce al 60 % (MUI) */
+.mtx-skeleton--text {
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  transform-origin: 0 55%;
+  transform: scale(1, 0.6);
+  border-radius: var(--mtx-shape-radius) / calc(var(--mtx-shape-radius) * 1.67);
+}
+
+.mtx-skeleton--text:empty::before {
+  content: "\00a0";
+}
+
+.mtx-skeleton--circular {
+  border-radius: 50%;
+}
+
+.mtx-skeleton--rectangular {
+  border-radius: 0;
+}
+
+.mtx-skeleton--rounded {
+  border-radius: var(--mtx-shape-radius);
+}
+
+/* Con hijos: toma su tamaño sin mostrarlos (prop children de MUI) */
+.mtx-skeleton--with-children {
+  max-width: fit-content;
+  color: transparent;
+}
+
+.mtx-skeleton--with-children:not([style*="height"]) {
+  height: auto;
+}
+
+.mtx-skeleton--with-children > * {
+  visibility: hidden;
+}
+
+/* Párrafo de varias líneas (data-lines) */
+.mtx-skeleton-lines {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Animaciones
+   -------------------------------------------------------------------------- */
+@keyframes mtx-skeleton-pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+@keyframes mtx-skeleton-wave {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+.mtx-skeleton--pulse {
+  animation: mtx-skeleton-pulse 2s ease-in-out 0.5s infinite;
+}
+
+.mtx-skeleton--wave {
+  position: relative;
+  overflow: hidden;
+  /* Recorta la ola al radio del bloque también en Safari */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+.mtx-skeleton--wave::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--mtx-skeleton-wave), transparent);
+  transform: translateX(-100%);
+  animation: mtx-skeleton-wave 2s linear 0.5s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-skeleton--pulse,
+  .mtx-skeleton--wave::after {
+    animation: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Región de carga: [data-loading] alterna placeholder y contenido real
+   -------------------------------------------------------------------------- */
+[data-loading]:not([data-loading="false"]) > [data-skeleton-content],
+:not([data-loading]) > [data-skeleton-placeholder],
+[data-loading="false"] > [data-skeleton-placeholder] {
+  display: none !important;
+}

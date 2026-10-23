@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utilities · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Sample box appearance only: layout is done by the utilities */
+    .demo-u-box {
+      min-width: 48px;
+      padding: var(--mtx-spacing-1) var(--mtx-spacing-1_5);
+      border: 1px solid color-mix(in srgb, var(--mtx-color-primary) 45%, transparent);
+      border-radius: var(--mtx-shape-radius);
+      background-color: color-mix(in srgb, var(--mtx-color-primary) 10%, transparent);
+      color: var(--mtx-color-text-primary);
+      font: var(--mtx-type-body2);
+      text-align: center;
+    }
+    .demo-u-area {
+      border: 1px dashed var(--mtx-color-divider);
+      border-radius: var(--mtx-shape-radius);
+    }
+    .demo-u-tile {
+      width: 96px;
+      height: 64px;
+    }
+    .demo-u-media {
+      width: 120px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--mtx-color-primary), var(--mtx-color-secondary));
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Guide · Utilities</span>
+        <h1>Utilities</h1>
+        <p class="demo-lead">Mobile-first mtx-* classes for display, flex, alignment, gap, spacing, sizing, text, color, position, borders and elevation, to build layouts without custom CSS.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#breakpoints">Breakpoints</a>
+      <a href="#display">Display</a>
+      <a href="#flex">Flex</a>
+      <a href="#alignment">Alignment</a>
+      <a href="#gap">Gap</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#sizing">Sizing</a>
+      <a href="#text">Text</a>
+      <a href="#color">Color</a>
+      <a href="#accessibility">Accessibility</a>
+      <a href="#position">Position</a>
+      <a href="#borders">Borders and elevation</a>
+      <a href="#misc">Miscellaneous</a>
+      <a href="#recipes">Recipes</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Combine <code>mtx-*</code> classes in the HTML. They all use <code>!important</code> to win over component styles, and the breakpoint ones use <code>min-width</code>.</p>
+      <div class="mtx-d-flex mtx-flex-column mtx-flex-sm-row mtx-align-items-sm-center mtx-justify-content-between mtx-gap-2 mtx-p-2 mtx-bg-paper mtx-border mtx-rounded">
+        <div class="mtx-d-flex mtx-align-items-center mtx-gap-1_5 mtx-min-w-0">
+          <span class="material-icons mtx-color-primary" aria-hidden="true">cloud_done</span>
+          <span class="mtx-typography--subtitle2 mtx-text-truncate">Backup completed</span>
+        </div>
+        <button class="mtx-button mtx-button--text" data-mtx="button" type="button">View details</button>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-d-flex mtx-flex-column mtx-flex-sm-row mtx-align-items-sm-center
+            mtx-justify-content-between mtx-gap-2 mtx-p-2 mtx-bg-paper mtx-border mtx-rounded"&gt;
+  …
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="breakpoints">
+      <h2>Breakpoints</h2>
+      <p>xs (no infix) 0px · <code>sm</code> 600px · <code>md</code> 900px · <code>lg</code> 1200px · <code>xl</code> 1536px. The infix goes before the value: <code>mtx-d-md-none</code>, <code>mtx-p-lg-4</code>. Resize the window: only one box is visible in each range.</p>
+      <div class="mtx-d-flex mtx-gap-1">
+        <span class="demo-u-box mtx-d-sm-none">xs (&lt; 600)</span>
+        <span class="demo-u-box mtx-d-none mtx-d-sm-block mtx-d-md-none">sm (600–899)</span>
+        <span class="demo-u-box mtx-d-none mtx-d-md-block mtx-d-lg-none">md (900–1199)</span>
+        <span class="demo-u-box mtx-d-none mtx-d-lg-block mtx-d-xl-none">lg (1200–1535)</span>
+        <span class="demo-u-box mtx-d-none mtx-d-xl-block">xl (≥ 1536)</span>
+      </div>
+      <pre class="demo-code"><code>&lt;span class="mtx-d-none mtx-d-md-block mtx-d-lg-none"&gt;md&lt;/span&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="display">
+      <h2>Display</h2>
+      <p><code>mtx-d-{none, block, inline, inline-block, flex, inline-flex, grid, contents}</code> and <code>mtx-d-{bp}-*</code>. The <code>hidden</code> attribute always wins inside <code>.mtx-root</code>.</p>
+      <div class="mtx-d-flex mtx-flex-wrap mtx-gap-2 mtx-align-items-center">
+        <span class="demo-u-box mtx-d-inline-block">inline-block</span>
+        <span class="demo-u-box mtx-d-inline-flex mtx-align-items-center mtx-gap-0_5"><span class="material-icons" aria-hidden="true">bolt</span>inline-flex</span>
+        <span class="demo-u-box mtx-d-flex" hidden>hidden + mtx-d-flex (not visible)</span>
+      </div>
+    </section>
+
+    <section class="demo-section" id="flex">
+      <h2>Flex</h2>
+      <p>Direction and wrap with responsive variants (<code>mtx-flex-{bp}-row</code>…); <code>mtx-flex-1</code>, <code>mtx-flex-grow-*</code>, <code>mtx-flex-shrink-*</code> and <code>mtx-min-w-0</code> so text can truncate inside flex.</p>
+      <div class="demo-stack">
+        <div class="demo-group">
+          <span class="demo-label">mtx-flex-column mtx-flex-md-row</span>
+          <div class="mtx-d-flex mtx-flex-column mtx-flex-md-row mtx-gap-1">
+            <span class="demo-u-box">1</span><span class="demo-u-box">2</span><span class="demo-u-box">3</span>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">mtx-flex-1 in the middle · mtx-flex-shrink-0 on the ends</span>
+          <div class="mtx-d-flex mtx-gap-1">
+            <span class="demo-u-box mtx-flex-shrink-0">fixed</span>
+            <span class="demo-u-box mtx-flex-1 mtx-min-w-0 mtx-text-truncate">Takes the remaining space and truncates a very long text that doesn't fit on a single line of the container</span>
+            <span class="demo-u-box mtx-flex-shrink-0">fixed</span>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">mtx-flex-wrap</span>
+          <div class="mtx-d-flex mtx-flex-wrap mtx-gap-1">
+            <span class="demo-u-box">one</span><span class="demo-u-box">two</span><span class="demo-u-box">three</span><span class="demo-u-box">four</span><span class="demo-u-box">five</span><span class="demo-u-box">six</span><span class="demo-u-box">seven</span><span class="demo-u-box">eight</span><span class="demo-u-box">nine</span><span class="demo-u-box">ten</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="alignment">
+      <h2>Alignment</h2>
+      <p><code>mtx-align-items-{start,center,end,baseline,stretch}</code>, <code>mtx-align-self-*</code>, <code>mtx-justify-content-{start,center,end,between,around,evenly}</code> and <code>mtx-align-content-*</code>, all with responsive variants.</p>
+      <div class="demo-stack">
+        <div class="mtx-d-flex mtx-justify-content-between mtx-align-items-center mtx-p-1 demo-u-area">
+          <span class="demo-u-box">between</span><span class="demo-u-box mtx-py-3">center</span><span class="demo-u-box">between</span>
+        </div>
+        <div class="mtx-d-flex mtx-justify-content-center mtx-align-items-end mtx-gap-1 mtx-p-1 demo-u-area">
+          <span class="demo-u-box">end</span><span class="demo-u-box mtx-py-3">tall</span><span class="demo-u-box mtx-align-self-start">align-self-start</span>
+        </div>
+        <div class="mtx-d-flex mtx-justify-content-evenly mtx-p-1 demo-u-area">
+          <span class="demo-u-box">evenly</span><span class="demo-u-box">evenly</span><span class="demo-u-box">evenly</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="gap">
+      <h2>Gap</h2>
+      <p><code>mtx-gap-{n}</code>, <code>mtx-row-gap-{n}</code> and <code>mtx-column-gap-{n}</code> with the scale <code>0, 0_5, 1, 1_5, 2, 2_5, 3, 4, 5, 6, 8, 10</code> (n × 8px) and responsive variants.</p>
+      <div class="demo-stack">
+        <div class="mtx-d-flex mtx-gap-0_5"><span class="demo-u-box">gap-0_5</span><span class="demo-u-box">4px</span></div>
+        <div class="mtx-d-flex mtx-gap-2"><span class="demo-u-box">gap-2</span><span class="demo-u-box">16px</span></div>
+        <div class="mtx-d-flex mtx-gap-1 mtx-gap-md-5"><span class="demo-u-box">gap-1 gap-md-5</span><span class="demo-u-box">8 → 40px</span></div>
+        <div class="mtx-d-grid mtx-row-gap-1 mtx-column-gap-4 demo-grid-3"><span class="demo-u-box">row-gap-1</span><span class="demo-u-box">column-gap-4</span><span class="demo-u-box">c</span><span class="demo-u-box">d</span><span class="demo-u-box">e</span><span class="demo-u-box">f</span></div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="spacing">
+      <h2>Spacing</h2>
+      <p><code>mtx-{m,mt,mb,ms,me,mx,my,p,pt,pb,ps,pe,px,py}-{n}</code>. <code>s</code>/<code>e</code> are logical (line start/end, RTL-aware). All margins (<code>m</code>, <code>mt</code>, <code>mb</code>, <code>ms</code>, <code>me</code>, <code>mx</code>, <code>my</code>) and <code>p</code>, <code>px</code>, <code>py</code> have responsive variants (<code>mtx-ms-md-2</code>, <code>mtx-mt-lg-0</code>…). Auto margins, also responsive: <code>mtx-{m,ms,me,mx,mt,mb}-auto</code> and <code>mtx-ms-{bp}-auto</code>. The aliases <code>mtx-ml-*</code>, <code>mtx-mr-*</code>, <code>mtx-pl-*</code>, <code>mtx-pr-*</code> (0–4) are kept.</p>
+      <div class="demo-stack">
+        <div class="mtx-d-flex mtx-flex-wrap mtx-gap-2 mtx-align-items-start">
+          <div class="demo-u-area"><div class="demo-u-box mtx-m-2">m-2</div></div>
+          <div class="demo-u-area"><div class="demo-u-box mtx-px-4 mtx-py-1">px-4 py-1</div></div>
+          <div class="demo-u-area"><div class="demo-u-box mtx-ms-5">ms-5</div></div>
+          <div class="demo-u-area"><div class="demo-u-box mtx-p-1 mtx-p-md-4">p-1 p-md-4</div></div>
+        </div>
+        <div class="mtx-d-flex mtx-align-items-center mtx-p-1 demo-u-area">
+          <span class="demo-u-box">Logo</span>
+          <span class="demo-u-box mtx-ms-auto">mtx-ms-auto pushes to the right</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizing">
+      <h2>Sizing</h2>
+      <p><code>mtx-w-{25,50,75,100,auto}</code>, <code>mtx-h-{100,auto}</code>, <code>mtx-mw-100</code>, <code>mtx-mh-100</code>, <code>mtx-vh-100</code> and <code>mtx-min-vh-100</code> (with <code>dvh</code> and a <code>vh</code> fallback).</p>
+      <div class="demo-stack">
+        <div class="demo-u-box mtx-w-25">w-25</div>
+        <div class="demo-u-box mtx-w-50">w-50</div>
+        <div class="demo-u-box mtx-w-75">w-75</div>
+        <div class="demo-u-box mtx-w-100">w-100</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="text">
+      <h2>Text and typography</h2>
+      <p>Logical alignment with responsive variants (<code>mtx-text-{bp}-start</code>), <code>nowrap</code>/<code>wrap</code>, <code>truncate</code>, <code>mtx-line-clamp-{2,3}</code>, transforms, <code>mtx-fw-*</code>, <code>mtx-tabular-nums</code> and <code>mtx-lh-1</code>. The <code>mtx-typography--{variant}</code> classes work as plain classes on any tag.</p>
+      <div class="demo-stack">
+        <p class="mtx-typography--body2 mtx-text-center mtx-text-md-start mtx-p-1 demo-u-area">mtx-text-center mtx-text-md-start</p>
+        <p class="mtx-typography--body2 mtx-line-clamp-2 demo-wide">mtx-line-clamp-2: Materix UI implements the Material UI components with vanilla CSS and JavaScript, without frameworks. This paragraph is long enough to take up more than two lines in a narrow container, so it is cut off with an ellipsis at the end of the second line.</p>
+        <div class="mtx-d-flex mtx-flex-wrap mtx-gap-3 mtx-align-items-baseline">
+          <span class="mtx-fw-light">fw-light</span>
+          <span class="mtx-fw-regular">fw-regular</span>
+          <span class="mtx-fw-medium">fw-medium</span>
+          <span class="mtx-fw-bold">fw-bold</span>
+          <span class="mtx-text-uppercase">uppercase</span>
+          <span class="mtx-text-capitalize">capitalize text</span>
+          <span class="mtx-tabular-nums">1,111.11 · 9,999.99</span>
+        </div>
+        <div>
+          <h3 class="mtx-typography--h6">h3 with mtx-typography--h6</h3>
+          <span class="mtx-typography--overline mtx-color-text-secondary">overline on a span</span>
+        </div>
+        <div>
+          <h3 class="mtx-typography--h5 mtx-typography--md-h4 mtx-typography--lg-h3">h5 → md-h4 → lg-h3 (mobile-first)</h3>
+          <h3 class="mtx-typography--h3 mtx-typography--responsive">Fluid h3 with mtx-typography--responsive</h3>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="color">
+      <h2>Color</h2>
+      <p><code>mtx-color-*</code> for text and <code>mtx-bg-*</code> for backgrounds. <code>mtx-bg-primary</code> and <code>mtx-bg-secondary</code> also set the contrast color. All values come from the tokens: they change with the theme.</p>
+      <div class="demo-stack">
+        <div class="mtx-d-flex mtx-flex-wrap mtx-gap-2">
+          <span class="mtx-color-text-primary">text-primary</span>
+          <span class="mtx-color-text-secondary">text-secondary</span>
+          <span class="mtx-color-text-disabled" aria-disabled="true">text-disabled</span>
+          <span class="mtx-color-primary">primary</span>
+          <span class="mtx-color-secondary">secondary</span>
+          <span class="mtx-color-success">success</span>
+          <span class="mtx-color-error">error</span>
+          <span class="mtx-color-warning">warning</span>
+          <span class="mtx-color-info">info</span>
+        </div>
+        <div class="mtx-d-flex mtx-flex-wrap mtx-gap-1">
+          <span class="mtx-bg-paper mtx-border mtx-rounded mtx-px-2 mtx-py-1">bg-paper</span>
+          <span class="mtx-bg-default mtx-border mtx-rounded mtx-px-2 mtx-py-1">bg-default</span>
+          <span class="mtx-bg-primary mtx-rounded mtx-px-2 mtx-py-1">bg-primary</span>
+          <span class="mtx-bg-secondary mtx-rounded mtx-px-2 mtx-py-1">bg-secondary</span>
+          <span class="mtx-bg-action-hover mtx-rounded mtx-px-2 mtx-py-1">bg-action-hover</span>
+          <span class="mtx-bg-action-selected mtx-rounded mtx-px-2 mtx-py-1">bg-action-selected</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="accessibility">
+      <h2>Accessibility</h2>
+      <p><code>mtx-visually-hidden</code> hides content visually but keeps the text for screen readers; <code>mtx-visually-hidden-focusable</code> shows it when it receives focus; <code>mtx-skip-link</code> is the “skip to content” link, fixed at the top left and visible only on focus (press Tab after this section's button to see it).</p>
+      <div class="mtx-d-flex mtx-align-items-center mtx-gap-2">
+        <button class="mtx-icon-button" data-mtx="icon-button" type="button">
+          <span class="material-icons" aria-hidden="true">delete</span>
+          <span class="mtx-visually-hidden">Delete draft</span>
+        </button>
+        <a class="mtx-visually-hidden-focusable" href="#recipes">Go to the recipes (visible with Tab)</a>
+        <a class="mtx-skip-link" href="#recipes">Skip to the recipes</a>
+      </div>
+      <pre class="demo-code"><code>&lt;a class="mtx-skip-link" href="#main"&gt;Skip to content&lt;/a&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="position">
+      <h2>Position, overflow and layers</h2>
+      <p><code>mtx-position-*</code>, <code>mtx-sticky-top</code> / <code>mtx-sticky-{bp}-top</code> (sits below the App Bar using <code>--mtx-app-bar-height</code>), <code>mtx-top-0</code>, <code>mtx-inset-0</code>, <code>mtx-z-{0,1,2,3,app-bar,drawer,modal}</code>, <code>mtx-overflow-{hidden,auto,visible}</code>, <code>mtx-overflow-x-auto</code> and <code>mtx-overflow-y-auto</code>. For anchors: <code>mtx-scroll-smooth</code> (on <code>&lt;html&gt;</code>, disabled by <code>prefers-reduced-motion</code>) and <code>mtx-scroll-mt-app-bar</code> (the target lands below the App Bar; with a fixed/sticky App Bar, <code>&lt;html&gt;</code> already gets an automatic <code>scroll-padding-top</code>).</p>
+      <div class="mtx-position-relative mtx-overflow-hidden mtx-rounded demo-u-area mtx-p-3">
+        <span class="demo-u-box">Content</span>
+        <span class="mtx-position-absolute mtx-top-0 mtx-end-0 mtx-m-1 mtx-bg-primary mtx-rounded-pill mtx-px-1 mtx-typography--caption">top-0 end-0</span>
+      </div>
+      <div class="mtx-overflow-x-auto mtx-mt-2 demo-u-area">
+        <div class="mtx-d-flex mtx-gap-1 mtx-p-1 mtx-text-nowrap">
+          <span class="demo-u-box">overflow-x-auto</span><span class="demo-u-box">scrolls</span><span class="demo-u-box">horizontally</span><span class="demo-u-box">without breaking</span><span class="demo-u-box">the page</span><span class="demo-u-box">on mobile</span><span class="demo-u-box">or tablet</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="borders">
+      <h2>Borders, radius and elevation</h2>
+      <p><code>mtx-border</code>, <code>mtx-border-{top,bottom,start,end}</code>, <code>mtx-border-0</code>, <code>mtx-border-{primary,error,divider}</code>, <code>mtx-rounded</code>, <code>mtx-rounded-{0,2,3,circle,pill}</code> and <code>mtx-elevation-{0..8,12,16,24}</code>.</p>
+      <div class="mtx-d-flex mtx-flex-wrap mtx-gap-2">
+        <span class="demo-u-tile mtx-d-flex mtx-align-items-center mtx-justify-content-center mtx-border">border</span>
+        <span class="demo-u-tile mtx-d-flex mtx-align-items-center mtx-justify-content-center mtx-border mtx-border-primary mtx-rounded">primary</span>
+        <span class="demo-u-tile mtx-d-flex mtx-align-items-center mtx-justify-content-center mtx-border mtx-border-error mtx-rounded-2">error · r2</span>
+        <span class="demo-u-tile mtx-d-flex mtx-align-items-center mtx-justify-content-center mtx-border-bottom">bottom</span>
+        <span class="demo-u-tile mtx-d-flex mtx-align-items-center mtx-justify-content-center mtx-bg-paper mtx-rounded-3 mtx-elevation-1">elev. 1</span>
+        <span class="demo-u-tile mtx-d-flex mtx-align-items-center mtx-justify-content-center mtx-bg-paper mtx-rounded mtx-elevation-4">elev. 4</span>
+        <span class="demo-u-tile mtx-d-flex mtx-align-items-center mtx-justify-content-center mtx-bg-paper mtx-rounded mtx-elevation-8">elev. 8</span>
+        <span class="demo-u-tile mtx-d-flex mtx-align-items-center mtx-justify-content-center mtx-bg-paper mtx-rounded mtx-elevation-24">elev. 24</span>
+      </div>
+    </section>
+
+    <section class="demo-section" id="misc">
+      <h2>Miscellaneous</h2>
+      <p><code>mtx-stretched-link</code> makes the whole ancestor with <code>position: relative</code> clickable; plus <code>mtx-pointer-events-none</code>, <code>mtx-user-select-none</code>, <code>mtx-cursor-pointer</code> and <code>mtx-object-cover</code>.</p>
+      <div class="mtx-position-relative mtx-d-flex mtx-gap-2 mtx-align-items-center mtx-p-2 mtx-bg-paper mtx-border mtx-rounded demo-wide">
+        <span class="demo-u-media mtx-rounded mtx-flex-shrink-0" role="img" aria-label="Cover"></span>
+        <div class="mtx-min-w-0">
+          <a class="mtx-stretched-link mtx-typography--subtitle1 mtx-color-primary mtx-text-decoration-none" href="#misc">Utilities guide</a>
+          <p class="mtx-typography--body2 mtx-color-text-secondary mtx-line-clamp-2">The whole card is clickable thanks to mtx-stretched-link, without nesting interactive elements.</p>
+        </div>
+      </div>
+      <h3 class="mtx-typography--subtitle1 mtx-mt-3 mtx-mb-1">Controls above the stretched link</h3>
+      <p>Bootstrap pattern: the link's <code>::after</code> has <code>z-index: 1</code>; controls that must keep working get <code>mtx-stretched-link-above</code> (or <code>mtx-position-relative mtx-z-2</code>). The action list uses <code>mtx-list-unstyled</code> (no bullets, padding or margin) with <code>role="list"</code>.</p>
+      <article class="mtx-position-relative mtx-d-flex mtx-flex-column mtx-gap-1 mtx-p-2 mtx-bg-paper mtx-border mtx-rounded demo-wide">
+        <a class="mtx-stretched-link mtx-typography--subtitle1 mtx-color-primary mtx-text-decoration-none" href="#misc">Responsive typography in Materix</a>
+        <p class="mtx-typography--body2 mtx-color-text-secondary">The card opens the article; the tags and the save button are independent.</p>
+        <ul class="mtx-list-unstyled mtx-d-flex mtx-flex-wrap mtx-gap-1" role="list">
+          <li><a class="mtx-button mtx-button--outlined mtx-stretched-link-above" data-mtx="button" data-size="small" href="#text">Typography</a></li>
+          <li><a class="mtx-button mtx-button--outlined mtx-stretched-link-above" data-mtx="button" data-size="small" href="#position">Layers</a></li>
+          <li><button type="button" class="mtx-button mtx-button--text mtx-position-relative mtx-z-2" data-mtx="button" data-size="small" data-start-icon="bookmark_border">Save</button></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="demo-section" id="recipes">
+      <h2>Recipes</h2>
+      <p>Common patterns solved with utilities and components only.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Stat card</span>
+          <div class="mtx-bg-paper mtx-border mtx-rounded mtx-p-2 mtx-d-flex mtx-flex-column mtx-gap-1">
+            <div class="mtx-d-flex mtx-justify-content-between mtx-align-items-center">
+              <span class="mtx-typography--overline mtx-color-text-secondary">Revenue</span>
+              <span class="material-icons mtx-color-success" aria-hidden="true">trending_up</span>
+            </div>
+            <span class="mtx-typography--h4 mtx-tabular-nums">$48,290</span>
+            <span class="mtx-typography--body2 mtx-color-success mtx-fw-medium">+12.4% vs. last month</span>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Empty state</span>
+          <div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-text-center mtx-gap-1 mtx-py-4 mtx-px-2 demo-u-area">
+            <span class="material-icons mtx-color-text-disabled" aria-hidden="true">inbox</span>
+            <span class="mtx-typography--subtitle1">No messages</span>
+            <span class="mtx-typography--body2 mtx-color-text-secondary">When you receive an email it will show up here.</span>
+            <button class="mtx-button mtx-button--outlined mtx-mt-1" data-mtx="button" type="button">Compose</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+</body>
+</html>

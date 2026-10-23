@@ -1,0 +1,25 @@
+{{/* El índice (texto completo por secciones) se descarga bajo demanda desde la salida SearchIndex del idioma. */}}
+{{ $src := "" }}{{ with site.Home.OutputFormats.Get "SearchIndex" }}{{ $src = .RelPermalink }}{{ end }}
+<div class="doc-search" data-doc-search data-doc-search-src="{{ $src }}" hidden>
+  <div class="doc-search-backdrop" data-doc-search-close></div>
+  <div class="doc-search-dialog" role="dialog" aria-modal="true" aria-labelledby="doc-search-title">
+    <h2 id="doc-search-title" class="doc-visually-hidden">{{ i18n "search_title" }}</h2>
+    <div class="doc-search-field">
+      <span class="material-icons" aria-hidden="true">search</span>
+      <input type="search" class="doc-search-input" data-doc-search-input
+        placeholder="{{ i18n "search_placeholder" }}" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="true" aria-autocomplete="list"
+        aria-controls="doc-search-results" aria-label="{{ i18n "search_label" }}">
+      <button type="button" class="doc-search-esc" data-doc-search-close aria-label="{{ i18n "search_close" }}">Esc</button>
+    </div>
+    <ul id="doc-search-results" class="doc-search-results" role="listbox" aria-label="{{ i18n "search_results" }}" data-doc-search-results></ul>
+    <p class="doc-search-empty" data-doc-search-empty hidden>{{ i18n "search_no_results" }}</p>
+    <p class="doc-search-empty" data-doc-search-loading hidden>{{ i18n "search_loading" }}</p>
+    <div class="doc-search-footer" aria-hidden="true">
+      <span><kbd class="doc-kbd">↑</kbd><kbd class="doc-kbd">↓</kbd> {{ i18n "search_navigate" }}</span>
+      <span><kbd class="doc-kbd">Enter</kbd> {{ i18n "search_select" }}</span>
+      <span><kbd class="doc-kbd">Esc</kbd> {{ i18n "search_dismiss" }}</span>
+    </div>
+    <p class="doc-visually-hidden" role="status" aria-live="polite" data-doc-search-status></p>
+  </div>
+</div>

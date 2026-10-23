@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speed Dial · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Placement of the SpeedDial inside the demo panels */
+    .demo-speed-dial-br { position: absolute; right: var(--mtx-spacing-2); bottom: var(--mtx-spacing-2); }
+    .demo-speed-dial-tr { position: absolute; right: var(--mtx-spacing-2); top: var(--mtx-spacing-2); }
+    .demo-speed-dial-r { position: absolute; right: var(--mtx-spacing-2); top: 50%; transform: translateY(-50%); }
+    .demo-speed-dial-l { position: absolute; left: var(--mtx-spacing-2); top: 50%; transform: translateY(-50%); }
+    .demo-speed-dial-note {
+      margin: 0;
+      padding: var(--mtx-spacing-2);
+      color: var(--mtx-color-text-secondary);
+      font: var(--mtx-type-body2);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Navigation</span>
+        <h1>Speed Dial</h1>
+        <p class="demo-lead">Floating action button that reveals three to six related, labeled actions in four directions, on click or on hover.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#directions">Directions</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#labels">Labels</a>
+      <a href="#hover">Open on hover</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A container with <code>data-icon</code> and <code>data-label</code>, and one <code>&lt;button&gt;</code> per action with <code>data-icon</code> and <code>data-tooltip</code> (which also provides the <code>aria-label</code> if it is missing). Press the FAB.</p>
+      <div class="demo-panel demo-panel--tall">
+        <p class="demo-speed-dial-note">The actions take up space even when hidden: place the SpeedDial in a corner with absolute or fixed positioning.</p>
+        <div class="demo-speed-dial-br" data-mtx="speed-dial" data-icon="add" data-label="Create">
+          <button data-icon="description" data-tooltip="Document" aria-label="Document"></button>
+          <button data-icon="table_chart" data-tooltip="Spreadsheet" aria-label="Spreadsheet"></button>
+          <button data-icon="slideshow" data-tooltip="Presentation" aria-label="Presentation"></button>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="speed-dial" data-icon="add" data-label="Create"&gt;
+  &lt;button data-icon="description" data-tooltip="Document" aria-label="Document"&gt;&lt;/button&gt;
+  &lt;button data-icon="table_chart" data-tooltip="Spreadsheet" aria-label="Spreadsheet"&gt;&lt;/button&gt;
+  &lt;button data-icon="slideshow" data-tooltip="Presentation" aria-label="Presentation"&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="directions">
+      <h2>Directions</h2>
+      <p><code>data-direction="up|down|left|right"</code>. For horizontal directions <code>data-tooltip-hover</code> is recommended so the labels do not overlap.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">up · default</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-br" data-mtx="speed-dial" data-direction="up" data-icon="north" data-label="Upwards">
+              <button data-icon="content_copy" data-tooltip="Copy" aria-label="Copy"></button>
+              <button data-icon="share" data-tooltip="Share" aria-label="Share"></button>
+              <button data-icon="print" data-tooltip="Print" aria-label="Print"></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">down</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-tr" data-mtx="speed-dial" data-direction="down" data-icon="south" data-label="Downwards">
+              <button data-icon="content_copy" data-tooltip="Copy" aria-label="Copy"></button>
+              <button data-icon="share" data-tooltip="Share" aria-label="Share"></button>
+              <button data-icon="print" data-tooltip="Print" aria-label="Print"></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">left · data-tooltip-hover</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-r" data-mtx="speed-dial" data-direction="left" data-tooltip-hover data-icon="west" data-label="To the left">
+              <button data-icon="content_copy" data-tooltip="Copy" aria-label="Copy"></button>
+              <button data-icon="share" data-tooltip="Share" aria-label="Share"></button>
+              <button data-icon="print" data-tooltip="Print" aria-label="Print"></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">right · data-tooltip-hover</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-l" data-mtx="speed-dial" data-direction="right" data-tooltip-hover data-icon="east" data-label="To the right">
+              <button data-icon="content_copy" data-tooltip="Copy" aria-label="Copy"></button>
+              <button data-icon="share" data-tooltip="Share" aria-label="Share"></button>
+              <button data-icon="print" data-tooltip="Print" aria-label="Print"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> on the container colors the main FAB (<code>primary</code> by default); on each action, it colors that action's FAB (<code>secondary</code> by default).</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Defaults · primary + secondary</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-br" data-mtx="speed-dial" data-icon="add" data-label="Create">
+              <button data-icon="mail" data-tooltip="Email" aria-label="Email"></button>
+              <button data-icon="event" data-tooltip="Event" aria-label="Event"></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">secondary + error · success · info</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-br" data-mtx="speed-dial" data-icon="edit" data-color="secondary" data-label="Edit">
+              <button data-icon="delete" data-color="error" data-tooltip="Delete" aria-label="Delete"></button>
+              <button data-icon="save" data-color="success" data-tooltip="Save" aria-label="Save"></button>
+              <button data-icon="info" data-color="info" data-tooltip="Details" aria-label="Details"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Closed and open (the main icon rotates 45°). Hover or use <kbd>Tab</kbd> to see hover and focus; <kbd>Escape</kbd> closes it and returns focus to the FAB. An action with <code>disabled</code> is shown disabled.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Closed</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-br" data-mtx="speed-dial" data-icon="add" data-label="Closed actions">
+              <button data-icon="mail" data-tooltip="Email" aria-label="Email"></button>
+              <button data-icon="event" data-tooltip="Event" aria-label="Event"></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Open · with a disabled action</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-br" id="speed-dial-open" data-mtx="speed-dial" data-icon="add" data-label="Open actions">
+              <button data-icon="mail" data-tooltip="Email" aria-label="Email"></button>
+              <button data-icon="event" data-tooltip="Event (unavailable)" aria-label="Event (unavailable)" disabled></button>
+              <button data-icon="note_add" data-tooltip="Note" aria-label="Note"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="labels">
+      <h2>Labels</h2>
+      <p>By default, every label shows when it opens (using the Tooltip tokens). With <code>data-tooltip-hover</code> each action uses a real <a href="../tooltip/index.html">Tooltip</a>: it appears on hover <strong>and when focused with <kbd>Tab</kbd></strong>, and <kbd>Escape</kbd> hides it.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Always visible</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-br" data-mtx="speed-dial" data-icon="add" data-label="Visible labels">
+              <button data-icon="photo_camera" data-tooltip="Take photo" aria-label="Take photo"></button>
+              <button data-icon="upload" data-tooltip="Upload file" aria-label="Upload file"></button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-tooltip-hover</span>
+          <div class="demo-panel demo-panel--tall">
+            <div class="demo-speed-dial-br" data-mtx="speed-dial" data-tooltip-hover data-icon="add" data-label="Labels on hover">
+              <button data-icon="photo_camera" data-tooltip="Take photo" aria-label="Take photo"></button>
+              <button data-icon="upload" data-tooltip="Upload file" aria-label="Upload file"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="hover">
+      <h2>Open on hover</h2>
+      <p><code>data-event="hover"</code> opens when the pointer enters and closes when it leaves; clicking still toggles it (touch and keyboard).</p>
+      <div class="demo-panel demo-panel--tall">
+        <div class="demo-speed-dial-br" data-mtx="speed-dial" data-event="hover" data-icon="menu" data-label="Quick actions">
+          <button data-icon="print" data-tooltip="Print" aria-label="Print"></button>
+          <button data-icon="download" data-tooltip="Download" aria-label="Download"></button>
+          <button data-icon="share" data-tooltip="Share" aria-label="Share"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>Photo gallery: each action runs its task and closes the SpeedDial with <code>close()</code>. On a real page you would use <code>mtx-speed-dial--fixed-br</code> to pin it to the viewport.</p>
+      <div class="demo-panel demo-panel--tall">
+        <p class="demo-speed-dial-note" id="speed-dial-gallery-status" aria-live="polite">Choose an action.</p>
+        <div class="demo-speed-dial-br" id="speed-dial-gallery" data-mtx="speed-dial" data-icon="add_a_photo" data-label="Add to gallery">
+          <button data-icon="photo_camera" data-tooltip="Take photo" aria-label="Take photo"></button>
+          <button data-icon="upload" data-tooltip="Upload file" aria-label="Upload file"></button>
+          <button data-icon="create_new_folder" data-tooltip="New album" aria-label="New album"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>In a grid</h2>
+      <p><code>mtx-grid</code> panels (one per row on mobile, two from 900px), each with its SpeedDial in the corner.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div class="demo-panel demo-panel--tall">
+            <p class="demo-speed-dial-note">Documents</p>
+            <div class="demo-speed-dial-br" data-mtx="speed-dial" data-icon="add" data-label="New document">
+              <button data-icon="description" data-tooltip="Text" aria-label="Text"></button>
+              <button data-icon="table_chart" data-tooltip="Sheet" aria-label="Sheet"></button>
+            </div>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div class="demo-panel demo-panel--tall">
+            <p class="demo-speed-dial-note">Contacts</p>
+            <div class="demo-speed-dial-br" data-mtx="speed-dial" data-icon="person_add" data-color="secondary" data-label="New contact">
+              <button data-icon="contact_phone" data-tooltip="Phone" aria-label="Phone"></button>
+              <button data-icon="contact_mail" data-tooltip="Email" aria-label="Email"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>open()</code>, <code>close()</code>, <code>toggle()</code> and the <code>direction</code> property. The log shows the <code>mtx:speed-dial:open</code> and <code>mtx:speed-dial:close</code> events (the old <code>mtx-speed-dial-open|close</code> names are still emitted as deprecated aliases until 1.0).</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-dial-call="open">open()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-dial-call="close">close()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-dial-call="toggle">toggle()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" data-dial-call="direction">direction = up / left</button>
+      </div>
+      <div class="demo-panel demo-panel--tall">
+        <div class="demo-speed-dial-br" id="speed-dial-api" data-mtx="speed-dial" data-icon="add" data-label="API actions">
+          <button data-icon="mail" data-tooltip="Email" aria-label="Email"></button>
+          <button data-icon="link" data-tooltip="Link" aria-label="Link"></button>
+        </div>
+      </div>
+      <pre class="demo-log" id="speed-dial-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const dial = Materix.getInstance(document.getElementById('speed-dial-api'));
+dial.open();
+dial.direction = 'left';
+dial.element.addEventListener('mtx:speed-dial:open', (e) =&gt; console.log(e.detail.speedDial));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Full structure: the component reuses the FAB and the actions container.</p>
+      <div class="demo-panel demo-panel--tall">
+        <div class="mtx-speed-dial demo-speed-dial-br" data-mtx="speed-dial" data-direction="up">
+          <button type="button" class="mtx-fab mtx-fab--primary mtx-speed-dial__fab" aria-label="Create (BEM)">
+            <span class="material-icons" aria-hidden="true">add</span>
+          </button>
+          <div class="mtx-speed-dial__actions">
+            <button type="button" class="mtx-fab mtx-fab--small mtx-fab--secondary mtx-speed-dial__action" data-tooltip="Document" aria-label="Document">
+              <span class="material-icons" aria-hidden="true">description</span>
+            </button>
+            <button type="button" class="mtx-fab mtx-fab--small mtx-fab--secondary mtx-speed-dial__action" data-tooltip="Sheet" aria-label="Sheet">
+              <span class="material-icons" aria-hidden="true">table_chart</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-speed-dial" data-mtx="speed-dial" data-direction="up"&gt;
+  &lt;button type="button" class="mtx-fab mtx-fab--primary mtx-speed-dial__fab" aria-label="Create"&gt;
+    &lt;span class="material-icons" aria-hidden="true"&gt;add&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="mtx-speed-dial__actions"&gt;
+    &lt;button type="button" class="mtx-fab mtx-fab--small mtx-fab--secondary mtx-speed-dial__action"
+            data-tooltip="Document" aria-label="Document"&gt;
+      &lt;span class="material-icons" aria-hidden="true"&gt;description&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Estado abierto de muestra
+      Materix.getInstance(document.getElementById('speed-dial-open')).open();
+
+      // Galería: cada acción cierra el SpeedDial
+      var gallery = document.getElementById('speed-dial-gallery');
+      var status = document.getElementById('speed-dial-gallery-status');
+      gallery.querySelectorAll('.mtx-speed-dial__action').forEach(function (action) {
+        action.addEventListener('click', function () {
+          status.textContent = 'Action: ' + action.getAttribute('aria-label');
+          Materix.getInstance(gallery).close();
+        });
+      });
+
+      // API
+      var el = document.getElementById('speed-dial-api');
+      var dial = Materix.getInstance(el);
+      var log = document.getElementById('speed-dial-log');
+
+      /**
+       * Añade una línea al registro.
+       * @param {string} text Línea a registrar.
+       */
+      function write(text) {
+        log.textContent += text + '\n';
+        log.scrollTop = log.scrollHeight;
+      }
+
+      document.querySelectorAll('[data-dial-call]').forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+          event.stopPropagation();
+          var call = btn.getAttribute('data-dial-call');
+          if (call === 'direction') {
+            dial.direction = dial.direction === 'up' ? 'left' : 'up';
+            write('direction = "' + dial.direction + '"');
+          } else {
+            dial[call]();
+            write(call + '() → isOpen=' + dial.isOpen);
+          }
+        });
+      });
+      el.addEventListener('mtx:speed-dial:open', function (event) {
+        write('mtx:speed-dial:open · detail.speedDial.direction=' + event.detail.speedDial.direction);
+      });
+      el.addEventListener('mtx:speed-dial:close', function () { write('mtx:speed-dial:close'); });
+    });
+  </script>
+</body>
+</html>

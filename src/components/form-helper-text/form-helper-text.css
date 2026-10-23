@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Materix UI — FormControl / FormLabel / FormHelperText
+   Piezas de formulario de MUI que acompañan a Checkbox, Switch y RadioGroup.
+   Anatomía:
+   .mtx-form-control
+     .mtx-form-label (opcional)
+     control (.mtx-checkbox | .mtx-switch | .mtx-radio-group)
+     .mtx-form-helper-text (+ --error)
+   ========================================================================== */
+
+.mtx-form-control {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: top;
+}
+
+/* FormLabel (MUI): body1, text-secondary; primary con foco y error en estado inválido */
+.mtx-form-label {
+  margin: 0 0 var(--mtx-spacing-0_5);
+  padding: 0;
+  font: var(--mtx-type-body1);
+  letter-spacing: 0.00938em;
+  color: var(--mtx-color-text-secondary);
+  transition: color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+
+.mtx-form-control:focus-within > .mtx-form-label {
+  color: var(--mtx-color-primary);
+}
+
+.mtx-form-control--error > .mtx-form-label,
+.mtx-form-control--error:focus-within > .mtx-form-label {
+  color: var(--mtx-color-error-text);
+}
+
+.mtx-form-control--disabled > .mtx-form-label {
+  color: var(--mtx-color-text-disabled);
+}
+
+/* FormHelperText (MUI): caption, margen superior 3px */
+.mtx-form-helper-text {
+  margin: 3px 0 0;
+  font: var(--mtx-type-caption);
+  letter-spacing: 0.03333em;
+  line-height: 1.66;
+  text-align: start;
+  color: var(--mtx-color-text-secondary);
+}
+
+/* Variante "contained": alineada con el texto de un TextField outlined/filled */
+.mtx-form-helper-text--contained {
+  margin-inline: 14px;
+}
+
+.mtx-form-helper-text--error {
+  color: var(--mtx-color-error-text);
+}
+
+.mtx-form-helper-text:empty {
+  display: none;
+}
+
+.mtx-form-helper-text--disabled,
+.mtx-form-control--disabled > .mtx-form-helper-text,
+.mtx-form-control:has(> .mtx-checkbox .mtx-checkbox__input:disabled) > .mtx-form-helper-text,
+.mtx-form-control:has(> .mtx-switch .mtx-switch__input:disabled) > .mtx-form-helper-text {
+  color: var(--mtx-color-text-disabled);
+}

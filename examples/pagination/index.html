@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagination · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Navigation</span>
+        <h1>Pagination</h1>
+        <p class="demo-lead">Lets users pick a page within a large set of results, with ellipsis, first/last buttons and a link mode for SSR.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#shapes">Shapes</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#colors">Colors</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#ranges">Ranges</a>
+      <a href="#states">States</a>
+      <a href="#link-mode">Link mode</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;nav data-mtx="pagination"&gt;</code> with <code>data-count</code> (total pages) and, optionally, <code>data-page</code> (1-based). The component generates the buttons, the ellipsis and the translated <code>aria-label</code>s.</p>
+      <div class="demo-stack">
+        <nav data-mtx="pagination" data-count="10"></nav>
+        <nav data-mtx="pagination" data-count="10" data-color="primary"></nav>
+        <nav data-mtx="pagination" data-count="10" data-color="secondary"></nav>
+        <nav data-mtx="pagination" data-count="10" data-disabled></nav>
+      </div>
+      <pre class="demo-code"><code>&lt;nav data-mtx="pagination" data-count="10"&gt;&lt;/nav&gt;
+&lt;nav data-mtx="pagination" data-count="10" data-color="primary"&gt;&lt;/nav&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>data-variant="text"</code> (default) or <code>outlined</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">text</span>
+        <div class="demo-stack">
+          <nav data-mtx="pagination" data-count="10" data-page="4"></nav>
+          <nav data-mtx="pagination" data-count="10" data-page="4" data-color="primary"></nav>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">outlined</span>
+        <div class="demo-stack">
+          <nav data-mtx="pagination" data-count="10" data-page="4" data-variant="outlined"></nav>
+          <nav data-mtx="pagination" data-count="10" data-page="4" data-variant="outlined" data-color="primary"></nav>
+          <nav data-mtx="pagination" data-count="10" data-page="4" data-variant="outlined" data-color="secondary"></nav>
+          <nav data-mtx="pagination" data-count="10" data-page="4" data-variant="outlined" data-disabled></nav>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="shapes">
+      <h2>Shapes</h2>
+      <p><code>data-shape="circular"</code> (default) or <code>rounded</code> (4px radius).</p>
+      <div class="demo-group">
+        <span class="demo-label">circular</span>
+        <nav data-mtx="pagination" data-count="10" data-page="2" data-color="primary"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">rounded</span>
+        <div class="demo-stack">
+          <nav data-mtx="pagination" data-count="10" data-page="2" data-shape="rounded" data-color="primary"></nav>
+          <nav data-mtx="pagination" data-count="10" data-page="2" data-shape="rounded" data-variant="outlined"></nav>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p><code>data-size="small|medium|large"</code>: 26px, 32px (default) and 40px items, like MUI's <code>PaginationItem</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Large · 40px</span>
+        <nav data-mtx="pagination" data-count="10" data-size="large" data-color="primary"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 32px</span>
+        <nav data-mtx="pagination" data-count="10" data-color="primary"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 26px</span>
+        <nav data-mtx="pagination" data-count="10" data-size="small" data-color="primary"></nav>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color="standard|primary|secondary"</code> sets the color of the selected page.</p>
+      <div class="demo-group">
+        <span class="demo-label">standard</span>
+        <nav data-mtx="pagination" data-count="6" data-page="3"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">primary</span>
+        <nav data-mtx="pagination" data-count="6" data-page="3" data-color="primary"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">secondary</span>
+        <nav data-mtx="pagination" data-count="6" data-page="3" data-color="secondary"></nav>
+      </div>
+    </section>
+
+    <section class="demo-section" id="buttons">
+      <h2>Buttons</h2>
+      <p>First and last page buttons with <code>data-show-first-button</code> and <code>data-show-last-button</code>; previous and next are hidden with <code>data-hide-prev-button</code> and <code>data-hide-next-button</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">First and last</span>
+        <nav data-mtx="pagination" data-count="10" data-page="5" data-show-first-button data-show-last-button></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Without previous or next</span>
+        <nav data-mtx="pagination" data-count="10" data-page="5" data-hide-prev-button data-hide-next-button></nav>
+      </div>
+    </section>
+
+    <section class="demo-section" id="ranges">
+      <h2>Ranges</h2>
+      <p><code>data-sibling-count</code> (1) sets how many pages are shown on each side of the current one and <code>data-boundary-count</code> (1) how many at the beginning and the end.</p>
+      <div class="demo-group">
+        <span class="demo-label">Default · sibling 1 · boundary 1</span>
+        <nav data-mtx="pagination" data-count="11" data-page="6"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">sibling 0</span>
+        <nav data-mtx="pagination" data-count="11" data-page="6" data-sibling-count="0"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">sibling 2</span>
+        <nav data-mtx="pagination" data-count="11" data-page="6" data-sibling-count="2"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">boundary 2</span>
+        <nav data-mtx="pagination" data-count="11" data-page="6" data-boundary-count="2"></nav>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover over a page, use <kbd>Tab</kbd> to see focus and press to see the ripple. Previous/next disable themselves at the ends; <code>data-disabled</code> disables the whole component.</p>
+      <div class="demo-group">
+        <span class="demo-label">Normal · hover · focus-visible · pressed</span>
+        <nav data-mtx="pagination" data-count="5" data-color="primary"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Last page · next disabled</span>
+        <nav data-mtx="pagination" data-count="5" data-page="5" data-color="primary"></nav>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Disabled · data-disabled</span>
+        <div class="demo-stack">
+          <nav data-mtx="pagination" data-count="5" data-page="2" data-color="primary" data-disabled></nav>
+          <nav data-mtx="pagination" data-count="5" data-page="2" data-variant="outlined" data-color="primary" data-disabled></nav>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="link-mode">
+      <h2>Link mode</h2>
+      <p>With <code>data-href-template</code> each item is an <code>&lt;a href&gt;</code> (<code>{page}</code> is replaced with the number): it works with server-side rendering, opens in a new tab and needs no JavaScript to navigate. The ends are marked with <code>aria-disabled</code>.</p>
+      <nav data-mtx="pagination" data-count="8" data-page="3" data-href-template="?page={page}#link-mode" data-variant="outlined" data-shape="rounded" data-color="primary"></nav>
+      <pre class="demo-code"><code>&lt;nav data-mtx="pagination" data-count="8" data-page="3" data-href-template="/blog?page={page}"&gt;&lt;/nav&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>A client-side paginated list of articles: the <code>mtx:pagination:change</code> event re-renders the list.</p>
+      <div class="demo-surface">
+        <div class="demo-stack">
+          <ul data-mtx="list" id="pg-articles" aria-live="polite"></ul>
+          <nav data-mtx="pagination" data-count="4" data-color="primary" aria-label="Article pagination" id="pg-articles-pagination"></nav>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>In a grid</h2>
+      <p>Items wrap to a new line if they don't fit. On mobile, reduce <code>data-sibling-count</code> to 0 or use the small size.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div class="demo-surface">
+            <nav data-mtx="pagination" data-count="20" data-page="10" data-size="small" data-sibling-count="0"></nav>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div class="demo-surface">
+            <nav data-mtx="pagination" data-count="20" data-page="10" data-variant="outlined" data-shape="rounded"></nav>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p><code>goTo(n)</code>, <code>next()</code> and <code>previous()</code> emit <code>mtx:pagination:change</code>; assigning <code>page</code> or <code>count</code> updates without emitting.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="pg-prev">previous()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="pg-next">next()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="pg-goto">goTo(7)</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="pg-count">count = 20</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="pg-toggle">disable / enable</button>
+      </div>
+      <nav data-mtx="pagination" data-count="10" data-color="primary" data-show-first-button data-show-last-button id="pg-api"></nav>
+      <pre class="demo-log" id="pg-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const pagination = Materix.getInstance(document.querySelector('#pg-api'));
+pagination.element.addEventListener('mtx:pagination:change', (event) =&gt; {
+  console.log(event.detail.page, event.detail.previousPage);
+});
+pagination.goTo(7);
+pagination.count = 20;</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Pre-rendered structure (SSR) without JavaScript: <code>mtx-pagination</code> with its modifiers, <code>mtx-pagination__ul</code> and <code>mtx-pagination__item</code>. If <code>data-mtx</code> is added, the component reuses the <code>&lt;ul&gt;</code> and re-renders the items.</p>
+      <nav class="mtx-pagination mtx-pagination--outlined mtx-pagination--rounded mtx-pagination--medium mtx-pagination--color-primary" aria-label="pagination navigation">
+        <ul class="mtx-pagination__ul">
+          <li><a class="mtx-pagination__item" href="#bem-usage" aria-label="Go to page 1">1</a></li>
+          <li><a class="mtx-pagination__item mtx-pagination__item--selected" href="#bem-usage" aria-current="page" aria-label="page 2">2</a></li>
+          <li><a class="mtx-pagination__item" href="#bem-usage" aria-label="Go to page 3">3</a></li>
+          <li><div class="mtx-pagination__ellipsis">…</div></li>
+          <li><a class="mtx-pagination__item" href="#bem-usage" aria-label="Go to page 9">9</a></li>
+        </ul>
+      </nav>
+      <pre class="demo-code"><code>&lt;nav class="mtx-pagination mtx-pagination--outlined mtx-pagination--rounded mtx-pagination--medium mtx-pagination--color-primary" aria-label="pagination navigation"&gt;
+  &lt;ul class="mtx-pagination__ul"&gt;
+    &lt;li&gt;&lt;a class="mtx-pagination__item" href="?page=1" aria-label="Go to page 1"&gt;1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class="mtx-pagination__item mtx-pagination__item--selected" href="?page=2" aria-current="page" aria-label="page 2"&gt;2&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class="mtx-pagination__item" href="?page=3" aria-label="Go to page 3"&gt;3&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;div class="mtx-pagination__ellipsis"&gt;…&lt;/div&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class="mtx-pagination__item" href="?page=9" aria-label="Go to page 9"&gt;9&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Uso programático
+      var api = Materix.getInstance(document.getElementById('pg-api'));
+      var log = document.getElementById('pg-log');
+      /**
+       * Escribe una línea en el registro.
+       * @param {string} text Mensaje.
+       */
+      function write(text) {
+        log.textContent = text + '\n' + log.textContent;
+      }
+      api.element.addEventListener('mtx:pagination:change', function (event) {
+        write('mtx:pagination:change → page ' + event.detail.page + ' (previously ' + event.detail.previousPage + ')');
+      });
+      document.getElementById('pg-prev').addEventListener('click', function () { api.previous(); });
+      document.getElementById('pg-next').addEventListener('click', function () { api.next(); });
+      document.getElementById('pg-goto').addEventListener('click', function () { api.goTo(7); });
+      document.getElementById('pg-count').addEventListener('click', function () {
+        api.count = api.count === 20 ? 10 : 20;
+        write('count = ' + api.count + ' (no event)');
+      });
+      document.getElementById('pg-toggle').addEventListener('click', function () {
+        if (api.disabled) api.enable(); else api.disable();
+        write(api.disabled ? 'disable()' : 'enable()');
+      });
+
+      // Ejemplo real: lista de artículos
+      var ARTICLES = [
+        'How to design accessible forms', 'A guide to color tokens', 'Responsive typography with clamp()',
+        'Shadows and elevation in MUI', 'Visible focus states', 'Mobile navigation patterns',
+        'Tables with sorting and filters', 'Micro-interactions with ripple', 'Flicker-free dark mode',
+        'Iconography on a 24px grid', '12-column grids', 'Dialogs and focus management'
+      ];
+      var PER_PAGE = 3;
+      var listEl = document.getElementById('pg-articles');
+      var pager = Materix.getInstance(document.getElementById('pg-articles-pagination'));
+      /**
+       * Pinta los artículos de una página.
+       * @param {number} page Página (base 1).
+       */
+      function renderArticles(page) {
+        var start = (page - 1) * PER_PAGE;
+        listEl.innerHTML = ARTICLES.slice(start, start + PER_PAGE).map(function (title, i) {
+          return '<li data-mtx="list-item"><span data-mtx="list-item-text" data-primary="' + title + '" data-secondary="Article ' + (start + i + 1) + ' of ' + ARTICLES.length + '"></span></li>';
+        }).join('');
+        Materix.initAll(listEl);
+      }
+      pager.count = Math.ceil(ARTICLES.length / PER_PAGE);
+      renderArticles(pager.page);
+      pager.element.addEventListener('mtx:pagination:change', function (event) {
+        renderArticles(event.detail.page);
+      });
+    });
+  </script>
+</body>
+</html>

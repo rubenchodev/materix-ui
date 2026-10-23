@@ -1,0 +1,140 @@
+/* ==========================================================================
+   Materix UI — Checkbox
+   Casilla de verificación basada en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-checkbox {
+  --mtx-cb-color: var(--mtx-color-primary);
+  --mtx-cb-check: var(--mtx-color-primary-contrast);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  font: var(--mtx-type-body1);
+  color: var(--mtx-color-text-primary);
+}
+
+/* Input nativo: fuera del flujo y sin interacción visual */
+.mtx-checkbox__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Casilla visual (MUI: 18x18, borde 2px, radio 2px) */
+.mtx-checkbox__box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  border: 2px solid var(--mtx-color-text-secondary);
+  border-radius: 2px;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--mtx-cb-color);
+  transition:
+    background-color var(--mtx-duration-shorter) var(--mtx-easing-standard),
+    border-color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+
+/* Tamaño small / compacto MUI */
+.mtx-checkbox--small {
+  font-size: 0.875rem;
+}
+.mtx-checkbox--small .mtx-checkbox__box {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+
+/* Check (✓) y guion (indeterminate) dibujados por máscara */
+.mtx-checkbox__box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--mtx-cb-check);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  opacity: 0;
+  transition: opacity var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+
+.mtx-checkbox__input:checked + .mtx-checkbox__box {
+  border-color: var(--mtx-cb-color);
+  background-color: var(--mtx-cb-color);
+}
+.mtx-checkbox__input:checked + .mtx-checkbox__box::after {
+  opacity: 1;
+  mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E");
+}
+
+.mtx-checkbox__input:indeterminate + .mtx-checkbox__box {
+  border-color: var(--mtx-cb-color);
+  background-color: var(--mtx-cb-color);
+}
+.mtx-checkbox__input:indeterminate + .mtx-checkbox__box::after {
+  opacity: 1;
+  mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 13H5v-2h14z'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 13H5v-2h14z'/%3E%3C/svg%3E");
+}
+
+.mtx-checkbox__label {
+  line-height: 1.5;
+  transform: translateY(1px);
+}
+
+/* Estados */
+.mtx-checkbox:hover .mtx-checkbox__box {
+  border-color: var(--mtx-cb-color);
+}
+.mtx-checkbox__input:focus-visible + .mtx-checkbox__box {
+  outline: var(--mtx-focus-ring-width) solid var(--mtx-focus-ring-color);
+  outline-offset: 2px;
+}
+.mtx-checkbox__input:disabled + .mtx-checkbox__box {
+  border-color: var(--mtx-color-action-disabled);
+  cursor: not-allowed;
+}
+.mtx-checkbox__input:disabled:checked + .mtx-checkbox__box,
+.mtx-checkbox__input:disabled:indeterminate + .mtx-checkbox__box {
+  background-color: var(--mtx-color-action-disabled);
+  border-color: var(--mtx-color-action-disabled);
+}
+.mtx-checkbox__input:disabled + .mtx-checkbox__box::after {
+  background-color: var(--mtx-color-background-paper);
+}
+
+/* Inválido (FormControl error): el borde sin marcar toma el color de error */
+.mtx-checkbox__input[aria-invalid='true']:not(:checked):not(:indeterminate):not(:disabled) + .mtx-checkbox__box {
+  border-color: var(--mtx-color-error);
+}
+.mtx-checkbox:has(.mtx-checkbox__input:disabled) .mtx-checkbox__label {
+  color: var(--mtx-color-text-disabled);
+}
+
+/* Colores (equivalente al prop `color` de MUI) */
+.mtx-checkbox--secondary { --mtx-cb-color: var(--mtx-color-secondary); --mtx-cb-check: var(--mtx-color-secondary-contrast); }
+.mtx-checkbox--error     { --mtx-cb-color: var(--mtx-color-error); --mtx-cb-check: var(--mtx-color-error-contrast); }
+.mtx-checkbox--warning   { --mtx-cb-color: var(--mtx-color-warning); --mtx-cb-check: var(--mtx-color-warning-contrast); }
+.mtx-checkbox--info      { --mtx-cb-color: var(--mtx-color-info); --mtx-cb-check: var(--mtx-color-info-contrast); }
+.mtx-checkbox--success   { --mtx-cb-color: var(--mtx-color-success); --mtx-cb-check: var(--mtx-color-success-contrast); }
+

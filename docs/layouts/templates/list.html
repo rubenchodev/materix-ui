@@ -1,0 +1,21 @@
+{{ define "main" }}
+{{/* Galería de plantillas: tarjetas desde data/templates.yaml + contenido markdown (cómo usarlas, licencia). */}}
+<div class="doc-page doc-page--wide">
+  <article class="doc-article doc-article--wide">
+    <header class="doc-page-header">
+      <h1 class="doc-title">{{ .Title }}</h1>
+      {{ with .Description }}<p class="doc-lead">{{ . }}</p>{{ end }}
+    </header>
+
+    <div class="doc-tpl-grid">
+      {{ range hugo.Data.templates.items }}
+        {{ partial "template-card.html" (dict "tpl" . "level" 2) }}
+      {{ end }}
+    </div>
+
+    {{ with .Content }}<div class="doc-content doc-tpl-content">{{ . }}</div>{{ end }}
+
+    {{ partial "page-footer.html" . }}
+  </article>
+</div>
+{{ end }}

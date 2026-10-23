@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User management · Materix UI Templates</title>
+  <meta name="description" content="CRUD admin table with search, filters, sorting, pagination, bulk actions and edit dialog.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="icon" href="data:,">
+  <script src="../shared/template.js"></script>
+  <style>
+    /* Solo diseño propio: logo con degradado y navegación redondeada con selección en color primario. */
+    .tpl-um-logo { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--mtx-color-primary), var(--mtx-color-secondary)); color: var(--mtx-color-primary-contrast); }
+    .tpl-um-nav .mtx-list-item-button { border-radius: 8px; margin-bottom: 2px; }
+    .tpl-um-nav .mtx-list-item--selected { font-weight: 500; }
+    .tpl-um-nav .mtx-list-item--selected .mtx-list-item-icon { color: var(--mtx-color-primary); }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-um-main">Skip to content</a>
+
+  <header data-mtx="app-bar" data-position="fixed" data-color="default" data-elevation="0" data-start-icon="menu" data-drawer="tpl-um-nav">
+    <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-1_5 mtx-typography--h6 mtx-color-inherit mtx-text-decoration-none mtx-text-nowrap" href="#" aria-label="Northwind Admin home">
+      <span class="tpl-um-logo"><span class="material-icons" aria-hidden="true">shield</span></span>
+      <span>Northwind Admin</span>
+    </a>
+    <span class="mtx-toolbar__spacer"></span>
+    <button data-mtx="icon-button" class="mtx-d-none mtx-d-sm-inline-flex" aria-label="Notifications, 3 unread">
+      <span data-mtx="badge" data-content="3" data-color="error"><span class="material-icons" aria-hidden="true">notifications</span></span>
+    </button>
+    <button data-mtx="icon-button" data-mtx-theme-toggle aria-label="Dark theme"><span class="material-icons" aria-hidden="true">dark_mode</span></button>
+    <div data-mtx="avatar" data-color="primary" class="mtx-ms-1" role="img" aria-label="Signed in as Daniel Reyes">DR</div>
+  </header>
+
+  <div class="mtx-d-flex">
+    <!-- Un solo Drawer: temporal por debajo de 900px y permanente (bajo la AppBar) desde 900px -->
+    <div data-mtx="drawer" id="tpl-um-nav" data-variant="responsive" data-breakpoint="md" data-clipped
+         data-width="248px" data-title="Northwind Admin" data-header="temporary" aria-label="Admin">
+      <nav aria-label="Admin sections">
+        <ul data-mtx="list" class="tpl-um-nav mtx-px-1">
+          <li><a data-mtx="list-item-button" data-icon="dashboard" href="#" data-no-select data-mtx-drawer-close>Overview</a></li>
+          <li><a data-mtx="list-item-button" data-icon="group" href="#" data-no-select data-selected aria-current="page" data-mtx-drawer-close>Users</a></li>
+          <li><a data-mtx="list-item-button" data-icon="workspaces" href="#" data-no-select data-mtx-drawer-close>Teams</a></li>
+          <li><a data-mtx="list-item-button" data-icon="admin_panel_settings" href="#" data-no-select data-mtx-drawer-close>Roles &amp; permissions</a></li>
+          <li><a data-mtx="list-item-button" data-icon="history" href="#" data-no-select data-mtx-drawer-close>Audit log</a></li>
+          <li><a data-mtx="list-item-button" data-icon="settings" href="#" data-no-select data-mtx-drawer-close>Settings</a></li>
+        </ul>
+      </nav>
+      <div class="mtx-mt-auto mtx-p-2">
+        <aside class="mtx-bg-action-hover mtx-rounded-3 mtx-p-2 mtx-typography--body2 mtx-color-text-secondary" aria-labelledby="tpl-um-sso-title">
+          <h2 id="tpl-um-sso-title" class="mtx-typography--subtitle2 mtx-color-text-primary mtx-mb-0_5">Single sign-on</h2>
+          <p class="mtx-mb-1_5">Connect Okta or Azure AD to provision users automatically.</p>
+          <button class="mtx-button mtx-button--outlined mtx-button--small" data-mtx="button" type="button" data-tpl-sso>Set up SSO</button>
+        </aside>
+      </div>
+    </div>
+
+    <main id="tpl-um-main" class="mtx-flex-1 mtx-min-w-0" tabindex="-1">
+      <div class="mtx-toolbar-offset"></div>
+      <div class="mtx-px-2 mtx-px-md-4 mtx-py-2 mtx-py-md-3 mtx-pb-6">
+        <ol data-mtx="breadcrumbs" data-separator="chevron_right" class="mtx-mb-1">
+          <li><a href="#">Admin</a></li>
+          <li>Users</li>
+        </ol>
+        <div class="mtx-d-flex mtx-flex-column mtx-flex-sm-row mtx-align-items-stretch mtx-align-items-sm-end mtx-justify-content-between mtx-gap-2 mtx-mb-3">
+          <div>
+            <h1 class="mtx-typography--h4 mtx-mb-0_5">Users</h1>
+            <p class="mtx-typography--body1 mtx-color-text-secondary">Manage team members, their roles and access to your workspace.</p>
+          </div>
+          <div class="mtx-d-flex mtx-gap-1">
+            <button class="mtx-button mtx-button--outlined mtx-flex-1" data-mtx="button" type="button" data-tpl-export-all>
+              <span class="mtx-button__icon material-icons" aria-hidden="true">file_download</span>
+              Export
+            </button>
+            <button class="mtx-button mtx-button--contained mtx-flex-1 mtx-text-nowrap" data-mtx="button" type="button" data-tpl-add-user>
+              <span class="mtx-button__icon material-icons" aria-hidden="true">person_add</span>
+              Add user
+            </button>
+          </div>
+        </div>
+
+        <section data-mtx="grid" data-spacing="2" class="mtx-mb-3" aria-label="User summary">
+          <div data-mtx="grid" data-xs="6" data-lg="3"><div data-mtx="paper" data-variant="outlined" class="mtx-d-flex mtx-align-items-center mtx-gap-1_5 mtx-p-1_5 mtx-px-sm-2_5 mtx-py-sm-2 mtx-h-100"><span data-mtx="avatar" data-variant="rounded" data-color="primary" data-icon="group" aria-hidden="true"></span><div><div class="mtx-typography--h5 mtx-fw-medium mtx-tabular-nums" data-stat="total">0</div><div class="mtx-typography--body2 mtx-color-text-secondary">Total users</div></div></div></div>
+          <div data-mtx="grid" data-xs="6" data-lg="3"><div data-mtx="paper" data-variant="outlined" class="mtx-d-flex mtx-align-items-center mtx-gap-1_5 mtx-p-1_5 mtx-px-sm-2_5 mtx-py-sm-2 mtx-h-100"><span data-mtx="avatar" data-variant="rounded" data-color="success" data-icon="verified_user" aria-hidden="true"></span><div><div class="mtx-typography--h5 mtx-fw-medium mtx-tabular-nums" data-stat="active">0</div><div class="mtx-typography--body2 mtx-color-text-secondary">Active</div></div></div></div>
+          <div data-mtx="grid" data-xs="6" data-lg="3"><div data-mtx="paper" data-variant="outlined" class="mtx-d-flex mtx-align-items-center mtx-gap-1_5 mtx-p-1_5 mtx-px-sm-2_5 mtx-py-sm-2 mtx-h-100"><span data-mtx="avatar" data-variant="rounded" data-color="info" data-icon="mail" aria-hidden="true"></span><div><div class="mtx-typography--h5 mtx-fw-medium mtx-tabular-nums" data-stat="invited">0</div><div class="mtx-typography--body2 mtx-color-text-secondary">Pending invites</div></div></div></div>
+          <div data-mtx="grid" data-xs="6" data-lg="3"><div data-mtx="paper" data-variant="outlined" class="mtx-d-flex mtx-align-items-center mtx-gap-1_5 mtx-p-1_5 mtx-px-sm-2_5 mtx-py-sm-2 mtx-h-100"><span data-mtx="avatar" data-variant="rounded" data-color="error" data-icon="block" aria-hidden="true"></span><div><div class="mtx-typography--h5 mtx-fw-medium mtx-tabular-nums" data-stat="suspended">0</div><div class="mtx-typography--body2 mtx-color-text-secondary">Suspended</div></div></div></div>
+        </section>
+
+        <section data-mtx="paper" data-variant="outlined" class="mtx-overflow-hidden" aria-labelledby="tpl-um-table-title">
+          <h2 id="tpl-um-table-title" class="mtx-visually-hidden">User directory</h2>
+          <div data-mtx="table-toolbar" data-table="#tpl-um-table" aria-label="User directory actions" class="mtx-py-2 mtx-pe-2">
+            <div class="mtx-table-toolbar__actions mtx-table-toolbar__actions--grow" data-show="default">
+              <div data-mtx="grid" data-spacing="2" data-align="center">
+                <div data-mtx="grid" data-xs="12" data-md="true">
+                  <input data-mtx="text-field" data-label="Search users" data-size="small" data-start-icon="search" type="search" id="tpl-um-search" autocomplete="off">
+                </div>
+                <div data-mtx="grid" data-xs="6" data-md="3" data-lg="2">
+                  <select data-mtx="select" data-label="Role" data-size="small" id="tpl-um-role-filter">
+                    <option value="all" selected>All roles</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Editor">Editor</option>
+                    <option value="Viewer">Viewer</option>
+                    <option value="Billing">Billing</option>
+                  </select>
+                </div>
+                <div data-mtx="grid" data-xs="6" data-md="3" data-lg="2">
+                  <select data-mtx="select" data-label="Status" data-size="small" id="tpl-um-status-filter">
+                    <option value="all" selected>All statuses</option>
+                    <option value="Active">Active</option>
+                    <option value="Invited">Invited</option>
+                    <option value="Suspended">Suspended</option>
+                  </select>
+                </div>
+                <div data-mtx="grid" id="tpl-um-clear-item" hidden>
+                  <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="tpl-um-clear">Clear filters</button>
+                </div>
+              </div>
+            </div>
+            <div class="mtx-table-toolbar__actions" data-show="selected">
+              <button class="mtx-button mtx-button--text" data-mtx="button" type="button" data-tpl-bulk-export>
+                <span class="mtx-button__icon material-icons" aria-hidden="true">file_download</span>
+                Export
+              </button>
+              <button class="mtx-button mtx-button--text" data-mtx="button" type="button" data-tpl-bulk-suspend>
+                <span class="mtx-button__icon material-icons" aria-hidden="true">block</span>
+                Suspend
+              </button>
+              <button class="mtx-button mtx-button--text mtx-button--error" data-mtx="button" type="button" data-tpl-bulk-delete>
+                <span class="mtx-button__icon material-icons" aria-hidden="true">delete</span>
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <div data-mtx="table-container" id="tpl-um-table-wrap" class="mtx-border-top">
+            <table data-mtx="table" id="tpl-um-table" data-selectable data-hover class="mtx-text-nowrap" aria-labelledby="tpl-um-table-title">
+              <thead>
+                <tr>
+                  <th><button data-mtx="table-sort-label" data-key="name" data-active>Name</button></th>
+                  <th><button data-mtx="table-sort-label" data-key="role">Role</button></th>
+                  <th><button data-mtx="table-sort-label" data-key="status">Status</button></th>
+                  <th>Team</th>
+                  <th><button data-mtx="table-sort-label" data-key="lastActive">Last active</button></th>
+                  <th data-align="right"><span class="mtx-visually-hidden">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody id="tpl-um-rows"></tbody>
+            </table>
+          </div>
+          <div class="mtx-d-flex mtx-flex-column mtx-align-items-center mtx-text-center mtx-gap-1 mtx-py-6 mtx-px-2 mtx-border-top" id="tpl-um-empty" hidden>
+            <span data-mtx="avatar" data-size="large" data-icon="person_search" aria-hidden="true"></span>
+            <h3 class="mtx-typography--h6">No users found</h3>
+            <p class="mtx-typography--body2 mtx-color-text-secondary">Try another search term or clear the filters.</p>
+          </div>
+          <div data-mtx="table-pagination" id="tpl-um-pagination" class="mtx-border-top" data-table="#tpl-um-table" data-rows-per-page="10" data-rows-per-page-options="5,10,25" data-show-first-button data-show-last-button></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div data-mtx="menu" id="tpl-um-row-menu">
+    <div data-mtx="menu-item" data-icon="edit" data-value="edit">Edit user</div>
+    <div data-mtx="menu-item" data-icon="lock_reset" data-value="reset">Send password reset</div>
+    <div data-mtx="menu-item" data-icon="block" data-value="suspend"><span data-tpl-suspend-label>Suspend</span></div>
+    <div data-mtx="menu-item" data-divider></div>
+    <div data-mtx="menu-item" data-icon="delete" data-value="delete">Delete</div>
+  </div>
+
+  <div data-mtx="dialog" id="tpl-um-dialog" data-title="Add user">
+    <form id="tpl-um-form" novalidate>
+      <div data-mtx="grid" data-spacing="2" class="mtx-pt-1">
+        <div data-mtx="grid" data-xs="12" data-sm="6"><input data-mtx="text-field" data-label="First name" type="text" id="tpl-um-first" name="first" autocomplete="given-name" required></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6"><input data-mtx="text-field" data-label="Last name" type="text" id="tpl-um-last" name="last" autocomplete="family-name" required></div>
+        <div data-mtx="grid" data-xs="12"><input data-mtx="text-field" data-label="Work email" type="email" id="tpl-um-email" name="email" autocomplete="email" required data-helper-text="An invitation will be sent to this address."></div>
+        <div data-mtx="grid" data-xs="12" data-sm="6">
+          <select data-mtx="select" data-label="Role" id="tpl-um-role" name="role">
+            <option value="Admin">Admin</option>
+            <option value="Editor">Editor</option>
+            <option value="Viewer" selected>Viewer</option>
+            <option value="Billing">Billing</option>
+          </select>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-sm="6">
+          <select data-mtx="select" data-label="Team" id="tpl-um-team" name="team">
+            <option value="Engineering">Engineering</option>
+            <option value="Design">Design</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Sales">Sales</option>
+            <option value="Support">Support</option>
+            <option value="Finance">Finance</option>
+          </select>
+        </div>
+        <div data-mtx="grid" data-xs="12"><input type="checkbox" data-mtx="switch" id="tpl-um-active" data-label="Account active" checked></div>
+      </div>
+    </form>
+    <div class="mtx-dialog__actions">
+      <button class="mtx-button mtx-button--text" data-mtx="button" type="button" data-mtx-dialog-close>Cancel</button>
+      <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit" form="tpl-um-form" id="tpl-um-submit">Send invite</button>
+    </div>
+  </div>
+
+  <div data-mtx="dialog" id="tpl-um-confirm" class="mtx-dialog--max-sm" data-title="Delete user?" data-description="The user will lose access to the workspace immediately.">
+    <div class="mtx-dialog__actions">
+      <button class="mtx-button mtx-button--text" data-mtx="button" type="button" data-mtx-dialog-close data-dialog-autofocus>Cancel</button>
+      <button class="mtx-button mtx-button--contained mtx-button--error" data-mtx="button" type="button" id="tpl-um-confirm-ok">Delete</button>
+    </div>
+  </div>
+
+  <div data-mtx="snackbar" id="tpl-um-snackbar" data-message="Done" data-duration="6000" data-anchor="bottom-left" data-role="status"></div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      'use strict';
+
+      var $ = function (sel, root) { return (root || document).querySelector(sel); };
+      var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+      var esc = function (str) { return String(str).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+      var inst = function (el) { return Materix.getInstance(typeof el === 'string' ? document.getElementById(el) : el); };
+      var fieldOf = function (id) { return Materix.getInstance(document.getElementById(id).closest('.mtx-text-field')); };
+      var selectOf = function (id) { return Materix.getInstance(document.getElementById(id).closest('.mtx-select')); };
+
+      // Datos de ejemplo deterministas
+      var FIRST = ['Olivia', 'Liam', 'Emma', 'Noah', 'Ava', 'Elijah', 'Sophia', 'Lucas', 'Mia', 'Mateo', 'Amelia', 'Levi', 'Harper', 'Ethan', 'Evelyn', 'Kai', 'Aria', 'Leo', 'Chloe', 'Omar', 'Isla', 'Hiro', 'Zoe', 'Diego', 'Nora', 'Samuel', 'Layla', 'Arjun', 'Grace', 'Felix', 'Priya', 'Jonas', 'Elena', 'Marcus', 'Yuna', 'Theo', 'Sara', 'Daniel', 'Ines', 'Victor'];
+      var LAST = ['Johnson', 'Martinez', 'Chen', 'Williams', 'Patel', 'Brown', 'Nguyen', 'Garcia', 'Kim', 'Rossi', 'Schmidt', 'Okafor', 'Silva', 'Andersen', 'Murphy', 'Tanaka', 'Lopez', 'Dubois', 'Cohen', 'Haddad', 'Novak', 'Sato', 'Bianchi', 'Ramirez', 'Larsen', 'Adeyemi', 'Khan', 'Sharma', 'Walker', 'Becker', 'Iyer', 'Fischer', 'Popescu', 'Reed', 'Park', 'Moreau', 'Ali', 'Reyes', 'Costa', 'Lindqvist'];
+      var ROLES = ['Admin', 'Editor', 'Editor', 'Viewer', 'Viewer', 'Viewer', 'Billing', 'Editor'];
+      var TEAMS = ['Engineering', 'Design', 'Marketing', 'Sales', 'Support', 'Finance'];
+      var STATUSES = ['Active', 'Active', 'Active', 'Active', 'Invited', 'Active', 'Suspended', 'Active'];
+      var COLORS = ['primary', 'secondary', 'success', 'info', 'warning', 'error'];
+      var NOW = new Date('2026-10-19T12:00:00').getTime();
+      var users = FIRST.map(function (first, i) {
+        var last = LAST[(i * 7) % LAST.length];
+        var status = i === 0 ? 'Active' : STATUSES[(i * 3) % STATUSES.length];
+        return {
+          id: 'u' + (i + 1),
+          first: first,
+          last: last,
+          email: (first + '.' + last).toLowerCase() + '@northwind.io',
+          role: i === 0 ? 'Owner' : ROLES[(i * 5) % ROLES.length],
+          team: TEAMS[(i * 2 + Math.floor(i / 6)) % TEAMS.length],
+          status: status,
+          lastActive: status === 'Invited' ? null : NOW - ((i * 37) % 97) * 3.6e6 * ((i % 4) + 1)
+        };
+      });
+
+      var state = { query: '', role: 'all', status: 'all', sortKey: 'name', sortDir: 'asc' };
+      var table = inst('tpl-um-table');
+      var pagination = inst('tpl-um-pagination');
+      var dialog = inst('tpl-um-dialog');
+      var confirmDialog = inst('tpl-um-confirm');
+      var snackbar = inst('tpl-um-snackbar');
+      confirmDialog.paper.setAttribute('role', 'alertdialog');
+
+      var fullName = function (u) { return u.first + ' ' + u.last; };
+      var initials = function (u) { return (u.first[0] + u.last[0]).toUpperCase(); };
+      var colorFor = function (u) { var h = 0; for (var i = 0; i < u.email.length; i++) h = (h * 31 + u.email.charCodeAt(i)) % 997; return COLORS[h % COLORS.length]; };
+      var STATUS_COLOR = { Active: 'success', Invited: 'info', Suspended: 'error' };
+      var REL = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+      /**
+       * Describe la última actividad de forma relativa.
+       * @param {number|null} ts Marca de tiempo.
+       * @returns {string} Texto.
+       */
+      var relTime = function (ts) {
+        if (!ts) return 'Never';
+        var diff = (ts - NOW) / 1000;
+        var abs = Math.abs(diff);
+        if (abs < 3600) return REL.format(Math.round(diff / 60), 'minute');
+        if (abs < 86400) return REL.format(Math.round(diff / 3600), 'hour');
+        return REL.format(Math.round(diff / 86400), 'day');
+      };
+
+      /**
+       * Muestra un mensaje con deshacer opcional.
+       * @param {string} message Texto.
+       * @param {Function} [undo] Acción de deshacer.
+       */
+      var notify = function (message, undo) {
+        snackbar.open({ message: message, action: undo ? 'Undo' : null, onAction: undo || null });
+      };
+
+      /**
+       * Filtra y ordena los usuarios.
+       * @returns {Object[]} Usuarios visibles.
+       */
+      var filtered = function () {
+        var q = state.query.trim().toLowerCase();
+        var list = users.filter(function (u) {
+          return (!q || (fullName(u) + ' ' + u.email + ' ' + u.team).toLowerCase().indexOf(q) !== -1) &&
+            (state.role === 'all' || u.role === state.role) &&
+            (state.status === 'all' || u.status === state.status);
+        });
+        var dir = state.sortDir === 'asc' ? 1 : -1;
+        var key = state.sortKey;
+        return list.sort(function (a, b) {
+          var va = key === 'name' ? fullName(a) : a[key];
+          var vb = key === 'name' ? fullName(b) : b[key];
+          if (key === 'lastActive') { va = va || 0; vb = vb || 0; return (va - vb) * dir; }
+          return String(va).localeCompare(String(vb)) * dir;
+        });
+      };
+
+      /** Actualiza las tarjetas de resumen. */
+      var renderStats = function () {
+        var count = function (s) { return users.filter(function (u) { return u.status === s; }).length; };
+        $('[data-stat="total"]').textContent = users.length;
+        $('[data-stat="active"]').textContent = count('Active');
+        $('[data-stat="invited"]').textContent = count('Invited');
+        $('[data-stat="suspended"]').textContent = count('Suspended');
+      };
+
+      /**
+       * Pinta todas las filas filtradas; la tabla las decora (checkbox, selección por data-id) y la paginación las pagina.
+       * @param {boolean} [resetPage] Vuelve a la primera página.
+       */
+      var render = function (resetPage) {
+        var list = filtered();
+        $('#tpl-um-rows').innerHTML = list.map(function (u) {
+          var name = fullName(u);
+          var owner = u.role === 'Owner';
+          return '<tr data-id="' + u.id + '" data-label="' + esc(name) + '">' +
+            (owner ? '<td data-padding="checkbox"><input type="checkbox" data-mtx="checkbox" disabled aria-label="' + esc(name) + ' is the workspace owner and cannot be selected"></td>' : '') +
+            '<td><div class="mtx-d-flex mtx-align-items-center mtx-gap-1_5"><span data-mtx="avatar" data-color="' + colorFor(u) + '" aria-hidden="true">' + initials(u) + '</span><div><div class="mtx-fw-medium">' + esc(name) + '</div><div class="mtx-typography--body2 mtx-color-text-secondary">' + esc(u.email) + '</div></div></div></td>' +
+            '<td>' + esc(u.role) + '</td>' +
+            '<td><span data-mtx="chip" data-size="small" data-variant="outlined" data-color="' + STATUS_COLOR[u.status] + '" data-label="' + u.status + '"></span></td>' +
+            '<td class="mtx-color-text-secondary">' + esc(u.team) + '</td>' +
+            '<td class="mtx-color-text-secondary">' + relTime(u.lastActive) + '</td>' +
+            '<td data-align="right"><button data-mtx="icon-button" data-icon="more_vert" data-open-menu="#tpl-um-row-menu" data-row-menu="' + u.id + '" aria-label="Actions for ' + esc(name) + '"' + (owner ? ' disabled' : '') + '></button></td>' +
+            '</tr>';
+        }).join('');
+        Materix.initAll($('#tpl-um-rows'));
+        $('#tpl-um-empty').hidden = list.length > 0;
+        $('#tpl-um-table-wrap').hidden = list.length === 0;
+        if (resetPage) pagination.page = 0;
+        pagination.update();
+        $('#tpl-um-clear-item').hidden = !(state.query || state.role !== 'all' || state.status !== 'all');
+        renderStats();
+      };
+
+      // Filtros
+      var searchTimer;
+      $('#tpl-um-search').addEventListener('input', function (e) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function () { state.query = e.target.value; render(true); }, 150);
+      });
+      $('#tpl-um-role-filter').addEventListener('change', function (e) { state.role = e.target.value; render(true); });
+      $('#tpl-um-status-filter').addEventListener('change', function (e) { state.status = e.target.value; render(true); });
+      $('#tpl-um-clear').addEventListener('click', function () {
+        state.query = ''; state.role = 'all'; state.status = 'all';
+        fieldOf('tpl-um-search').value = '';
+        selectOf('tpl-um-role-filter').value = 'all';
+        selectOf('tpl-um-status-filter').value = 'all';
+        render(true);
+        fieldOf('tpl-um-search').focus();
+      });
+
+      // Ordenación (la librería desactiva las demás columnas y gestiona aria-sort)
+      table.element.addEventListener('mtx:table:sort', function (e) {
+        state.sortKey = e.detail.key;
+        state.sortDir = e.detail.direction;
+        render(true);
+      });
+
+      // Menú por fila: el disparador data-open-menu lo abre; aquí solo se prepara su contenido.
+      var menuUser = null;
+      $('#tpl-um-rows').addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-row-menu]');
+        if (!btn) return;
+        menuUser = users.find(function (u) { return u.id === btn.getAttribute('data-row-menu'); });
+        $('#tpl-um-row-menu [data-tpl-suspend-label]').textContent = menuUser.status === 'Suspended' ? 'Reactivate' : 'Suspend';
+        var resetItem = $('#tpl-um-row-menu [data-value="reset"]');
+        var invited = menuUser.status === 'Invited';
+        resetItem.classList.toggle('mtx-menu-item--disabled', invited);
+        if (invited) resetItem.setAttribute('aria-disabled', 'true'); else resetItem.removeAttribute('aria-disabled');
+      });
+      $('#tpl-um-row-menu').addEventListener('mtx:menu:select', function (e) {
+        var action = e.detail.item.getAttribute('data-value');
+        var u = menuUser;
+        if (!u) return;
+        if (action === 'edit') openForm(u);
+        else if (action === 'reset') notify('Password reset link sent to ' + u.email);
+        else if (action === 'suspend') setStatus([u], u.status === 'Suspended' ? 'Active' : 'Suspended');
+        else if (action === 'delete') askDelete([u]);
+      });
+
+      /**
+       * Cambia el estado de varios usuarios con deshacer.
+       * @param {Object[]} list Usuarios.
+       * @param {string} status Nuevo estado.
+       */
+      var setStatus = function (list, status) {
+        var prev = list.map(function (u) { return u.status; });
+        list.forEach(function (u) { u.status = status; });
+        render();
+        var label = list.length === 1 ? fullName(list[0]) : list.length + ' users';
+        notify(label + (status === 'Suspended' ? ' suspended' : ' reactivated'), function () {
+          list.forEach(function (u, i) { u.status = prev[i]; });
+          render();
+        });
+      };
+
+      // Borrado
+      var pendingDelete = null;
+      /**
+       * Pide confirmación para borrar usuarios.
+       * @param {Object[]} list Usuarios.
+       */
+      var askDelete = function (list) {
+        pendingDelete = list;
+        $('#tpl-um-confirm-title').textContent = list.length === 1 ? 'Delete user?' : 'Delete ' + list.length + ' users?';
+        $('#tpl-um-confirm-description').textContent = list.length === 1
+          ? fullName(list[0]) + ' will lose access to the workspace immediately. Their content will be transferred to you.'
+          : 'These ' + list.length + ' users will lose access to the workspace immediately. Their content will be transferred to you.';
+        confirmDialog.open();
+      };
+      $('#tpl-um-confirm-ok').addEventListener('click', function () {
+        var list = pendingDelete || [];
+        pendingDelete = null;
+        confirmDialog.close('confirm');
+        var snapshot = users.slice();
+        var ids = new Set(list.map(function (u) { return u.id; }));
+        users = users.filter(function (u) { return !ids.has(u.id); });
+        table.selected = table.selected.filter(function (id) { return !ids.has(id); });
+        render();
+        notify(list.length === 1 ? fullName(list[0]) + ' deleted' : list.length + ' users deleted', function () {
+          users = snapshot;
+          render();
+        });
+      });
+
+      // Exportación CSV real
+      /**
+       * Descarga usuarios como CSV.
+       * @param {Object[]} list Usuarios.
+       */
+      var exportCsv = function (list) {
+        var rows = [['Name', 'Email', 'Role', 'Team', 'Status']].concat(list.map(function (u) { return [fullName(u), u.email, u.role, u.team, u.status]; }));
+        var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+        var url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        var a = document.createElement('a');
+        a.href = url; a.download = 'northwind-users.csv';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        notify('Exported ' + list.length + (list.length === 1 ? ' user' : ' users') + ' to CSV');
+      };
+      var selectedUsers = function () { return users.filter(function (u) { return table.isSelected(u.id); }); };
+      $('[data-tpl-export-all]').addEventListener('click', function () { exportCsv(filtered()); });
+      $('[data-tpl-bulk-export]').addEventListener('click', function () { exportCsv(selectedUsers()); });
+      $('[data-tpl-bulk-delete]').addEventListener('click', function () { askDelete(selectedUsers()); });
+      $('[data-tpl-bulk-suspend]').addEventListener('click', function () { var l = selectedUsers(); table.clearSelection(); setStatus(l, 'Suspended'); });
+
+      // Alta / edición
+      var editing = null;
+      var F = { first: fieldOf('tpl-um-first'), last: fieldOf('tpl-um-last'), email: fieldOf('tpl-um-email') };
+      var roleSel = selectOf('tpl-um-role');
+      var teamSel = selectOf('tpl-um-team');
+      var activeSwitch = inst($('#tpl-um-active').closest('.mtx-switch'));
+      /**
+       * Abre el formulario para crear o editar.
+       * @param {Object|null} u Usuario a editar o null.
+       */
+      var openForm = function (u) {
+        editing = u;
+        $('#tpl-um-dialog-title').textContent = u ? 'Edit user' : 'Add user';
+        $('#tpl-um-submit').textContent = u ? 'Save changes' : 'Send invite';
+        Object.keys(F).forEach(function (k) { F[k].clearError(); F[k].value = u ? u[k] : ''; });
+        roleSel.value = u && u.role !== 'Owner' ? u.role : 'Viewer';
+        teamSel.value = u ? u.team : 'Engineering';
+        activeSwitch.checked = u ? u.status !== 'Suspended' : true;
+        dialog.open();
+      };
+      Object.keys(F).forEach(function (k) { F[k].input.addEventListener('input', function () { F[k].clearError(); }); });
+      $('[data-tpl-add-user]').addEventListener('click', function () { openForm(null); });
+      $('#tpl-um-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var v = { first: F.first.value.trim(), last: F.last.value.trim(), email: F.email.value.trim().toLowerCase() };
+        var firstInvalid = null;
+        var fail = function (k, msg) { F[k].setError(msg); if (!firstInvalid) firstInvalid = F[k]; };
+        if (!v.first) fail('first', 'First name is required.');
+        if (!v.last) fail('last', 'Last name is required.');
+        if (!v.email) fail('email', 'Email is required.');
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email)) fail('email', 'Enter a valid email address.');
+        else if (users.some(function (u) { return u !== editing && u.email === v.email; })) fail('email', 'A user with this email already exists.');
+        if (firstInvalid) { firstInvalid.focus(); return; }
+        var status = activeSwitch.checked ? 'Active' : 'Suspended';
+        if (editing) {
+          var before = Object.assign({}, editing);
+          Object.assign(editing, v, { role: editing.role === 'Owner' ? 'Owner' : roleSel.value, team: teamSel.value, status: editing.status === 'Invited' && activeSwitch.checked ? 'Invited' : status });
+          dialog.close('confirm');
+          render();
+          var target = editing;
+          notify('Changes to ' + fullName(target) + ' saved', function () { Object.assign(target, before); render(); });
+        } else {
+          var user = { id: 'u' + Date.now(), first: v.first, last: v.last, email: v.email, role: roleSel.value, team: teamSel.value, status: activeSwitch.checked ? 'Invited' : 'Suspended', lastActive: null };
+          users.unshift(user);
+          dialog.close('confirm');
+          render();
+          notify('Invitation sent to ' + user.email, function () { users = users.filter(function (u) { return u !== user; }); render(); });
+        }
+      });
+
+      $('[data-tpl-sso]').addEventListener('click', function () { notify('SSO setup is available on the Business plan'); });
+
+      render(true);
+    });
+  </script>
+</body>
+</html>

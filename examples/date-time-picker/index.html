@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Time Picker · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Date Time Picker</h1>
+        <p class="demo-lead">Date, time, date-time and range pickers with a calendar, MD2 radial clock, popover, modal or static mode, limits and formats.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#states">States</a>
+      <a href="#keyboard">Keyboard and accessibility</a>
+      <a href="#ranges">Ranges</a>
+      <a href="#time">Clock and AM/PM</a>
+      <a href="#presentation">Popover, modal and static</a>
+      <a href="#limits">Limits and format</a>
+      <a href="#language">Language</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>An <code>&lt;input&gt;</code> with <code>data-mtx="date-picker"</code>, <code>"time-picker"</code> or <code>"datetime-picker"</code>. It becomes a TextField with a mask and an icon, and opens the picker on click. Typing directly is also supported.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">date-picker</span>
+          <input data-mtx="date-picker" data-label="Delivery date" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">time-picker</span>
+          <input data-mtx="time-picker" data-label="Appointment time" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">datetime-picker</span>
+          <input data-mtx="datetime-picker" data-label="Meeting" type="text" />
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;input data-mtx="date-picker" data-label="Delivery date" type="text" /&gt;
+&lt;input data-mtx="time-picker" data-label="Appointment time" type="text" /&gt;
+&lt;input data-mtx="datetime-picker" data-label="Meeting" type="text" /&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>data-variant</code>: <code>outlined</code> (default), <code>filled</code> and <code>standard</code>, inherited from TextField.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <input data-mtx="date-picker" data-label="Date" data-variant="outlined" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Filled</span>
+          <input data-mtx="time-picker" data-label="Time" data-variant="filled" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Standard</span>
+          <input data-mtx="datetime-picker" data-label="Date and time" data-variant="standard" type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Medium 56px (default) and small 40px with <code>data-size="small"</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 56px</span>
+        <div class="demo-grid-3">
+          <input data-mtx="date-picker" data-label="Date" type="text" />
+          <input data-mtx="time-picker" data-label="Time" data-variant="filled" type="text" />
+          <input data-mtx="datetime-picker" data-label="Date and time" data-variant="standard" type="text" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 40px</span>
+        <div class="demo-grid-3">
+          <input data-mtx="date-picker" data-label="Date" data-size="small" type="text" />
+          <input data-mtx="time-picker" data-label="Time" data-variant="filled" data-size="small" type="text" />
+          <input data-mtx="datetime-picker" data-label="Date and time" data-variant="standard" data-size="small" type="text" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · small Picker 40px + medium Button 40px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="date-picker" data-label="From" data-size="small" type="text" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="button">Search</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · medium Picker 56px + large Button 48px + FAB 56px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <input data-mtx="datetime-picker" data-label="Reminder" type="text" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="large" type="button">Schedule</button>
+          <button data-mtx="fab" data-icon="alarm_add" aria-label="New reminder" type="button"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With icons</h2>
+      <p>The end icon opens and closes the picker and depends on the mode; change it with <code>data-end-icon</code> and add another one with <code>data-start-icon</code>.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Default icon</span>
+          <input data-mtx="date-picker" data-label="Date" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Start icon + custom end icon</span>
+          <input data-mtx="date-picker" data-label="Check-in" data-start-icon="hotel" data-end-icon="calendar_today" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Custom end icon</span>
+          <input data-mtx="time-picker" data-label="Alarm" data-end-icon="alarm" type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Helper, error with message, required, disabled and read-only, as in TextField. Use <kbd>Tab</kbd> to see focus. With <code>disabled</code> or <code>readonly</code> the calendar button is disabled and the picker does not open.</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">Helper</span>
+          <input data-mtx="date-picker" data-label="Start" data-helper-text="MM/DD/YYYY" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error + message</span>
+          <input data-mtx="date-picker" data-label="Due date" data-error="The date has already passed" value="01/01/2020" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Required</span>
+          <input data-mtx="time-picker" data-label="Time" required type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled</span>
+          <input data-mtx="date-picker" data-label="Locked" data-value="2026-08-15" disabled type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Read-only</span>
+          <input data-mtx="date-picker" data-label="Issued" data-value="2026-03-02" readonly type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-value (floating label)</span>
+          <input data-mtx="date-picker" data-label="Start" data-value="2026-10-20" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-default-value</span>
+          <input data-mtx="time-picker" data-label="Alarm" data-default-value="07:30" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">disable() / enable()</span>
+          <div class="demo-stack">
+            <input id="picker-toggle-disabled" data-mtx="date-picker" data-label="Toggleable" type="text" />
+            <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" id="picker-toggle-disabled-btn">disable()</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="keyboard">
+      <h2>Keyboard and accessibility</h2>
+      <p>WAI-ARIA <em>Date Picker Dialog</em> pattern: the end icon is a button with <code>aria-haspopup="dialog"</code> and <code>aria-expanded</code>; the picker is a <code>role="dialog"</code> named "Choose date" and the calendar a <code>role="grid"</code> with roving tabindex. Focus the calendar button with <kbd>Tab</kbd> and press <kbd>Enter</kbd>, or type in the field and press <kbd>Alt</kbd>+<kbd>↓</kbd>: focus moves to the selected day (or today).</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Popover · day grid</span>
+          <input id="picker-kbd" data-mtx="date-picker" data-label="Date" data-value="2026-10-20" data-min="2026-01-01" data-max="2027-12-31" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Modal · focus trap</span>
+          <input data-mtx="date-picker" data-label="Date (modal)" data-display="modal" data-value="2026-10-20" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Clock · slider with aria-valuetext</span>
+          <input data-mtx="time-picker" data-label="Time" data-time-view="dial" data-value="10:30" type="text" />
+        </div>
+      </div>
+      <p class="demo-status" id="picker-kbd-out" aria-live="polite">Navigate the calendar with the keyboard.</p>
+      <div class="demo-surface">
+        <table data-mtx="table" data-size="small">
+          <caption>Picker keys</caption>
+          <thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>←</kbd> / <kbd>→</kbd></td><td>Previous / next day</td></tr>
+            <tr><td><kbd>↑</kbd> / <kbd>↓</kbd></td><td>Same weekday of the previous / next week</td></tr>
+            <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>First / last day of the week</td></tr>
+            <tr><td><kbd>PgUp</kbd> / <kbd>PgDn</kbd></td><td>Previous / next month</td></tr>
+            <tr><td><kbd>Shift</kbd>+<kbd>PgUp</kbd> / <kbd>PgDn</kbd></td><td>Previous / next year</td></tr>
+            <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Selects the focused day, month or year</td></tr>
+            <tr><td>Arrows on the clock</td><td>Change the hour or minute; <kbd>PgUp</kbd>/<kbd>PgDn</kbd> ±5 min; <kbd>Enter</kbd> moves to minutes</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Closes and returns focus to the button or the field</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="demo-section" id="ranges">
+      <h2>Ranges</h2>
+      <p>Start and end with two clicks on the same calendar. In date-time mode, once the days are chosen the start and end time tabs appear.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">date-range-picker</span>
+          <input data-mtx="date-range-picker" data-label="Stay" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">datetime-range-picker</span>
+          <input data-mtx="datetime-range-picker" data-label="Maintenance" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Initial value</span>
+          <input data-mtx="date-range-picker" data-label="Vacation" value="2026-07-01 - 2026-07-15" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Range with AM/PM</span>
+          <input data-mtx="datetime-range-picker" data-label="Shift" data-ampm type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="time">
+      <h2>Clock and 12-hour format</h2>
+      <p>Time opens in keyboard mode (editable cards with <kbd>↑</kbd>/<kbd>↓</kbd>); <code>data-time-view="dial"</code> opens the MD2 radial clock. <code>data-ampm</code> or a format with <code>hh</code>/<code>A</code> turns on AM/PM.</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">Keyboard · 24 h</span>
+          <input data-mtx="time-picker" data-label="Time" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Keyboard · 12 h</span>
+          <input data-mtx="time-picker" data-label="Time" data-ampm type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Clock · 24 h</span>
+          <input data-mtx="time-picker" data-label="Time" data-time-view="dial" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Clock · 12 h</span>
+          <input data-mtx="datetime-picker" data-label="Appointment" data-time-view="dial" data-format="MM/DD/YYYY hh:mm A" type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="presentation">
+      <h2>Popover, modal and static</h2>
+      <p>A popover below the field (default; centered over a dark backdrop on screens ≤ 600px), a modal dialog with an MD2 header (<code>data-display="modal"</code>) or an embedded picker (<code>data-static</code> on a <code>&lt;div&gt;</code>).</p>
+      <div class="demo-group">
+        <span class="demo-label">Modal</span>
+        <div class="demo-grid-2">
+          <input data-mtx="date-picker" data-label="Date (modal)" data-display="modal" type="text" />
+          <input data-mtx="datetime-picker" data-label="Date and time (modal)" data-display="modal" type="text" />
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Static · each choice emits mtx:date-time-picker:change</span>
+        <div class="demo-grid-2">
+          <div class="demo-stack">
+            <div id="picker-static-date" data-mtx="date-picker" data-static></div>
+            <p class="demo-status" id="picker-static-date-out" aria-live="polite">Pick a day.</p>
+          </div>
+          <div class="demo-stack">
+            <div id="picker-static-time" data-mtx="time-picker" data-static data-time-view="dial"></div>
+            <p class="demo-status" id="picker-static-time-out" aria-live="polite">Pick a time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="limits">
+      <h2>Limits, initial value and format</h2>
+      <p><code>data-min</code>/<code>data-max</code> disable days outside the interval (they accept <code>today</code>); <code>value</code> or <code>data-value</code> set the initial value and <code>data-format</code> changes the format and the mask.</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">2026 only</span>
+          <input data-mtx="date-picker" data-label="Date" data-min="2026-01-01" data-max="2026-12-31" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">From today + value</span>
+          <input data-mtx="date-picker" data-label="Delivery" data-min="today" value="2026-12-24" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Format YYYY-MM-DD</span>
+          <input data-mtx="date-picker" data-label="ISO" data-format="YYYY-MM-DD" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Format YYYY-MM-DD HH:mm</span>
+          <input data-mtx="datetime-picker" data-label="ISO with time" data-format="YYYY-MM-DD HH:mm" type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="language">
+      <h2>Language and texts</h2>
+      <p><code>data-locale</code> sets a field's language and accepts regions (<code>es-MX</code> uses the <code>es</code> texts); without it, the <code>lang</code> of the nearest ancestor or of <code>&lt;html&gt;</code> is used (this page is <code>en</code>). Months and days come from the i18n dictionary, or from <code>Intl</code> if the language is not registered, and the default format follows the locale order (<code>en</code>: MM/DD/YYYY; <code>es</code>: DD/MM/YYYY) unless <code>data-format</code> is set. <code>data-today-text</code>, <code>data-cancel-text</code> and <code>data-ok-text</code> replace the button texts.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">data-locale="es-MX" · DD/MM/YYYY</span>
+          <input data-mtx="date-picker" data-label="Fecha de factura" data-locale="es-MX" data-value="2026-10-20" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-locale="en-US" · MM/DD/YYYY</span>
+          <input data-mtx="datetime-picker" data-label="Meeting" data-locale="en-US" data-value="2026-10-20 14:30" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-locale="fr-FR" · Intl</span>
+          <input data-mtx="date-picker" data-label="Date" data-locale="fr-FR" data-value="2026-10-20" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-locale="es"</span>
+          <input data-mtx="date-picker" data-label="Fecha" data-locale="es" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">data-locale="en"</span>
+          <input data-mtx="date-picker" data-label="Date" data-locale="en" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Custom texts</span>
+          <input data-mtx="date-picker" data-label="Date" data-today-text="Now" data-cancel-text="Back" data-ok-text="Done" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">date-time-picker + data-picker="date"</span>
+          <input data-mtx="date-time-picker" data-picker="date" data-label="Date only" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">date-time-picker + data-picker="time"</span>
+          <input data-mtx="date-time-picker" data-picker="time" data-label="Time only" type="text" />
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>A room booking form in <code>mtx-grid</code> combining a date range, a time, a Select and a Button.</p>
+      <div class="demo-surface">
+        <form data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <input data-mtx="date-range-picker" data-label="Days" data-min="today" required type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3">
+            <input data-mtx="time-picker" data-label="Start time" data-ampm required type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="3">
+            <select data-mtx="select" data-label="Duration">
+              <option value="60">1 hour</option>
+              <option value="120">2 hours</option>
+              <option value="240">Half day</option>
+            </select>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <input data-mtx="text-field" data-label="Organizer" data-start-icon="person" type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="6">
+            <input data-mtx="datetime-picker" data-label="Reminder" data-helper-text="Optional" type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12">
+            <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Book</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The buttons call the instance's real API; the console shows the <code>mtx:date-time-picker:open</code>, <code>:close</code> and <code>:change</code> events (a single emission per selection; <code>mtx:open</code>, <code>mtx:close</code> and <code>mtx:change</code> are still emitted as deprecated aliases).</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Date and time</span>
+          <input id="picker-api" data-mtx="datetime-picker" data-label="Delivery" type="text" />
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Range</span>
+          <input id="picker-api-range" data-mtx="date-range-picker" data-label="Period" type="text" />
+        </div>
+      </div>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-picker-action="open">open()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-picker-action="set">setDateTime('2026-12-25 20:00')</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-picker-action="now">setDateTime(new Date())</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-picker-action="time">setTime('09:15')</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-picker-action="read">getDate() / getTime() / getISOString()</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-picker-action="range">setRange('2026-10-01', '2026-10-15')</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-picker-action="getrange">getRange(true)</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-picker-action="clear">clear()</button>
+      </div>
+      <pre class="demo-log" id="picker-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const picker = Materix.getInstance(document.getElementById('picker-api'));
+button.addEventListener('click', (e) =&gt; { e.stopPropagation(); picker.open(); });
+picker.setDateTime('2026-12-25 20:00');
+picker.getDate('YYYY-MM-DD');   // "2026-12-25"
+picker.input.addEventListener('mtx:date-time-picker:change', (e) =&gt; console.log(e.detail.value, e.detail.iso));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The picker mounts on the full TextField structure with <code>data-mtx</code> on the wrapper; the popover is generated inside it.</p>
+      <div class="demo-fixed-width">
+        <div class="mtx-text-field mtx-text-field--outlined" data-mtx="date-picker">
+          <label class="mtx-text-field__label" for="picker-bem">Due date</label>
+          <div class="mtx-text-field__container">
+            <input class="mtx-text-field__input" id="picker-bem" type="text" placeholder=" " />
+            <span class="mtx-text-field__adornment mtx-text-field__adornment--end material-icons" aria-hidden="true">event</span>
+          </div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-text-field mtx-text-field--outlined" data-mtx="date-picker"&gt;
+  &lt;label class="mtx-text-field__label" for="due"&gt;Due date&lt;/label&gt;
+  &lt;div class="mtx-text-field__container"&gt;
+    &lt;input class="mtx-text-field__input" id="due" type="text" placeholder=" " /&gt;
+    &lt;span class="mtx-text-field__adornment mtx-text-field__adornment--end material-icons" aria-hidden="true"&gt;event&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      /**
+       * Añade una línea a la consola de eventos.
+       * @param {string} text Mensaje.
+       */
+      function log(text) {
+        var out = document.getElementById('picker-log');
+        out.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        out.scrollTop = out.scrollHeight;
+      }
+
+      // Pickers estáticos
+      document.getElementById('picker-static-date').addEventListener('mtx:date-time-picker:change', function (e) {
+        document.getElementById('picker-static-date-out').textContent = 'mtx:date-time-picker:change → ' + e.detail.value;
+      });
+      document.getElementById('picker-static-time').addEventListener('mtx:date-time-picker:change', function (e) {
+        document.getElementById('picker-static-time-out').textContent = 'mtx:date-time-picker:change → ' + e.detail.value;
+      });
+
+      // Teclado: muestra el día enfocado en la cuadrícula
+      var kbd = Materix.getInstance(document.getElementById('picker-kbd'));
+      kbd.element.addEventListener('focusin', function (e) {
+        if (e.target.getAttribute('role') === 'gridcell') {
+          document.getElementById('picker-kbd-out').textContent = 'Focus: ' + e.target.getAttribute('aria-label');
+        }
+      });
+
+      // disable() / enable()
+      var lockable = Materix.getInstance(document.getElementById('picker-toggle-disabled'));
+      var lockBtn = document.getElementById('picker-toggle-disabled-btn');
+      lockBtn.addEventListener('click', function () {
+        if (lockable.disabled) { lockable.enable(); lockBtn.textContent = 'disable()'; }
+        else { lockable.disable(); lockBtn.textContent = 'enable()'; }
+      });
+
+      // API
+      var picker = Materix.getInstance(document.getElementById('picker-api'));
+      var range = Materix.getInstance(document.getElementById('picker-api-range'));
+      [picker, range].forEach(function (inst) {
+        inst.element.addEventListener('mtx:date-time-picker:open', function () { log('mtx:date-time-picker:open (' + inst.input.id + ')'); });
+        inst.element.addEventListener('mtx:date-time-picker:close', function () { log('mtx:date-time-picker:close (' + inst.input.id + ')'); });
+        inst.element.addEventListener('mtx:date-time-picker:change', function (e) {
+          log('mtx:date-time-picker:change (' + inst.input.id + ') → value "' + e.detail.value + '" · iso ' + e.detail.iso);
+        });
+      });
+
+      document.querySelectorAll('[data-picker-action]').forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+          event.stopPropagation();
+          var action = btn.getAttribute('data-picker-action');
+          if (action === 'open') picker.open();
+          if (action === 'set') picker.setDateTime('2026-12-25 20:00');
+          if (action === 'now') picker.setDateTime(new Date());
+          if (action === 'time') picker.setTime('09:15');
+          if (action === 'read') {
+            log('getDate(true) "' + picker.getDate(true) + '" · getTime() "' + picker.getTime() + '" · getISOString() ' + picker.getISOString());
+          }
+          if (action === 'range') range.setRange('2026-10-01', '2026-10-15');
+          if (action === 'getrange') log('getRange(true) ' + JSON.stringify(range.getRange(true)));
+          if (action === 'clear') { picker.clear(); range.clear(); }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

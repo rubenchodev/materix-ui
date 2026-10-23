@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breadcrumbs · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Navigation</span>
+        <h1>Breadcrumbs</h1>
+        <p class="demo-lead">Hierarchical navigation trail that shows where the user is and lets them jump back to any parent level.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#separators">Separators</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#collapsed">Collapsed</a>
+      <a href="#typography">Typography</a>
+      <a href="#states">States</a>
+      <a href="#direct-links">From links</a>
+      <a href="#real-world">Real-world examples</a>
+      <a href="#grid-layout">Grid layout</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A single <code>&lt;ol data-mtx="breadcrumbs"&gt;</code>. The component wraps it in a <code>&lt;nav aria-label&gt;</code>, turns the <code>&lt;a&gt;</code> elements into Materix Links, inserts the separators and marks the last item with <code>aria-current="page"</code>.</p>
+      <div class="demo-stack">
+        <ol data-mtx="breadcrumbs">
+          <li><a href="#basic-usage">Home</a></li>
+          <li><a href="#basic-usage">Catalog</a></li>
+          <li>Accessories</li>
+        </ol>
+        <ol data-mtx="breadcrumbs">
+          <li><a href="#basic-usage">Home</a></li>
+          <li><a href="#basic-usage">Catalog</a></li>
+          <li><a href="#basic-usage">Accessories</a></li>
+          <li><a href="#basic-usage" aria-current="page">Headphones</a></li>
+        </ol>
+      </div>
+      <pre class="demo-code"><code>&lt;ol data-mtx="breadcrumbs"&gt;
+  &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/catalog"&gt;Catalog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Accessories&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="separators">
+      <h2>Separators</h2>
+      <p><code>data-separator</code> accepts a text (<code>/</code> by default) or the name of a Material icon (<code>navigate_next</code>, <code>chevron_right</code>…). Separators carry <code>aria-hidden="true"</code>.</p>
+      <div class="demo-group">
+        <span class="demo-label">Text · ›</span>
+        <ol data-mtx="breadcrumbs" data-separator="›">
+          <li><a href="#separators">Home</a></li>
+          <li><a href="#separators">Catalog</a></li>
+          <li>Accessories</li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Text · -</span>
+        <ol data-mtx="breadcrumbs" data-separator="-">
+          <li><a href="#separators">Home</a></li>
+          <li><a href="#separators">Catalog</a></li>
+          <li>Accessories</li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon · navigate_next</span>
+        <ol data-mtx="breadcrumbs" data-separator="navigate_next">
+          <li><a href="#separators">Home</a></li>
+          <li><a href="#separators">Catalog</a></li>
+          <li>Accessories</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With icons</h2>
+      <p><code>data-icon</code> on the link or on the text adds a decorative Material icon before the label. On hover only the label is underlined, never the icon.</p>
+      <div class="demo-group">
+        <span class="demo-label">No icon</span>
+        <ol data-mtx="breadcrumbs">
+          <li><a href="#with-icons">Home</a></li>
+          <li><a href="#with-icons">Projects</a></li>
+          <li>Website redesign</li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icon on every item</span>
+        <ol data-mtx="breadcrumbs">
+          <li><a href="#with-icons" data-icon="home">Home</a></li>
+          <li><a href="#with-icons" data-icon="whatshot">Projects</a></li>
+          <li><span data-icon="grain">Website redesign</span></li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Root only</span>
+        <ol data-mtx="breadcrumbs" data-separator="chevron_right">
+          <li><a href="#with-icons" data-icon="folder">My Drive</a></li>
+          <li><a href="#with-icons">Marketing</a></li>
+          <li>2026 campaign</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="demo-section" id="collapsed">
+      <h2>Collapsed</h2>
+      <p>With more items than <code>data-max-items</code> (8 by default), <code>data-items-before-collapse</code> (1) and <code>data-items-after-collapse</code> (1) are shown along with a "Show path" button that reveals the rest and moves focus to the first revealed item.</p>
+      <div class="demo-group">
+        <span class="demo-label">data-max-items="2"</span>
+        <ol data-mtx="breadcrumbs" data-max-items="2">
+          <li><a href="#collapsed">Home</a></li>
+          <li><a href="#collapsed">Catalog</a></li>
+          <li><a href="#collapsed">Accessories</a></li>
+          <li><a href="#collapsed">New collection</a></li>
+          <li>Belts</li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">data-max-items="4" · before 2 · after 2</span>
+        <ol data-mtx="breadcrumbs" data-max-items="4" data-items-before-collapse="2" data-items-after-collapse="2" data-separator="navigate_next">
+          <li><a href="#collapsed">Home</a></li>
+          <li><a href="#collapsed">Documents</a></li>
+          <li><a href="#collapsed">2026</a></li>
+          <li><a href="#collapsed">Accounting</a></li>
+          <li><a href="#collapsed">Quarter 3</a></li>
+          <li>Invoices</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="demo-section" id="typography">
+      <h2>Typography</h2>
+      <p>As in MUI, it uses <code>body1</code> in <code>text.secondary</code>. For a more compact trail, add a Typography class to the container.</p>
+      <div class="demo-group">
+        <span class="demo-label">body1 · default</span>
+        <ol data-mtx="breadcrumbs">
+          <li><a href="#typography">Settings</a></li>
+          <li>Security</li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">body2 · class="mtx-typography--body2"</span>
+        <nav data-mtx="breadcrumbs" class="mtx-typography--body2">
+          <a href="#typography">Settings</a>
+          <span>Security</span>
+        </nav>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Hover the links to see the underline and use <kbd>Tab</kbd> to see the focus ring. The current item is not a link and is painted in <code>text.primary</code>; a trail link can be disabled with <code>data-disabled</code> (handled by Link).</p>
+      <div class="demo-group">
+        <span class="demo-label">Normal · hover · focus-visible · current</span>
+        <ol data-mtx="breadcrumbs">
+          <li><a href="#states">Home</a></li>
+          <li><a href="#states">Customers</a></li>
+          <li>Anna Taylor</li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Disabled item</span>
+        <ol data-mtx="breadcrumbs">
+          <li><a href="#states">Home</a></li>
+          <li><a href="#states" data-disabled>Archived</a></li>
+          <li>Order #4821</li>
+        </ol>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Link colors · data-color on the &lt;a&gt;</span>
+        <ol data-mtx="breadcrumbs">
+          <li><a href="#states" data-color="primary">Home</a></li>
+          <li><a href="#states" data-color="primary">Customers</a></li>
+          <li>Anna Taylor</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="demo-section" id="direct-links">
+      <h2>From a list of links</h2>
+      <p>It can also be initialized on a <code>&lt;nav&gt;</code> with the links as direct children: the component generates the <code>&lt;ol&gt;</code> and one <code>&lt;li&gt;</code> per link.</p>
+      <nav data-mtx="breadcrumbs" aria-label="Location in help center">
+        <a href="#direct-links">Help</a>
+        <a href="#direct-links">Billing</a>
+        <span>Change payment method</span>
+      </nav>
+      <pre class="demo-code"><code>&lt;nav data-mtx="breadcrumbs" aria-label="Location in help center"&gt;
+  &lt;a href="/help"&gt;Help&lt;/a&gt;
+  &lt;a href="/help/billing"&gt;Billing&lt;/a&gt;
+  &lt;span&gt;Change payment method&lt;/span&gt;
+&lt;/nav&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="real-world">
+      <h2>Real-world examples</h2>
+      <p>Page header of an admin panel: trail, title and primary action.</p>
+      <div class="demo-surface">
+        <div class="demo-stack">
+          <ol data-mtx="breadcrumbs" class="mtx-typography--body2">
+            <li><a href="#real-world" data-icon="dashboard">Dashboard</a></li>
+            <li><a href="#real-world">Users</a></li>
+            <li>Edit profile</li>
+          </ol>
+          <div class="demo-row">
+            <h3 data-mtx="typography" data-variant="h5">Edit profile</h3>
+            <button class="mtx-button mtx-button--contained" data-mtx="button" type="button">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>In a grid</h2>
+      <p>On narrow screens the items wrap onto new lines (flex-wrap) without overflowing the column.</p>
+      <div data-mtx="grid" data-spacing="2">
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div class="demo-surface">
+            <ol data-mtx="breadcrumbs">
+              <li><a href="#grid-layout">Store</a></li>
+              <li><a href="#grid-layout">Electronics</a></li>
+              <li><a href="#grid-layout">Audio</a></li>
+              <li>Wireless headphones</li>
+            </ol>
+          </div>
+        </div>
+        <div data-mtx="grid" data-xs="12" data-md="6">
+          <div class="demo-surface">
+            <ol data-mtx="breadcrumbs" data-separator="navigate_next">
+              <li><a href="#grid-layout">Docs</a></li>
+              <li><a href="#grid-layout">Components</a></li>
+              <li>Breadcrumbs</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>File-manager style folder navigation: <code>setItems()</code> rebuilds the trail and <code>mtx:breadcrumbs:navigate</code> (cancelable) reports the clicked item. Items without <code>href</code> are rendered as a Link on a <code>&lt;button&gt;</code>.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" type="button" id="bc-open-folder">Open subfolder</button>
+        <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="bc-reset">Back to root</button>
+      </div>
+      <div class="demo-surface">
+        <ol data-mtx="breadcrumbs" data-separator="chevron_right" data-max-items="4" id="bc-dynamic">
+          <li><span data-icon="folder">My Drive</span></li>
+        </ol>
+      </div>
+      <pre class="demo-log" id="bc-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const crumbs = Materix.getInstance(document.querySelector('#bc-dynamic'));
+crumbs.setItems([
+  { label: 'My Drive', icon: 'folder', data: { folder: 'root' } },
+  { label: 'Projects', data: { folder: 'p1' } },
+  { label: 'Q3 report' }             // last: current page
+]);
+crumbs.element.addEventListener('mtx:breadcrumbs:navigate', (event) =&gt; {
+  event.preventDefault();            // SPA navigation
+  openFolder(event.detail.item.data.folder);
+});</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Full pre-rendered structure (SSR). It already looks right without JavaScript; with <code>data-mtx</code> the component reuses the nodes and repaints the separators without duplicating them.</p>
+      <nav class="mtx-breadcrumbs" data-mtx="breadcrumbs" aria-label="breadcrumb">
+        <ol class="mtx-breadcrumbs__ol">
+          <li class="mtx-breadcrumbs__li"><a class="mtx-link mtx-link--inherit mtx-breadcrumbs__link" href="#bem-usage">Home</a></li>
+          <li class="mtx-breadcrumbs__separator" aria-hidden="true">/</li>
+          <li class="mtx-breadcrumbs__li"><a class="mtx-link mtx-link--inherit mtx-breadcrumbs__link" href="#bem-usage">Blog</a></li>
+          <li class="mtx-breadcrumbs__separator" aria-hidden="true">/</li>
+          <li class="mtx-breadcrumbs__li"><span class="mtx-breadcrumbs__text" aria-current="page">What's new in October</span></li>
+        </ol>
+      </nav>
+      <pre class="demo-code"><code>&lt;nav class="mtx-breadcrumbs" data-mtx="breadcrumbs" aria-label="breadcrumb"&gt;
+  &lt;ol class="mtx-breadcrumbs__ol"&gt;
+    &lt;li class="mtx-breadcrumbs__li"&gt;&lt;a class="mtx-link mtx-link--inherit mtx-breadcrumbs__link" href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="mtx-breadcrumbs__separator" aria-hidden="true"&gt;/&lt;/li&gt;
+    &lt;li class="mtx-breadcrumbs__li"&gt;&lt;a class="mtx-link mtx-link--inherit mtx-breadcrumbs__link" href="/blog"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="mtx-breadcrumbs__separator" aria-hidden="true"&gt;/&lt;/li&gt;
+    &lt;li class="mtx-breadcrumbs__li"&gt;&lt;span class="mtx-breadcrumbs__text" aria-current="page"&gt;What's new in October&lt;/span&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var FOLDERS = [
+        { id: 'root', name: 'My Drive' },
+        { id: 'p1', name: 'Projects' },
+        { id: 'p2', name: 'Acme client' },
+        { id: 'p3', name: 'Deliverables' },
+        { id: 'p4', name: 'Q3 report' },
+      ];
+      var depth = 0;
+      var list = document.getElementById('bc-dynamic');
+      var crumbs = Materix.getInstance(list);
+      var log = document.getElementById('bc-log');
+
+      /**
+       * Escribe una línea en el registro.
+       * @param {string} text Mensaje.
+       */
+      function write(text) {
+        log.textContent = text + '\n' + log.textContent;
+      }
+
+      /** Pinta la ruta hasta la profundidad actual. */
+      function render() {
+        crumbs.setItems(FOLDERS.slice(0, depth + 1).map(function (folder, index) {
+          return { label: folder.name, icon: index === 0 ? 'folder' : null, data: { folder: folder.id } };
+        }));
+      }
+
+      crumbs.element.addEventListener('mtx:breadcrumbs:navigate', function (event) {
+        event.preventDefault();
+        depth = event.detail.index;
+        write('navigate → index ' + event.detail.index + ' · folder "' + event.detail.item.data.folder + '"');
+        render();
+      });
+      document.getElementById('bc-open-folder').addEventListener('click', function () {
+        depth = Math.min(depth + 1, FOLDERS.length - 1);
+        write('setItems() · ' + (depth + 1) + ' levels');
+        render();
+      });
+      document.getElementById('bc-reset').addEventListener('click', function () {
+        depth = 0;
+        write('setItems() · root');
+        render();
+      });
+    });
+  </script>
+</body>
+</html>

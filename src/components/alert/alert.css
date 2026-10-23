@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Materix UI — Alert
+   Basado en Material UI (MUI)
+   ========================================================================== */
+.mtx-alert {
+  --mtx-alert-main: var(--mtx-color-success);
+  --mtx-alert-contrast: var(--mtx-color-success-contrast);
+  /* Icono en standard/outlined: color de texto accesible de la severidad (AA; = main con data-mtx-contrast="mui"). */
+  --mtx-alert-accent: var(--mtx-color-success-text);
+  display: flex;
+  align-items: flex-start;
+  padding: 6px 16px;
+  border-radius: var(--mtx-shape-radius);
+  font-family: var(--mtx-font-family);
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  position: relative;
+  /* Standard (MUI): texto = main oscurecido 60 % (claro) / aclarado 60 % (oscuro); fondo al 10 %. */
+  color: color-mix(in srgb, var(--mtx-alert-main) 40%, var(--mtx-alert-text-mix, #000));
+  background-color: color-mix(in srgb, var(--mtx-alert-main) 10%, var(--mtx-alert-bg-mix, #fff));
+}
+/* `hidden` (y close()) sacan la alerta del flujo: display:flex no debe anularlo. */
+.mtx-alert[hidden] {
+  display: none !important;
+}
+.mtx-alert__icon {
+  display: flex;
+  flex-shrink: 0;
+  padding: 7px 0;
+  margin-right: 12px;
+  color: var(--mtx-alert-accent);
+  opacity: 0.9;
+}
+/* Icono SVG de 22px como MUI (los .material-icons conservan su rejilla de 24px). */
+.mtx-alert__icon > svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+.mtx-alert__message {
+  flex: 1;
+  padding: 8px 0;
+  min-width: 0;
+  overflow: auto;
+}
+.mtx-alert__title {
+  display: block;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  margin: -2px 0 4px;
+}
+.mtx-alert__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin: 3px -8px 0 auto;
+  padding: 0;
+  border: none;
+  border-radius: var(--mtx-shape-full);
+  background: transparent;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color var(--mtx-duration-shorter) var(--mtx-easing-standard);
+}
+.mtx-alert__message + .mtx-alert__close {
+  margin-left: 16px;
+}
+.mtx-alert__close:hover {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
+.mtx-alert__close:focus-visible {
+  outline: var(--mtx-focus-ring-width, 2px) solid currentColor;
+  outline-offset: 0;
+  background-color: color-mix(in srgb, currentColor 12%, transparent);
+}
+/* Severidades: cada una fija el color principal y su contraste. */
+.mtx-alert--success { --mtx-alert-main: var(--mtx-color-success); --mtx-alert-contrast: var(--mtx-color-success-contrast); --mtx-alert-accent: var(--mtx-color-success-text); }
+.mtx-alert--info { --mtx-alert-main: var(--mtx-color-info); --mtx-alert-contrast: var(--mtx-color-info-contrast); --mtx-alert-accent: var(--mtx-color-info-text); }
+.mtx-alert--warning { --mtx-alert-main: var(--mtx-color-warning); --mtx-alert-contrast: var(--mtx-color-warning-contrast); --mtx-alert-accent: var(--mtx-color-warning-text); }
+.mtx-alert--error { --mtx-alert-main: var(--mtx-color-error); --mtx-alert-contrast: var(--mtx-color-error-contrast); --mtx-alert-accent: var(--mtx-color-error-text); }
+/* Filled: fondo del color principal con su texto de contraste. */
+.mtx-alert--filled {
+  background-color: var(--mtx-alert-main);
+  color: var(--mtx-alert-contrast);
+  font-weight: 500;
+}
+.mtx-alert--filled .mtx-alert__icon {
+  color: inherit;
+}
+/* Outlined: mismo color de texto que standard, sin fondo y con borde del color principal. */
+.mtx-alert--outlined {
+  background-color: transparent;
+  border: 1px solid var(--mtx-alert-main);
+}

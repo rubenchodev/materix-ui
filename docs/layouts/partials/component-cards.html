@@ -1,0 +1,19 @@
+{{/* Grilla de componentes agrupada por `group` (tarjetas con icono, título y descripción). */}}
+{{ range partialCached "component-groups.html" . "doc-groups" site.Language.Lang }}
+<section class="doc-group" aria-labelledby="doc-group-{{ .key }}">
+  <h2 class="doc-group-title" id="doc-group-{{ .key }}">{{ .name }}</h2>
+  <ul class="doc-card-grid">
+    {{ range .pages }}
+    <li>
+      <a class="doc-card" href="{{ .RelPermalink }}">
+        <span class="doc-card-icon" aria-hidden="true"><span class="material-icons">{{ .Params.icon | default "widgets" }}</span></span>
+        <span class="doc-card-text">
+          <span class="doc-card-title">{{ .LinkTitle }}</span>
+          {{ with .Description }}<span class="doc-card-desc">{{ . }}</span>{{ end }}
+        </span>
+      </a>
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

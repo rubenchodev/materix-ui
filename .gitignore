@@ -1,0 +1,25 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.idea/
+.vscode/
+# Playwright (E2E, visual, a11y)
+test-results/
+playwright-report/
+blob-report/
+
+# Declaraciones generadas por scripts/gen-types.mjs (npm run build:types)
+types/lib/
+types/components/
+*.tgz
+
+# Hugo: salida compilada, lock y copia local de dist/ (se regeneran con npm run docs:build)
+docs/public/
+docs/resources/
+docs/.hugo_build.lock
+docs/static/dist/
+
+# Borradores locales de depuración (no forman parte de la librería ni de la suite)
+scratch/
+tests/scratch.js

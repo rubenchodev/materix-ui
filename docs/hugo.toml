@@ -1,0 +1,108 @@
+# Requiere Hugo extended >= 0.156 (hugo.Data, languages.*.label/locale, module.mounts.files). Verificado con 0.168.0.
+baseURL = "/"
+title = "Materix UI"
+# Inglés en la raíz (/) y español en /es/. Las traducciones se emparejan por nombre: x.en.md / x.es.md.
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = false
+disableKinds = ["taxonomy", "term", "RSS"]
+
+# Índice de búsqueda de texto completo por idioma (/search-index.json y /es/search-index.json),
+# cargado bajo demanda por docs.js al abrir el buscador.
+[outputs]
+  home = ["HTML", "SearchIndex"]
+
+[outputFormats]
+  [outputFormats.SearchIndex]
+    mediaType = "application/json"
+    baseName = "search-index"
+    isPlainText = true
+    notAlternative = true
+
+[languages]
+  [languages.en]
+    label = "English"
+    locale = "en"
+    weight = 1
+    [languages.en.params]
+      description = "Vanilla CSS + JavaScript library with components based on Material UI."
+  [languages.es]
+    label = "Español"
+    locale = "es"
+    weight = 2
+    [languages.es.params]
+      description = "Librería CSS + JavaScript vanilla con componentes basados en Material UI."
+
+# Los estáticos (y dist/) se publican una sola vez en la raíz del sitio, compartidos por ambos idiomas.
+# Los layouts los enlazan con relURL (nunca relLangURL) para que en /es/ apunten a la raíz.
+[module]
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "../dist"
+    target = "static/dist"
+  # Ejemplos y plantillas del repo se sirven dentro del sitio (/examples/, /templates/{slug}/),
+  # así "Live example" y "Live preview" funcionan también con `hugo server`.
+  [[module.mounts]]
+    source = "../examples"
+    target = "static/examples"
+  # La galería propia de templates/index.html se excluye: /templates/ es la página de la documentación.
+  [[module.mounts]]
+    source = "../templates"
+    target = "static/templates"
+    files = ["! index.html"]
+
+[params]
+  # Versión mostrada en la barra superior (mantener sincronizada con package.json).
+  version = "0.2.0"
+  # Repositorio: enlace de GitHub, "Código fuente" (repoURL + /src/components/{example})
+  # y código de las plantillas (repoURL + /templates/{slug}/index.html).
+  repoURL = "https://github.com/rubenchodev/materix-ui/tree/vainilla"
+  # Base para "Editar esta página" (editURL + /docs/content/{ruta del .md con sufijo de idioma}).
+  editURL = "https://github.com/rubenchodev/materix-ui/edit/vainilla"
+  # Ruta de los ejemplos en vivo: URL absoluta (https://...) o ruta relativa a la raíz
+  # del sitio publicado. Por defecto "../examples/" asume que el sitio de docs se publica
+  # en una carpeta hermana de /examples (p. ej. /materix-ui/docs/ y /materix-ui/examples/).
+  # El enlace final es {raíz del sitio}{examplesURL}{example}/index.html (igual en /es/).
+  examplesURL = "examples/"
+  # Ruta de las plantillas en vivo (carpeta /templates del repo). Misma resolución que
+  # examplesURL: URL absoluta, ruta que empieza por "/" o ruta relativa a la raíz del sitio.
+  # El enlace final es {raíz del sitio}{templatesURL}{slug}/index.html.
+  templatesURL = "templates/"
+  # Orden de los grupos de componentes (claves neutras del front matter `group`).
+  # El nombre visible se traduce con i18n: group_{clave}.
+  componentGroups = ["layout", "inputs", "data-display", "feedback", "surfaces", "navigation"]
+  # Plantillas destacadas en la home (slugs de data/templates.yaml).
+  featuredTemplates = ["dashboard", "sign-in", "checkout", "landing-page"]
+  # Búsqueda: caracteres de texto plano indexados por sección (H2/H3) de cada página.
+  searchSectionChars = 1200
+  # Playground (botones CodePen / StackBlitz de cada demo). Base de dist/ con la que se generan
+  # los proyectos; {version} se sustituye por params.version. Mientras el paquete no esté
+  # publicado en npm se puede sobrescribir con otra CDN o activar playgroundUseLocal.
+  cdnBase = "https://cdn.jsdelivr.net/npm/materix-ui@{version}/dist/"
+  # true: usa la URL absoluta del dist/ servido por este sitio (útil en local o en un sitio
+  # publicado propio) en lugar de cdnBase.
+  playgroundUseLocal = false
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+  [markup.highlight]
+    noClasses = false
+    codeFences = true
+    guessSyntax = false
+    lineNos = false
+    tabWidth = 2
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+
+# Valor de data-mtx cuando no coincide con el slug del ejemplo (front matter `example`).
+[params.dataMtxAlias]
+  progress = "circular-progress"

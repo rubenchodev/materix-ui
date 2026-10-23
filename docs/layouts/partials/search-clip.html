@@ -1,0 +1,4 @@
+{{/* search-clip — Recorta texto plano a "max" caracteres sin escaparlo (truncate escaparía el HTML). */}}
+{{ $t := .text }}
+{{ if gt (strings.RuneCount $t) .max }}{{ $t = substr $t 0 .max }}{{ end }}
+{{ return $t }}

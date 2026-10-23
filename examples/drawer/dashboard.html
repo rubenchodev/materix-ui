@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App shell · Drawer · Materix UI</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%234818d0'/%3E%3Cpath d='M8 23V9h3l5 7 5-7h3v14h-3v-9l-5 7-5-7v9z' fill='%23fff'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=17">
+  <!-- No custom CSS: fixed AppBar + clipped responsive Drawer + toolbar offset + main -->
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#main">Skip to content</a>
+
+  <!-- 1. Fixed AppBar: the menu icon (data-drawer) opens the drawer on mobile and hides on desktop -->
+  <header data-mtx="app-bar" data-position="fixed" data-color="primary" data-start-icon="menu" data-drawer="app-nav" data-title="Materix Admin">
+    <div class="mtx-app-bar-search mtx-app-bar-search--grow" role="search">
+      <span class="material-icons" aria-hidden="true">search</span>
+      <input type="search" placeholder="Search orders or customers…" aria-label="Search orders or customers" />
+    </div>
+    <button data-mtx="icon-button" data-icon="dark_mode" aria-label="Toggle theme" data-demo-theme-toggle></button>
+    <span data-mtx="badge" data-content="4" data-color="error">
+      <button data-mtx="icon-button" data-icon="notifications" aria-label="Notifications, 4 unread"></button>
+    </span>
+  </header>
+
+  <!-- 2. Flex row: drawer (fixed-width box in the flow) + content -->
+  <div class="mtx-d-flex">
+    <div data-mtx="drawer" id="app-nav" data-variant="responsive" data-breakpoint="md" data-clipped
+         data-width="240px" data-title="Materix Admin" data-header="temporary" aria-label="Main navigation">
+      <nav data-mtx="list" aria-label="Sections">
+        <a data-mtx="list-item-button" data-icon="dashboard" href="#main" data-selected aria-current="page" data-mtx-drawer-close>Overview</a>
+        <a data-mtx="list-item-button" data-icon="receipt_long" href="#orders" data-mtx-drawer-close>Orders</a>
+        <a data-mtx="list-item-button" data-icon="people" href="#main" data-mtx-drawer-close>Customers</a>
+        <a data-mtx="list-item-button" data-icon="inventory_2" href="#main" data-mtx-drawer-close>Products</a>
+        <a data-mtx="list-item-button" data-icon="insights" href="#main" data-mtx-drawer-close>Analytics</a>
+      </nav>
+      <hr data-mtx="divider">
+      <nav data-mtx="list" aria-label="Settings">
+        <a data-mtx="list-item-button" data-icon="settings" href="#main" data-mtx-drawer-close>Settings</a>
+        <a data-mtx="list-item-button" data-icon="help_outline" href="#main" data-mtx-drawer-close>Help</a>
+      </nav>
+      <!-- Footer pinned to the bottom: .mtx-drawer__content is a flex column -->
+      <div class="mtx-mt-auto mtx-p-2">
+        <div data-mtx="card" data-variant="outlined">
+          <div class="mtx-card__content">
+            <p class="mtx-typography--subtitle2">Pro plan</p>
+            <p class="mtx-typography--body2 mtx-color-text-secondary">Advanced reports and 10 seats.</p>
+          </div>
+          <div class="mtx-card__actions">
+            <a class="mtx-button mtx-button--contained mtx-button--small mtx-button--full-width" data-mtx="button" href="#main">Upgrade plan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main id="main" class="mtx-flex-1 mtx-min-w-0" tabindex="-1">
+      <div class="mtx-toolbar-offset"></div>
+      <div class="mtx-p-2 mtx-p-sm-3">
+        <h1 class="mtx-typography--h5 mtx-mb-1">Overview</h1>
+        <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-3">Below 900px the drawer is temporary (menu button); from 900px up it is permanent under the AppBar.</p>
+
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3">
+            <div data-mtx="card" data-variant="outlined"><div class="mtx-card__content">
+              <p class="mtx-typography--overline mtx-color-text-secondary">Revenue</p>
+              <p class="mtx-typography--h5">$128,450</p>
+              <p class="mtx-typography--body2 mtx-color-success">+14.2% vs. last month</p>
+            </div></div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3">
+            <div data-mtx="card" data-variant="outlined"><div class="mtx-card__content">
+              <p class="mtx-typography--overline mtx-color-text-secondary">Orders</p>
+              <p class="mtx-typography--h5">3,284</p>
+              <p class="mtx-typography--body2 mtx-color-success">+8.5%</p>
+            </div></div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3">
+            <div data-mtx="card" data-variant="outlined"><div class="mtx-card__content">
+              <p class="mtx-typography--overline mtx-color-text-secondary">Conversion</p>
+              <p class="mtx-typography--h5">3.82%</p>
+              <p class="mtx-typography--body2 mtx-color-success">+0.4 points</p>
+            </div></div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-lg="3">
+            <div data-mtx="card" data-variant="outlined"><div class="mtx-card__content">
+              <p class="mtx-typography--overline mtx-color-text-secondary">Issues</p>
+              <p class="mtx-typography--h5">18</p>
+              <p class="mtx-typography--body2 mtx-color-error">5 unassigned</p>
+            </div></div>
+          </div>
+
+          <div data-mtx="grid" data-xs="12" id="orders">
+            <div data-mtx="card" data-variant="outlined">
+              <div class="mtx-card__content">
+                <h2 class="mtx-typography--h6 mtx-mb-2">Recent orders</h2>
+                <div class="mtx-overflow-x-auto">
+                  <table data-mtx="table">
+                    <thead>
+                      <tr><th>Order</th><th>Customer</th><th>Status</th><th data-align="right">Amount</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>#10492</td><td>Ethan Brooks</td><td><span data-mtx="chip" data-label="Shipped" data-color="success" data-size="small"></span></td><td data-align="right">$249.00</td></tr>
+                      <tr><td>#10491</td><td>Sophia Ramirez</td><td><span data-mtx="chip" data-label="Pending" data-color="warning" data-size="small"></span></td><td data-align="right">$89.50</td></tr>
+                      <tr><td>#10490</td><td>Liam Chen</td><td><span data-mtx="chip" data-label="Shipped" data-color="success" data-size="small"></span></td><td data-align="right">$1,120.00</td></tr>
+                      <tr><td>#10489</td><td>Ava Martin</td><td><span data-mtx="chip" data-label="Cancelled" data-color="error" data-size="small"></span></td><td data-align="right">$64.90</td></tr>
+                      <tr><td>#10488</td><td>Noah Parker</td><td><span data-mtx="chip" data-label="Shipped" data-color="success" data-size="small"></span></td><td data-align="right">$310.00</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../dist/materix.umd.js?v=17"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+</body>
+</html>

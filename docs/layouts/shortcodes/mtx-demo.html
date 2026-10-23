@@ -1,0 +1,58 @@
+{{/*
+  mtx-demo — Demo en vivo (escenario) + barra de herramientas + código fuente colapsable.
+  Parámetros opcionales:
+    title  — rótulo de la barra (por defecto i18n demo_default_title).
+    layout — row (predeterminado) | column | center | block.
+    open   — "true" para mostrar el código al cargar.
+    height — alto mínimo del escenario (p. ej. "320px").
+    script — selector(es) CSS, separados por comas, de los <script> de la página que acompañan
+             a la demo (p. ej. "#doc-dialog-script"). Se incluyen al abrirla en CodePen/StackBlitz.
+             Sin él, docs.js añade los <script> en línea que referencian algún id de la demo.
+  Uso:
+    {{< mtx-demo title="Variantes" layout="row" >}}
+    <button class="mtx-button mtx-button--contained" data-mtx="button">Guardar</button>
+    {{< /mtx-demo >}}
+*/}}
+{{ $src := trim (.InnerDeindent | default .Inner) "\r\n" }}
+{{ $title := .Get "title" | default (i18n "demo_default_title") }}
+{{ $show := i18n "show_code" }}
+{{ $hide := i18n "hide_code" }}
+{{ $copy := i18n "copy_code" }}
+{{ $layout := .Get "layout" | default "row" }}
+{{ if not (in (slice "row" "column" "center" "block") $layout) }}
+  {{ warnf "mtx-demo: layout %q no válido en %s (usa row|column|center|block)" $layout .Position }}
+  {{ $layout = "row" }}
+{{ end }}
+{{ $open := eq (printf "%v" (.Get "open")) "true" }}
+{{ $height := .Get "height" }}
+{{ $id := printf "doc-demo-%d" .Ordinal }}
+{{ $script := .Get "script" }}
+{{ $codepen := i18n "open_codepen" }}
+{{ $stackblitz := i18n "open_stackblitz" }}
+<div class="doc-demo"{{ with $script }} data-doc-demo-script="{{ . }}"{{ end }}>
+  <div class="doc-demo-stage doc-demo-stage--{{ $layout }} mtx-root"{{ with $height }} style="{{ printf "min-height: %s" . | safeCSS }}"{{ end }}>
+{{ $src | safeHTML }}
+  </div>
+  <div class="doc-demo-toolbar">
+    <span class="doc-demo-title">{{ $title }}</span>
+    <span class="doc-demo-status" role="status" aria-live="polite"></span>
+    <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-code-toggle
+      aria-expanded="{{ if $open }}true{{ else }}false{{ end }}" aria-controls="{{ $id }}-code"
+      aria-label="{{ if $open }}{{ $hide }}{{ else }}{{ $show }}{{ end }}" title="{{ if $open }}{{ $hide }}{{ else }}{{ $show }}{{ end }}">
+      <span class="material-icons" aria-hidden="true">code</span>
+    </button>
+    <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-copy aria-controls="{{ $id }}-code" aria-label="{{ $copy }}" title="{{ $copy }}">
+      <span class="material-icons" aria-hidden="true">content_copy</span>
+    </button>
+    <span class="doc-demo-divider" aria-hidden="true"></span>
+    <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-playground="codepen" aria-controls="{{ $id }}-code" aria-label="{{ $codepen }} {{ i18n "opens_new_tab" }}" title="{{ $codepen }}">
+      <svg class="doc-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 2.5 21.5 8.7v6.6L12 21.5 2.5 15.3V8.7L12 2.5Zm0 0v6.3m0 6.4v6.3M2.5 8.7 12 15.2l9.5-6.5M2.5 15.3 12 8.8l9.5 6.5"/></svg>
+    </button>
+    <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-playground="stackblitz" aria-controls="{{ $id }}-code" aria-label="{{ $stackblitz }} {{ i18n "opens_new_tab" }}" title="{{ $stackblitz }}">
+      <svg class="doc-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M10.8 13.6H4.5L15.6 2 13.2 10.4h6.3L8.4 22l2.4-8.4Z"/></svg>
+    </button>
+  </div>
+  <div class="doc-demo-code" id="{{ $id }}-code"{{ if not $open }} hidden{{ end }}>
+    {{ highlight $src "html" "" }}
+  </div>
+</div>

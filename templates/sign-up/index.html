@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up · Materix UI Templates</title>
+  <meta name="description" content="Multi-field registration form with password rules, terms and validation.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="../../dist/materix.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="../shared/template.js"></script>
+  <style>
+    /* D: fondo de marca con halo del color primario (adaptado al tema por tokens) */
+    .tpl-sign-up {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--mtx-color-primary) 14%, transparent), transparent),
+        var(--mtx-color-background-default);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <a class="mtx-skip-link" href="#tpl-sign-up-main">Skip to sign-up form</a>
+  <div class="tpl-sign-up mtx-d-flex mtx-flex-column mtx-min-vh-100">
+    <header class="mtx-d-flex mtx-align-items-center mtx-justify-content-between mtx-gap-1 mtx-px-2 mtx-py-1_5 mtx-typography--body2">
+      <a class="mtx-d-inline-flex mtx-align-items-center mtx-gap-0_5" data-mtx="link" data-underline="hover" href="../index.html">
+        <span class="material-icons" aria-hidden="true">arrow_back</span>
+        All templates
+      </a>
+      <button type="button" data-mtx="icon-button" data-mtx-theme-toggle>
+        <span class="material-icons" aria-hidden="true">dark_mode</span>
+      </button>
+    </header>
+
+    <main id="tpl-sign-up-main" class="mtx-flex-1 mtx-d-flex mtx-align-items-start mtx-align-items-sm-center mtx-justify-content-center mtx-pb-6">
+      <div data-mtx="container" data-max-width="sm">
+        <div class="mtx-px-2_5 mtx-py-3 mtx-p-sm-4 mtx-elevation-2" data-mtx="card" data-variant="outlined">
+          <a class="mtx-d-inline-flex mtx-align-items-center mtx-align-self-start mtx-gap-1 mtx-mb-3 mtx-typography--h6 mtx-color-text-primary mtx-text-decoration-none" href="../index.html" aria-label="Lumen home">
+            <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <rect width="32" height="32" rx="8" fill="var(--mtx-color-primary)" />
+              <path d="M9 22.5V9.5h3.2v10.2H22v2.8H9Z" fill="var(--mtx-color-primary-contrast)" />
+              <circle cx="21" cy="12" r="3" fill="var(--mtx-color-primary-contrast)" opacity="0.7" />
+            </svg>
+            Lumen
+          </a>
+
+          <div id="tpl-sign-up-view">
+            <h1 class="mtx-typography--h4 mtx-mb-0_5">Create your account</h1>
+            <p class="mtx-typography--body2 mtx-color-text-secondary mtx-mb-3">Start your 14-day free trial. No credit card required.</p>
+
+            <form id="tpl-sign-up-form" data-mtx="stack" data-spacing="2.5" novalidate>
+              <div data-mtx="grid" data-row-spacing="2" data-column-spacing="2">
+                <div data-mtx="grid" data-xs="12" data-sm="6">
+                  <input id="tpl-sign-up-first" data-mtx="text-field" data-label="First name" type="text" name="firstName" autocomplete="given-name" required />
+                </div>
+                <div data-mtx="grid" data-xs="12" data-sm="6">
+                  <input id="tpl-sign-up-last" data-mtx="text-field" data-label="Last name" type="text" name="lastName" autocomplete="family-name" required />
+                </div>
+              </div>
+              <input id="tpl-sign-up-email" data-mtx="text-field" data-label="Work email" data-helper-text="We'll send a confirmation link to this address." type="email" name="email" autocomplete="email" inputmode="email" required />
+
+              <div data-mtx="stack" data-spacing="1.5">
+                <input id="tpl-sign-up-password" data-mtx="text-field" data-label="Password" data-password-toggle type="password" name="password" autocomplete="new-password" aria-describedby="tpl-sign-up-rules" required />
+                <div id="tpl-sign-up-strength">
+                  <div class="mtx-d-flex mtx-justify-content-between mtx-mb-1 mtx-typography--caption mtx-color-text-secondary">
+                    <span>Password strength</span>
+                    <span id="tpl-sign-up-strength-label" class="mtx-fw-medium" aria-live="polite">Too short</span>
+                  </div>
+                  <div id="tpl-sign-up-meter" data-mtx="linear-progress" class="mtx-color-text-disabled" data-value="0" data-rounded data-decorative></div>
+                  <ul id="tpl-sign-up-rules" class="mtx-list-unstyled mtx-pt-1_5" role="list" data-mtx="grid" data-row-spacing="1" data-column-spacing="2" aria-label="Password requirements">
+                    <li class="mtx-d-flex mtx-align-items-center mtx-gap-0_5 mtx-typography--body2 mtx-color-text-secondary" data-mtx="grid" data-xs="12" data-sm="6" data-rule="length"><span class="material-icons mtx-color-text-secondary" aria-hidden="true">remove</span><span class="mtx-visually-hidden" data-rule-state>Not met: </span><span>At least 8 characters</span></li>
+                    <li class="mtx-d-flex mtx-align-items-center mtx-gap-0_5 mtx-typography--body2 mtx-color-text-secondary" data-mtx="grid" data-xs="12" data-sm="6" data-rule="case"><span class="material-icons mtx-color-text-secondary" aria-hidden="true">remove</span><span class="mtx-visually-hidden" data-rule-state>Not met: </span><span>Upper and lowercase letters</span></li>
+                    <li class="mtx-d-flex mtx-align-items-center mtx-gap-0_5 mtx-typography--body2 mtx-color-text-secondary" data-mtx="grid" data-xs="12" data-sm="6" data-rule="number"><span class="material-icons mtx-color-text-secondary" aria-hidden="true">remove</span><span class="mtx-visually-hidden" data-rule-state>Not met: </span><span>At least one number</span></li>
+                    <li class="mtx-d-flex mtx-align-items-center mtx-gap-0_5 mtx-typography--body2 mtx-color-text-secondary" data-mtx="grid" data-xs="12" data-sm="6" data-rule="symbol"><span class="material-icons mtx-color-text-secondary" aria-hidden="true">remove</span><span class="mtx-visually-hidden" data-rule-state>Not met: </span><span>At least one symbol</span></li>
+                  </ul>
+                  <p id="tpl-sign-up-rules-status" class="mtx-visually-hidden" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <input id="tpl-sign-up-confirm" data-mtx="text-field" data-label="Confirm password" type="password" name="confirmPassword" autocomplete="new-password" required />
+
+              <select id="tpl-sign-up-country" data-mtx="select" data-label="Country or region" data-search name="country">
+                <option value="AR">Argentina</option>
+                <option value="AU">Australia</option>
+                <option value="BR">Brazil</option>
+                <option value="CA">Canada</option>
+                <option value="CL">Chile</option>
+                <option value="CO">Colombia</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+                <option value="IN">India</option>
+                <option value="JP">Japan</option>
+                <option value="MX">Mexico</option>
+                <option value="ES">Spain</option>
+                <option value="GB">United Kingdom</option>
+                <option value="US" selected>United States</option>
+              </select>
+
+              <div data-mtx="stack" data-spacing="0.5">
+                <input id="tpl-sign-up-terms" data-mtx="checkbox" type="checkbox" name="terms" data-label="I agree to the Terms of Service and Privacy Policy" required />
+                <p class="mtx-typography--body2 mtx-ps-3 mtx-mt-0 mtx-mb-0_5">
+                  <button type="button" data-mtx="link" data-underline="always" data-mtx-dialog-open="tpl-sign-up-terms-dialog">Read the terms</button>
+                </p>
+                <input id="tpl-sign-up-news" data-mtx="switch" type="checkbox" name="newsletter" data-label="Send me product updates and tips (about twice a month)" />
+              </div>
+
+              <button id="tpl-sign-up-submit" class="mtx-button mtx-button--contained mtx-button--large mtx-button--full-width" data-mtx="button" type="submit">Create account</button>
+            </form>
+
+            <p class="mtx-typography--body2 mtx-color-text-secondary mtx-text-center mtx-mt-3 mtx-mb-0">
+              Already have an account?
+              <a data-mtx="link" href="../sign-in/">Sign in</a>
+            </p>
+          </div>
+
+          <section id="tpl-sign-up-success" class="mtx-text-center mtx-py-1" aria-labelledby="tpl-sign-up-success-title" tabindex="-1" hidden>
+            <div class="mtx-mx-auto mtx-mb-2" data-mtx="avatar" data-size="64" data-color="success" data-icon="mark_email_read" aria-hidden="true"></div>
+            <h1 id="tpl-sign-up-success-title" class="mtx-typography--h5 mtx-mb-1">Check your inbox</h1>
+            <p class="mtx-typography--body1 mtx-color-text-secondary mtx-mb-3">We sent a confirmation link to <strong id="tpl-sign-up-sent-to">you</strong>. Click it to activate your workspace.</p>
+            <a class="mtx-button mtx-button--contained mtx-button--full-width" data-mtx="button" href="../sign-in/">Go to sign in</a>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="tpl-sign-up-terms-dialog" data-mtx="dialog" data-title="Terms of Service" data-scroll="paper" class="mtx-dialog--max-md">
+    <div class="mtx-dialog__content mtx-dialog__content--dividers">
+      <h2 class="mtx-typography--subtitle1 mtx-fw-medium mtx-color-text-primary mtx-mb-0_5">1. Your account</h2>
+      <p class="mtx-mt-0 mtx-mb-1">You are responsible for the activity that happens under your account and for keeping your password secure. Notify us immediately at security@lumen.app if you suspect unauthorized access.</p>
+      <h2 class="mtx-typography--subtitle1 mtx-fw-medium mtx-color-text-primary mtx-mt-2 mtx-mb-0_5">2. Acceptable use</h2>
+      <p class="mtx-mt-0 mtx-mb-1">Do not use Lumen to distribute malware, send unsolicited messages, or store content you don't have the right to share. We may suspend accounts that put other customers at risk.</p>
+      <h2 class="mtx-typography--subtitle1 mtx-fw-medium mtx-color-text-primary mtx-mt-2 mtx-mb-0_5">3. Billing</h2>
+      <p class="mtx-mt-0 mtx-mb-1">Trials last 14 days. Paid plans renew automatically every month or year until cancelled from Settings &rsaquo; Billing. Refunds are issued pro rata within 30 days.</p>
+      <h2 class="mtx-typography--subtitle1 mtx-fw-medium mtx-color-text-primary mtx-mt-2 mtx-mb-0_5">4. Privacy</h2>
+      <p class="mtx-mt-0 mtx-mb-1">We process your data only to provide the service. You can export or permanently delete your workspace at any time. See our Privacy Policy for the list of sub-processors.</p>
+    </div>
+    <div class="mtx-dialog__actions">
+      <button type="button" class="mtx-button mtx-button--text" data-mtx="button" data-mtx-dialog-close>Close</button>
+      <button type="button" id="tpl-sign-up-accept" class="mtx-button mtx-button--contained" data-mtx="button" data-mtx-dialog-close>I agree</button>
+    </div>
+  </div>
+
+  <script src="../../dist/materix.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      var $ = function (id) { return document.getElementById(id); };
+      var field = function (id) { return Materix.getInstance($(id)); };
+      var form = $('tpl-sign-up-form');
+      var passwordInput = $('tpl-sign-up-password');
+      var confirmInput = $('tpl-sign-up-confirm');
+      var termsInput = $('tpl-sign-up-terms');
+      var terms = field('tpl-sign-up-terms');
+      var submit = field('tpl-sign-up-submit');
+      var meter = field('tpl-sign-up-meter');
+      var strength = $('tpl-sign-up-strength');
+      var strengthLabel = $('tpl-sign-up-strength-label');
+
+      // El botón de mostrar contraseña (data-password-toggle) también revela la confirmación.
+      form.addEventListener('mtx:text-field:password-visibility', function (event) {
+        confirmInput.type = event.detail.visible ? 'text' : 'password';
+      });
+
+      var RULES = {
+        length: function (v) { return v.length >= 8; },
+        case: function (v) { return /[a-z]/.test(v) && /[A-Z]/.test(v); },
+        number: function (v) { return /\d/.test(v); },
+        symbol: function (v) { return /[^A-Za-z0-9]/.test(v); }
+      };
+      var LEVELS = ['Too short', 'Weak', 'Fair', 'Good', 'Strong'];
+      var LEVEL_COLORS = ['inherit', 'error', 'warning', 'info', 'success'];
+      var rulesStatus = document.getElementById('tpl-sign-up-rules-status');
+      var ruleState = {};
+
+      /**
+       * Evalúa las reglas de contraseña y actualiza la checklist y el medidor.
+       * @returns {number} Número de reglas cumplidas (0-4).
+       */
+      var updateRules = function () {
+        var value = passwordInput.value;
+        var met = 0;
+        var changes = [];
+        Object.keys(RULES).forEach(function (key) {
+          var ok = RULES[key](value);
+          var li = strength.querySelector('[data-rule="' + key + '"]');
+          var icon = li.querySelector('.material-icons');
+          li.classList.toggle('mtx-color-text-primary', ok);
+          li.classList.toggle('mtx-color-text-secondary', !ok);
+          icon.classList.toggle('mtx-color-success', ok);
+          icon.classList.toggle('mtx-color-text-secondary', !ok);
+          icon.textContent = ok ? 'check_circle' : 'remove';
+          li.querySelector('[data-rule-state]').textContent = ok ? 'Met: ' : 'Not met: ';
+          // Anuncia solo los cambios de estado (no el estado inicial).
+          if (ruleState[key] !== undefined && ruleState[key] !== ok) {
+            changes.push((ok ? 'Requirement met: ' : 'Requirement not met: ') + li.lastElementChild.textContent);
+          }
+          ruleState[key] = ok;
+          if (ok) met++;
+        });
+        var level = value ? Math.max(1, met) : 0;
+        meter.color = LEVEL_COLORS[level];
+        meter.setValue(level * 25);
+        strengthLabel.textContent = LEVELS[level];
+        if (changes.length) rulesStatus.textContent = changes.join('. ');
+        return met;
+      };
+      updateRules();
+
+      var validators = {
+        'tpl-sign-up-first': function (v) { return v.trim() ? '' : 'First name is required.'; },
+        'tpl-sign-up-last': function (v) { return v.trim() ? '' : 'Last name is required.'; },
+        'tpl-sign-up-email': function (v) {
+          if (!v.trim()) return 'Email is required.';
+          return EMAIL_RE.test(v.trim()) ? '' : 'Enter a valid email address, like name@company.com.';
+        },
+        'tpl-sign-up-password': function (v) {
+          if (!v) return 'Password is required.';
+          return updateRules() === 4 ? '' : 'Your password must meet all four requirements below.';
+        },
+        'tpl-sign-up-confirm': function (v) {
+          if (!v) return 'Please confirm your password.';
+          return v === passwordInput.value ? '' : 'Passwords don’t match.';
+        }
+      };
+
+      /**
+       * Valida un campo de texto por id y muestra su error.
+       * @param {string} id Id del input.
+       * @returns {boolean} `true` si es válido.
+       */
+      var validate = function (id) {
+        var message = validators[id]($(id).value);
+        if (message) field(id).setError(message); else field(id).clearError();
+        return !message;
+      };
+
+      Object.keys(validators).forEach(function (id) {
+        var input = $(id);
+        input.addEventListener('blur', function () { if (input.value) validate(id); });
+        input.addEventListener('input', function () {
+          if (input.getAttribute('aria-invalid') === 'true') validate(id);
+        });
+      });
+      passwordInput.addEventListener('input', function () {
+        updateRules();
+        if (confirmInput.value) validate('tpl-sign-up-confirm');
+      });
+
+      /**
+       * Valida la aceptación de términos con el estado de error del Checkbox.
+       * @returns {boolean} `true` si se aceptaron.
+       */
+      var validateTerms = function () {
+        if (termsInput.checked) terms.clearError();
+        else terms.setError('You must accept the terms to create an account.');
+        return termsInput.checked;
+      };
+      termsInput.addEventListener('change', validateTerms);
+      $('tpl-sign-up-accept').addEventListener('click', function () {
+        terms.checked = true;
+        validateTerms();
+      });
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var firstInvalid = null;
+        Object.keys(validators).forEach(function (id) {
+          if (!validate(id) && !firstInvalid) firstInvalid = $(id);
+        });
+        var termsOk = validateTerms();
+        if (firstInvalid) { firstInvalid.focus(); return; }
+        if (!termsOk) { termsInput.focus(); return; }
+
+        submit.setLoading(true);
+        window.setTimeout(function () {
+          $('tpl-sign-up-sent-to').textContent = $('tpl-sign-up-email').value.trim();
+          $('tpl-sign-up-view').hidden = true;
+          var success = $('tpl-sign-up-success');
+          success.hidden = false;
+          success.focus();
+        }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>

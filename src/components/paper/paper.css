@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Materix UI — Paper
+   Superficie elevada basada en Material UI (MUI).
+   ========================================================================== */
+
+.mtx-paper {
+  background-color: var(--mtx-color-background-paper);
+  color: var(--mtx-color-text-primary);
+  border-radius: var(--mtx-shape-radius);
+  box-sizing: border-box;
+  box-shadow: var(--mtx-elevation-1);
+  /* Tema oscuro: overlay blanco según la elevación (MUI); en claro el token es `none`. */
+  background-image: var(--mtx-overlay-elevation-1);
+  transition: box-shadow var(--mtx-duration-short) var(--mtx-easing-standard);
+}
+
+/* Elevaciones (MD2 / MUI 0 a 24dp) */
+.mtx-paper--elevation-0 { box-shadow: none; background-image: var(--mtx-overlay-elevation-0); }
+.mtx-paper--elevation-1 { box-shadow: var(--mtx-elevation-1); background-image: var(--mtx-overlay-elevation-1); }
+.mtx-paper--elevation-2 { box-shadow: var(--mtx-elevation-2); background-image: var(--mtx-overlay-elevation-2); }
+.mtx-paper--elevation-3 { box-shadow: var(--mtx-elevation-3); background-image: var(--mtx-overlay-elevation-3); }
+.mtx-paper--elevation-4 { box-shadow: var(--mtx-elevation-4); background-image: var(--mtx-overlay-elevation-4); }
+.mtx-paper--elevation-5 { box-shadow: var(--mtx-elevation-5); background-image: var(--mtx-overlay-elevation-5); }
+.mtx-paper--elevation-6 { box-shadow: var(--mtx-elevation-6); background-image: var(--mtx-overlay-elevation-6); }
+.mtx-paper--elevation-7 { box-shadow: var(--mtx-elevation-7); background-image: var(--mtx-overlay-elevation-7); }
+.mtx-paper--elevation-8 { box-shadow: var(--mtx-elevation-8); background-image: var(--mtx-overlay-elevation-8); }
+.mtx-paper--elevation-12 { box-shadow: var(--mtx-elevation-12); background-image: var(--mtx-overlay-elevation-12); }
+.mtx-paper--elevation-16 { box-shadow: var(--mtx-elevation-16); background-image: var(--mtx-overlay-elevation-16); }
+.mtx-paper--elevation-24 { box-shadow: var(--mtx-elevation-24); background-image: var(--mtx-overlay-elevation-24); }
+
+/* Variante outlined: borde en lugar de elevación. Va tras las elevaciones y con más
+   especificidad para que un --elevation-N no reintroduzca la sombra. */
+.mtx-paper.mtx-paper--outlined,
+.mtx-paper--outlined {
+  border: 1px solid var(--mtx-color-divider);
+  box-shadow: none;
+  background-image: none;
+}
+
+.mtx-paper--square {
+  border-radius: 0;
+}

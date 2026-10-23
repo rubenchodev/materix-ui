@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Inputs</span>
+        <h1>Select</h1>
+        <p class="demo-lead">Select with a custom MUI-style menu: search, multiple selection, bulk actions, groups, limits and icons or images in the options.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#with-icons">With icons</a>
+      <a href="#colors">Colors</a>
+      <a href="#states">States</a>
+      <a href="#placeholder">Placeholder and long text</a>
+      <a href="#search">Search</a>
+      <a href="#multiple">Multiple selection</a>
+      <a href="#groups">Groups and limit</a>
+      <a href="#positioning">Positioning</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>Just the <code>&lt;select&gt;</code> with <code>data-mtx="select"</code> and <code>data-label</code>. The native <code>&lt;select&gt;</code> remains the source of truth and is submitted with the form. Only need the system dropdown? Use <a href="../native-select/index.html">NativeSelect</a>.</p>
+      <div class="demo-fixed-width">
+        <select data-mtx="select" data-label="City" name="city">
+          <option value="mdx">Mexico City</option>
+          <option value="gdl">Guadalajara</option>
+          <option value="mty">Monterrey</option>
+        </select>
+      </div>
+      <pre class="demo-code"><code>&lt;select data-mtx="select" data-label="City" name="city"&gt;
+  &lt;option value="mdx"&gt;Mexico City&lt;/option&gt;
+  &lt;option value="gdl"&gt;Guadalajara&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>data-variant</code>: <code>outlined</code> (default, with notch), <code>filled</code> and <code>standard</code>.</p>
+      <div class="demo-grid-3">
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <select data-mtx="select" data-label="Country" data-variant="outlined">
+            <option value="co">Colombia</option>
+            <option value="mx">Mexico</option>
+            <option value="es">Spain</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Filled</span>
+          <select data-mtx="select" data-label="Country" data-variant="filled">
+            <option value="co">Colombia</option>
+            <option value="mx">Mexico</option>
+            <option value="es">Spain</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Standard</span>
+          <select data-mtx="select" data-label="Country" data-variant="standard">
+            <option value="co">Colombia</option>
+            <option value="mx">Mexico</option>
+            <option value="es">Spain</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="sizes">
+      <h2>Sizes</h2>
+      <p>Medium 56px (default, <code>data-size="medium"</code>) and small 40px with <code>data-size="small"</code>: the same heights as TextField and Button.</p>
+      <div class="demo-group">
+        <span class="demo-label">Medium · 56px</span>
+        <div class="demo-grid-3">
+          <select data-mtx="select" data-label="Outlined"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+          <select data-mtx="select" data-label="Filled" data-variant="filled"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+          <select data-mtx="select" data-label="Standard" data-variant="standard"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Small · 40px</span>
+        <div class="demo-grid-3">
+          <select data-mtx="select" data-label="Outlined" data-size="small"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+          <select data-mtx="select" data-label="Filled" data-variant="filled" data-size="small"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+          <select data-mtx="select" data-label="Standard" data-variant="standard" data-size="small"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · Select small 40px + TextField small 40px + Button medium 40px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <select data-mtx="select" data-label="Sort by" data-size="small">
+              <option value="recent">Most recent</option>
+              <option value="price">Price</option>
+            </select>
+          </div>
+          <div class="demo-fixed-width">
+            <input data-mtx="text-field" data-label="Search" data-size="small" type="search" />
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" type="button">Filter</button>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Alignment · Select medium 56px + Button large 48px + FAB 56px</span>
+        <div class="demo-row">
+          <div class="demo-fixed-width">
+            <select data-mtx="select" data-label="Project" data-start-icon="folder">
+              <option value="web">Website</option>
+              <option value="app">Mobile app</option>
+            </select>
+          </div>
+          <button class="mtx-button mtx-button--contained" data-mtx="button" data-size="large" type="button">Open</button>
+          <button data-mtx="fab" data-icon="add" aria-label="New project" type="button"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="with-icons">
+      <h2>With and without icons</h2>
+      <p><code>data-start-icon</code> on the control (icon or URL) and <code>data-icon</code> / <code>data-image</code> on each <code>&lt;option&gt;</code>. The icon of the chosen option also appears in the control.</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">No icon</span>
+          <select data-mtx="select" data-label="Destination"><option value="bog">Bogotá</option><option value="med">Medellín</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Start icon</span>
+          <select data-mtx="select" data-label="Destination" data-start-icon="place"><option value="bog">Bogotá</option><option value="med">Medellín</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Icons in options</span>
+          <select data-mtx="select" data-label="Payment">
+            <option value="card" data-icon="credit_card">Card</option>
+            <option value="cash" data-icon="payments">Cash</option>
+            <option value="bank" data-icon="account_balance">Bank transfer</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Images in options</span>
+          <select data-mtx="select" data-label="Country">
+            <option value="co" data-image="https://flagcdn.com/w40/co.png">Colombia</option>
+            <option value="mx" data-image="https://flagcdn.com/w40/mx.png">Mexico</option>
+            <option value="es" data-image="https://flagcdn.com/w40/es.png">Spain</option>
+          </select>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Icons in filled and standard</span>
+        <div class="demo-grid-3">
+          <select data-mtx="select" data-label="Language" data-variant="filled" data-start-icon="language"><option value="es">Spanish</option><option value="en">English</option></select>
+          <select data-mtx="select" data-label="User" data-variant="standard" data-start-icon="person"><option value="ana">Ana</option><option value="luis">Luis</option></select>
+          <select data-mtx="select" data-label="Notify by" data-variant="filled">
+            <option value="mail" data-icon="email">Email</option>
+            <option value="sms" data-icon="sms">SMS</option>
+            <option value="push" data-icon="notifications">Push</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="colors">
+      <h2>Colors</h2>
+      <p><code>data-color</code> accepts the whole MUI palette (<code>primary</code>, <code>secondary</code>, <code>error</code>, <code>warning</code>, <code>info</code>, <code>success</code>): it changes the label, the border or underline on focus, and the selected option in the menu. Use <kbd>Tab</kbd> or open them to compare.</p>
+      <div class="demo-grid-3">
+        <select data-mtx="select" data-label="Primary (default)"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        <select data-mtx="select" data-label="Secondary" data-color="secondary"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        <select data-mtx="select" data-label="Error" data-color="error"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        <select data-mtx="select" data-label="Warning" data-color="warning" data-variant="filled"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        <select data-mtx="select" data-label="Info" data-color="info" data-variant="filled"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+        <select data-mtx="select" data-label="Success" data-color="success" data-variant="standard"><option value="1">Option 1</option><option value="2">Option 2</option></select>
+      </div>
+    </section>
+
+    <section class="demo-section" id="states">
+      <h2>States</h2>
+      <p>Helper (<code>data-helper-text</code>), error (<code>data-error</code>), disabled (<code>disabled</code>) and read-only (<code>data-readonly</code>). Use <kbd>Tab</kbd> to see the focus and <kbd>Enter</kbd> to open.</p>
+      <div class="demo-grid-4">
+        <div class="demo-group">
+          <span class="demo-label">Helper</span>
+          <select data-mtx="select" data-label="Residence" data-helper-text="Where you pay taxes"><option value="co">Colombia</option><option value="mx">Mexico</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Error + message</span>
+          <select data-mtx="select" data-label="Currency" data-error data-helper-text="Select a currency" required>
+            <option value="">Not selected</option>
+            <option value="usd">USD</option>
+            <option value="eur">EUR</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Disabled</span>
+          <select data-mtx="select" data-label="Plan" disabled><option value="pro">Professional</option></select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Read-only</span>
+          <select data-mtx="select" data-label="Region" data-readonly><option value="latam">Latin America</option><option value="eu">Europe</option></select>
+        </div>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Error and disabled in filled and standard</span>
+        <div class="demo-grid-4">
+          <select data-mtx="select" data-label="Filled error" data-variant="filled" data-error data-helper-text="Required"><option value="">—</option><option value="a">A</option></select>
+          <select data-mtx="select" data-label="Standard error" data-variant="standard" data-error data-helper-text="Required"><option value="">—</option><option value="a">A</option></select>
+          <select data-mtx="select" data-label="Filled disabled" data-variant="filled" disabled><option value="a">Locked</option></select>
+          <select data-mtx="select" data-label="Standard disabled" data-variant="standard" disabled><option value="a">Locked</option></select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="placeholder">
+      <h2>Placeholder and long text</h2>
+      <p>In single selection, <code>data-placeholder</code> is shown while no option has the <code>selected</code> attribute (the select's value stays empty and <code>required</code> validates it). Long text is truncated with an ellipsis without widening the field.</p>
+      <div class="demo-grid-3">
+        <select data-mtx="select" data-label="Role" data-placeholder="Choose a role" required>
+          <option value="admin">Administrator</option>
+          <option value="editor">Editor</option>
+          <option value="viewer">Viewer</option>
+        </select>
+        <select data-mtx="select" data-label="Plan" data-variant="filled" data-placeholder="No plan">
+          <option value="">None</option>
+          <option value="pro">Professional</option>
+        </select>
+        <select data-mtx="select" data-label="Shipping address" data-start-icon="local_shipping">
+          <option value="1">1600 Amphitheatre Parkway, Building 43, Mountain View, CA 94043, United States</option>
+          <option value="2">221B Baker Street, Marylebone, London NW1 6XE, United Kingdom</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="demo-section" id="search">
+      <h2>Search</h2>
+      <p><code>data-search</code> filters by text and value; <code>data-header</code> adds a header and <code>data-none-results-text</code> the no-match message (<code>{0}</code> = search term). Try typing "zz".</p>
+      <div class="demo-fixed-width">
+        <select data-mtx="select" data-label="Country" data-search data-header="Select a country" data-none-results-text="No country matches &quot;{0}&quot;">
+          <option value="ar">Argentina</option>
+          <option value="bo">Bolivia</option>
+          <option value="cl">Chile</option>
+          <option value="co">Colombia</option>
+          <option value="cr">Costa Rica</option>
+          <option value="ec">Ecuador</option>
+          <option value="es">Spain</option>
+          <option value="mx">Mexico</option>
+          <option value="pe">Peru</option>
+          <option value="uy">Uruguay</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="demo-section" id="multiple">
+      <h2>Multiple selection</h2>
+      <p>With <code>multiple</code>, each option gets a checkbox and the menu stays open. <code>data-actions-box</code> adds bulk actions and <code>data-selected-text-format</code> controls the text in the control.</p>
+      <div class="demo-grid-2">
+        <div class="demo-group">
+          <span class="demo-label">Search + actions · values format</span>
+          <select data-mtx="select" data-label="Skills" data-search data-actions-box data-select-all-text="Check all" data-deselect-all-text="Uncheck all" multiple>
+            <option value="js" selected>JavaScript</option>
+            <option value="ts" selected>TypeScript</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="py">Python</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">count format</span>
+          <select data-mtx="select" data-label="Languages" data-selected-text-format="count" data-placeholder="Choose languages" multiple>
+            <option value="js" selected>JavaScript</option>
+            <option value="go" selected>Go</option>
+            <option value="rs" selected>Rust</option>
+            <option value="kt">Kotlin</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">count &gt; 2 format</span>
+          <select data-mtx="select" data-label="Tags" data-selected-text-format="count > 2" data-placeholder="No tags" multiple>
+            <option value="new">New</option>
+            <option value="sale">On sale</option>
+            <option value="eco">Sustainable</option>
+            <option value="top">Best seller</option>
+          </select>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">static format + icons</span>
+          <select data-mtx="select" data-label="Visible columns" data-selected-text-format="static" data-placeholder="Configure columns" multiple>
+            <option value="name" data-icon="badge" selected>Name</option>
+            <option value="mail" data-icon="email" selected>Email</option>
+            <option value="phone" data-icon="phone">Phone</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="groups">
+      <h2>Groups and selection limit</h2>
+      <p><code>&lt;optgroup&gt;</code> elements are shown as subheaders; <code>disabled</code> options cannot be chosen and <code>data-max-options="2"</code> locks the rest once the limit is reached.</p>
+      <div class="demo-grid-2">
+        <select data-mtx="select" data-label="Stack (max. 2)" data-max-options="2" multiple>
+          <optgroup label="Frontend">
+            <option value="react" selected>React</option>
+            <option value="vue">Vue</option>
+            <option value="angular" disabled>Angular (unavailable)</option>
+          </optgroup>
+          <optgroup label="Backend">
+            <option value="node">Node.js</option>
+            <option value="django">Django</option>
+          </optgroup>
+        </select>
+        <select data-mtx="select" data-label="Time zone" data-search>
+          <optgroup label="Americas">
+            <option value="bog">Bogotá (UTC−5)</option>
+            <option value="mex">Mexico City (UTC−6)</option>
+          </optgroup>
+          <optgroup label="Europe">
+            <option value="mad">Madrid (UTC+1)</option>
+            <option value="lis">Lisbon (UTC+0)</option>
+          </optgroup>
+        </select>
+      </div>
+    </section>
+
+    <section class="demo-section" id="positioning">
+      <h2>Automatic positioning</h2>
+      <p>The menu is mounted in a portal, repositions itself on scroll and opens upwards when it doesn't fit below, limiting its height to the available space.</p>
+      <div class="demo-panel">
+        <div class="demo-fixed-width">
+          <select data-mtx="select" data-label="Destination" data-search data-header="Menu near the edge">
+            <option value="1">Amsterdam</option>
+            <option value="2">Berlin</option>
+            <option value="3">Bogotá</option>
+            <option value="4">Buenos Aires</option>
+            <option value="5">Lima</option>
+            <option value="6">Lisbon</option>
+            <option value="7">Madrid</option>
+            <option value="8">Mexico City</option>
+            <option value="9">Paris</option>
+            <option value="10">Rome</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>A shipping form in <code>mtx-grid</code> combining Select, TextField and Button: one column on mobile and three on desktop.</p>
+      <div class="demo-surface">
+        <form data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-md="4">
+            <input data-mtx="text-field" data-label="Recipient" data-start-icon="person" type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <select data-mtx="select" data-label="Country" data-search>
+              <option value="co" data-image="https://flagcdn.com/w40/co.png">Colombia</option>
+              <option value="mx" data-image="https://flagcdn.com/w40/mx.png">Mexico</option>
+              <option value="es" data-image="https://flagcdn.com/w40/es.png">Spain</option>
+            </select>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-sm="6" data-md="4">
+            <select data-mtx="select" data-label="Shipping">
+              <option value="std" data-icon="local_shipping">Standard</option>
+              <option value="exp" data-icon="bolt">Express</option>
+            </select>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="8">
+            <input data-mtx="text-field" data-label="Address" data-start-icon="home" type="text" />
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="4">
+            <select data-mtx="select" data-label="Notifications" data-selected-text-format="count" data-placeholder="None" multiple>
+              <option value="mail">Email</option>
+              <option value="sms">SMS</option>
+            </select>
+          </div>
+          <div data-mtx="grid" data-xs="12">
+            <button class="mtx-button mtx-button--contained" data-mtx="button" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>The buttons call the instance's real API; the console shows the native <code>&lt;select&gt;</code>'s <code>change</code> event.</p>
+      <div class="demo-group">
+        <span class="demo-label">Existing instance</span>
+        <div class="demo-grid-2">
+          <select id="select-api" data-mtx="select" data-label="Environment" data-helper-text="Use the buttons or the menu">
+            <option value="dev">Development</option>
+            <option value="staging">Staging</option>
+            <option value="prod">Production</option>
+          </select>
+          <select id="select-api-multi" data-mtx="select" data-label="Regions" data-actions-box multiple>
+            <option value="us">United States</option>
+            <option value="eu">Europe</option>
+            <option value="sa">South America</option>
+          </select>
+        </div>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-select-action="value">value = 'prod'</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-select-action="multi">value = ['eu', 'sa']</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-select-action="open">open()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-select-action="toggle">disable() / enable()</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-select-action="helper">helperText</button>
+          <button class="mtx-button mtx-button--outlined" data-mtx="button" data-size="small" type="button" data-select-action="focus">focus()</button>
+        </div>
+        <pre class="demo-log" id="select-log" aria-live="polite"></pre>
+      </div>
+      <div class="demo-group">
+        <span class="demo-label">Create and initialize dynamically</span>
+        <div class="demo-row">
+          <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="select-create-init">Materix.init(el)</button>
+          <button class="mtx-button mtx-button--text" data-mtx="button" type="button" id="select-create-class">new Materix.Select(el)</button>
+        </div>
+        <div class="demo-grid-3" id="select-dynamic"></div>
+      </div>
+      <pre class="demo-code"><code>const select = Materix.getInstance(document.getElementById('select-api'));
+select.value = 'prod';             // does not emit change
+select.open();
+select.disabled ? select.enable() : select.disable();
+select.select.addEventListener('change', () =&gt; console.log(select.value));</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>Full structure for SSR or fine-grained control. The component reuses the label, control and chevron, and generates the rest.</p>
+      <div class="demo-fixed-width">
+        <div class="mtx-select mtx-select--outlined" data-mtx="select" data-search data-actions-box>
+          <label class="mtx-select__label">Skills</label>
+          <div class="mtx-select__control">
+            <select class="mtx-select__native" multiple title="Choose…">
+              <option value="js" selected>JavaScript</option>
+              <option value="ts">TypeScript</option>
+              <option value="css">CSS</option>
+            </select>
+            <span class="mtx-select__chevron"></span>
+          </div>
+          <div class="mtx-select__helper-text" id="select-bem-help">Choose at least one</div>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-select mtx-select--outlined" data-mtx="select" data-search data-actions-box&gt;
+  &lt;label class="mtx-select__label"&gt;Skills&lt;/label&gt;
+  &lt;div class="mtx-select__control"&gt;
+    &lt;select class="mtx-select__native" multiple title="Choose…"&gt;
+      &lt;option value="js" selected&gt;JavaScript&lt;/option&gt;
+      &lt;option value="ts"&gt;TypeScript&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;span class="mtx-select__chevron"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="mtx-select__helper-text" id="skills-help"&gt;Choose at least one&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      /**
+       * Añade una línea a la consola de eventos.
+       * @param {string} text Mensaje.
+       */
+      function log(text) {
+        var out = document.getElementById('select-log');
+        out.textContent += new Date().toLocaleTimeString() + '  ' + text + '\n';
+        out.scrollTop = out.scrollHeight;
+      }
+
+      var single = Materix.getInstance(document.getElementById('select-api'));
+      var multi = Materix.getInstance(document.getElementById('select-api-multi'));
+      [single, multi].forEach(function (inst) {
+        inst.select.addEventListener('change', function () {
+          log('change (' + inst.select.id + ') → value ' + JSON.stringify(inst.value));
+        });
+      });
+
+      document.querySelectorAll('[data-select-action]').forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+          var action = btn.getAttribute('data-select-action');
+          if (action === 'value') { single.value = 'prod'; log("value = 'prod' → " + JSON.stringify(single.value)); }
+          if (action === 'multi') { multi.value = ['eu', 'sa']; log("value = ['eu', 'sa'] → " + JSON.stringify(multi.value)); }
+          if (action === 'open') { event.stopPropagation(); single.open(); log('open()'); }
+          if (action === 'toggle') {
+            if (single.disabled) { single.enable(); log('enable() → disabled = false'); }
+            else { single.disable(); log('disable() → disabled = true'); }
+          }
+          if (action === 'helper') { single.helperText = 'Updated at ' + new Date().toLocaleTimeString(); log('helperText = "' + single.helperText + '"'); }
+          if (action === 'focus') { single.focus(); }
+        });
+      });
+
+      var dynamic = document.getElementById('select-dynamic');
+      var count = 0;
+      /**
+       * Crea un select con opciones de ejemplo.
+       * @param {string} label Texto del label.
+       * @returns {HTMLSelectElement} Select creado.
+       */
+      function makeSelect(label) {
+        var el = document.createElement('select');
+        el.setAttribute('data-label', label);
+        el.innerHTML = '<option value="a">Option A</option><option value="b">Option B</option>';
+        dynamic.appendChild(el);
+        return el;
+      }
+      document.getElementById('select-create-init').addEventListener('click', function () {
+        var el = makeSelect('Materix.init #' + (++count));
+        el.setAttribute('data-mtx', 'select');
+        Materix.init(el);
+        log('Materix.init(select) → #' + count);
+      });
+      document.getElementById('select-create-class').addEventListener('click', function () {
+        var el = makeSelect('new Select #' + (++count));
+        el.setAttribute('data-variant', 'filled');
+        new Materix.Select(el);
+        log('new Materix.Select(select) → #' + count);
+      });
+    });
+  </script>
+</body>
+</html>

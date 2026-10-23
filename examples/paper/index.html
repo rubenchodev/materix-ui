@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper · Materix UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="../../dist/materix.min.css?v=8">
+  <link rel="stylesheet" href="../shared/example.css?v=8">
+  <style>
+    /* Square sample to compare surfaces. */
+    .demo-paper-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      font: var(--mtx-type-body2);
+      text-align: center;
+    }
+    .demo-paper-box--fluid {
+      width: auto;
+    }
+    .demo-paper-content {
+      padding: var(--mtx-spacing-2);
+    }
+  </style>
+</head>
+<body class="mtx-root">
+  <main class="demo-shell">
+    <header class="demo-header">
+      <div>
+        <span class="demo-crumbs">Components · Surfaces</span>
+        <h1>Paper</h1>
+        <p class="demo-lead">The base Material Design surface, with background, border radius and shadow, that groups content and expresses elevation.</p>
+      </div>
+    </header>
+
+    <nav class="demo-toc" aria-label="On this page">
+      <a href="#basic-usage">Basic usage</a>
+      <a href="#variants">Variants</a>
+      <a href="#elevations">Elevations</a>
+      <a href="#shape">Shape</a>
+      <a href="#dark-theme">Dark theme</a>
+      <a href="#grid-layout">Grid</a>
+      <a href="#programmatic-usage">Programmatic usage</a>
+      <a href="#bem-usage">Manual BEM usage</a>
+    </nav>
+
+    <section class="demo-section demo-section--highlight" id="basic-usage">
+      <h2>Basic usage</h2>
+      <p>A <code>&lt;div data-mtx="paper"&gt;</code> gets a paper background, a 4px border radius and elevation 1. Adjust the shadow with <code>data-elevation</code>.</p>
+      <div class="demo-surface">
+        <div data-mtx="paper" class="demo-paper-box">Elevation 1</div>
+        <div data-mtx="paper" data-elevation="8" class="demo-paper-box">Elevation 8</div>
+      </div>
+      <pre class="demo-code"><code>&lt;div data-mtx="paper"&gt;Elevation 1&lt;/div&gt;
+&lt;div data-mtx="paper" data-elevation="8"&gt;Elevation 8&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="demo-section" id="variants">
+      <h2>Variants</h2>
+      <p><code>elevation</code> (default) separates the surface with a shadow; <code>data-variant="outlined"</code> outlines it with a 1px border and no shadow.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">Elevation</span>
+          <div data-mtx="paper" class="demo-paper-box">Shadow</div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Outlined</span>
+          <div data-mtx="paper" data-variant="outlined" class="demo-paper-box">Border</div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Elevation 0</span>
+          <div data-mtx="paper" data-elevation="0" class="demo-paper-box">Flat</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="elevations">
+      <h2>Elevations</h2>
+      <p>Only MUI elevations 0 to 8, 12, 16 and 24 exist as tokens (<code>--mtx-elevation-*</code>). Any other <code>data-elevation</code> value has no style and keeps the base elevation 1.</p>
+      <div class="demo-surface">
+        <div data-mtx="paper" data-elevation="0" class="demo-paper-box">0</div>
+        <div data-mtx="paper" data-elevation="1" class="demo-paper-box">1</div>
+        <div data-mtx="paper" data-elevation="2" class="demo-paper-box">2</div>
+        <div data-mtx="paper" data-elevation="3" class="demo-paper-box">3</div>
+        <div data-mtx="paper" data-elevation="4" class="demo-paper-box">4</div>
+        <div data-mtx="paper" data-elevation="5" class="demo-paper-box">5</div>
+        <div data-mtx="paper" data-elevation="6" class="demo-paper-box">6</div>
+        <div data-mtx="paper" data-elevation="7" class="demo-paper-box">7</div>
+        <div data-mtx="paper" data-elevation="8" class="demo-paper-box">8</div>
+        <div data-mtx="paper" data-elevation="12" class="demo-paper-box">12</div>
+        <div data-mtx="paper" data-elevation="16" class="demo-paper-box">16</div>
+        <div data-mtx="paper" data-elevation="24" class="demo-paper-box">24</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="shape">
+      <h2>Shape</h2>
+      <p>By default the corners use <code>--mtx-shape-radius</code> (4px). <code>data-square</code> makes them straight, useful for surfaces attached to the edges of the window.</p>
+      <div class="demo-surface">
+        <div class="demo-group">
+          <span class="demo-label">Rounded · 4px</span>
+          <div data-mtx="paper" data-elevation="3" class="demo-paper-box">Rounded</div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Square</span>
+          <div data-mtx="paper" data-elevation="3" data-square class="demo-paper-box">Square</div>
+        </div>
+        <div class="demo-group">
+          <span class="demo-label">Outlined square</span>
+          <div data-mtx="paper" data-variant="outlined" data-square class="demo-paper-box">Outlined</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="dark-theme">
+      <h2>Surfaces in the dark theme</h2>
+      <p>Paper consumes <code>--mtx-color-background-paper</code> and <code>--mtx-color-text-primary</code>, so it changes with the theme. This block forces <code>data-mtx-theme="dark"</code> on a container: as in MUI, each elevation adds a white overlay (<code>--mtx-overlay-elevation-N</code>) that lightens the surface the higher it is; <code>outlined</code> has no overlay.</p>
+      <div class="demo-surface" data-mtx-theme="dark">
+        <div data-mtx="paper" data-elevation="0" class="demo-paper-box">Elevation 0</div>
+        <div data-mtx="paper" data-elevation="1" class="demo-paper-box">Elevation 1</div>
+        <div data-mtx="paper" data-elevation="4" class="demo-paper-box">Elevation 4</div>
+        <div data-mtx="paper" data-elevation="8" class="demo-paper-box">Elevation 8</div>
+        <div data-mtx="paper" data-elevation="24" class="demo-paper-box">Elevation 24</div>
+        <div data-mtx="paper" data-variant="outlined" class="demo-paper-box">Outlined</div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="grid-layout">
+      <h2>Grid</h2>
+      <p>Paper is the usual container for the items of an <code>mtx-grid</code>: the column decides the width and Paper provides the surface.</p>
+      <div class="demo-surface">
+        <div data-mtx="grid" data-spacing="2">
+          <div data-mtx="grid" data-xs="12" data-md="8">
+            <div data-mtx="paper" class="demo-paper-box demo-paper-box--fluid">xs=12 md=8</div>
+          </div>
+          <div data-mtx="grid" data-xs="12" data-md="4">
+            <div data-mtx="paper" class="demo-paper-box demo-paper-box--fluid">xs=12 md=4</div>
+          </div>
+          <div data-mtx="grid" data-xs="6" data-md="4">
+            <div data-mtx="paper" data-variant="outlined" class="demo-paper-box demo-paper-box--fluid">xs=6 md=4</div>
+          </div>
+          <div data-mtx="grid" data-xs="6" data-md="8">
+            <div data-mtx="paper" data-variant="outlined" class="demo-paper-box demo-paper-box--fluid">xs=6 md=8</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="programmatic-usage">
+      <h2>Programmatic usage</h2>
+      <p>Paper has no methods or events of its own: initializing it is enough. Create dynamic surfaces with <code>Materix.init(el, 'paper')</code>; the <code>data-*</code> attributes are read only once, on initialization.</p>
+      <div class="demo-row">
+        <button class="mtx-button mtx-button--contained" data-mtx="button" id="paper-api-create">Create Paper</button>
+        <button class="mtx-button mtx-button--outlined" data-mtx="button" id="paper-api-clear">Clear</button>
+      </div>
+      <div class="demo-surface" id="paper-api-container"></div>
+      <pre class="demo-log" id="paper-log" aria-live="polite"></pre>
+      <pre class="demo-code"><code>const el = document.createElement('div');
+el.setAttribute('data-elevation', '4');
+container.append(el);
+const paper = Materix.init(el, 'paper');   // Materix.Paper instance
+el.className;                              // "mtx-paper mtx-paper--elevation-4"</code></pre>
+    </section>
+
+    <section class="demo-section" id="bem-usage">
+      <h2>Manual BEM usage</h2>
+      <p>The classes can be written directly (for example, with SSR); the component adds nothing that already exists.</p>
+      <div class="demo-surface">
+        <div class="mtx-paper mtx-paper--elevation-2 demo-paper-content demo-wide" data-mtx="paper">
+          <h3 class="mtx-typography mtx-typography--h6 mtx-typography--gutter-bottom">Order summary</h3>
+          <p class="mtx-typography mtx-typography--body2">3 items · Standard shipping · Total $74.90</p>
+        </div>
+      </div>
+      <pre class="demo-code"><code>&lt;div class="mtx-paper mtx-paper--elevation-2" data-mtx="paper"&gt;...&lt;/div&gt;
+&lt;div class="mtx-paper mtx-paper--outlined mtx-paper--square" data-mtx="paper"&gt;...&lt;/div&gt;</code></pre>
+    </section>
+  </main>
+
+  <script src="../../dist/materix.umd.js?v=8"></script>
+  <script src="../shared/locale.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var levels = ['0', '1', '2', '3', '4', '6', '8', '12', '16', '24'];
+      var container = document.getElementById('paper-api-container');
+      var log = document.getElementById('paper-log');
+      var count = 0;
+      document.getElementById('paper-api-create').addEventListener('click', function () {
+        var level = levels[count % levels.length];
+        count += 1;
+        var el = document.createElement('div');
+        el.className = 'demo-paper-box';
+        el.setAttribute('data-elevation', level);
+        el.textContent = 'Elevation ' + level;
+        container.appendChild(el);
+        var paper = Materix.init(el, 'paper');
+        log.textContent += 'Materix.init(el, "paper") → ' + (paper instanceof Materix.Paper ? 'Paper' : '?') + ' · ' + el.className + '\n';
+        log.scrollTop = log.scrollHeight;
+      });
+      document.getElementById('paper-api-clear').addEventListener('click', function () {
+        container.textContent = '';
+        log.textContent = '';
+        count = 0;
+      });
+    });
+  </script>
+</body>
+</html>
