@@ -1,0 +1,48 @@
+{{/* Pie de página: editar en GitHub y navegación anterior/siguiente dentro de la sección (idioma actual). */}}
+{{ $list := slice }}
+{{ if eq .Section "components" }}
+  {{ range partialCached "component-groups.html" . "doc-groups" site.Language.Lang }}
+    {{ range .pages }}{{ $list = $list | append . }}{{ end }}
+  {{ end }}
+{{ else if eq .Section "guide" }}
+  {{ with site.GetPage "/guide" }}{{ range .RegularPages.ByWeight }}{{ $list = $list | append . }}{{ end }}{{ end }}
+{{ end }}
+
+{{ $idx := -1 }}
+{{ range $i, $p := $list }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $idx = $i }}{{ end }}{{ end }}
+
+<footer class="doc-page-footer">
+  <div class="doc-page-footer-row">
+  {{/* .File.Path incluye el sufijo de idioma (p. ej. components/button.en.md). */}}
+  {{ with .File }}{{ with site.Params.editURL }}
+    <a class="doc-edit-link" href="{{ . }}/docs/content/{{ replace $.File.Path "\\" "/" }}" target="_blank" rel="noopener">
+      <span class="material-icons" aria-hidden="true">edit</span>{{ i18n "edit_page" }}
+    </a>
+  {{ end }}{{ end }}
+    {{/* Volver arriba: docs.js lo muestra solo en páginas largas; sin JS el ancla sigue funcionando. */}}
+    <a class="doc-text-link doc-back-to-top" href="#doc-content" data-doc-back-to-top hidden>
+      <span class="material-icons" aria-hidden="true">arrow_upward</span>{{ i18n "back_to_top" }}
+    </a>
+  </div>
+
+  {{ if ge $idx 0 }}
+  <nav class="doc-pager" aria-label="{{ i18n "pager_label" }}">
+    {{ if gt $idx 0 }}
+      {{ with index $list (sub $idx 1) }}
+      <a class="doc-pager-link doc-pager-link--prev" href="{{ .RelPermalink }}" rel="prev">
+        <span class="doc-pager-label"><span class="material-icons" aria-hidden="true">chevron_left</span>{{ i18n "previous" }}</span>
+        <span class="doc-pager-title">{{ .LinkTitle }}</span>
+      </a>
+      {{ end }}
+    {{ else }}<span></span>{{ end }}
+    {{ if lt (add $idx 1) (len $list) }}
+      {{ with index $list (add $idx 1) }}
+      <a class="doc-pager-link doc-pager-link--next" href="{{ .RelPermalink }}" rel="next">
+        <span class="doc-pager-label">{{ i18n "next" }}<span class="material-icons" aria-hidden="true">chevron_right</span></span>
+        <span class="doc-pager-title">{{ .LinkTitle }}</span>
+      </a>
+      {{ end }}
+    {{ end }}
+  </nav>
+  {{ end }}
+</footer>

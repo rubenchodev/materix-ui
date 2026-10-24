@@ -1,0 +1,36 @@
+{{ define "main" }}
+{{/* Front matter opcional: toc: false oculta "En esta página"; wide: true amplía el artículo (herramientas). */}}
+{{ $hasToc := and (ne .Params.toc false) (findRE "<li" .TableOfContents 1) }}
+<div class="doc-page{{ if $hasToc }} doc-page--toc{{ end }}{{ if .Params.wide }} doc-page--wide{{ end }}">
+  <article class="doc-article">
+    {{ if .Params.group }}
+      {{ partial "page-header.html" . }}
+    {{ else if not (findRE "<h1" .Content 1) }}
+      <header class="doc-page-header">
+        {{ if eq .Section "guide" }}
+        <nav class="doc-breadcrumb" aria-label="{{ i18n "breadcrumb" }}">
+          <ol>
+            {{ with site.GetPage "/guide" }}<li><a href="{{ .RelPermalink }}">{{ i18n "guide" }}</a></li>{{ else }}<li><span>{{ i18n "guide" }}</span></li>{{ end }}
+          </ol>
+        </nav>
+        {{ end }}
+        <h1 class="doc-title">{{ .Title }}</h1>
+        {{ with .Description }}<p class="doc-lead">{{ . }}</p>{{ end }}
+      </header>
+    {{ end }}
+
+    <div class="doc-content">
+      {{ .Content }}
+    </div>
+
+    {{ partial "page-footer.html" . }}
+  </article>
+
+  {{ if $hasToc }}
+  <aside class="doc-toc" aria-labelledby="doc-toc-title">
+    <p class="doc-toc-title" id="doc-toc-title">{{ i18n "on_this_page" }}</p>
+    {{ .TableOfContents }}
+  </aside>
+  {{ end }}
+</div>
+{{ end }}

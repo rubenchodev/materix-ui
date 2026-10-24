@@ -1,0 +1,75 @@
+{{/*
+  react-demo — Demo React en vivo (isla) + barra de herramientas + código fuente del archivo.
+  El código se lee de demos/{id}.tsx (montado como assets/demos) y nunca se duplica en el .md.
+  docs/islands/main.tsx monta en el escenario [data-demo] el export default del archivo.
+  Parámetros:
+    0 / id — ruta de la demo sin extensión: "button/01-basic" → demos/button/01-basic.tsx.
+    title  — rótulo de la barra; por defecto `export const title = { en: '…', es: '…' }` del archivo
+             en el idioma de la página y, si no existe, i18n demo_default_title.
+    layout — row (predeterminado) | column | center | block.
+    open   — "false" para ocultar el código al cargar (por defecto se muestra).
+    height — alto mínimo del escenario (p. ej. "320px").
+  Uso:
+    {{< react-demo "button/01-basic" >}}
+    {{< react-demo id="dialog/02-form" layout="center" open="false" >}}
+*/}}
+{{ $id := .Get "id" | default (.Get 0) }}
+{{ if not $id }}{{ errorf "react-demo: falta el id de la demo en %s" .Position }}{{ end }}
+{{ $id = strings.TrimSuffix ".tsx" $id }}
+{{ $res := resources.Get (printf "demos/%s.tsx" $id) }}
+{{ if not $res }}{{ errorf "react-demo: no existe demos/%s.tsx (%s)" $id .Position }}{{ end }}
+{{ $raw := $res.Content | replaceRE `\r\n` "\n" }}
+
+{{/* Título: parámetro > export const title del archivo (idioma actual, luego en) > genérico. */}}
+{{ $lang := .Page.Language.Lang }}
+{{ $title := .Get "title" }}
+{{ if not $title }}
+  {{ range slice $lang "en" }}
+    {{ if not $title }}
+      {{ with findRESubmatch (printf `(?s)export\s+const\s+title\s*=\s*\{[^}]*?\b%s\s*:\s*['"]([^'"]*)['"]` .) $raw 1 }}
+        {{ $title = index (index . 0) 1 }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $title = $title | default (i18n "demo_default_title") }}
+
+{{/* Código mostrado: sin el export de metadatos `title` (no forma parte del ejemplo). */}}
+{{ $src := $raw | replaceRE `(?s)\n?export\s+const\s+title\s*=\s*\{[^}]*\}\s*;?[ \t]*\n?` "\n" | replaceRE `\n{3,}` "\n\n" | strings.TrimSpace }}
+
+{{ $layout := .Get "layout" | default "row" }}
+{{ if not (in (slice "row" "column" "center" "block") $layout) }}
+  {{ warnf "react-demo: layout %q no válido en %s (usa row|column|center|block)" $layout .Position }}
+  {{ $layout = "row" }}
+{{ end }}
+{{ $open := ne (printf "%v" (.Get "open")) "false" }}
+{{ $height := .Get "height" }}
+{{ $domId := printf "doc-demo-%d" .Ordinal }}
+{{ $show := i18n "show_code" }}
+{{ $hide := i18n "hide_code" }}
+{{ $copy := i18n "copy_code" }}
+<div class="doc-demo">
+  <div class="doc-demo-stage doc-demo-stage--{{ $layout }}" data-demo="{{ $id }}" id="{{ $domId }}-stage"{{ with $height }} style="{{ printf "min-height: %s" . | safeCSS }}"{{ end }}></div>
+  <div class="doc-demo-toolbar">
+    <span class="doc-demo-title">{{ $title }}</span>
+    <span class="doc-demo-status" role="status" aria-live="polite"></span>
+    <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-code-toggle
+      aria-expanded="{{ if $open }}true{{ else }}false{{ end }}" aria-controls="{{ $domId }}-code"
+      aria-label="{{ if $open }}{{ $hide }}{{ else }}{{ $show }}{{ end }}" title="{{ if $open }}{{ $hide }}{{ else }}{{ $show }}{{ end }}">
+      <span class="material-icons" aria-hidden="true">code</span>
+    </button>
+    <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-copy aria-controls="{{ $domId }}-code" aria-label="{{ $copy }}" title="{{ $copy }}">
+      <span class="material-icons" aria-hidden="true">content_copy</span>
+    </button>
+    {{ with site.Params.repoURL }}
+    {{ $gh := i18n "view_on_github" }}
+    <span class="doc-demo-divider" aria-hidden="true"></span>
+    <a class="doc-icon-btn doc-icon-btn--small" href="{{ printf "%s/demos/%s.tsx" . $id }}" target="_blank" rel="noopener" aria-label="{{ $gh }} {{ i18n "opens_new_tab" }}" title="{{ $gh }}">
+      <span class="material-icons" aria-hidden="true">open_in_new</span>
+    </a>
+    {{ end }}
+  </div>
+  <div class="doc-demo-code" id="{{ $domId }}-code"{{ if not $open }} hidden{{ end }}>
+    {{ highlight $src "tsx" "" }}
+  </div>
+</div>

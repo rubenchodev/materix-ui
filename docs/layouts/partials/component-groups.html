@@ -1,0 +1,27 @@
+{{/*
+  component-groups — Devuelve [{key, name, pages}] con los componentes del idioma actual agrupados
+  por `group` (clave neutra) en el orden de site.Params.componentGroups. El nombre visible sale de
+  i18n (group_{clave}); las páginas sin grupo conocido van a "other".
+  Llamar con partialCached ... site.Language.Lang para no mezclar idiomas en la caché.
+*/}}
+{{ $out := slice }}
+{{ $groups := site.Params.componentGroups | default slice }}
+{{ with site.GetPage "/components" }}
+  {{ $pages := .RegularPages }}
+  {{ range $groups }}
+    {{ $ps := (where $pages "Params.group" .).ByWeight }}
+    {{ if $ps }}
+      {{ $out = $out | append (dict "key" . "name" (i18n (printf "group_%s" .) | default .) "pages" $ps) }}
+    {{ end }}
+  {{ end }}
+  {{ $others := slice }}
+  {{ range $pages.ByWeight }}
+    {{ if not (in $groups (.Params.group | default "")) }}
+      {{ $others = $others | append . }}
+    {{ end }}
+  {{ end }}
+  {{ if $others }}
+    {{ $out = $out | append (dict "key" "other" "name" (i18n "group_other") "pages" $others) }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

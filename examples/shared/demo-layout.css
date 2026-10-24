@@ -1,0 +1,173 @@
+/* Maquetación de las demos (filas, grupos, rejillas). Compartida por examples/ y las islas de docs/. Extraída de example.css. */
+
+.demo-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Grupos con rótulo */
+.demo-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mtx-spacing-1_5);
+  min-width: 0;
+}
+
+.demo-label {
+  display: block;
+  margin: 0;
+  color: var(--mtx-color-text-secondary);
+  font: var(--mtx-type-overline);
+  font-weight: 500;
+  line-height: 1.66;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Filas, pilas y rejillas */
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mtx-spacing-2);
+  min-width: 0;
+}
+
+.demo-row--start {
+  align-items: flex-start;
+}
+
+.demo-row--col {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.demo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mtx-spacing-2);
+  width: 100%;
+  min-width: 0;
+}
+
+.demo-grid-2,
+.demo-grid-3,
+.demo-grid-4 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--mtx-spacing-2);
+  min-width: 0;
+}
+
+@media (min-width: 600px) {
+  .demo-grid-2,
+  .demo-grid-3,
+  .demo-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .demo-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .demo-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Paneles y superficies */
+.demo-panel {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--mtx-spacing-2);
+  min-width: 0;
+  padding: var(--mtx-spacing-2);
+  border: 1px dashed var(--mtx-color-divider);
+  border-radius: var(--mtx-shape-radius);
+  background-color: var(--mtx-color-background-default);
+}
+
+.demo-panel--tall {
+  display: block;
+  min-height: 320px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.demo-surface {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--mtx-spacing-3);
+  min-width: 0;
+  padding: var(--mtx-spacing-3);
+  border-radius: var(--mtx-shape-radius);
+  background-color: var(--mtx-color-background-default);
+}
+
+@media (max-width: 599px) {
+  .demo-surface {
+    padding: var(--mtx-spacing-2);
+    gap: var(--mtx-spacing-2);
+  }
+}
+
+.demo-fixed-width {
+  width: 100%;
+  max-width: 360px;
+}
+
+.demo-wide {
+  width: 100%;
+  max-width: 640px;
+}
+
+/* Bloques con scroll enfocables (tabindex=0 desde nav.js): anillo de foco visible */
+.demo-code:focus-visible,
+.demo-log:focus-visible,
+[role="region"][tabindex="0"]:focus-visible {
+  outline: var(--mtx-focus-ring-width, 2px) solid var(--mtx-focus-ring-color, var(--mtx-color-primary));
+  outline-offset: 2px;
+}
+
+/* Consola de eventos y estado */
+.demo-log {
+  box-sizing: border-box;
+  max-height: 160px;
+  min-height: 48px;
+  margin: 0;
+  padding: var(--mtx-spacing-1) var(--mtx-spacing-1_5);
+  overflow: auto;
+  border: 1px solid var(--mtx-color-divider);
+  border-radius: var(--mtx-shape-radius);
+  background-color: var(--demo-code-bg);
+  color: var(--mtx-color-text-primary);
+  font: 400 0.75rem/1.6 var(--demo-mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.demo-log:empty::before {
+  content: 'Events will appear here.';
+  color: var(--mtx-color-text-secondary);
+}
+
+.demo-status {
+  min-height: 1.66em;
+  margin: 0;
+  color: var(--mtx-color-text-secondary);
+  font: var(--mtx-type-caption);
+}

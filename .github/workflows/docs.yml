@@ -1,0 +1,101 @@
+# Publica la documentación Hugo de Materix UI · React (docs/) en GitHub Pages, una carpeta por rama:
+#   https://qualitycode.dev/materix-ui/{rama}/   (react-js → /materix-ui/react-js/)
+# La raíz del sitio (redirección a la rama por defecto) la gestiona el workflow de la rama vainilla.
+# Al borrar una rama se elimina su carpeta (GitHub ejecuta los eventos `delete` con el workflow
+# de la rama por defecto; este job aplica solo si esta rama lo es).
+# Requiere: Settings → Pages → Source = "Deploy from a branch" → gh-pages / (root).
+name: Docs
+
+on:
+  push:
+    branches: ['**']
+  delete:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Todas las ramas escriben en gh-pages: un despliegue a la vez, sin cancelar.
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+env:
+  HUGO_VERSION: 0.168.0
+  # Dominio propio de la cuenta (rubenchodev.github.io redirige a qualitycode.dev).
+  SITE_URL: https://qualitycode.dev/materix-ui
+
+jobs:
+  deploy:
+    if: github.event_name != 'delete'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Nombre de carpeta seguro: feature/x → feature-x.
+      - name: Resolve branch folder
+        run: echo "DOCS_DIR=${GITHUB_REF_NAME//\//-}" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # También instala @rubenchodev/materix-ui: hugo.toml monta su dist/*.css en /materix/.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build library
+        run: npm run build
+
+      # Bundle de las demos React: docs/static/demos/ (islands.js, islands.css y chunks).
+      - name: Build docs islands
+        run: npm run docs:islands
+
+      - name: Install Hugo extended
+        run: |
+          wget -qO "$RUNNER_TEMP/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i "$RUNNER_TEMP/hugo.deb"
+
+      # Los enlaces "código fuente" y "editar esta página" apuntan a la rama publicada.
+      - name: Build docs
+        env:
+          HUGO_PARAMS_REPOURL: https://github.com/${{ github.repository }}/tree/${{ github.ref_name }}
+          HUGO_PARAMS_EDITURL: https://github.com/${{ github.repository }}/edit/${{ github.ref_name }}
+        run: hugo -s docs --minify --baseURL "${SITE_URL}/${DOCS_DIR}/"
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: docs/public
+          destination_dir: ${{ env.DOCS_DIR }}
+          keep_files: false
+          commit_message: 'docs(${{ env.DOCS_DIR }}): ${{ github.sha }}'
+
+  # Al borrar una rama, quita su carpeta de gh-pages.
+  cleanup:
+    if: github.event_name == 'delete' && github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - name: Remove branch folder
+        env:
+          REF: ${{ github.event.ref }}
+        run: |
+          DIR="${REF//\//-}"
+          if [ -n "$DIR" ] && [ -d "$DIR" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+            git rm -r --quiet "$DIR"
+            git commit -m "docs: remove $DIR"
+            git push
+          fi

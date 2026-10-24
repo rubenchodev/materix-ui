@@ -1,0 +1,44 @@
+{{/* Cabecera de página de componente: ruta, título, descripción, enlaces e import del paquete. */}}
+{{ $example := .Params.example }}
+{{ $groupKey := .Params.group | default "" }}
+<header class="doc-page-header">
+  <nav class="doc-breadcrumb" aria-label="{{ i18n "breadcrumb" }}">
+    <ol>
+      {{ with site.GetPage "/components" }}<li><a href="{{ .RelPermalink }}">{{ i18n "components" }}</a></li>{{ end }}
+      {{ with $groupKey }}<li><span>{{ i18n (printf "group_%s" .) | default . }}</span></li>{{ end }}
+    </ol>
+  </nav>
+
+  <h1 class="doc-title">{{ .Title }}</h1>
+  {{ with .Description }}<p class="doc-lead">{{ . }}</p>{{ end }}
+
+  <div class="doc-page-links">
+    {{ with $example }}
+      {{ with site.Params.repoURL }}
+      <a class="doc-chip-link" href="{{ printf "%s/src/components/%s" . $example }}" target="_blank" rel="noopener">
+        <span class="material-icons" aria-hidden="true">code</span>{{ i18n "source_code" }}
+      </a>
+      <a class="doc-chip-link" href="{{ printf "%s/demos/%s" . $example }}" target="_blank" rel="noopener">
+        <span class="material-icons" aria-hidden="true">play_circle</span>{{ i18n "demo_sources" }}
+      </a>
+      {{ end }}
+    {{ end }}
+    {{ with .Params.mui }}
+      <a class="doc-chip-link" href="{{ . }}" target="_blank" rel="noopener">
+        <span class="material-icons" aria-hidden="true">open_in_new</span>{{ i18n "mui_reference" }}
+      </a>
+    {{ end }}
+  </div>
+
+  {{/* Front matter `import`: nombres exportados por el paquete (p. ej. "Button, ButtonGroup"). */}}
+  {{ with .Params.import }}
+    {{ $stmt := printf "import { %s } from '%s';" . (site.Params.npmPackage | default "@rubenchodev/materix-react") }}
+    <div class="doc-usage">
+      <span class="doc-usage-label">{{ i18n "import_label" }}</span>
+      <code class="doc-usage-code">{{ $stmt }}</code>
+      <button type="button" class="doc-icon-btn doc-icon-btn--small" data-doc-copy-text="{{ $stmt }}" aria-label="{{ i18n "copy" }} {{ $stmt }}" title="{{ i18n "copy" }}">
+        <span class="material-icons" aria-hidden="true">content_copy</span>
+      </button>
+    </div>
+  {{ end }}
+</header>

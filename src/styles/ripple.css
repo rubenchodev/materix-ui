@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Materix UI — Ripple
+   Sistema de interacción compartido (patrón TouchRipple de Material UI)
+   ========================================================================== */
+
+.mtx-ripple-container {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mtx-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0;
+  transform: scale(0);
+  animation: mtx-ripple-enter var(--mtx-duration-ripple) var(--mtx-easing-standard) forwards;
+  pointer-events: none;
+}
+
+.mtx-ripple--finishing {
+  opacity: 0;
+  animation: mtx-ripple-exit var(--mtx-duration-ripple) var(--mtx-easing-standard);
+}
+
+@keyframes mtx-ripple-enter {
+  from {
+    transform: scale(0);
+    opacity: 0.1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes mtx-ripple-exit {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtx-ripple,
+  .mtx-ripple--finishing {
+    animation: none;
+  }
+}

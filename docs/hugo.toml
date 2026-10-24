@@ -1,0 +1,92 @@
+# Documentación de Materix UI · React (rama react-js).
+# Requiere Hugo extended >= 0.156 (hugo.Data, languages.*.label/locale, module.mounts.files). Verificado con 0.168.0.
+# Antes de compilar: `npm run docs:islands` genera static/demos/ (bundle de las demos React).
+baseURL = "/"
+title = "Materix UI · React"
+# Inglés en la raíz (/) y español en /es/. Las traducciones se emparejan por nombre: x.en.md / x.es.md.
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = false
+disableKinds = ["taxonomy", "term", "RSS"]
+
+# Índice de búsqueda de texto completo por idioma (/search-index.json y /es/search-index.json),
+# cargado bajo demanda por docs.js al abrir el buscador.
+[outputs]
+  home = ["HTML", "SearchIndex"]
+
+[outputFormats]
+  [outputFormats.SearchIndex]
+    mediaType = "application/json"
+    baseName = "search-index"
+    isPlainText = true
+    notAlternative = true
+
+[languages]
+  [languages.en]
+    label = "English"
+    locale = "en"
+    weight = 1
+    [languages.en.params]
+      description = "Native React + TypeScript components with the Material UI look, built on the Materix UI CSS and design tokens."
+  [languages.es]
+    label = "Español"
+    locale = "es"
+    weight = 2
+    [languages.es.params]
+      description = "Componentes React + TypeScript nativos con la estética de Material UI, sobre el CSS y los design tokens de Materix UI."
+
+# Los estáticos se publican una sola vez en la raíz del sitio, compartidos por ambos idiomas.
+# Los layouts los enlazan con relURL (nunca relLangURL) para que en /es/ apunten a la raíz.
+[module]
+  # static/dist es un resto local de la rama vainilla (ignorado por git): no se publica.
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+    files = ["! dist", "! dist/**"]
+  # CSS de Materix (paquete @rubenchodev/materix-ui) servido en /materix/: materix.min.css (completo), base.css y utilities.css.
+  [[module.mounts]]
+    source = "../node_modules/@rubenchodev/materix-ui/dist"
+    target = "static/materix"
+    files = ["*.css"]
+  # Código fuente de las demos (demos/{slug}/{nn-nombre}.tsx): lo lee el shortcode react-demo.
+  [[module.mounts]]
+    source = "../demos"
+    target = "assets/demos"
+    files = ["**.tsx"]
+
+[params]
+  # Versión mostrada en la barra superior (mantener sincronizada con package.json).
+  version = "0.1.0"
+  # Repositorio: enlace de GitHub, "Código fuente" (repoURL + /src/components/{example})
+  # y código de cada demo (repoURL + /demos/{id}.tsx).
+  repoURL = "https://github.com/rubenchodev/materix-ui/tree/react-js"
+  # Base para "Editar esta página" (editURL + /docs/content/{ruta del .md con sufijo de idioma}).
+  editURL = "https://github.com/rubenchodev/materix-ui/edit/react-js"
+  # Documentación de la versión vanilla (enlace cruzado en la barra superior y en la home).
+  vanillaURL = "https://qualitycode.dev/materix-ui/vainilla/"
+  # Paquetes npm.
+  npmPackage = "@rubenchodev/materix-react"
+  cssPackage = "@rubenchodev/materix-ui"
+  # Orden de los grupos de componentes (claves neutras del front matter `group`).
+  # El nombre visible se traduce con i18n: group_{clave}.
+  componentGroups = ["layout", "inputs", "data-display", "feedback", "surfaces", "navigation"]
+  # Búsqueda: caracteres de texto plano indexados por sección (H2/H3) de cada página.
+  searchSectionChars = 1200
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+  [markup.highlight]
+    noClasses = false
+    codeFences = true
+    guessSyntax = false
+    lineNos = false
+    tabWidth = 2
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false

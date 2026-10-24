@@ -1,0 +1,10 @@
+export { Tabs } from './Tabs';
+export type { TabsOrientation, TabsProps, TabsVariant } from './Tabs';
+export { Tab } from './Tab';
+export type { TabIconPosition, TabProps } from './Tab';
+export { TabPanel } from './TabPanel';
+export type { TabPanelProps } from './TabPanel';
+export { TabContext, useTabContext } from './TabContext';
+export type { TabContextProps, TabContextValue, TabValue } from './TabContext';
+export { TabsContainer } from './TabsContainer';
+export type { TabsContainerProps } from './TabsContainer';

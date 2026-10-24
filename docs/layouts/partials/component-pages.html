@@ -1,0 +1,20 @@
+{{/*
+  component-pages — Devuelve las páginas de componentes en el orden global:
+  grupos (claves neutras) de site.Params.componentGroups del idioma actual (por weight) y después las páginas sin grupo conocido.
+*/}}
+{{ $out := slice }}
+{{ $groups := site.Params.componentGroups | default slice }}
+{{ with site.GetPage "/components" }}
+  {{ $pages := .RegularPages }}
+  {{ range $groups }}
+    {{ range (where $pages "Params.group" .).ByWeight }}
+      {{ $out = $out | append . }}
+    {{ end }}
+  {{ end }}
+  {{ range $pages.ByWeight }}
+    {{ if not (in $groups (.Params.group | default "")) }}
+      {{ $out = $out | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

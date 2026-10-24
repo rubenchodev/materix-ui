@@ -1,0 +1,20 @@
+/* Estilos propios de las demos de Container (equivalen al <style> de examples/container de vanilla). */
+.demo-container-frame {
+  padding: var(--mtx-spacing-1) 0;
+  border: 1px dashed var(--mtx-color-divider);
+  border-radius: var(--mtx-shape-radius);
+  overflow: hidden;
+}
+.demo-container-frame .mtx-container {
+  background-color: color-mix(in srgb, var(--mtx-color-primary) 8%, transparent);
+  outline: 1px dashed color-mix(in srgb, var(--mtx-color-primary) 50%, transparent);
+}
+.demo-container-box {
+  padding: var(--mtx-spacing-1_5);
+  border-radius: var(--mtx-shape-radius);
+  background-color: var(--mtx-color-background-paper);
+  color: var(--mtx-color-text-primary);
+  font: var(--mtx-type-body2);
+  text-align: center;
+  overflow-wrap: anywhere;
+}

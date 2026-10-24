@@ -1,0 +1,1 @@
+<h{{ .Level }} id="{{ .Anchor }}"{{ with .Attributes.class }} class="{{ . }}"{{ end }}>{{ .Text | safeHTML }}{{ if and (ge .Level 2) (le .Level 4) }}<a class="doc-anchor" href="#{{ .Anchor }}" aria-label="{{ i18n "anchor_link" (dict "Section" .PlainText) }}">#</a>{{ end }}</h{{ .Level }}>

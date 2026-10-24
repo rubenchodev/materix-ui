@@ -1,0 +1,25 @@
+node_modules/
+dist/
+*.log
+*.tgz
+.DS_Store
+.idea/
+.vscode/
+
+# Playwright (E2E y a11y)
+test-results*/
+playwright-report/
+blob-report/
+
+# Hugo: salida compilada, lock y artefactos copiados (se regeneran con npm run docs:build)
+docs/public/
+docs/resources/
+docs/.hugo_build.lock
+docs/static/dist/
+docs/static/demos/
+
+# Restos de la rama vainilla y borradores locales
+types/
+scratch/
+tests/scratch.js
+dist-examples/

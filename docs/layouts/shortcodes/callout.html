@@ -1,0 +1,17 @@
+{{/*
+  callout — Aviso destacado con cuerpo markdown.
+  Uso: {{< callout type="info|tip|warning|danger" title="Opcional" >}}Texto **markdown**{{< /callout >}}
+*/}}
+{{ $type := .Get "type" | default "info" }}
+{{ $icons := dict "info" "info" "tip" "lightbulb" "warning" "warning" "danger" "report" }}
+{{ if not (isset $icons $type) }}
+  {{ warnf "callout: type %q no válido en %s (usa info|tip|warning|danger)" $type .Position }}
+  {{ $type = "info" }}
+{{ end }}
+<aside class="doc-callout doc-callout--{{ $type }}" aria-label="{{ .Get "title" | default (i18n (printf "callout_%s" $type)) }}">
+  <span class="material-icons doc-callout-icon" aria-hidden="true">{{ index $icons $type }}</span>
+  <div class="doc-callout-body">
+    {{ with .Get "title" }}<p class="doc-callout-title">{{ . }}</p>{{ end }}
+    {{ trim (.InnerDeindent | default .Inner) "\r\n" | .Page.RenderString (dict "display" "block") }}
+  </div>
+</aside>
