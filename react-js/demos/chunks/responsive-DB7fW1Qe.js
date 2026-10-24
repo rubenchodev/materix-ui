@@ -1,0 +1,1 @@
+var e=[`xs`,`sm`,`md`,`lg`,`xl`];function t(t){if(t==null)return[];if(Array.isArray(t))return t.map((t,n)=>[e[n],t]).filter(e=>e[0]!==void 0&&e[1]!==void 0&&e[1]!==null);if(typeof t==`object`){let n=t;return e.filter(e=>n[e]!==void 0&&n[e]!==null).map(e=>[e,n[e]])}return[[`xs`,t]]}export{t as n,e as t};

@@ -1,0 +1,1 @@
+import{r as e}from"../islands.js";var t=e(),n=(0,t.createContext)(void 0);n.displayName=`MtxFormControlContext`;function r(){return(0,t.useContext)(n)}export{r as n,n as t};

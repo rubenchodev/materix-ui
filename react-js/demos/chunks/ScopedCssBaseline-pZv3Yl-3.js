@@ -1,0 +1,1 @@
+import{r as e,t}from"../islands.js";import{t as n}from"./classes-DN5FF69A.js";/* empty css                     */var r=e(),i=t(),a=(0,r.forwardRef)(function({component:e,className:t,...r},a){return(0,i.jsx)(e??`div`,{ref:a,className:n(`mtx-root`,t),...r})});a.displayName=`ScopedCssBaseline`;export{a as t};

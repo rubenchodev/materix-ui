@@ -1,0 +1,1 @@
+import{r as e,t}from"../islands.js";import{t as n}from"./classes-DN5FF69A.js";import"./FormHelperText-CLsd96CI.js";var r=e(),i=t(),a=(0,r.forwardRef)(function({className:e,children:t,...r},a){return(0,i.jsx)(`div`,{ref:a,className:n(`mtx-form-label`,e),...r,children:t})});export{a as t};

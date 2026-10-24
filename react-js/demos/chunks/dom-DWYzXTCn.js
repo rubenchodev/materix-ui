@@ -1,0 +1,1 @@
+var e=(()=>{try{return!1}catch{return!1}})();function t(){return typeof window>`u`||typeof window.matchMedia!=`function`?!1:!!window.matchMedia(`(prefers-reduced-motion: reduce)`).matches}function n(e){return e==null?null:typeof e==`function`?e()??null:typeof e==`object`&&`current`in e&&!(`nodeType`in e)?e.current??null:e}export{t as n,n as r,e as t};

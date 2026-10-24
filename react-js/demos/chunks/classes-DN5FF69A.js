@@ -1,0 +1,1 @@
+function e(...e){let t=``;for(let n of e){if(!n)continue;let e=String(n).trim();e&&(t=t?`${t} ${e}`:e)}return t}function t(e,t={}){let n=e.startsWith(`mtx-`)?e:`mtx-${e}`,r=[n];for(let[e,i]of Object.entries(t))i===!0?r.push(`${n}--${e}`):typeof i==`string`&&i&&r.push(`${n}--${i}`);return r.join(` `)}export{t as n,e as t};
