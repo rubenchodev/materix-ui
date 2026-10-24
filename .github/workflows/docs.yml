@@ -38,7 +38,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       # También instala @rubenchodev/materix-ui: hugo.toml monta su dist/*.css en /materix/.
