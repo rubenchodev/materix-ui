@@ -94,11 +94,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>CircularProgress</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/progress&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;The simplest form: `&lt;Backdrop open&gt;` with the content to center. `closeOnClick` and `closeOnEscape` ask to close it through `onClose`, which updates the state. The content is white, so `CircularProgress color=&#34;inherit&#34;` stands out in both themes.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;La forma más simple: `&lt;Backdrop open&gt;` con el contenido a centrar. `closeOnClick` y `closeOnEscape` solicitan el cierre mediante `onClose`, que actualiza el estado. El contenido es blanco, así que `CircularProgress color=&#34;inherit&#34;` destaca en ambos temas.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=p>[</span><span class=nx>open</span><span class=p>,</span> <span class=nx>setOpen</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=p>(</span><span class=kc>false</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -125,11 +120,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Button</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/button&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>CircularProgress</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/progress&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;The default layer dims the page with `--mtx-backdrop-bg`; `invisible` keeps it transparent but still blocks clicks. With `invisible` use a colored indicator.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;La capa predeterminada oscurece la página con `--mtx-backdrop-bg`; `invisible` la deja transparente pero sigue bloqueando los clics. Con `invisible` usa un indicador con color.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=p>[</span><span class=nx>open</span><span class=p>,</span> <span class=nx>setOpen</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=o>&lt;</span><span class=s1>&#39;default&#39;</span> <span class=o>|</span> <span class=s1>&#39;invisible&#39;</span> <span class=o>|</span> <span class=kc>null</span><span class=o>&gt;</span><span class=p>(</span><span class=kc>null</span><span class=p>);</span>
@@ -165,11 +155,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>CircularProgress</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/progress&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Children are centered; compose them with `Stack` and `Typography`. Any element with `data-mtx-backdrop-close` closes the layer (reason `click`), even without `closeOnClick`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Los hijos se centran; compónlos con `Stack` y `Typography`. Cualquier elemento con `data-mtx-backdrop-close` cierra la capa (motivo `click`), incluso sin `closeOnClick`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=p>[</span><span class=nx>open</span><span class=p>,</span> <span class=nx>setOpen</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=p>(</span><span class=kc>false</span><span class=p>);</span>
@@ -207,11 +192,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>CircularProgress</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/progress&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`closeOnClick` closes on a click on the layer (controls inside the content are ignored), `closeOnEscape` with Escape through the layer stack, and without either the layer only closes with `open={false}`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`closeOnClick` cierra con un clic en la capa (los controles del contenido se ignoran), `closeOnEscape` con Escape a través de la pila de capas y, sin ninguno, la capa solo se cierra con `open={false}`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>type</span> <span class=nx>Mode</span> <span class=o>=</span> <span class=s1>&#39;click&#39;</span> <span class=o>|</span> <span class=s1>&#39;escape&#39;</span> <span class=o>|</span> <span class=s1>&#39;timer&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
@@ -274,11 +254,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>CircularProgress</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/progress&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`lockScroll` locks the `&lt;body&gt;` scroll (modal manager shared with Dialog) and `inertOthers` marks the rest of the page as `inert`, so Tab and screen readers cannot reach the covered content. Both are restored on close.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`lockScroll` bloquea el scroll del `&lt;body&gt;` (gestor modal compartido con Dialog) e `inertOthers` marca el resto de la página como `inert`, así que Tab y los lectores de pantalla no llegan al contenido cubierto. Ambos se restauran al cerrar.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=p>[</span><span class=nx>open</span><span class=p>,</span> <span class=nx>setOpen</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=p>(</span><span class=kc>false</span><span class=p>);</span>
 </span></span><span class=line><span class=cl>
@@ -315,11 +290,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>TextField</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/text-field&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Saving a form: the backdrop covers the page while the request runs and closes by itself when it finishes; then a Snackbar confirms the result.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Guardar un formulario: el backdrop cubre la página mientras dura la petición y se cierra solo al terminar; después un Snackbar confirma el resultado.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=p>[</span><span class=nx>saving</span><span class=p>,</span> <span class=nx>setSaving</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=p>(</span><span class=kc>false</span><span class=p>);</span>
@@ -371,11 +341,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;The backdrop is fixed to the viewport (in a portal on `document.body`) and does not take part in the layout; here a grid of triggers opens the same backdrop with different messages.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;El backdrop está fijo al viewport (en un portal sobre `document.body`) y no participa en la maquetación; aquí una grilla de disparadores abre el mismo backdrop con mensajes distintos.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>ACTIONS</span> <span class=o>=</span> <span class=p>[</span>
 </span></span><span class=line><span class=cl>  <span class=p>{</span> <span class=nx>label</span><span class=o>:</span> <span class=s1>&#39;Export&#39;</span><span class=p>,</span> <span class=nx>message</span><span class=o>:</span> <span class=s1>&#39;Exporting report…&#39;</span> <span class=p>},</span>
 </span></span><span class=line><span class=cl>  <span class=p>{</span> <span class=nx>label</span><span class=o>:</span> <span class=s1>&#39;Invite&#39;</span><span class=p>,</span> <span class=nx>message</span><span class=o>:</span> <span class=s1>&#39;Sending invitations…&#39;</span> <span class=p>},</span>
@@ -425,11 +390,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>CircularProgress</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/progress&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;The `open` prop replaces `open()`, `close()` and `toggle()`. `onOpen` and `onClose(event, reason)` are the equivalents of `mtx:backdrop:open` and `mtx:backdrop:close`; `onExited` fires when the fade-out ends.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;La prop `open` sustituye a `open()`, `close()` y `toggle()`. `onOpen` y `onClose(event, reason)` equivalen a `mtx:backdrop:open` y `mtx:backdrop:close`; `onExited` se llama al terminar el fundido de salida.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=p>[</span><span class=nx>open</span><span class=p>,</span> <span class=nx>setOpen</span><span class=p>]</span> <span class=o>=</span> <span class=nx>useState</span><span class=p>(</span><span class=kc>false</span><span class=p>);</span>

@@ -91,11 +91,6 @@
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/container/01-basic.tsx target=_blank rel=noopener aria-label="View source on GitHub (opens in a new tab)" title="View source on GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-2-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;./demo.css&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Container</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/container&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;A single `&lt;Container&gt;`. Without `maxWidth` the cap is `lg` (1200px), as in MUI. The shaded area is the container; the inner strip, its gutters.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Un único `&lt;Container&gt;`. Sin `maxWidth` el tope es `lg` (1200px), como en MUI. La zona sombreada es el contenedor; la franja interior, sus gutters.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;demo-container-frame&#34;</span><span class=p>&gt;</span>
@@ -115,11 +110,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/container/02-max-width.tsx target=_blank rel=noopener aria-label="View source on GitHub (opens in a new tab)" title="View source on GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-3-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;./demo.css&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Container</span><span class=p>,</span> <span class=kr>type</span> <span class=nx>ContainerMaxWidth</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/container&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`maxWidth` sets the cap: `xs` 444px, `sm` 600px, `md` 900px, `lg` 1200px, `xl` 1536px or `false` to take the full width.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`maxWidth` fija el tope: `xs` 444px, `sm` 600px, `md` 900px, `lg` 1200px, `xl` 1536px o `false` para ocupar todo el ancho.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>options</span>: <span class=kt>Array</span><span class=o>&lt;</span><span class=p>{</span> <span class=nx>value</span>: <span class=kt>ContainerMaxWidth</span><span class=p>;</span> <span class=nx>label</span>: <span class=kt>string</span> <span class=p>}</span><span class=o>&gt;</span> <span class=o>=</span> <span class=p>[</span>
 </span></span><span class=line><span class=cl>  <span class=p>{</span> <span class=nx>value</span><span class=o>:</span> <span class=s1>&#39;xs&#39;</span><span class=p>,</span> <span class=nx>label</span><span class=o>:</span> <span class=s1>&#39;maxWidth=&#34;xs&#34; · 444px&#39;</span> <span class=p>},</span>
@@ -156,11 +146,6 @@
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/container/03-fixed.tsx target=_blank rel=noopener aria-label="View source on GitHub (opens in a new tab)" title="View source on GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-4-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;./demo.css&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Container</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/container&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`fixed` makes the max width jump to the minimum of each breakpoint (600, 900, 1200, 1536px) instead of growing fluidly. Useful when the design targets specific widths. Resize the window to see it.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`fixed` hace que el ancho máximo salte al mínimo de cada breakpoint (600, 900, 1200, 1536px) en lugar de crecer de forma fluida. Útil cuando el diseño apunta a anchos concretos. Redimensiona la ventana para verlo.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;demo-container-frame&#34;</span><span class=p>&gt;</span>
@@ -180,11 +165,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/container/04-gutters.tsx target=_blank rel=noopener aria-label="View source on GitHub (opens in a new tab)" title="View source on GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-5-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;./demo.css&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Container</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/container&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;By default the container adds 16px of side padding on mobile and 24px from 600px. `disableGutters` removes them, for example to make an image or a table touch the edges.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Por defecto el contenedor añade 16px de relleno lateral en móvil y 24px desde 600px. `disableGutters` los elimina, por ejemplo para que una imagen o una tabla toque los bordes.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -220,11 +200,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Container</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/container&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Grid</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/grid&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Container bounds the width and Grid splits the columns inside it. No wrapper with `overflow` is needed: Grid spaces items with `gap`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Container limita el ancho y Grid reparte las columnas dentro. No hace falta un envoltorio con `overflow`: Grid separa los ítems con `gap`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;demo-container-frame&#34;</span><span class=p>&gt;</span>
@@ -258,11 +233,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Container</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/container&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stack</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stack&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;An article page: a full-width header and a reading body capped at `sm` to keep a comfortable line length.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Una página de artículo: una cabecera a todo el ancho y un cuerpo de lectura limitado a `sm` para mantener una longitud de línea cómoda.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -302,11 +272,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;./demo.css&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Button</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/button&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Container</span><span class=p>,</span> <span class=kr>type</span> <span class=nx>ContainerMaxWidth</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/container&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;The vanilla `setMaxWidth()`, `setFixed()` and `setGutters()` become props driven by state. Container emits no events: the log shows the resulting classes.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Los `setMaxWidth()`, `setFixed()` y `setGutters()` de vanilla pasan a ser props controladas por el estado. Container no emite eventos: el registro muestra las clases resultantes.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>sizes</span>: <span class=kt>ContainerMaxWidth</span><span class=p>[]</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;xs&#39;</span><span class=p>,</span> <span class=s1>&#39;sm&#39;</span><span class=p>,</span> <span class=s1>&#39;md&#39;</span><span class=p>,</span> <span class=kc>false</span><span class=p>];</span>
 </span></span><span class=line><span class=cl>
@@ -363,11 +328,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/container/08-bem.tsx target=_blank rel=noopener aria-label="View source on GitHub (opens in a new tab)" title="View source on GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-9-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;@rubenchodev/materix-ui/components/container.css&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=s1>&#39;./demo.css&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;The classes work without the component.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Las clases funcionan sin el componente.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>

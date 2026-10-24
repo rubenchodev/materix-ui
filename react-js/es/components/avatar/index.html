@@ -79,7 +79,7 @@
 <span class=material-icons aria-hidden=true>content_copy</span></button></div></header><div class=doc-content><p><code>Avatar</code> muestra la identidad de una persona o entidad en un espacio compacto: una foto, sus iniciales o un icono. Úsalo en listas de usuarios, cabeceras de tarjetas, comentarios o barras de aplicación. Si necesitas una etiqueta con texto que se pueda eliminar o pulsar, usa <a href=../chip/>Chip</a>; para un indicador numérico sobre un icono, usa <a href=../badge/>Badge</a>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span><span class=p>,</span> <span class=nx>AvatarGroup</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=c1>// o solo este componente:
 </span></span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span><span class=p>,</span> <span class=nx>AvatarGroup</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
-</span></span></code></pre></div><h2 id=uso-básico>Uso básico<a class=doc-anchor href=#uso-b%c3%a1sico aria-label="Enlace a la sección Uso básico">#</a></h2><p>Las iniciales van como hijos, <code>src</code> genera la imagen e <code>icon</code> inserta un icono de Material (una cadena es el nombre del icono; también se acepta cualquier nodo, como un SVG).</p><div class=doc-demo><div class="doc-demo-stage doc-demo-stage--row" data-demo=avatar/01-basic id=doc-demo-0-stage></div><div class=doc-demo-toolbar><span class=doc-demo-title>Uso básico</span>
+</span></span></code></pre></div><h2 id=uso-básico>Uso básico<a class=doc-anchor href=#uso-b%c3%a1sico aria-label="Enlace a la sección Uso básico">#</a></h2><p>Las iniciales van como hijos, <code>src</code> genera la imagen e <code>icon</code> inserta un icono de Material (una cadena es el nombre del icono; también se acepta cualquier nodo, como un SVG).</p><div class=doc-demo><div class="doc-demo-stage doc-demo-stage--block" data-demo=avatar/01-basic id=doc-demo-0-stage></div><div class=doc-demo-toolbar><span class=doc-demo-title>Uso básico</span>
 <span class=doc-demo-status role=status aria-live=polite></span>
 <button type=button class="doc-icon-btn doc-icon-btn--small" data-doc-code-toggle aria-expanded=true aria-controls=doc-demo-0-code aria-label="Ocultar código" title="Ocultar código">
 <span class=material-icons aria-hidden=true>code</span>
@@ -89,11 +89,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/01-basic.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-0-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;A single `Avatar`: initials go as children, `src` renders the image and `icon` inserts a Material icon.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Un solo `Avatar`: las iniciales van como hijos, `src` genera la imagen e `icon` inserta un icono de Material.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -114,11 +109,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/02-variants.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-1-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`variant` sets the shape: `circular` (default), `rounded` (4px radius) or `square`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`variant` define la forma: `circular` (por defecto), `rounded` (radio de 4px) o `square`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>photo</span> <span class=o>=</span> <span class=s1>&#39;https://i.pravatar.cc/120?img=12&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
@@ -154,11 +144,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/03-sizes.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-2-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Button</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/button&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Canonical sizes of 24, 40 and 56px with `size=&#34;small|medium|large&#34;`. A number in `size` sets a custom size in pixels.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Tamaños canónicos de 24, 40 y 56px con `size=&#34;small|medium|large&#34;`. Un número en `size` fija un tamaño personalizado en píxeles.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>photo</span> <span class=o>=</span> <span class=s1>&#39;https://i.pravatar.cc/120?img=5&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
@@ -210,11 +195,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/04-content.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-3-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Content is resolved in order: `src`, `icon` and, if there is nothing, the children. Icons keep their native 24px grid; `icon` also accepts any node (an SVG, for example).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;El contenido se resuelve en orden: `src`, `icon` y, si no hay nada, los hijos. Los iconos conservan su cuadrícula nativa de 24px; `icon` acepta también cualquier nodo (un SVG, por ejemplo).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;&gt;</span>
@@ -243,7 +223,7 @@
 </span></span><span class=line><span class=cl>      <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;/&gt;</span>
 </span></span><span class=line><span class=cl>  <span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div></div><h2 id=colores>Colores<a class=doc-anchor href=#colores aria-label="Enlace a la sección Colores">#</a></h2><p>Sin <code>color</code> se usa gris 600 con texto blanco (<code>--mtx-avatar-default-bg</code> / <code>--mtx-avatar-default-color</code>, contraste AA 4.6:1; MUI usa gris 400 con 1.8:1). <code>color</code> aplica cualquier color de la paleta con su texto de contraste.</p><div class=doc-demo><div class="doc-demo-stage doc-demo-stage--row" data-demo=avatar/05-colors id=doc-demo-4-stage></div><div class=doc-demo-toolbar><span class=doc-demo-title>Colores</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div></div><h2 id=colores>Colores<a class=doc-anchor href=#colores aria-label="Enlace a la sección Colores">#</a></h2><p>Sin <code>color</code> se usa gris 600 con texto blanco (<code>--mtx-avatar-default-bg</code> / <code>--mtx-avatar-default-color</code>, contraste AA 4.6:1; MUI usa gris 400 con 1.8:1). <code>color</code> aplica cualquier color de la paleta con su texto de contraste.</p><div class=doc-demo><div class="doc-demo-stage doc-demo-stage--block" data-demo=avatar/05-colors id=doc-demo-4-stage></div><div class=doc-demo-toolbar><span class=doc-demo-title>Colores</span>
 <span class=doc-demo-status role=status aria-live=polite></span>
 <button type=button class="doc-icon-btn doc-icon-btn--small" data-doc-code-toggle aria-expanded=true aria-controls=doc-demo-4-code aria-label="Ocultar código" title="Ocultar código">
 <span class=material-icons aria-hidden=true>code</span>
@@ -253,11 +233,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/05-colors.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-4-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Without `color`, grey 600 with white text is used (`--mtx-avatar-default-bg` / `--mtx-avatar-default-color`, 4.6:1 AA contrast; MUI uses grey 400 at 1.8:1). `color` applies any palette color with its contrast text.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Sin `color` se usa gris 600 con texto blanco (`--mtx-avatar-default-bg` / `--mtx-avatar-default-color`, contraste AA 4.6:1; MUI usa gris 400 con 1.8:1). `color` aplica cualquier color de la paleta con su texto de contraste.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -281,11 +256,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/06-states.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-5-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Avatar is not interactive: its states are about content. With an image it shows the photo; without an image or icon it switches to fallback mode (`mtx-avatar--fallback`) and shows the initials or the children.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Avatar no es interactivo: sus estados son de contenido. Con imagen muestra la foto; sin imagen ni icono pasa a modo fallback (`mtx-avatar--fallback`) y muestra las iniciales o los hijos.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -325,11 +295,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/07-grouping.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-6-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span><span class=p>,</span> <span class=nx>AvatarGroup</span><span class=p>,</span> <span class=kr>type</span> <span class=nx>AvatarColor</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`AvatarGroup` overlaps avatars. `max` also counts the `+N` indicator, `total` indicates users that are not rendered and `spacing` sets the overlap (`medium`, `small` or pixels).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`AvatarGroup` solapa avatares. `max` cuenta también el indicador `+N`, `total` indica usuarios que no se renderizan y `spacing` fija el solapamiento (`medium`, `small` o píxeles).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>abc</span>: <span class=kt>Array</span><span class=o>&lt;</span><span class=p>[</span><span class=kt>string</span><span class=p>,</span> <span class=nx>AvatarColor</span><span class=p>]</span><span class=o>&gt;</span> <span class=o>=</span> <span class=p>[[</span><span class=s1>&#39;A&#39;</span><span class=p>,</span> <span class=s1>&#39;primary&#39;</span><span class=p>],</span> <span class=p>[</span><span class=s1>&#39;B&#39;</span><span class=p>,</span> <span class=s1>&#39;secondary&#39;</span><span class=p>],</span> <span class=p>[</span><span class=s1>&#39;C&#39;</span><span class=p>,</span> <span class=s1>&#39;success&#39;</span><span class=p>]];</span>
 </span></span><span class=line><span class=cl>
@@ -398,11 +363,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Badge</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/badge&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>List</span><span class=p>,</span> <span class=nx>ListItem</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/list&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Online status indicator with Badge and a list of authors with List.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Indicador de estado en línea con Badge y una lista de autores con List.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;demo-grid-2&#34;</span><span class=p>&gt;</span>
@@ -445,11 +405,6 @@
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/09-grid.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-8-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Grid</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/grid&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Team directory in `Grid`: 1 column on mobile, 2 at `sm` and 3 at `md`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Directorio del equipo en `Grid`: 1 columna en móvil, 2 en `sm` y 3 en `md`.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>Grid</span> <span class=na>container</span> <span class=na>spacing</span><span class=o>=</span><span class=p>{</span><span class=mi>2</span><span class=p>}</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;mtx-w-100&#34;</span><span class=p>&gt;</span>
@@ -491,11 +446,6 @@
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/avatar/10-controlled.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-9-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>useState</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;react&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span><span class=p>,</span> <span class=nx>AvatarGroup</span><span class=p>,</span> <span class=kr>type</span> <span class=nx>AvatarColor</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Button</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/button&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;In React the group recalculates on every render: `max`, `total` and the children replace the vanilla `max`/`total` setters and `refresh()`. Avatar and AvatarGroup emit no events; the log shows each change and the resulting state.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;En React el grupo se recalcula en cada render: `max`, `total` y los hijos sustituyen a los setters `max`/`total` y a `refresh()` de vanilla. Avatar y AvatarGroup no emiten eventos; el registro muestra cada cambio y el estado resultante.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>colors</span>: <span class=kt>AvatarColor</span><span class=p>[]</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;primary&#39;</span><span class=p>,</span> <span class=s1>&#39;secondary&#39;</span><span class=p>,</span> <span class=s1>&#39;success&#39;</span><span class=p>,</span> <span class=s1>&#39;info&#39;</span><span class=p>,</span> <span class=s1>&#39;warning&#39;</span><span class=p>,</span> <span class=s1>&#39;error&#39;</span><span class=p>];</span>
 </span></span><span class=line><span class=cl>

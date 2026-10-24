@@ -1234,3 +1234,12 @@ a.doc-version--link:hover { border-color: var(--mtx-color-primary); color: var(-
 }
 /* El envoltorio .mtx-root de cada isla no debe romper el layout row/column/center del escenario. */
 .doc-demo-stage > .mtx-root { display: contents; }
+
+/* Envoltorio .mtx-root de cada isla: no participa en el layout para que el gap del
+   escenario (row/column/center) llegue a los hijos de la demo. */
+.doc-demo-stage > .doc-demo-root { display: contents; }
+/* Layout block: mismo ritmo vertical que .demo-section en examples/ (gana al margin:0 de los componentes). */
+.doc-demo-stage--block > .doc-demo-root > * + * { margin-top: var(--mtx-spacing-2); }
+.doc-demo-stage--block > .doc-demo-root > * + h3,
+.doc-demo-stage--block > .doc-demo-root > * + .demo-group { margin-top: var(--mtx-spacing-3); }
+.doc-demo-stage--block > .doc-demo-root > h3 + * { margin-top: var(--mtx-spacing-1); }

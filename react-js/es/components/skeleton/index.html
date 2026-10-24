@@ -90,11 +90,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/skeleton/01-basic.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-0-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Without a variant, `Skeleton` is a line of text that fills the available width and takes the height of the typography; `width` and `height` accept numbers (px) or any CSS unit.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Sin variante, `Skeleton` es una línea de texto que ocupa el ancho disponible y toma la altura de la tipografía; `width` y `height` aceptan números (px) o cualquier unidad CSS.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;demo-stack demo-wide&#34;</span><span class=p>&gt;</span>
@@ -114,11 +109,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/skeleton/02-variants.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-1-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Four shapes, as in MUI: `text` (default, scaled down to 60% of the line height), `circular`, `rectangular` (no radius) and `rounded` (4px radius).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Cuatro formas, como en MUI: `text` (por defecto, reducida al 60 % de la altura de línea), `circular`, `rectangular` (sin radio) y `rounded` (radio de 4px).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -152,11 +142,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/skeleton/03-animations.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-2-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span><span class=p>,</span> <span class=kr>type</span> <span class=nx>SkeletonAnimation</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`animation=&#34;pulse&#34;` (default, the opacity oscillates), `&#34;wave&#34;` (a band sweeps across the block) or `false` (static). With `prefers-reduced-motion: reduce` the animation is turned off automatically.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`animation=&#34;pulse&#34;` (por defecto, la opacidad oscila), `&#34;wave&#34;` (una banda recorre el bloque) o `false` (estático). Con `prefers-reduced-motion: reduce` la animación se desactiva automáticamente.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>animations</span>: <span class=kt>SkeletonAnimation</span><span class=p>[]</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;pulse&#39;</span><span class=p>,</span> <span class=s1>&#39;wave&#39;</span><span class=p>,</span> <span class=kc>false</span><span class=p>];</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
@@ -181,11 +166,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/skeleton/04-sizes.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-3-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;The `text` variant inherits the size of the typography it sits in: just place it inside the same element that will hold the real text. Circular shapes follow the canonical Avatar sizes (24, 40 and 56px).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;La variante `text` hereda el tamaño de la tipografía que la contiene: basta con colocarla dentro del mismo elemento que tendrá el texto real. Las formas circulares siguen los tamaños canónicos de Avatar (24, 40 y 56px).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -222,11 +202,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/skeleton/05-paragraphs.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-4-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`lines={3}` generates several lines of text; the last one is shorter (60% by default, configurable with `lastWidth`).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`lines={3}` genera varias líneas de texto; la última es más corta (60 % por defecto, configurable con `lastWidth`).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;demo-grid-2&#34;</span><span class=p>&gt;</span>
@@ -240,7 +215,7 @@
 </span></span><span class=line><span class=cl>      <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span>
 </span></span><span class=line><span class=cl>  <span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div></div><h2 id=con-hijos>Con hijos<a class=doc-anchor href=#con-hijos aria-label="Enlace a la sección Con hijos">#</a></h2><p>Cuando el skeleton envuelve contenido, toma su tamaño exacto y lo oculta (<code>visibility: hidden</code>, clase <code>.mtx-skeleton--with-children</code>). El texto directo se envuelve en <code>.mtx-skeleton__text</code> para ocultarlo también, en lugar de dejar texto transparente que falla las comprobaciones de contraste.</p><div class=doc-demo><div class="doc-demo-stage doc-demo-stage--row" data-demo=skeleton/06-with-children id=doc-demo-5-stage></div><div class=doc-demo-toolbar><span class=doc-demo-title>Con hijos</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div></div><h2 id=con-hijos>Con hijos<a class=doc-anchor href=#con-hijos aria-label="Enlace a la sección Con hijos">#</a></h2><p>Cuando el skeleton envuelve contenido, toma su tamaño exacto y lo oculta (<code>visibility: hidden</code>, clase <code>.mtx-skeleton--with-children</code>). El texto directo se envuelve en <code>.mtx-skeleton__text</code> para ocultarlo también, en lugar de dejar texto transparente que falla las comprobaciones de contraste.</p><div class=doc-demo><div class="doc-demo-stage doc-demo-stage--block" data-demo=skeleton/06-with-children id=doc-demo-5-stage></div><div class=doc-demo-toolbar><span class=doc-demo-title>Con hijos</span>
 <span class=doc-demo-status role=status aria-live=polite></span>
 <button type=button class="doc-icon-btn doc-icon-btn--small" data-doc-code-toggle aria-expanded=true aria-controls=doc-demo-5-code aria-label="Ocultar código" title="Ocultar código">
 <span class=material-icons aria-hidden=true>code</span>
@@ -252,11 +227,6 @@
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/skeleton/06-with-children.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-5-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Avatar</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/avatar&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Button</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/button&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;When the skeleton wraps content, it takes its exact size and hides it (`visibility: hidden`). Useful to avoid repeating dimensions: an Avatar or a Button inside becomes its own placeholder.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Cuando el skeleton envuelve contenido, toma su tamaño exacto y lo oculta (`visibility: hidden`). Útil para no repetir dimensiones: un Avatar o un Button dentro se convierte en su propio placeholder.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -286,11 +256,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Button</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/button&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span><span class=p>,</span> <span class=nx>SkeletonRegion</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;`SkeletonRegion` shows its `placeholder` while `loading` and its children afterwards, syncing `data-loading` and `aria-busy` (the React equivalent of `Materix.skeleton.set()`). With `aria-live=&#34;polite&#34;` the content is announced when loading finishes.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;`SkeletonRegion` muestra su `placeholder` mientras `loading` y sus hijos después, sincronizando `data-loading` y `aria-busy` (el equivalente React de `Materix.skeleton.set()`). Con `aria-live=&#34;polite&#34;` el contenido se anuncia al terminar la carga.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>row</span> <span class=o>=</span> <span class=p>{</span> <span class=nx>className</span><span class=o>:</span> <span class=s1>&#39;mtx-d-flex mtx-align-items-center mtx-gap-2&#39;</span> <span class=p>};</span>
 </span></span><span class=line><span class=cl>
@@ -341,11 +306,6 @@
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Paper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/paper&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;A video card and a message list while loading (patterns from the MUI documentation).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Una tarjeta de vídeo y una lista de mensajes mientras cargan (patrones de la documentación de MUI).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;demo-grid-2&#34;</span><span class=p>&gt;</span>
@@ -383,11 +343,6 @@
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/skeleton/09-grid.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-8-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Grid</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/grid&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Skeleton</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;Blocks without a fixed width fill their column: the same placeholder works in 1, 2 or 3 columns.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Los bloques sin ancho fijo llenan su columna: el mismo placeholder sirve en 1, 2 o 3 columnas.&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>columns</span> <span class=o>=</span> <span class=p>[</span><span class=mi>6</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=mi>12</span><span class=p>]</span> <span class=kr>as</span> <span class=kr>const</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
@@ -419,11 +374,6 @@
 </span></span><span class=line><span class=cl>  <span class=kr>type</span> <span class=nx>SkeletonAnimation</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>  <span class=kr>type</span> <span class=nx>SkeletonVariant</span><span class=p>,</span>
 </span></span><span class=line><span class=cl><span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/skeleton&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s1>&#39;The `variant` and `animation` props replace the vanilla `setVariant()` and `setAnimation()`; `SkeletonRegion` calls `onChange({ loading })` when `loading` changes (the `mtx:skeleton:change` event).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s1>&#39;Las props `variant` y `animation` sustituyen a `setVariant()` y `setAnimation()` de vanilla; `SkeletonRegion` llama a `onChange({ loading })` cuando cambia `loading` (el evento `mtx:skeleton:change`).&#39;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>variants</span>: <span class=kt>SkeletonVariant</span><span class=p>[]</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;rounded&#39;</span><span class=p>,</span> <span class=s1>&#39;circular&#39;</span><span class=p>,</span> <span class=s1>&#39;rectangular&#39;</span><span class=p>,</span> <span class=s1>&#39;text&#39;</span><span class=p>];</span>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>animations</span>: <span class=kt>SkeletonAnimation</span><span class=p>[]</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;pulse&#39;</span><span class=p>,</span> <span class=s1>&#39;wave&#39;</span><span class=p>,</span> <span class=kc>false</span><span class=p>];</span>

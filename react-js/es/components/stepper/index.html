@@ -97,11 +97,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/01-basic.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-0-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;A `Stepper` with a `steps` array: it renders the `&lt;ol&gt;`, the numbered icons, the connectors and the accessible text, and marks the active step with `aria-current=\&#34;step\&#34;`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;Un `Stepper` con un array `steps`: genera el `&lt;ol&gt;`, los iconos numerados, los conectores y el texto accesible, y marca el paso activo con `aria-current=\&#34;step\&#34;`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>&lt;</span><span class=nt>Stepper</span> <span class=na>defaultActiveStep</span><span class=o>=</span><span class=p>{</span><span class=mi>1</span><span class=p>}</span> <span class=na>label</span><span class=o>=</span><span class=s>&#34;Reset password&#34;</span> <span class=na>steps</span><span class=o>=</span><span class=p>{[</span><span class=s1>&#39;Email&#39;</span><span class=p>,</span> <span class=s1>&#39;Verify code&#39;</span><span class=p>,</span> <span class=s1>&#39;New password&#39;</span><span class=p>]}</span> <span class=p>/&gt;;</span>
 </span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>Stepper</span> <span class=na>defaultActiveStep</span><span class=o>=</span><span class=p>{</span><span class=mi>1</span><span class=p>}</span> <span class=na>label</span><span class=o>=</span><span class=s>&#34;Reset password&#34;</span> <span class=na>steps</span><span class=o>=</span><span class=p>{[</span><span class=s1>&#39;Email&#39;</span><span class=p>,</span> <span class=s1>&#39;Verify code&#39;</span><span class=p>,</span> <span class=s1>&#39;New password&#39;</span><span class=p>]}</span> <span class=p>/&gt;</span>
@@ -116,11 +111,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/02-linear.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-1-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Typography</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/typography&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Step</span><span class=p>,</span> <span class=nx>StepPanel</span><span class=p>,</span> <span class=nx>Stepper</span><span class=p>,</span> <span class=nx>StepperButton</span><span class=p>,</span> <span class=nx>useStepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;In linear mode previous steps are completed and the next ones disabled. `useStepper` links the stepper, `StepperButton` navigates it and `StepPanel` shows the active panel (`index=\&#34;finished\&#34;` at the end).&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;En modo lineal los pasos anteriores quedan completados y los siguientes deshabilitados. `useStepper` enlaza el stepper, `StepperButton` lo navega y `StepPanel` muestra el panel activo (`index=\&#34;finished\&#34;` al final).&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=nx>stepper</span> <span class=o>=</span> <span class=nx>useStepper</span><span class=p>();</span>
@@ -172,11 +162,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/03-alternative-label.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-2-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;`alternativeLabel` places the label below the icon and splits the width evenly; the most stable option on narrow screens.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;`alternativeLabel` coloca la etiqueta bajo el icono y reparte el ancho por igual; la opción más estable en pantallas estrechas.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>Stepper</span> <span class=na>alternativeLabel</span> <span class=na>defaultActiveStep</span><span class=o>=</span><span class=p>{</span><span class=mi>1</span><span class=p>}</span> <span class=na>label</span><span class=o>=</span><span class=s>&#34;Order&#34;</span> <span class=na>steps</span><span class=o>=</span><span class=p>{[</span><span class=s1>&#39;Cart&#39;</span><span class=p>,</span> <span class=s1>&#39;Shipping&#39;</span><span class=p>,</span> <span class=s1>&#39;Payment&#39;</span><span class=p>,</span> <span class=s1>&#39;Confirmation&#39;</span><span class=p>]}</span> <span class=p>/&gt;</span>
@@ -191,11 +176,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/04-non-linear.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-3-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Step</span><span class=p>,</span> <span class=nx>Stepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;With `nonLinear` each step is a `&lt;button&gt;` (StepButton) with ripple and focus; completion is set with `completed` or `setCompleted()`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;Con `nonLinear` cada paso es un `&lt;button&gt;` (StepButton) con ripple y foco; el completado se indica con `completed` o `setCompleted()`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -225,11 +205,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/05-vertical.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-4-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Step</span><span class=p>,</span> <span class=nx>Stepper</span><span class=p>,</span> <span class=nx>StepperButton</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;`orientation=\&#34;vertical\&#34;` stacks the steps; the children of each `Step` become StepContent, expanded only on the active step. `StepperButton` without `stepper` acts on its own stepper.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;`orientation=\&#34;vertical\&#34;` apila los pasos; los hijos de cada `Step` pasan a StepContent, expandido solo en el paso activo. `StepperButton` sin `stepper` actúa sobre su propio stepper.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -269,11 +244,6 @@
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/06-with-icons.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-5-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Step</span><span class=p>,</span> <span class=nx>Stepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;By default the icon is the step number; `icon` uses a Material Icon. Completed shows a check and error a warning.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;Por defecto el icono es el número del paso; `icon` usa un Material Icon. Completado muestra un check y error un aviso.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>div</span> <span class=na>className</span><span class=o>=</span><span class=s>&#34;demo-stack&#34;</span><span class=p>&gt;</span>
@@ -301,11 +271,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/07-states.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-6-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Step</span><span class=p>,</span> <span class=nx>Stepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;Active, completed, `optional` (with custom text), `error` with a message and `disabled`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;Activo, completado, `optional` (con texto propio), `error` con mensaje y `disabled`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -339,11 +304,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/08-mobile-stepper.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-8-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>MobileStepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;`MobileStepper` renders Back/Next buttons and a `dots`, `text` or `progress` indicator; `position=\&#34;bottom|top\&#34;` pins it to the viewport.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;`MobileStepper` genera los botones Atrás/Siguiente y un indicador `dots`, `text` o `progress`; `position=\&#34;bottom|top\&#34;` lo fija al viewport.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
@@ -385,11 +345,6 @@
 </span></span><span class=line><span class=cl>  <span class=nx>useStepper</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>  <span class=kr>type</span> <span class=nx>StepperChangeHandler</span><span class=p>,</span>
 </span></span><span class=line><span class=cl><span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;A sign-up wizard with validation: the cancelable `onChange` returns `false` while the email is invalid and marks the step with `setError()`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;Un asistente de alta con validación: el `onChange` cancelable devuelve `false` mientras el email no sea válido y marca el paso con `setError()`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>const</span> <span class=nx>EMAIL</span> <span class=o>=</span> <span class=sr>/^[^@\s]+@[^@\s]+\.[^@\s]+$/</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
@@ -478,11 +433,6 @@
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/10-grid.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-10-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Grid</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/grid&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Step</span><span class=p>,</span> <span class=nx>Stepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;Inside `Grid` the stepper takes its column width; narrow columns work best with the alternative label or vertical orientation.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;Dentro de `Grid` el stepper toma el ancho de su columna; en columnas estrechas conviene la etiqueta alternativa o la orientación vertical.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
-</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
 </span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>Grid</span> <span class=na>container</span> <span class=na>spacing</span><span class=o>=</span><span class=p>{</span><span class=mi>2</span><span class=p>}&gt;</span>
@@ -517,11 +467,6 @@
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/11-programmatic.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-11-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>useRef</span><span class=p>,</span> <span class=nx>useState</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;react&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Button</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/button&#39;</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Stepper</span><span class=p>,</span> <span class=kr>type</span> <span class=nx>StepperApi</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;`apiRef` exposes `next()`, `back()`, `goTo()`, `reset()`, `setCompleted()`, `setError()` and `activeStep`; every change goes through `onChange`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;`apiRef` expone `next()`, `back()`, `goTo()`, `reset()`, `setCompleted()`, `setError()` y `activeStep`; todo cambio pasa por `onChange`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=nx>api</span> <span class=o>=</span> <span class=nx>useRef</span><span class=p>&lt;</span><span class=nt>StepperApi</span><span class=p>&gt;(</span><span class=kc>null</span><span class=p>);</span>
@@ -610,11 +555,6 @@
 </button>
 <span class=doc-demo-divider aria-hidden=true></span>
 <a class="doc-icon-btn doc-icon-btn--small" href=https://github.com/rubenchodev/materix-ui/tree/react-js/demos/stepper/12-composition.tsx target=_blank rel=noopener aria-label="Ver el código en GitHub (se abre en una pestaña nueva)" title="Ver el código en GitHub"><span class=material-icons aria-hidden=true>open_in_new</span></a></div><div class=doc-demo-code id=doc-demo-12-code><div class=highlight><pre tabindex=0 class=chroma><code class=language-tsx data-lang=tsx><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>Step</span><span class=p>,</span> <span class=nx>StepContent</span><span class=p>,</span> <span class=nx>StepLabel</span><span class=p>,</span> <span class=nx>Stepper</span> <span class=p>}</span> <span class=kr>from</span> <span class=s1>&#39;@rubenchodev/materix-react/components/stepper&#39;</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>const</span> <span class=nx>description</span> <span class=o>=</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=nx>en</span><span class=o>:</span> <span class=s2>&#34;Equivalent to vanilla manual BEM: each `Step` declares its `StepLabel` and `StepContent`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>  <span class=nx>es</span><span class=o>:</span> <span class=s2>&#34;Equivalente al BEM manual de vanilla: cada `Step` declara su `StepLabel` y su `StepContent`.&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl><span class=p>};</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kd>function</span> <span class=nx>Demo() {</span>
 </span></span><span class=line><span class=cl>  <span class=c1>// Equivale al uso BEM manual de vanilla: cada Step declara sus partes.
