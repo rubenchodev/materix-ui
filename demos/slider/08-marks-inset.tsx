@@ -16,21 +16,30 @@ export default function Demo() {
       <Card variant="outlined">
         <CardContent>
           <div className="demo-stack">
-            <Slider aria-label="Temperature, centered edge labels" marks={TEMPERATURES} defaultValue={37} />
-            <Slider aria-label="Temperature, inset edge labels" marks={TEMPERATURES} marksInset defaultValue={37} />
-            <Slider
-              aria-label="Quality"
-              min={1}
-              max={3}
-              step={null}
-              marks={[
-                { value: 1, label: 'Minimum' },
-                { value: 2, label: 'Medium' },
-                { value: 3, label: 'Maximum' },
-              ]}
-              marksInset
-              defaultValue={2}
-            />
+            <div className="demo-group">
+              <span className="demo-label">Default (centered, like MUI)</span>
+              <Slider aria-label="Temperature, centered edge labels" marks={TEMPERATURES} defaultValue={37} />
+            </div>
+            <div className="demo-group">
+              <span className="demo-label">marksInset</span>
+              <Slider aria-label="Temperature, inset edge labels" marks={TEMPERATURES} marksInset defaultValue={37} />
+            </div>
+            <div className="demo-group">
+              <span className="demo-label">marksInset · long labels</span>
+              <Slider
+                aria-label="Quality"
+                min={1}
+                max={3}
+                step={null}
+                marks={[
+                  { value: 1, label: 'Minimum' },
+                  { value: 2, label: 'Medium' },
+                  { value: 3, label: 'Maximum' },
+                ]}
+                marksInset
+                defaultValue={2}
+              />
+            </div>
           </div>
         </CardContent>
       </Card>

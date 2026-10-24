@@ -13,9 +13,11 @@ export default function Demo() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button variant="contained" onClick={() => setOpen(true)}>
-        Open with submenus
-      </Button>
+      <div className="demo-row">
+        <Button variant="contained" onClick={() => setOpen(true)}>
+          Open with submenus
+        </Button>
+      </div>
       <Drawer open={open} onClose={() => setOpen(false)} title="Projects">
         <List component="nav" aria-label="Projects">
           <ListItemButton icon="dashboard" selected>

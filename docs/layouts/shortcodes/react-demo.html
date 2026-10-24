@@ -6,7 +6,7 @@
     0 / id — ruta de la demo sin extensión: "button/01-basic" → demos/button/01-basic.tsx.
     title  — rótulo de la barra; por defecto `export const title = { en: '…', es: '…' }` del archivo
              en el idioma de la página y, si no existe, i18n demo_default_title.
-    layout — row (predeterminado) | column | center | block.
+    layout — block (predeterminado, mismo ritmo que examples/) | row | column | center.
     open   — "false" para ocultar el código al cargar (por defecto se muestra).
     height — alto mínimo del escenario (p. ej. "320px").
   Uso:
@@ -34,13 +34,16 @@
 {{ end }}
 {{ $title = $title | default (i18n "demo_default_title") }}
 
-{{/* Código mostrado: sin el export de metadatos `title` (no forma parte del ejemplo). */}}
-{{ $src := $raw | replaceRE `(?s)\n?export\s+const\s+title\s*=\s*\{[^}]*\}\s*;?[ \t]*\n?` "\n" | replaceRE `\n{3,}` "\n\n" | strings.TrimSpace }}
+{{/* Código mostrado: sin los exports de metadatos `title` y `description` (no forman parte del ejemplo). */}}
+{{ $src := $raw | replaceRE `(?s)\n?export\s+const\s+title\s*=\s*\{[^}]*\}\s*;?[ \t]*\n?` "\n" }}
+{{/* description: en una línea (`{ en: '…', es: '…' };`) o en varias, hasta la línea que empieza por `};`. */}}
+{{ $src = $src | replaceRE `\n?export\s+const\s+description\s*=\s*\{[^\n]*\};?[ \t]*\n` "\n" | replaceRE `(?s)\n?export\s+const\s+description\s*=\s*\{.*?\n\};?[ \t]*\n?` "\n" }}
+{{ $src = $src | replaceRE `\n{3,}` "\n\n" | strings.TrimSpace }}
 
-{{ $layout := .Get "layout" | default "row" }}
+{{ $layout := .Get "layout" | default "block" }}
 {{ if not (in (slice "row" "column" "center" "block") $layout) }}
   {{ warnf "react-demo: layout %q no válido en %s (usa row|column|center|block)" $layout .Position }}
-  {{ $layout = "row" }}
+  {{ $layout = "block" }}
 {{ end }}
 {{ $open := ne (printf "%v" (.Get "open")) "false" }}
 {{ $height := .Get "height" }}

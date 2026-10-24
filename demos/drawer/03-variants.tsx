@@ -40,7 +40,7 @@ function Frame({ label, children }: { label: string; children: ReactNode }) {
 
 export default function Demo() {
   const [temporary, setTemporary] = useState(false);
-  const [persistent, setPersistent] = useState(true);
+  const [persistent, setPersistent] = useState(false);
   return (
     <div className="demo-grid-3 demo-wide">
       <Frame label="temporary · absolute">
@@ -48,7 +48,7 @@ export default function Demo() {
           <Button variant="outlined" onClick={() => setTemporary(true)}>
             Open
           </Button>
-          <Typography variant="body2" color="text-secondary">
+          <Typography variant="body2" color="text-secondary" className="mtx-mt-1">
             Semi-transparent backdrop; click outside or press Escape to close.
           </Typography>
         </div>
@@ -71,7 +71,7 @@ export default function Demo() {
           <Button variant="outlined" aria-expanded={persistent} onClick={() => setPersistent((value) => !value)}>
             Toggle
           </Button>
-          <Typography variant="body2" color="text-secondary" align="right">
+          <Typography variant="body2" color="text-secondary" align="right" className="mtx-mt-1">
             No backdrop: the content stays interactive.
           </Typography>
         </div>

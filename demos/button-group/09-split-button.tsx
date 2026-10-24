@@ -27,8 +27,6 @@ export default function Demo() {
           <Button onClick={() => write(`click → ${OPTIONS[index]}`)}>{OPTIONS[index]}</Button>
           <Button
             ref={arrowRef}
-            iconOnly
-            startIcon="arrow_drop_down"
             aria-label="Choose merge strategy"
             aria-haspopup="menu"
             aria-expanded={open}
@@ -38,7 +36,11 @@ export default function Demo() {
               setFocusItem(event.detail === 0);
               setOpen((value) => !value);
             }}
-          />
+          >
+            <span className="material-icons" aria-hidden="true">
+              arrow_drop_down
+            </span>
+          </Button>
         </ButtonGroup>
         <Menu
           id="split-button-menu"

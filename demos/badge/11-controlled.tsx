@@ -19,7 +19,7 @@ export default function Demo() {
   };
   return (
     <div className="demo-stack">
-      <div className="demo-row mtx-gap-4">
+      <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
         <Badge badgeContent={content} invisible={invisible} max={9} color="primary">
           <span className="material-icons" aria-hidden="true">notifications</span>
         </Badge>

@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { createRef, useState } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
@@ -305,4 +307,17 @@ describe('AccordionGroup', () => {
     fireEvent.keyDown(inner, { key: 'ArrowDown' });
     expect(document.activeElement).toBe(inner);
   });
+});
+
+describe('AccordionActions: orden de las hojas de estilo', () => {
+  it.each(['Accordion.tsx', 'AccordionGroup.tsx'])(
+    '%s importa button.css antes que accordion.css para conservar los 8px entre acciones',
+    (file) => {
+      const source = readFileSync(resolve(__dirname, file), 'utf8');
+      const buttonCss = source.indexOf("import '@rubenchodev/materix-ui/components/button.css'");
+      const accordionCss = source.indexOf("import '@rubenchodev/materix-ui/components/accordion.css'");
+      expect(buttonCss).toBeGreaterThanOrEqual(0);
+      expect(buttonCss).toBeLessThan(accordionCss);
+    },
+  );
 });

@@ -13,7 +13,7 @@ export default function Demo() {
         <span className="demo-label">Per breakpoint · h5 → md h4 → lg h3</span>
         <div className="demo-panel">
           <div>
-            <Typography component="h2" variant="h5" variantMd="h4" variantLg="h3">
+            <Typography component="h2" variant="h5" variantMd="h4" variantLg="h3" gutterBottom>
               What&apos;s new in October
             </Typography>
             <Typography variant="body2" variantMd="body1">
@@ -26,7 +26,7 @@ export default function Demo() {
         <span className="demo-label">Fluid scale · clamp()</span>
         <div className="demo-panel">
           <div>
-            <Typography component="h2" variant="h2" responsive>
+            <Typography component="h2" variant="h2" responsive gutterBottom>
               Fluid headline
             </Typography>
             <Typography component="h3" variant="h4" responsive>

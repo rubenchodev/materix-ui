@@ -15,9 +15,11 @@ export default function Demo() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button variant="outlined" startIcon="filter_list" onClick={() => setOpen(true)}>
-        Filters
-      </Button>
+      <div className="demo-row">
+        <Button variant="outlined" startIcon="filter_list" onClick={() => setOpen(true)}>
+          Filters
+        </Button>
+      </div>
       <Drawer anchor="right" width="wide" padded title="Filters" open={open} onClose={() => setOpen(false)}>
         <Grid container spacing={2}>
           <Grid size={12}>

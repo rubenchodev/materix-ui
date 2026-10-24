@@ -36,7 +36,7 @@ function SubscribeForm() {
   };
 
   return (
-    <Stack component="form" spacing={2} alignItems="flex-start" noValidate onSubmit={submit}>
+    <Stack component="form" spacing={2} alignItems="flex-start" className="demo-fixed-width" noValidate onSubmit={submit}>
       <TextField
         label="Email"
         type="email"

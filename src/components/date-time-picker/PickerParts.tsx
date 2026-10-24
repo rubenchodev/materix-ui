@@ -4,6 +4,7 @@
  * (o Fechas/Inicio/Fin en rangos) y barra de acciones. Reproducen el DOM de vanilla.
  */
 import type { KeyboardEvent as ReactKeyboardEvent, ReactNode } from 'react';
+import './picker-tabs.css';
 import { cx } from '../../core';
 import type { TranslateFn } from '../../i18n';
 import { getMonthNames, getWeekdayNames } from '../../utils/dates';
@@ -94,11 +95,11 @@ export interface PickerTabsProps {
  * Pestañas Fecha/Hora (o Fechas/Inicio/Fin) con el patrón WAI-ARIA Tabs y activación automática.
  */
 export function PickerTabs({ range, activeTab, label, startTime, endTime, t, onSelect }: PickerTabsProps) {
-  const tabs: Array<{ id: PickerTab; icon: string; text: string }> = range
+  const tabs: Array<{ id: PickerTab; icon: string; text: string; time?: string }> = range
     ? [
         { id: 'date', icon: 'calendar_today', text: t('dates', null, 'Dates') },
-        { id: 'time-start', icon: 'schedule', text: `${t('start', null, 'Start')} (${timeText(startTime.hour, startTime.minute, true)})` },
-        { id: 'time-end', icon: 'schedule', text: `${t('end', null, 'End')} (${timeText(endTime.hour, endTime.minute, true)})` },
+        { id: 'time-start', icon: 'schedule', text: t('start', null, 'Start'), time: timeText(startTime.hour, startTime.minute, true) },
+        { id: 'time-end', icon: 'schedule', text: t('end', null, 'End'), time: timeText(endTime.hour, endTime.minute, true) },
       ]
     : [
         { id: 'date', icon: 'calendar_today', text: t('date', null, 'Date') },
@@ -119,7 +120,7 @@ export function PickerTabs({ range, activeTab, label, startTime, endTime, t, onS
   };
 
   return (
-    <div className="mtx-picker-tabs" role="tablist" aria-label={label}>
+    <div className={cx('mtx-picker-tabs', range && 'mtx-picker-tabs--range')} role="tablist" aria-label={label}>
       {tabs.map((tab, index) => {
         const selected = tab.id === activeTab;
         return (
@@ -137,7 +138,21 @@ export function PickerTabs({ range, activeTab, label, startTime, endTime, t, onS
             }}
             onKeyDown={(event) => handleKeyDown(event, index)}
           >
-            <span className="material-icons" aria-hidden="true">{tab.icon}</span> {tab.text}
+            <span className="material-icons" aria-hidden="true">{tab.icon}</span>{' '}
+            {range ? (
+              <span className="mtx-picker-tab__text">
+                {tab.time ? `${tab.text} ` : tab.text}
+                {tab.time ? (
+                  <span className="mtx-picker-tab__time">
+                    <span className="mtx-picker-tab__paren">(</span>
+                    {tab.time}
+                    <span className="mtx-picker-tab__paren">)</span>
+                  </span>
+                ) : null}
+              </span>
+            ) : (
+              tab.text
+            )}
           </button>
         );
       })}

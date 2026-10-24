@@ -12,7 +12,7 @@ export default function Demo() {
     <>
       <div className="demo-group">
         <span className="demo-label">Rectangular</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <Badge variant="dot" color="error">
             <Avatar variant="square" color="primary">R</Avatar>
           </Badge>
@@ -23,7 +23,7 @@ export default function Demo() {
       </div>
       <div className="demo-group">
         <span className="demo-label">Circular (four anchors)</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <Badge variant="dot" color="error" overlap="circular">
             <Avatar color="secondary">C</Avatar>
           </Badge>

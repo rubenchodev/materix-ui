@@ -13,9 +13,11 @@ export default function Demo() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button variant="outlined" onClick={() => setOpen(true)}>
-        Open BEM drawer
-      </Button>
+      <div className="demo-row">
+        <Button variant="outlined" onClick={() => setOpen(true)}>
+          Open BEM drawer
+        </Button>
+      </div>
       <Drawer width="wide" open={open} onClose={() => setOpen(false)} aria-labelledby="drawer-bem-title">
         <DrawerHeader>
           <h3 className="mtx-drawer__title" id="drawer-bem-title">

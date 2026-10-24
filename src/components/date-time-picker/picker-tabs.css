@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Materix UI React — DateTimeRangePicker: pestañas Fechas/Inicio/Fin en pantallas estrechas.
+   Complementa date-time-picker.css de vanilla: la hora pasa a una segunda línea
+   para que las tres pestañas quepan sin scroll horizontal.
+   ========================================================================== */
+
+.mtx-picker-tabs--range .mtx-picker-tab__text {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: pre;
+}
+
+@media (max-width: 600px) {
+  .mtx-picker-tabs--range .mtx-picker-tab {
+    min-width: 0;
+    padding: 6px 4px;
+    gap: 4px;
+    white-space: normal;
+  }
+
+  .mtx-picker-tabs--range .mtx-picker-tab__text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    line-height: 1.2;
+  }
+
+  .mtx-picker-tabs--range .mtx-picker-tab__time {
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .mtx-picker-tabs--range .mtx-picker-tab__paren {
+    display: none;
+  }
+}

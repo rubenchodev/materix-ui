@@ -11,7 +11,7 @@ export const description = {
 export default function Demo() {
   return (
     <div className="demo-panel">
-      <div className="demo-row mtx-gap-4">
+      <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
         <IconButton aria-label="Notifications, 17 unread">
           <Badge badgeContent={17} color="error">
             <span className="material-icons" aria-hidden="true">notifications</span>

@@ -20,7 +20,7 @@ export default function Demo() {
         More
       </Button>
       <Popover {...popover.popoverProps} className="mtx-p-2 demo-fixed-width">
-        <h3 className="mtx-typography--subtitle2">Order #48213</h3>
+        <h3 className="mtx-typography--subtitle2 mtx-mb-1">Order #48213</h3>
         <p className="mtx-typography--body2 mtx-color-text-secondary">
           Shipped on October 12 with estimated delivery in 48 h.
         </p>

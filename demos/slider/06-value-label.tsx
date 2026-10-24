@@ -9,25 +9,31 @@ export const description = {
 export default function Demo() {
   return (
     <div className="demo-stack demo-wide">
-      <div className="demo-group mtx-pt-5">
+      <div className="demo-group">
         <span className="demo-label">Auto (hover, focus and drag)</span>
-        <Slider aria-label="Auto label" defaultValue={30} valueLabelDisplay="auto" />
+        <div className="mtx-pt-5">
+          <Slider aria-label="Auto label" defaultValue={30} valueLabelDisplay="auto" />
+        </div>
       </div>
-      <div className="demo-group mtx-pt-5">
+      <div className="demo-group">
         <span className="demo-label">Always on, template format</span>
-        <Slider aria-label="Temperature" min={-10} max={40} defaultValue={21} valueLabelDisplay="on" valueLabelFormat="{value} °C" />
+        <div className="mtx-pt-5">
+          <Slider aria-label="Temperature" min={-10} max={40} defaultValue={21} valueLabelDisplay="on" valueLabelFormat="{value} °C" />
+        </div>
       </div>
-      <div className="demo-group mtx-pt-5">
+      <div className="demo-group">
         <span className="demo-label">Function format and getAriaValueText</span>
-        <Slider
-          aria-label="Storage"
-          min={0}
-          max={10}
-          defaultValue={4}
-          valueLabelDisplay="on"
-          valueLabelFormat={(value) => `${2 ** value}G`}
-          getAriaValueText={(value) => `${2 ** value} gigabytes`}
-        />
+        <div className="mtx-pt-5">
+          <Slider
+            aria-label="Storage"
+            min={0}
+            max={10}
+            defaultValue={4}
+            valueLabelDisplay="on"
+            valueLabelFormat={(value) => `${2 ** value}G`}
+            getAriaValueText={(value) => `${2 ** value} gigabytes`}
+          />
+        </div>
       </div>
     </div>
   );

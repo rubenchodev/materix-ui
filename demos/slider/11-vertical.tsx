@@ -8,7 +8,7 @@ export const description = {
 
 export default function Demo() {
   return (
-    <div className="demo-row demo-row--start">
+    <div className="demo-row demo-row--start mtx-gap-5 mtx-pl-4">
       <Slider aria-label="Vertical" orientation="vertical" defaultValue={30} valueLabelDisplay="auto" />
       <Slider aria-label="Vertical range" orientation="vertical" defaultValue={[20, 70]} valueLabelDisplay="auto" />
       <Slider

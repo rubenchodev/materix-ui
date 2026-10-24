@@ -1,5 +1,6 @@
 import { Switch } from '@rubenchodev/materix-react/components/switch';
 import { FormControl, FormLabel } from '@rubenchodev/materix-react/components/form-helper-text';
+import { Stack } from '@rubenchodev/materix-react/components/stack';
 
 export const title = { en: 'Grouping', es: 'Agrupación' };
 export const description = {
@@ -9,11 +10,17 @@ export const description = {
 
 export default function Demo() {
   return (
-    <FormControl role="group" aria-labelledby="switch-notify-label">
-      <FormLabel id="switch-notify-label">Notifications</FormLabel>
-      <Switch name="notify" value="push" label="Push notifications" defaultChecked />
-      <Switch name="notify" value="email" label="Email digest" />
-      <Switch name="notify" value="sms" label="SMS alerts" />
-    </FormControl>
+    <div className="demo-stack">
+      <FormControl role="group" aria-labelledby="switch-notify-label">
+        <FormLabel id="switch-notify-label" className="mtx-mb-1">
+          Notifications
+        </FormLabel>
+        <Stack spacing={1.5} alignItems="start">
+          <Switch name="notify" value="push" label="Push notifications" defaultChecked />
+          <Switch name="notify" value="email" label="Email digest" />
+          <Switch name="notify" value="sms" label="SMS alerts" />
+        </Stack>
+      </FormControl>
+    </div>
   );
 }

@@ -13,9 +13,11 @@ export default function Demo() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button variant="contained" onClick={() => setOpen(true)}>
-        Open navigation
-      </Button>
+      <div className="demo-row">
+        <Button variant="contained" onClick={() => setOpen(true)}>
+          Open navigation
+        </Button>
+      </div>
       <Drawer open={open} onClose={() => setOpen(false)} title="Mail">
         <List component="nav" aria-label="Main navigation">
           <ListItemButton icon="inbox" href="#inbox" selected>

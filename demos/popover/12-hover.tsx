@@ -12,18 +12,20 @@ export default function Demo() {
   const anchorRef = useRef<HTMLSpanElement>(null);
   return (
     <>
-      <span
-        ref={anchorRef}
-        className="mtx-typography--body1"
-        tabIndex={0}
-        aria-describedby={open ? 'popover-hover' : undefined}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-        onFocus={() => setOpen(true)}
-        onBlur={() => setOpen(false)}
-      >
-        Hover or focus this text
-      </span>
+      <div className="demo-row">
+        <span
+          ref={anchorRef}
+          className="mtx-typography--body1"
+          tabIndex={0}
+          aria-describedby={open ? 'popover-hover' : undefined}
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setOpen(false)}
+        >
+          Hover or focus this text
+        </span>
+      </div>
       <Popover
         id="popover-hover"
         open={open}

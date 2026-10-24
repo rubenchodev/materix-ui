@@ -69,7 +69,7 @@ async function mountDemo(stage: HTMLElement): Promise<void> {
     createRoot(stage).render(
       <StrictMode>
         <DemoBoundary id={id}>
-          <div className="mtx-root">
+          <div className="mtx-root doc-demo-root">
             <Demo />
           </div>
         </DemoBoundary>

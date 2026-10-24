@@ -4,6 +4,8 @@
  */
 import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
 import type { HTMLAttributes, Ref } from 'react';
+// button.css antes que accordion.css: el `> * + *` de AccordionActions debe ganar al `margin: 0` de `.mtx-button`.
+import '@rubenchodev/materix-ui/components/button.css';
 import '@rubenchodev/materix-ui/components/accordion.css';
 import { cx } from '../../core';
 import { AccordionGroupContext } from './context';

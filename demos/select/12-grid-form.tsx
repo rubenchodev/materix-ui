@@ -79,7 +79,7 @@ export default function Demo() {
           </div>
         </div>
       </form>
-      <pre className="demo-log" aria-live="polite">{submitted}</pre>
+      <pre className="demo-log mtx-w-100" aria-live="polite">{submitted}</pre>
     </div>
   );
 }

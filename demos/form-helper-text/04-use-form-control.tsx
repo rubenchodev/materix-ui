@@ -15,7 +15,7 @@ function FieldStatus() {
   const formControl = useFormControl();
   const label = formControl?.disabled ? 'Disabled' : formControl?.error ? 'Invalid' : 'Valid';
   return (
-    <Typography variant="caption" color={formControl?.error ? 'error' : 'text-secondary'}>
+    <Typography variant="caption" className="mtx-mt-1" color={formControl?.error ? 'error' : 'text-secondary'}>
       Status: {label} · describedby: {formControl?.helperTextIds.length ?? 0} helper(s)
     </Typography>
   );

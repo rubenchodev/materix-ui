@@ -26,7 +26,7 @@ export default function Demo() {
             </List>
           </Drawer>
           <main className="mtx-flex-1 mtx-min-w-0 mtx-p-2">
-            <Typography variant="subtitle1" component="h3">
+            <Typography variant="subtitle1" component="h3" gutterBottom>
               Overview
             </Typography>
             <Typography variant="body2" color="text-secondary">

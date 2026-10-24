@@ -12,19 +12,19 @@ export default function Demo() {
       <div className="demo-group">
         <span className="demo-label">h1 · 96px / 300</span>
         <Typography variant="h1" component="p">
-          h1. Heading
+          h1. Title
         </Typography>
       </div>
       <div className="demo-group">
         <span className="demo-label">h2 · 60px / 300</span>
         <Typography variant="h2" component="p">
-          h2. Heading
+          h2. Title
         </Typography>
       </div>
       <div className="demo-group">
         <span className="demo-label">h3 · 48px / 400</span>
         <Typography variant="h3" component="p">
-          h3. Heading
+          h3. Title
         </Typography>
       </div>
       <div className="demo-group">

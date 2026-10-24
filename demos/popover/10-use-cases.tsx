@@ -27,9 +27,11 @@ export default function Demo() {
       </IconButton>
       <Popover {...filters.popoverProps} className="mtx-p-2">
         <h3 className="mtx-typography--subtitle2 mtx-mb-1">Filter orders</h3>
-        <Checkbox label="Pending" defaultChecked />
-        <Checkbox label="Shipped" />
-        <Checkbox label="Returned" />
+        <div className="mtx-d-flex mtx-flex-column mtx-gap-1" role="group" aria-label="Order status">
+          <Checkbox label="Pending" defaultChecked />
+          <Checkbox label="Shipped" />
+          <Checkbox label="Returned" />
+        </div>
         <div className="mtx-d-flex mtx-justify-content-end mtx-gap-1 mtx-mt-1">
           <Button variant="text" data-mtx-popover-close="">
             Apply

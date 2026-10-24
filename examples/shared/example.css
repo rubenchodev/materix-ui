@@ -371,21 +371,21 @@ body {
   margin-top: var(--mtx-spacing-1);
 }
 
-/* Ritmo vertical sin especificidad: los márgenes de los componentes prevalecen */
-:where(.demo-section) > * + * {
+/* Ritmo vertical: doble clase para ganar al margin:0 de los componentes en la raíz de una demo */
+.demo-section.demo-section > * + * {
   margin-top: var(--mtx-spacing-2);
 }
 
-:where(.demo-section) > h2 + * {
+.demo-section.demo-section > h2 + * {
   margin-top: var(--mtx-spacing-1);
 }
 
-:where(.demo-section) > * + h3,
-:where(.demo-section) > * + .demo-group {
+.demo-section.demo-section > * + h3,
+.demo-section.demo-section > * + .demo-group {
   margin-top: var(--mtx-spacing-3);
 }
 
-:where(.demo-section) > h3 + * {
+.demo-section.demo-section > h3 + * {
   margin-top: var(--mtx-spacing-1);
 }
 

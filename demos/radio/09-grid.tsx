@@ -16,14 +16,16 @@ const SLOTS = [
 
 export default function Demo() {
   return (
-    <RadioGroup aria-label="Time slot" defaultValue="10">
-      <Grid container spacing={1}>
-        {SLOTS.map(([value, label]) => (
-          <Grid key={value} size={{ xs: 12, sm: 6, md: 3 }}>
-            <Radio value={value} label={label} />
-          </Grid>
-        ))}
-      </Grid>
-    </RadioGroup>
+    <div className="demo-stack">
+      <RadioGroup aria-label="Time slot" defaultValue="10">
+        <Grid container spacing={1}>
+          {SLOTS.map(([value, label]) => (
+            <Grid key={value} size={{ xs: 12, sm: 6, md: 3 }}>
+              <Radio value={value} label={label} />
+            </Grid>
+          ))}
+        </Grid>
+      </RadioGroup>
+    </div>
   );
 }

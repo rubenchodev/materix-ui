@@ -13,7 +13,7 @@ export default function Demo() {
     <>
       <div className="demo-group">
         <span className="demo-label">Standard</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           {colors.map((color) => (
             <Badge key={color} badgeContent={4} color={color}>
               <span className="material-icons" aria-hidden="true">mail</span>
@@ -23,7 +23,7 @@ export default function Demo() {
       </div>
       <div className="demo-group">
         <span className="demo-label">Dot</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           {colors.map((color) => (
             <Badge key={color} variant="dot" color={color}>
               <span className="material-icons" aria-hidden="true">mail</span>

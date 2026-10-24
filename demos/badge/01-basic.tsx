@@ -8,7 +8,7 @@ export const description = {
 
 export default function Demo() {
   return (
-    <div className="demo-row mtx-gap-4">
+    <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
       <Badge badgeContent={4} color="primary">
         <span className="material-icons" aria-hidden="true">mail</span>
       </Badge>

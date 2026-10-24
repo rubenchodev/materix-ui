@@ -14,7 +14,7 @@ export default function Demo() {
     <>
       <div className="demo-group">
         <span className="demo-label">Icon</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <Badge badgeContent={3} color="primary">
             <span className="material-icons" aria-hidden="true">shopping_cart</span>
           </Badge>
@@ -22,7 +22,7 @@ export default function Demo() {
       </div>
       <div className="demo-group">
         <span className="demo-label">Avatar</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <Badge badgeContent={2} color="error" overlap="circular">
             <Avatar color="primary">AG</Avatar>
           </Badge>
@@ -33,7 +33,7 @@ export default function Demo() {
       </div>
       <div className="demo-group">
         <span className="demo-label">IconButton and Button</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <IconButton aria-label="Notifications, 17 unread">
             <Badge badgeContent={17} color="error">
               <span className="material-icons" aria-hidden="true">notifications</span>

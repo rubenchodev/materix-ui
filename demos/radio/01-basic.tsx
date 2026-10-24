@@ -8,10 +8,12 @@ export const description = {
 
 export default function Demo() {
   return (
-    <RadioGroup label="Plan" defaultValue="basic">
-      <Radio value="basic" label="Basic" />
-      <Radio value="pro" label="Professional" />
-      <Radio value="enterprise" label="Enterprise" />
-    </RadioGroup>
+    <div className="demo-stack">
+      <RadioGroup label="Plan" defaultValue="basic">
+        <Radio value="basic" label="Basic" />
+        <Radio value="pro" label="Professional" />
+        <Radio value="enterprise" label="Enterprise" />
+      </RadioGroup>
+    </div>
   );
 }

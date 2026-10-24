@@ -11,7 +11,7 @@ export default function Demo() {
     <>
       <div className="demo-group">
         <span className="demo-label">Standard</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <Badge badgeContent={4} color="secondary">
             <span className="material-icons" aria-hidden="true">mail</span>
           </Badge>
@@ -22,7 +22,7 @@ export default function Demo() {
       </div>
       <div className="demo-group">
         <span className="demo-label">Dot</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <Badge variant="dot" color="secondary">
             <span className="material-icons" aria-hidden="true">mail</span>
           </Badge>

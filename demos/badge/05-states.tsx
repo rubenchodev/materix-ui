@@ -13,7 +13,7 @@ export default function Demo() {
     <>
       <div className="demo-group">
         <span className="demo-label">Value 0 · with showZero · invisible</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <Badge badgeContent={0} color="primary">{icon}</Badge>
           <Badge badgeContent={0} showZero color="primary">{icon}</Badge>
           <Badge badgeContent={5} invisible color="primary">{icon}</Badge>
@@ -21,7 +21,7 @@ export default function Demo() {
       </div>
       <div className="demo-group">
         <span className="demo-label">Maximum value: 99 with max 9 · 150 (max 99) · 1000 with max 999</span>
-        <div className="demo-row mtx-gap-4">
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
           <Badge badgeContent={99} max={9} color="error">{icon}</Badge>
           <Badge badgeContent={150} color="error">{icon}</Badge>
           <Badge badgeContent={1000} max={999} color="error">{icon}</Badge>

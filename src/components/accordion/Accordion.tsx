@@ -12,6 +12,8 @@ import type {
   SyntheticEvent,
 } from 'react';
 import { flushSync } from 'react-dom';
+// button.css antes que accordion.css: el `> * + *` de AccordionActions debe ganar al `margin: 0` de `.mtx-button`.
+import '@rubenchodev/materix-ui/components/button.css';
 import '@rubenchodev/materix-ui/components/accordion.css';
 import { Collapse, cx, useControlled, useEnhancedEffect, useEventCallback, useForkRef } from '../../core';
 import { AccordionActions, AccordionDetails, AccordionSummary } from './AccordionParts';

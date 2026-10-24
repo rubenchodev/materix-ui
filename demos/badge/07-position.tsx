@@ -10,7 +10,7 @@ const anchors: BadgeAnchor[] = ['top-left', 'top-right', 'bottom-left', 'bottom-
 
 export default function Demo() {
   return (
-    <div className="demo-row mtx-gap-4">
+    <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
       {anchors.map((anchor) => (
         <Badge key={anchor} badgeContent={3} anchor={anchor} color="primary">
           <span className="material-icons" aria-hidden="true">mail</span>
