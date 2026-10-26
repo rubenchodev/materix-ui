@@ -1,1 +1,0 @@
-import{n as e,r as t,t as n}from"../islands.js";import{r}from"./dom-DWYzXTCn.js";import{n as i}from"./hooks-TliYna6y.js";var a=t(),o=e(),s=n();function c({children:e,container:t,disablePortal:n=!1}){let[c,l]=(0,a.useState)(null);return i(()=>{n||l(r(t)||document.body)},[t,n]),n?(0,s.jsx)(s.Fragment,{children:e}):c?(0,o.createPortal)(e,c):null}export{c as t};

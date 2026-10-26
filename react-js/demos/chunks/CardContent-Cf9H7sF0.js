@@ -1,1 +1,0 @@
-import{r as e,t}from"../islands.js";import{t as n}from"./classes-DN5FF69A.js";import"./Card-Df-6mdKs.js";var r=e(),i=t(),a=(0,r.forwardRef)(function({component:e,className:t,...r},a){return(0,i.jsx)(e??`div`,{ref:a,className:n(`mtx-card__content`,t),...r})});a.displayName=`CardContent`;export{a as t};
