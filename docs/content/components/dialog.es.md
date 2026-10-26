@@ -26,9 +26,9 @@ La forma más simple es un único elemento: `<Dialog open={…} onClose={…} ti
 ```tsx
 const [open, setOpen] = useState(false);
 
-<Button variant="contained" onClick={() => setOpen(true)}>Open dialog</Button>
-<Dialog open={open} onClose={() => setOpen(false)} title="Use the device location">
-  <p>Let apps determine your location to show you nearby results.</p>
+<Button variant="contained" onClick={() => setOpen(true)}>Abrir diálogo</Button>
+<Dialog open={open} onClose={() => setOpen(false)} title="¿Usar la ubicación del dispositivo?">
+  <p>Permite que las aplicaciones determinen tu ubicación para mostrarte resultados cercanos.</p>
 </Dialog>
 ```
 
@@ -55,12 +55,12 @@ const [open, setOpen] = useState(false);
   open={open}
   onClose={close}
   maxWidth="sm"
-  title="Discard draft?"
-  description="The message will be deleted and you will not be able to recover it."
+  title="¿Descartar borrador?"
+  description="El mensaje se eliminará y no podrás recuperarlo."
   actions={
     <>
-      <Button onClick={close} data-dialog-autofocus>Cancel</Button>
-      <Button variant="contained" onClick={close}>Discard</Button>
+      <Button onClick={close} data-dialog-autofocus>Cancelar</Button>
+      <Button variant="contained" onClick={close}>Descartar</Button>
     </>
   }
 />
@@ -73,12 +73,12 @@ Como en MUI, las acciones van a la derecha por defecto (`end`). Cámbiala con `a
 {{< react-demo id="dialog/03-actions-alignment" layout="block" >}}
 
 ```tsx
-<Dialog open={open} onClose={close} title="Export report">
+<Dialog open={open} onClose={close} title="Exportar informe">
   <DialogActions align="between">
-    <Button startIcon="help_outline">Help</Button>
+    <Button startIcon="help_outline">Ayuda</Button>
     <div className="mtx-d-flex mtx-gap-1">
       <Button onClick={close}>Cancel</Button>
-      <Button variant="contained" onClick={close}>Export</Button>
+      <Button variant="contained" onClick={close}>Exportar</Button>
     </div>
   </DialogActions>
 </Dialog>
@@ -92,7 +92,7 @@ Como en MUI, las acciones van a la derecha por defecto (`end`). Cámbiala con `a
 
 ## Confirmación destructiva
 
-Para acciones irreversibles usa un título en forma de pregunta, explica la consecuencia y colorea la acción con `color="error"`. `role="alertdialog"` indica a las tecnologías de asistencia que el diálogo requiere una respuesta urgente, y `data-dialog-autofocus` lleva el foco inicial a "Cancel", la opción segura.
+Para acciones irreversibles usa un título en forma de pregunta, explica la consecuencia y colorea la acción con `color="error"`. `role="alertdialog"` indica a las tecnologías de asistencia que el diálogo requiere una respuesta urgente, y `data-dialog-autofocus` lleva el foco inicial a "Cancelar", la opción segura.
 
 {{< react-demo id="dialog/05-confirmation" layout="block" >}}
 
@@ -103,18 +103,18 @@ Un `<form>` puede contener los campos [TextField](../text-field/) y enviarse des
 {{< react-demo id="dialog/06-form" layout="block" >}}
 
 ```tsx
-<Dialog open={open} onClose={close} maxWidth="sm" title="Subscribe to the newsletter">
+<Dialog open={open} onClose={close} maxWidth="sm" title="Suscríbete al boletín">
   <DialogContent>
     <form id="subscribe" onSubmit={handleSubmit}>
-      <DialogContentText>Get the Materix UI news once a month.</DialogContentText>
-      <TextField label="Name" name="name" required fullWidth />
-      <TextField label="Email" type="email" name="email" required fullWidth
+      <DialogContentText>Recibe una vez al mes las novedades de Materix UI.</DialogContentText>
+      <TextField label="Nombre" name="name" required fullWidth />
+      <TextField label="Correo electrónico" type="email" name="email" required fullWidth
         inputProps={{ 'data-dialog-autofocus': '' }} />
     </form>
   </DialogContent>
   <DialogActions>
     <Button onClick={close}>Cancel</Button>
-    <Button variant="contained" type="submit" form="subscribe">Subscribe</Button>
+    <Button variant="contained" type="submit" form="subscribe">Suscribirse</Button>
   </DialogActions>
 </Dialog>
 ```
@@ -163,13 +163,13 @@ Para un control total, compón las piezas: `DialogTitle` da nombre al diálogo (
 
 ```tsx
 <Dialog open={open} onClose={close} maxWidth="sm">
-  <DialogTitle sticky>Composed structure</DialogTitle>
+  <DialogTitle sticky>Estructura compuesta</DialogTitle>
   <DialogContent>
     <DialogContentText>…</DialogContentText>
   </DialogContent>
   <DialogActions sticky>
     <Button onClick={close}>Cancel</Button>
-    <Button variant="contained" onClick={close}>OK</Button>
+    <Button variant="contained" onClick={close}>Aceptar</Button>
   </DialogActions>
 </Dialog>
 ```

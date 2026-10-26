@@ -80,7 +80,7 @@ Los enlaces se crean desde el estado (no hay métodos). `component` aplica el es
 ```tsx
 import { Link as RouterLink } from 'react-router-dom';
 
-<Link component={RouterLink} to="/dashboard">Dashboard</Link>
+<Link component={RouterLink} to="/dashboard">Panel</Link>
 ```
 
 ## API

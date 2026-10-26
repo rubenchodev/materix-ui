@@ -111,7 +111,7 @@ Equivalente del envoltorio vanilla `data-mtx="tooltip"`: un `<span>` envuelve al
 
 ```html
 <div class="mtx-tooltip mtx-tooltip--open mtx-tooltip--arrow" role="tooltip" id="mtx-tooltip-…" data-side="right">
-  <span class="mtx-tooltip__label">Export to CSV</span>
+  <span class="mtx-tooltip__label">Exportar a CSV</span>
   <span class="mtx-tooltip__arrow" aria-hidden="true"></span>
 </div>
 ```

@@ -28,11 +28,11 @@ import { Menu, MenuItem, useMenu } from '@rubenchodev/materix-react/components/m
 ```tsx
 const menu = useMenu();
 
-<Button variant="contained" {...menu.triggerProps}>Open menu</Button>
+<Button variant="contained" {...menu.triggerProps}>Abrir menú</Button>
 <Menu {...menu.menuProps}>
-  <MenuItem>Profile</MenuItem>
-  <MenuItem>My account</MenuItem>
-  <MenuItem>Sign out</MenuItem>
+  <MenuItem>Perfil</MenuItem>
+  <MenuItem>Mi cuenta</MenuItem>
+  <MenuItem>Cerrar sesión</MenuItem>
 </Menu>
 ```
 
@@ -106,10 +106,10 @@ Con muchas opciones el contenido se desplaza dentro del paper. Escribe una letra
 <ContextMenu
   target="#canvas"
   items={[
-    { label: 'Copy', icon: 'content_copy', shortcut: '⌘C', action: () => copy() },
-    { label: 'Paste', icon: 'content_paste', disabled: true },
+    { label: 'Copiar', icon: 'content_copy', shortcut: '⌘C', action: () => copy() },
+    { label: 'Pegar', icon: 'content_paste', disabled: true },
     { divider: true },
-    { label: 'Share', icon: 'share', submenu: [{ label: 'Email', icon: 'mail', action: share }] },
+    { label: 'Compartir', icon: 'share', submenu: [{ label: 'Correo', icon: 'mail', action: share }] },
   ]}
 />
 ```

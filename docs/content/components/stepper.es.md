@@ -33,7 +33,7 @@ La forma más corta es un `<Stepper>` con un array `steps` de etiquetas. El comp
 {{< react-demo id="stepper/01-basic" layout="block" >}}
 
 ```tsx
-<Stepper defaultActiveStep={1} label="Reset password" steps={['Email', 'Verify code', 'New password']} />
+<Stepper defaultActiveStep={1} label="Restablecer contraseña" steps={['Correo electrónico', 'Verificar código', 'Nueva contraseña']} />
 ```
 
 Cada entrada de `steps` también puede ser un objeto con las props de `Step` (`{ label, optional, error, completed, disabled, icon, expanded, content }`), o puedes escribir hijos `<Step>`.
@@ -47,15 +47,15 @@ En modo lineal (el predeterminado) los pasos anteriores al activo se consideran 
 ```tsx
 const stepper = useStepper();
 
-<Stepper apiRef={stepper.apiRef} label="Create campaign">
-  <Step label="Settings" />
-  <Step label="Ad group" optional />
-  <Step label="Create ad" />
+<Stepper apiRef={stepper.apiRef} label="Crear campaña">
+  <Step label="Configuración" />
+  <Step label="Grupo de anuncios" optional />
+  <Step label="Crear anuncio" />
 </Stepper>
 <StepPanel stepper={stepper} index={0}>…</StepPanel>
-<StepPanel stepper={stepper} index="finished">Done</StepPanel>
-<StepperButton action="back" stepper={stepper}>Back</StepperButton>
-<StepperButton action="next" stepper={stepper} variant="contained">Next</StepperButton>
+<StepPanel stepper={stepper} index="finished">Listo</StepPanel>
+<StepperButton action="back" stepper={stepper}>Atrás</StepperButton>
+<StepperButton action="next" stepper={stepper} variant="contained">Siguiente</StepperButton>
 ```
 
 ## Etiqueta alternativa
@@ -114,7 +114,7 @@ Un asistente de alta de cuenta con validación: el `onChange` cancelable devuelv
 const handleChange: StepperChangeHandler = (activeStep, { previousStep }) => {
   if (previousStep === 0 && activeStep > 0) {
     const valid = EMAIL.test(email);
-    stepper.setError(0, valid ? false : 'Enter a valid email');
+    stepper.setError(0, valid ? false : 'Introduce un correo electrónico válido');
     if (!valid) return false;
   }
 };
@@ -135,7 +135,7 @@ Dentro de [Grid](../grid/) el stepper toma el ancho de su columna; en columnas e
 ```tsx
 const api = useRef<StepperApi>(null);
 
-<Stepper apiRef={api} steps={['One', 'Two']} onChange={(next, { previousStep }) => isValid(previousStep)} />;
+<Stepper apiRef={api} steps={['Uno', 'Dos']} onChange={(next, { previousStep }) => isValid(previousStep)} />;
 
 api.current?.next();
 api.current?.setError(1, 'Campo obligatorio');

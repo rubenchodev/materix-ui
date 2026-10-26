@@ -21,7 +21,7 @@ export default function Demo() {
             <DateCalendar value={date} onChange={setDate} shouldDisableDate={isWeekend} />
         </Paper>
         <p className="demo-status" aria-live="polite">
-          Solo días laborables · {date ? date.toDateString() : 'ninguna'}
+          Solo días laborables · {date ? date.toLocaleDateString('es') : 'ninguna'}
         </p>
       </div>
       <div className="demo-stack">
@@ -29,7 +29,7 @@ export default function Demo() {
             <DateCalendar range rangeValue={range} onRangeChange={setRange} minDate={new Date()} />
         </Paper>
         <p className="demo-status" aria-live="polite">
-          Rango · {range.start ? range.start.toDateString() : '…'} – {range.end ? range.end.toDateString() : '…'}
+          Rango · {range.start ? range.start.toLocaleDateString('es') : '…'} – {range.end ? range.end.toLocaleDateString('es') : '…'}
         </p>
       </div>
     </div>

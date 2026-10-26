@@ -8,7 +8,7 @@ export const title = { en: 'Controlled usage and cancelable change', es: 'Uso co
 
 export const description = {
   en: "`TabContext` is controlled with `value` + `onChange`, so external buttons can change the tab. `onBeforeChange(value, previousValue)` runs first: returning `false` cancels the change (here, the \"Locked\" tab), like the cancelable `mtx:tabs:before-change` in vanilla.",
-  es: "`TabContext` se controla con `value` + `onChange`, así que unos botones externos pueden cambiar de pestaña. `onBeforeChange(value, previousValue)` se ejecuta antes: si devuelve `false`, cancela el cambio (aquí, la pestaña \"Locked\"), como el cancelable `mtx:tabs:before-change` de vanilla.",
+  es: "`TabContext` se controla con `value` + `onChange`, así que unos botones externos pueden cambiar de pestaña. `onBeforeChange(value, previousValue)` se ejecuta antes: si devuelve `false`, cancela el cambio (aquí, la pestaña \"Bloqueado\"), como el cancelable `mtx:tabs:before-change` de vanilla.",
 };
 
 export default function Demo() {
