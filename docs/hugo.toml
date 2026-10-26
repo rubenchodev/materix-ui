@@ -56,7 +56,7 @@ disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
   # Versión mostrada en la barra superior (mantener sincronizada con package.json).
-  version = "0.1.0"
+  version = "0.2.0"
   # Repositorio: enlace de GitHub, "Código fuente" (repoURL + /src/components/{example})
   # y código de cada demo (repoURL + /demos/{id}.tsx).
   repoURL = "https://github.com/rubenchodev/materix-ui/tree/react-js"
