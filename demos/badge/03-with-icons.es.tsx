@@ -1,0 +1,52 @@
+import { Avatar } from '@rubenchodev/materix-react/components/avatar';
+import { Badge } from '@rubenchodev/materix-react/components/badge';
+import { Button } from '@rubenchodev/materix-react/components/button';
+import { IconButton } from '@rubenchodev/materix-react/components/icon-button';
+
+export const title = { en: 'On icons, avatars and buttons', es: 'Sobre iconos, avatares y botones' };
+export const description = {
+  en: "The badge wraps any element. With IconButton it can go inside the button, wrapping the icon (MUI pattern), or outside, wrapping the button; the number is announced in the button's `aria-label`.",
+  es: 'La insignia envuelve cualquier elemento. Con IconButton puede ir dentro del botón, envolviendo el icono (patrón MUI), o fuera, envolviendo el botón; el número se anuncia en el `aria-label` del botón.',
+};
+
+export default function Demo() {
+  return (
+    <>
+      <div className="demo-group">
+        <span className="demo-label">Icono</span>
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
+          <Badge badgeContent={3} color="primary">
+            <span className="material-icons" aria-hidden="true">shopping_cart</span>
+          </Badge>
+        </div>
+      </div>
+      <div className="demo-group">
+        <span className="demo-label">Avatar</span>
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
+          <Badge badgeContent={2} color="error" overlap="circular">
+            <Avatar color="primary">AG</Avatar>
+          </Badge>
+          <Badge badgeContent={9} color="error">
+            <Avatar variant="rounded" color="secondary">CR</Avatar>
+          </Badge>
+        </div>
+      </div>
+      <div className="demo-group">
+        <span className="demo-label">IconButton y Button</span>
+        <div className="demo-row mtx-gap-4 mtx-pt-1 mtx-px-1">
+          <IconButton aria-label="Notificaciones, 17 sin leer">
+            <Badge badgeContent={17} color="error">
+              <span className="material-icons" aria-hidden="true">notifications</span>
+            </Badge>
+          </IconButton>
+          <Badge badgeContent={4} color="primary" overlap="circular">
+            <IconButton icon="mail" aria-label="Correo, 4 mensajes sin leer" />
+          </Badge>
+          <Badge badgeContent={8} color="error">
+            <Button variant="outlined" aria-label="Pendientes, 8 tareas">Pendientes</Button>
+          </Badge>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,0 +1,37 @@
+import { Button } from '@rubenchodev/materix-react/components/button';
+import { Drawer, DrawerSubmenu, useDrawer } from '@rubenchodev/materix-react/components/drawer';
+import { List, ListItemButton } from '@rubenchodev/materix-react/components/list';
+
+export const title = { en: 'Collapsible submenus', es: 'Submenús colapsables' };
+export const description = {
+  en: '`DrawerSubmenu` (vanilla `data-mtx-collapse-trigger` + `.mtx-collapse`) renders an item with `aria-expanded` and `aria-controls` that expands a nested list with `Collapse`; the `.mtx-collapse-indicator` rotates 90°. Controlled (`open` + `onToggle`) or uncontrolled (`defaultOpen`).',
+  es: '`DrawerSubmenu` (`data-mtx-collapse-trigger` + `.mtx-collapse` de vanilla) renderiza un elemento con `aria-expanded` y `aria-controls` que despliega una lista anidada con `Collapse`; el `.mtx-collapse-indicator` rota 90°. Controlado (`open` + `onToggle`) o no controlado (`defaultOpen`).',
+};
+
+export default function Demo() {
+  const drawer = useDrawer();
+  return (
+    <>
+      <div className="demo-row">
+        <Button variant="contained" {...drawer.getTriggerProps({ action: 'open' })}>
+          Abrir con submenús
+        </Button>
+      </div>
+      <Drawer {...drawer.drawerProps} title="Proyectos">
+        <List component="nav" aria-label="Proyectos">
+          <ListItemButton icon="dashboard" selected>
+            Resumen
+          </ListItemButton>
+          <DrawerSubmenu label="Mis proyectos" icon="folder" defaultOpen>
+            <ListItemButton icon="language">Sitio web</ListItemButton>
+            <ListItemButton icon="smartphone">App móvil</ListItemButton>
+          </DrawerSubmenu>
+          <DrawerSubmenu label="Informes" icon="analytics">
+            <ListItemButton icon="trending_up">Conversiones</ListItemButton>
+            <ListItemButton icon="bar_chart">Facturación</ListItemButton>
+          </DrawerSubmenu>
+        </List>
+      </Drawer>
+    </>
+  );
+}

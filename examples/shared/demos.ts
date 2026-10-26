@@ -34,6 +34,7 @@ export interface DemoEntry {
 }
 
 const FILE_RE = /(?:^|\/)(\d+)-([^/]+)\.tsx$/;
+const LOCALIZED_RE = /\.[a-z]{2}\.tsx$/;
 
 /**
  * Normaliza y ordena por prefijo NN los módulos de un glob eager.
@@ -43,6 +44,8 @@ const FILE_RE = /(?:^|\/)(\d+)-([^/]+)\.tsx$/;
  */
 export const loadDemos = (globResult: Record<string, unknown>): DemoEntry[] =>
   Object.entries(globResult)
+    // Las variantes traducidas (`NN-name.es.tsx`) solo las usa la documentación.
+    .filter(([path]) => !LOCALIZED_RE.test(path))
     .map(([path, raw]): DemoEntry => {
       const match = FILE_RE.exec(path);
       if (!match) throw new Error(`[examples] "${path}" debe llamarse NN-name.tsx`);

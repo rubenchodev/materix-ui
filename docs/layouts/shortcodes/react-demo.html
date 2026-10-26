@@ -18,10 +18,17 @@
 {{ $id = strings.TrimSuffix ".tsx" $id }}
 {{ $res := resources.Get (printf "demos/%s.tsx" $id) }}
 {{ if not $res }}{{ errorf "react-demo: no existe demos/%s.tsx (%s)" $id .Position }}{{ end }}
+{{/* Variante traducida: demos/{id}.{lang}.tsx (p. ej. 08-search.es.tsx) si existe para el idioma de la página. */}}
+{{ $lang := .Page.Language.Lang }}
+{{ if ne $lang "en" }}
+  {{ with resources.Get (printf "demos/%s.%s.tsx" $id $lang) }}
+    {{ $res = . }}
+    {{ $id = printf "%s.%s" $id $lang }}
+  {{ end }}
+{{ end }}
 {{ $raw := $res.Content | replaceRE `\r\n` "\n" }}
 
 {{/* Título: parámetro > export const title del archivo (idioma actual, luego en) > genérico. */}}
-{{ $lang := .Page.Language.Lang }}
 {{ $title := .Get "title" }}
 {{ if not $title }}
   {{ range slice $lang "en" }}

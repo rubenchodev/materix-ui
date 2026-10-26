@@ -79,6 +79,10 @@ tests/                       setup, helpers (paridad con vanilla), e2e Playwrigh
   Mismas secciones que `examples/{slug}/index.html` de vanilla, en el mismo orden: uso básico primero,
   después variantes, tamaños, con/sin iconos, estados (disabled, error, read-only…), controlado,
   grilla y API programática cuando aplique.
+* **Demos en español** `demos/{slug}/NN-{name}.es.tsx`: copia de la demo con los textos visibles
+  (etiquetas, contenido, datos de ejemplo, `aria-label`, comentarios) en español y el mismo código.
+  La doc `/es/` la monta y muestra si existe; si no, usa la original. Los ejemplos la ignoran.
+  Al cambiar una demo, actualiza también su `.es.tsx`.
 * **Ejemplo** `examples/{slug}/index.html` + `main.tsx` siguiendo la plantilla de `examples/_template/`
   (monta todas las demos del slug con selector de tema claro/oscuro).
 * **Documentación** `docs/content/components/{slug}.en.md` y `{slug}.es.md` con la misma estructura

@@ -3,7 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ExamplePage, loadDemos } from '../shared/ExamplePage';
 
-const demos = loadDemos(import.meta.glob('../../demos/container/*.tsx', { eager: true }));
+const demos = loadDemos(import.meta.glob(['../../demos/container/*.tsx', '!../../demos/container/*.*.tsx'], { eager: true }));
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
