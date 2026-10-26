@@ -46,9 +46,9 @@ export interface CardOwnProps {
   subheader?: ReactNode;
   /** Atajo: avatar del encabezado; una cadena se pinta como Avatar primario con ese texto. */
   avatar?: ReactNode;
-  /** Atajo: acción del encabezado (p. ej. un `IconButton`). */
+  /** Atajo: acción del encabezado (p. ej. un `IconButton`); se ignora sin `title`, `subheader` ni `avatar`, como en vanilla. */
   action?: ReactNode;
-  /** Atajo: nombre de Material Icon para un IconButton de acción en el encabezado. */
+  /** Atajo: Material Icon de un IconButton en el encabezado; se ignora sin `title`, `subheader` ni `avatar`. */
   actionIcon?: string;
   /** `aria-label` del IconButton de `actionIcon` (por defecto i18n `card.actions`). */
   actionLabel?: string;

@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { useState } from 'react';
 import { expectParity, mountVanilla } from '../../../tests/parity';
 import { I18nProvider } from '../../i18n';
+import { FormControl, FormHelperText } from '../form-helper-text';
 import { Autocomplete } from './Autocomplete';
 
 const COUNTRIES = [
@@ -439,5 +440,35 @@ describe('Autocomplete — estados, carga y formulario', () => {
       '1900s',
       '2000s',
     ]);
+  });
+
+  it('hereda error, disabled y required de FormControl y enlaza su helper', () => {
+    const { container, unmount } = render(
+      <FormControl error required>
+        <Autocomplete label="C" options={COUNTRIES} />
+        <FormHelperText>Pick one</FormHelperText>
+      </FormControl>,
+    );
+    const input = getInput();
+    expect(container.querySelector('.mtx-text-field--error')).not.toBeNull();
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    expect(input.required).toBe(true);
+    const helper = container.querySelector('.mtx-form-helper-text') as HTMLElement;
+    expect(helper.id).toBeTruthy();
+    expect(input.getAttribute('aria-describedby')).toContain(helper.id);
+    unmount();
+
+    const second = render(
+      <FormControl disabled error>
+        <Autocomplete label="C" options={COUNTRIES} error={false} helperText="Own" />
+        <FormHelperText>Shared</FormHelperText>
+      </FormControl>,
+    );
+    const own = getInput();
+    expect(own.disabled).toBe(true);
+    expect(own.hasAttribute('aria-invalid')).toBe(false);
+    const ids = (own.getAttribute('aria-describedby') ?? '').split(' ');
+    expect(ids).toHaveLength(1);
+    expect(second.container.querySelector(`#${ids[0]}`)!.textContent).toBe('Own');
   });
 });

@@ -152,6 +152,8 @@ El resto de props van a la raíz; `className` se concatena, `style` se combina y
 | `setValue()` · `setBuffer()` · `color =` · `variant =` | props (controlado) |
 | `Materix.createCircularProgress({ decorative: true })` | `<CircularProgress decorative />` |
 
+No hay sección de "Uso manual BEM": los componentes siempre renderizan la estructura completa del SVG o de las barras, así que no hace falta escribirla a mano.
+
 ## Accesibilidad
 
 - La raíz tiene `role="progressbar"` y un nombre accesible: `label`, `aria-label` o `aria-labelledby`; si no hay ninguno, "Loading" / "Cargando".

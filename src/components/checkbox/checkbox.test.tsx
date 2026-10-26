@@ -75,6 +75,21 @@ describe('Checkbox', () => {
     expect(input.indeterminate).toBe(false);
   });
 
+  it('indeterminate fijo en modo no controlado: el clic limpia aria-checked="mixed" (como vanilla)', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(<Checkbox label="Mixed" indeterminate />);
+    const input = screen.getByRole('checkbox') as HTMLInputElement;
+    await user.click(input);
+    expect(input).toBeChecked();
+    expect(input.indeterminate).toBe(false);
+    expect(input).not.toHaveAttribute('aria-checked');
+    // Al cambiar la prop vuelve a seguirla.
+    rerender(<Checkbox label="Mixed" indeterminate={false} />);
+    rerender(<Checkbox label="Mixed" indeterminate />);
+    expect(input).toHaveAttribute('aria-checked', 'mixed');
+    expect(input.indeterminate).toBe(true);
+  });
+
   it('disabled: input deshabilitado y sin ripple', () => {
     const { container } = render(<Checkbox label="D" disabled />);
     const input = screen.getByRole('checkbox');

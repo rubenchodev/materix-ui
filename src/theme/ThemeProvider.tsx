@@ -143,7 +143,9 @@ export function ThemeProvider({
       return;
     }
     const root = document.documentElement;
-    root.setAttribute('data-mtx-theme', resolvedMode);
+    // En la hidratación `prefersDark` usa el snapshot de servidor (claro): con `system` se consulta
+    // matchMedia directamente para no pisar el tema que puso el script anti-parpadeo.
+    root.setAttribute('data-mtx-theme', mode === 'system' ? resolveThemeMode('system') : resolvedMode);
     root.setAttribute('data-mtx-theme-mode', mode);
   }, [target, mode, resolvedMode]);
 

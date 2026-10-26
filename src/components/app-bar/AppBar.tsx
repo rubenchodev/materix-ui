@@ -5,7 +5,7 @@
 import { Children, forwardRef, isValidElement, useEffect, useState } from 'react';
 import type { CSSProperties, ElementType, HTMLAttributes, MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import '@rubenchodev/materix-ui/components/app-bar.css';
-import { cx, resolveTarget } from '../../core';
+import { cx, isDev, resolveTarget } from '../../core';
 import type { ElementTarget } from '../../core';
 import { useT } from '../../i18n';
 import { IconButton } from '../icon-button';
@@ -177,6 +177,15 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(props
     };
   }, [elevateOnScroll, hideOnScroll, scrollTarget]);
 
+  // Aviso en desarrollo: un icono-nodo sin etiqueta recibe un nombre accesible genérico.
+  const unlabeledStart = startIcon != null && typeof startIcon !== 'string' && !startIconLabel;
+  const unlabeledEnd = endIcon != null && typeof endIcon !== 'string' && !endIconLabel;
+  useEffect(() => {
+    if (!isDev) return;
+    if (unlabeledStart) console.warn('Materix: <AppBar> startIcon is a node without startIconLabel; using the default "Open navigation" label.');
+    if (unlabeledEnd) console.warn('Materix: <AppBar> endIcon is a node without endIconLabel; using the default "More options" label.');
+  }, [unlabeledStart, unlabeledEnd]);
+
   // Sombra por variable para que --transparent y --flat puedan anularla.
   let shadow: string | undefined;
   if (elevateOnScroll) shadow = elevated ? `var(--mtx-elevation-${elevation ?? 4})` : 'none';
@@ -189,13 +198,13 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(props
 
   let content: ReactNode = children;
   if (scaffold) {
+    // Sin etiqueta explícita: "Open navigation" para `menu`, un Drawer o un icono-nodo; si no, el nombre del icono.
     const navLabel =
       startIconLabel ??
-      (startIcon === 'menu' || navigationControls
+      (startIcon === 'menu' || navigationControls || typeof startIcon !== 'string'
         ? t('openNavigation', null, 'Open navigation')
-        : typeof startIcon === 'string'
-          ? startIcon
-          : undefined);
+        : startIcon);
+    const endLabel = endIconLabel ?? (typeof endIcon === 'string' ? endIcon : t('moreOptions', null, 'More options'));
     content = (
       <Toolbar variant={toolbarVariant ?? (dense ? 'dense' : 'regular')} disableGutters={disableGutters}>
         {startIcon != null && (
@@ -217,7 +226,7 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(props
         {endIcon != null && (
           <IconButton
             icon={endIcon}
-            aria-label={endIconLabel ?? (typeof endIcon === 'string' ? endIcon : undefined)}
+            aria-label={endLabel}
             onClick={onEndIconClick}
           />
         )}

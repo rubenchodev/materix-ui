@@ -1,3 +1,4 @@
+import '@rubenchodev/materix-ui/base.css'; // primero: los CSS de componentes (demos) deben ganar a base.css
 /** Página de ejemplo de NativeSelect: monta todas las demos de demos/native-select. */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

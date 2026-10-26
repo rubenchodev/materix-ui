@@ -53,12 +53,11 @@ function toList(raw: ToggleButtonGroupValue | undefined, exclusive: boolean): st
 /**
  * Botones habilitados que pertenecen a este grupo (no a grupos anidados).
  * @param {HTMLElement} root Contenedor del grupo.
- * @param {boolean} onlyEnabled Excluye los deshabilitados.
  * @returns {HTMLButtonElement[]} Botones en orden del DOM.
  */
-function groupButtons(root: HTMLElement, onlyEnabled: boolean): HTMLButtonElement[] {
+function groupButtons(root: HTMLElement): HTMLButtonElement[] {
   return Array.from(root.querySelectorAll<HTMLButtonElement>('button.mtx-toggle-button')).filter(
-    (btn) => btn.parentElement?.closest('.mtx-toggle-button-group') === root && (!onlyEnabled || !btn.disabled),
+    (btn) => btn.parentElement?.closest('.mtx-toggle-button-group') === root && !btn.disabled,
   );
 }
 
@@ -95,25 +94,36 @@ export const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupPro
   const selectedList = toList(rawValue, exclusive);
   const selectedKey = selectedList.join('\u0000');
 
-  const handleButtonClick = useEventCallback((event: MouseEvent<HTMLButtonElement>, buttonValue: string) => {
+  /** Elementos de los botones por valor, para ordenar el valor múltiple según el DOM. */
+  const registry = useRef(new Map<string, HTMLButtonElement>());
+  const register = useEventCallback((buttonValue: string, element: HTMLButtonElement) => {
+    registry.current.set(buttonValue, element);
+    return () => {
+      if (registry.current.get(buttonValue) === element) registry.current.delete(buttonValue);
+    };
+  });
+
+  const handleButtonClick = useEventCallback((event: MouseEvent<HTMLButtonElement>, buttonValue: string): boolean => {
     let next: ToggleButtonGroupValue;
     if (exclusive) {
       next = selectedList[0] === buttonValue ? null : buttonValue;
-      if (next === null && enforceValueSet) return;
+      if (next === null && enforceValueSet) return false;
     } else {
       const has = selectedList.includes(buttonValue);
       const list = has ? selectedList.filter((v) => v !== buttonValue) : [...selectedList, buttonValue];
-      if (list.length === 0 && enforceValueSet) return;
-      // Orden del DOM, como vanilla.
-      const order = rootRef.current ? groupButtons(rootRef.current, false).map((btn) => btn.value) : [];
-      const rank = (v: string) => {
-        const index = order.indexOf(v);
-        return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+      if (list.length === 0 && enforceValueSet) return false;
+      // Orden del DOM, como vanilla; los valores sin botón van al final.
+      const position = (a: string, b: string) => {
+        const ea = registry.current.get(a);
+        const eb = registry.current.get(b);
+        if (!ea || !eb) return ea ? -1 : eb ? 1 : 0;
+        return ea.compareDocumentPosition(eb) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
       };
-      next = [...list].sort((a, b) => rank(a) - rank(b));
+      next = [...list].sort(position);
     }
     setRawValue(next);
     onChange?.(event, next);
+    return true;
   });
 
   const context = useMemo<ToggleButtonGroupContextValue>(() => {
@@ -124,14 +134,15 @@ export const ToggleButtonGroup = forwardRef<HTMLDivElement, ToggleButtonGroupPro
       disabled,
       isSelected: (v: string) => set.has(v),
       onButtonClick: handleButtonClick,
+      register,
     };
-  }, [size, color, disabled, selectedKey, handleButtonClick]);
+  }, [size, color, disabled, selectedKey, handleButtonClick, register]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     onKeyDown?.(event);
     const root = rootRef.current;
     if (event.defaultPrevented || !root) return;
-    const enabled = groupButtons(root, true);
+    const enabled = groupButtons(root);
     const index = enabled.indexOf(event.target as HTMLButtonElement);
     if (index === -1) return;
     const vertical = orientation === 'vertical';

@@ -2,10 +2,10 @@
 /**
  * Partes de un paso: StepConnector, StepLabel (o StepButton en modo no lineal) y StepContent.
  */
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import type { HTMLAttributes, MouseEvent, ReactNode, Ref } from 'react';
 import '@rubenchodev/materix-ui/components/stepper.css';
-import { cx, useRipple } from '../../core';
+import { cx, useEnhancedEffect, useForkRef, useRipple } from '../../core';
 import { StepIcon } from './StepIcon';
 import { useStepContext, useStepperContext } from './context';
 
@@ -152,8 +152,17 @@ export const StepContent = forwardRef<HTMLDivElement, StepContentProps>(function
   const stepper = useStepperContext();
   const state = useStepContext();
   const visible = stepper?.orientation === 'vertical' && Boolean(state?.expanded);
+  const ownRef = useRef<HTMLDivElement>(null);
+  const handleRef = useForkRef<HTMLDivElement>(ownRef, ref);
+  // `inert` por DOM: React 18 no pinta la prop booleana (React 19 sí).
+  useEnhancedEffect(() => {
+    const node = ownRef.current;
+    if (!node) return;
+    if (visible) node.removeAttribute('inert');
+    else node.setAttribute('inert', '');
+  }, [visible]);
   return (
-    <div ref={ref} className={cx('mtx-step__content', className)} aria-hidden={!visible} inert={!visible} {...rest}>
+    <div ref={handleRef} className={cx('mtx-step__content', className)} aria-hidden={!visible} {...rest}>
       <div className="mtx-step__content-inner">{children}</div>
     </div>
   );

@@ -63,6 +63,11 @@ describe('Badge', () => {
     expect(container.querySelector('.mtx-badge__label')!.textContent).toBe('');
   });
 
+  it('label con contenido no textual no muestra [object Object]', () => {
+    const { container } = render(<Badge badgeContent={<b>!</b>} label="Aviso {0}" />);
+    expect(container.querySelector('.mtx-badge__label')!.textContent).toBe('Aviso ');
+  });
+
   it('reenvía ref, concatena className y acepta component', () => {
     const ref = createRef<HTMLDivElement>();
     const { container } = render(<Badge component="div" ref={ref} className="extra" id="b1" badgeContent={2} />);

@@ -32,7 +32,7 @@ import type { BackdropProps } from '../backdrop';
 import { Button } from '../button';
 import { DrawerContent, DrawerFooter, DrawerHeader } from './DrawerParts';
 import type { DrawerContentProps } from './DrawerParts';
-import { useDrawerMode } from './useDrawerMode';
+import { useDrawerModeState } from './useDrawerMode';
 import type { DrawerBreakpoint, DrawerMode, DrawerVariant } from './useDrawerMode';
 
 /** Borde de la pantalla desde el que se desliza. */
@@ -110,9 +110,9 @@ export interface DrawerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title
   keepMounted?: boolean;
   /** Props adicionales del Backdrop del modo temporal. */
   backdropProps?: Partial<Omit<BackdropProps, 'open'>>;
-  /** Renderiza el temporal en su sitio en lugar de en `document.body`. */
+  /** Renderiza el temporal en su sitio en lugar de en la raíz de portales (`[data-mtx-portal-root]`). */
   disablePortal?: boolean;
-  /** Contenedor del portal (por defecto `document.body`). */
+  /** Contenedor del portal (por defecto, la raíz de portales). */
   container?: PortalProps['container'];
   /** Contenido; `DrawerHeader`, `DrawerContent` y `DrawerFooter` se respetan (sintaxis BEM). */
   children?: ReactNode;
@@ -215,7 +215,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(pr
   const id = idProp ?? `mtx-drawer-${autoId}`;
   const titleId = `${id}-title`;
 
-  const mode = useDrawerMode(variant, breakpoint);
+  const { mode, fromServer } = useDrawerModeState(variant, breakpoint);
   const isTemporary = mode === 'temporary';
   const isPermanent = mode === 'permanent';
   const open = isPermanent || openProp;
@@ -256,6 +256,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(pr
     setAnimated(false);
     setMounted(true);
     setShown(mode === 'permanent');
+    // Corrección tras hidratar (el servidor no conoce el viewport): no es un cruce real, no se notifica.
+    if (fromServer.current) {
+      fromServer.current = false;
+      return;
+    }
     // Directo a onClose: requestClose ya ve el modo nuevo (permanente) y lo ignoraría.
     if (openProp && previous !== 'permanent') onClose?.(new Event('change'), 'breakpoint');
     handleModeChange(mode, previous);

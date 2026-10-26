@@ -12,6 +12,7 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   ListSubheader,
+  ListSelectionProvider,
 } from './index';
 
 const PARITY = { classPrefixes: ['mtx-', 'material-'], attributes: ['tabindex', 'href', 'alt', 'src'] };
@@ -184,6 +185,50 @@ describe('ListItemButton', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Starred' }));
     expect(screen.getByRole('button', { name: 'Starred' })).toHaveClass('mtx-list-item--selected');
     expect(screen.getByRole('button', { name: 'Sent' })).not.toHaveClass('mtx-list-item--selected');
+  });
+
+  it('ListSelectionProvider comparte una sola selección entre varias List', async () => {
+    const onSelect = vi.fn();
+    render(
+      <ListSelectionProvider defaultValue="a" onSelect={onSelect}>
+        <nav>
+          <List>
+            <li><ListItemButton value="a">A</ListItemButton></li>
+          </List>
+          <List>
+            <li><ListItemButton value="b">B</ListItemButton></li>
+          </List>
+          <List defaultValue="z">
+            <li><ListItemButton value="z">Z</ListItemButton></li>
+          </List>
+        </nav>
+      </ListSelectionProvider>,
+    );
+    const a = screen.getByRole('button', { name: 'A' });
+    const b = screen.getByRole('button', { name: 'B' });
+    expect(a).toHaveClass('mtx-list-item--selected');
+    await userEvent.click(b);
+    expect(b).toHaveClass('mtx-list-item--selected');
+    expect(a).not.toHaveClass('mtx-list-item--selected');
+    expect(onSelect).toHaveBeenCalledWith({ item: b, value: 'b' });
+    // Una List con estado propio mantiene su ámbito independiente.
+    expect(screen.getByRole('button', { name: 'Z' })).toHaveClass('mtx-list-item--selected');
+  });
+
+  it('sin proveedor, dos List hermanas mantienen selecciones independientes', async () => {
+    render(
+      <nav>
+        <List>
+          <li><ListItemButton>A</ListItemButton></li>
+        </List>
+        <List>
+          <li><ListItemButton>B</ListItemButton></li>
+        </List>
+      </nav>,
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'A' }));
+    await userEvent.click(screen.getByRole('button', { name: 'B' }));
+    expect(screen.getByRole('button', { name: 'A' })).toHaveClass('mtx-list-item--selected');
   });
 
   it('enlace: aria-current="page"; disabled con aria-disabled y tabindex -1', () => {

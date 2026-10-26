@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render } from '@testing-library/react';
-import { useRef } from 'react';
+import { act, fireEvent, render } from '@testing-library/react';
+import { useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 import {
   getTopLayer,
   hasLayer,
@@ -158,5 +159,33 @@ describe('useLayer', () => {
     expect(v1).not.toHaveBeenCalled();
     expect(v2).toHaveBeenCalledTimes(1);
     unmount();
+  });
+});
+
+function StackedPopup() {
+  const [node, setNode] = useState<HTMLDivElement | null>(null);
+  useLayer({ open: true, kind: 'popup', nodes: node, stack: () => [{ node }] });
+  return <div ref={setNode} data-testid="popup" />;
+}
+
+function Modal({ children }: { children?: ReactNode }) {
+  useLayer({ open: true, kind: 'modal' });
+  return <div>{children}</div>;
+}
+
+describe('stack perezoso', () => {
+  it('una capa montada abierta dentro de un modal recibe el z-index superior', async () => {
+    const { getByTestId, rerender, unmount } = render(<Modal />);
+    rerender(
+      <Modal>
+        <StackedPopup />
+      </Modal>,
+    );
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(getByTestId('popup').style.zIndex).toBe('calc(var(--mtx-z-index-modal, 1300) + 2)');
+    unmount();
+    expect(layerCount()).toBe(0);
   });
 });

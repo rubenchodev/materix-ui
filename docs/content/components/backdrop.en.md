@@ -57,13 +57,13 @@ Saving a form: the backdrop covers the page while the request runs and closes by
 
 ## Grid layout
 
-The layer is rendered in a portal on `document.body` and does not take part in the layout; here a grid of triggers opens the same backdrop with different messages.
+The layer is rendered in a portal (the shared `[data-mtx-portal-root]` container at the end of `<body>`) and does not take part in the layout; here a grid of triggers opens the same backdrop with different messages.
 
 {{< react-demo id="backdrop/07-grid" layout="block" >}}
 
 ## Programmatic usage
 
-The equivalent of `open()`/`close()`/`toggle()` is the `open` prop. `onOpen` and `onClose(event, reason)` are the equivalents of `mtx:backdrop:open` and `mtx:backdrop:close`; `onExited` fires when the fade-out ends.
+The equivalent of `open()`/`close()` is the `open` prop. There is no `toggle()`: the state lives in your component, so toggling is `setOpen((value) => !value)`. `onOpen` and `onClose(event, reason)` are the equivalents of `mtx:backdrop:open` and `mtx:backdrop:close`; `onExited` fires when the fade-out ends.
 
 {{< react-demo id="backdrop/08-programmatic" layout="block" >}}
 
@@ -99,8 +99,8 @@ The equivalent of `open()`/`close()`/`toggle()` is the `open` prop. `onOpen` and
 | `onOpen` | `() => void` | — | `open` goes from `false` to `true`. |
 | `onExited` | `() => void` | — | The fade-out finished. |
 | `transitionDuration` | `number \| { enter?, exit? }` | `{ enter: 225, exit: 195 }` | Fade duration in ms. |
-| `disablePortal` | `boolean` | `false` | Renders in place instead of on `document.body`. |
-| `container` | `Element \| ref \| () => Element` | `document.body` | Portal target. |
+| `disablePortal` | `boolean` | `false` | Renders in place instead of in the portal root. |
+| `container` | `Element \| ref \| () => Element` | `[data-mtx-portal-root]` in `<body>` | Portal target. |
 | `keepMounted` | `boolean` | `false` | Keeps the node (with `hidden`) while closed. |
 
 `className` is merged; `ref`, `style` (for example a custom `zIndex`) and any other attribute go to the root `<div>`.
@@ -131,6 +131,8 @@ The equivalent of `open()`/`close()`/`toggle()` is the `open` prop. `onOpen` and
 
 ## Accessibility
 
+- By default the layer is portaled to the end of `<body>`, outside your landmarks. If it must stay inside `<main>` (for example, so its content belongs to that landmark or inherits its theme scope), use `disablePortal`; it is `position: fixed`, so it still covers the viewport.
+
 - The backdrop has no role and doesn't move focus: it is a visual indicator. Give the indicator an accessible name (`CircularProgress label="Loading"`).
 - While closed or fading out it has `aria-hidden="true"`.
 - To keep keyboard and screen reader users out of the page while it is busy, use `inertOthers`. For messages or decisions, use a [Dialog](../dialog/), which traps focus.
@@ -144,7 +146,8 @@ The equivalent of `open()`/`close()`/`toggle()` is the `open` prop. `onOpen` and
 
 | Vanilla | React |
 |---|---|
-| `data-mtx="backdrop"` + `open()` / `close()` / `toggle()` | `<Backdrop open={…}>` |
+| `data-mtx="backdrop"` + `open()` / `close()` | `<Backdrop open={…}>` |
+| `toggle()` | `setOpen((value) => !value)` |
 | `data-open` | initial `open={true}` |
 | `data-invisible` | `invisible` |
 | `data-close-on-click`, `data-close-on-escape` | `closeOnClick`, `closeOnEscape` |

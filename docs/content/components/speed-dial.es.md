@@ -90,7 +90,7 @@ Galería de fotos: el SpeedDial es controlado, así que cada acción hace su tar
 
 ## Oculto y posición
 
-`hidden` encoge el FAB principal con una transición de escala y cierra las acciones (por ejemplo al hacer scroll). `position="fixed-br"` y `"fixed-bl"` lo fijan a 24px de la esquina inferior derecha o izquierda de la ventana, por encima del contenido (`z-index` 1050).
+`hidden` encoge el FAB principal con una transición de escala y cierra las acciones (por ejemplo al hacer scroll): si estaba abierto, se llama a `onClose(null, 'hidden')` y reaparece cerrado. `position="fixed-br"` y `"fixed-bl"` lo fijan a 24px de la esquina inferior derecha o izquierda de la ventana, por encima del contenido (`z-index` 1050).
 
 {{< react-demo id="speed-dial/09-hidden" layout="block" >}}
 
@@ -119,7 +119,7 @@ const [open, setOpen] = useState(false);
   ariaLabel="Acciones"
   open={open}
   onOpen={(event, reason) => setOpen(true)}   // 'toggle' | 'mouseEnter'
-  onClose={(event, reason) => setOpen(false)} // 'toggle' | 'mouseLeave' | 'escapeKeyDown' | 'clickaway'
+  onClose={(event, reason) => setOpen(false)} // 'toggle' | 'mouseLeave' | 'escapeKeyDown' | 'clickaway' | 'hidden'
 >
   …
 </SpeedDial>
@@ -144,11 +144,11 @@ El CSS también funciona con marcado plano (HTML estático o plantillas de servi
 | `open` | `boolean` | — | Estado controlado. |
 | `defaultOpen` | `boolean` | `false` | Estado inicial no controlado. |
 | `onOpen` | `(event, reason) => void` | — | Solicitud de apertura (`'toggle' \| 'mouseEnter'`). |
-| `onClose` | `(event, reason) => void` | — | Solicitud de cierre (`'toggle' \| 'mouseLeave' \| 'escapeKeyDown' \| 'clickaway'`). |
+| `onClose` | `(event, reason) => void` | — | Solicitud de cierre (`'toggle' \| 'mouseLeave' \| 'escapeKeyDown' \| 'clickaway' \| 'hidden'`); `event` es `null` con `'hidden'`. |
 | `event` | `'click' \| 'hover'` | `'click'` | Con `hover` también abre al entrar el ratón y cierra al salir. |
 | `tooltipHover` | `boolean` | `false` | Sustituye las etiquetas persistentes por un Tooltip por acción. |
 | `color` | Colores de Fab | `'primary'` | Color del FAB principal. |
-| `hidden` | `boolean` | `false` | Oculta el FAB principal con una transición de escala y cierra las acciones. |
+| `hidden` | `boolean` | `false` | Oculta el FAB principal con una transición de escala; si estaba abierto, se cierra y llama a `onClose(null, 'hidden')`, así no reaparece abierto. |
 | `position` | `'fixed-br' \| 'fixed-bl'` | — | Fijado a una esquina de la ventana. |
 | `FabProps` | `Partial<FabProps>` | — | Props extra del FAB principal. |
 | `locale` | `string` | — | Idioma del `ariaLabel` por defecto. |
@@ -179,7 +179,7 @@ El CSS también funciona con marcado plano (HTML estático o plantillas de servi
 | Callback | Evento vanilla | Se dispara cuando |
 |---|---|---|
 | `onOpen(event, reason)` | `mtx:speed-dial:open` | Se abre (clic o hover). |
-| `onClose(event, reason)` | `mtx:speed-dial:close` | Se cierra (clic, clic fuera, <kbd>Escape</kbd> o salida del puntero). |
+| `onClose(event, reason)` | `mtx:speed-dial:close` | Se cierra (clic, clic fuera, <kbd>Escape</kbd>, salida del puntero o `hidden`). |
 
 ### Clases CSS
 
@@ -193,9 +193,9 @@ El CSS también funciona con marcado plano (HTML estático o plantillas de servi
 | `mtx-speed-dial__fab` | FAB principal. |
 | `mtx-speed-dial__actions` | Contenedor de acciones (separación de 12px). |
 | `mtx-speed-dial__action` | FAB pequeño de cada acción. |
-| `mtx-speed-dial__action-wrapper` | Envoltorio acción + etiqueta, con animación escalonada (30 ms por acción). |
+| `mtx-speed-dial__action-wrapper` | Envoltorio acción + etiqueta, con animación escalonada (30 ms por acción). Las acciones sin `tooltipTitle` no tienen envoltorio, así que no se animan ni reciben el retardo extra a partir de la quinta. |
 | `mtx-speed-dial__tooltip` | Etiqueta persistente de la acción (`aria-hidden`). |
-| `mtx-speed-dial__icon` | `SpeedDialIcon` con `openIcon` (`--open` mientras está abierto). |
+| `mtx-speed-dial__icon` | `SpeedDialIcon` cuyo `icon` es un nodo o que tiene `openIcon` (`--open` mientras está abierto con `openIcon`). |
 
 ### Variables CSS
 

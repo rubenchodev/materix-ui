@@ -115,6 +115,7 @@ The portaled menu registers itself as an upper layer: the [Dialog](../dialog/) f
 | `size` | `'medium' \| 'small'` | `'medium'` | 56px or 40px. |
 | `color` | `'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success'` | `'primary'` | Focus and selection color. |
 | `label` | `ReactNode` | — | Floating label (and notch in `outlined`). |
+| `hiddenLabel` | `boolean` | `false` | Outlined border without a notch (`.mtx-select--hidden-label`); use it with `aria-label` when there is no visible label. |
 | `options` | `Array<SelectOption \| SelectOptionGroup>` | — | `{ value, label, icon?, image?, secondary?, disabled? }` or `{ label, options, disabled? }`. Rendered before `children`. |
 | `children` | `<option>` / `<optgroup>` | — | Declarative options; `data-icon`, `data-image` and `data-secondary` are read. |
 | `multiple` | `boolean` | `false` | Multiple selection with checkboxes. |
@@ -161,6 +162,7 @@ The portaled menu registers itself as an upper layer: the [Dialog](../dialog/) f
 | `.mtx-select--small` | 40px height. |
 | `.mtx-select--color-{color}` | Palette color (also on the menu as `.mtx-select__menu--color-{color}`). |
 | `.mtx-select--error` / `--open` / `--adorned-start` | Error, open menu, start icon. |
+| `.mtx-select--hidden-label` | Outlined border without a notch (`hiddenLabel`). |
 | `.mtx-select__label` / `__control` / `__display` / `__display-text` / `__chevron` | Label, combobox, shown value and arrow. |
 | `.mtx-select__outline` / `__legend` | Notched border (`outlined`). |
 | `.mtx-select__adornment--start` | Start icon. |
@@ -186,6 +188,7 @@ The portaled menu registers itself as an upper layer: the [Dialog](../dialog/) f
 | `data-max-options`, `data-selected-text-format` | `maxOptions`, `selectedTextFormat` |
 | `data-placeholder` / `title` | `placeholder` |
 | `data-helper-text`, `data-error`, `data-readonly`, `disabled` | `helperText`, `error`, `readOnly`, `disabled` |
+| `data-hidden-label` / `mtx-select--hidden-label` | `hiddenLabel` |
 | `instance.value = …` | Update the `value` state |
 | `open()` / `close()` | `open` + `onOpen` / `onClose` |
 | `disable()` / `enable()` | `disabled` |
@@ -195,16 +198,18 @@ The portaled menu registers itself as an upper layer: the [Dialog](../dialog/) f
 ## Accessibility
 
 - WAI-ARIA *select-only combobox* pattern: the control has `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded` and `aria-controls`; the menu contains a `role="listbox"` with `role="option"` items (`aria-selected`, `aria-disabled`) and `role="group"` for groups. With `multiple`, the listbox has `aria-multiselectable`.
-- Focus stays on the combobox and the active option is announced through `aria-activedescendant`; with `search`, focus moves to the search box, which carries `aria-activedescendant`.
+- Focus stays on the combobox and the active option is announced through `aria-activedescendant`; with `search`, focus moves to the search box, which carries `aria-activedescendant`, and no option is active until the first arrow key.
+- While the menu is open the global focus ring is removed from the combobox (its 2px border already shows focus); it comes back when the menu closes.
+- With a helper text of its own, `aria-describedby` points only to it and not to the FormControl helper texts.
 - The label names the combobox (`aria-labelledby`); without a label use `aria-label`. `error` sets `aria-invalid`, `required` `aria-required`, `readOnly` `aria-readonly`, and `helperText` is linked with `aria-describedby`.
 - The hidden native `<select>` is `aria-hidden` and out of the tab order; Escape is delivered through the common layer stack (only the top layer closes).
 
 | Key | Action |
 | :--- | :--- |
 | <kbd>Tab</kbd> | Focuses the combobox; with the menu open, closes it and moves on. |
-| <kbd>↓</kbd> / <kbd>↑</kbd> / <kbd>Space</kbd> / <kbd>Enter</kbd> | Opens the menu. |
-| <kbd>↓</kbd> / <kbd>↑</kbd> | Moves the active option (wraps around). |
-| <kbd>Home</kbd> / <kbd>End</kbd> | First / last option. |
-| Letters | Typeahead: jumps to the option that starts with what was typed. |
-| <kbd>Enter</kbd> / <kbd>Space</kbd> | Selects the active option (toggles it in `multiple`). |
-| <kbd>Esc</kbd> | Closes the menu and returns focus to the combobox. |
+| <kbd>↓</kbd> / <kbd>↑</kbd> / <kbd>Space</kbd> / <kbd>Enter</kbd> | Closed: opens the menu. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Closed (single selection): selects the first / last option. Open: activates the first / last option (not inside the search box). |
+| Letters | Closed (single selection): selects the next option that starts with what was typed. Open without `search`: activates it. With `search` they are typed into the box. |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Open: moves the active option (wraps around). |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Open: selects the active option (toggles it in `multiple`); <kbd>Space</kbd> types in the search box. |
+| <kbd>Esc</kbd> | Open: closes the menu and returns focus to the combobox. |

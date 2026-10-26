@@ -85,11 +85,17 @@ Dos grupos dentro de un [Grid](../grid/): el indicador se recalcula al cambiar e
 
 {{< react-demo id="tabs/10-grid" layout="block" >}}
 
+## Varios grupos sin id
+
+Los ids salen de `useId`, así que varios grupos sin `id` (o `TabContext` sin `id`) nunca repiten ids y `aria-controls` / `aria-labelledby` siempre apuntan al elemento correcto.
+
+{{< react-demo id="tabs/11-groups" layout="block" >}}
+
 ## Uso controlado y cambio cancelable
 
-Controla el valor con `value` + `onChange` en `TabContext` (o directamente en `Tabs` si no hay paneles). `onBeforeChange(value, previousValue)` se ejecuta antes del cambio: si devuelve `false`, lo cancela (equivale al cancelable `mtx:tabs:before-change`).
+Controla el valor con `value` + `onChange` en `TabContext` o en `Tabs`: dentro de un `TabContext`, el `value` de un `Tabs` controlado se refleja en el contexto para que los paneles lo sigan (allí se ignora el `defaultValue` de `Tabs`, con un aviso en desarrollo). Los `Tab` envueltos en un `Fragment` se aplanan. `onBeforeChange(value, previousValue)` se ejecuta antes del cambio: si devuelve `false`, lo cancela (equivale al cancelable `mtx:tabs:before-change`).
 
-{{< react-demo id="tabs/11-programmatic" layout="block" >}}
+{{< react-demo id="tabs/12-programmatic" layout="block" >}}
 
 ```tsx
 const [value, setValue] = useState('general');

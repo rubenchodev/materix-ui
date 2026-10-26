@@ -7,12 +7,12 @@ import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   ElementType,
-  MouseEvent as ReactMouseEvent,
   PointerEvent as ReactPointerEvent,
   ReactNode,
 } from 'react';
 import '@rubenchodev/materix-ui/components/icon-button.css';
 import { cx, useRipple } from '../../core';
+import { getButtonBehavior } from './button-behavior';
 
 /** Tamaños canónicos: small 32px, medium 40px (por defecto) y large 48px. */
 export type IconButtonSize = 'small' | 'medium' | 'large';
@@ -75,7 +75,10 @@ export const IconButton = forwardRef<HTMLElement, IconButtonProps>(function Icon
     type,
     href,
     tabIndex,
+    role,
     onClick,
+    onKeyDown,
+    onKeyUp,
     onPointerDown,
     onPointerUp,
     onPointerLeave,
@@ -84,17 +87,7 @@ export const IconButton = forwardRef<HTMLElement, IconButtonProps>(function Icon
   } = props;
 
   const Tag: ElementType = component ?? (href ? 'a' : 'button');
-  const isNativeButton = Tag === 'button';
   const ripple = useRipple<HTMLElement>({ centered: true, disabled: disabled || disableRipple });
-
-  const handleClick = (event: ReactMouseEvent<HTMLElement>) => {
-    if (disabled && !isNativeButton) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
-    onClick?.(event);
-  };
 
   /** Encadena el manejador del ripple con el del usuario. */
   const chain =
@@ -104,14 +97,8 @@ export const IconButton = forwardRef<HTMLElement, IconButtonProps>(function Icon
       own(event);
     };
 
-  const nativeProps = isNativeButton
-    ? { type: type ?? 'button', disabled, tabIndex }
-    : {
-        href,
-        type,
-        'aria-disabled': disabled ? true : undefined,
-        tabIndex: disabled ? -1 : tabIndex,
-      };
+  const { to, ...attrs } = rest as typeof rest & { to?: unknown };
+  const behavior = getButtonBehavior({ tag: Tag, disabled, href, to, type, tabIndex, role, onClick, onKeyDown, onKeyUp });
 
   return (
     <Tag
@@ -123,9 +110,8 @@ export const IconButton = forwardRef<HTMLElement, IconButtonProps>(function Icon
         edge && `mtx-icon-button--edge-${edge}`,
         className,
       )}
-      {...nativeProps}
-      {...rest}
-      onClick={handleClick}
+      {...attrs}
+      {...behavior}
       onPointerDown={chain(ripple.handlers.onPointerDown, onPointerDown)}
       onPointerUp={chain(ripple.handlers.onPointerUp, onPointerUp)}
       onPointerLeave={chain(ripple.handlers.onPointerLeave, onPointerLeave)}

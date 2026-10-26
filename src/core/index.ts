@@ -27,6 +27,7 @@ export {
   useLayer,
   pushLayer,
   removeLayer,
+  refreshLayerStack,
   isTopLayer,
   getTopLayer,
   hasLayer,

@@ -120,6 +120,12 @@ const action = useRef<PopoverActions>(null);
 </Popover>
 ```
 
+## Manual trigger
+
+The equivalent of vanilla's manual BEM usage: you can skip `usePopover` and wire the trigger yourself with `aria-controls`, `aria-haspopup="dialog"` and `aria-expanded`, giving the popover an `id` and naming it with `aria-labelledby`. A click on an element whose `aria-controls` points to the popover is never treated as "outside".
+
+{{< react-demo id="popover/14-manual-trigger" layout="block" >}}
+
 ## Reuse in other components
 
 `Popover` is designed as the floating base for other surfaces. The props they rely on:
@@ -159,7 +165,7 @@ const action = useRef<PopoverActions>(null);
 | `elevation` | `0`–`8`, `12`, `16`, `24` | `8` | Shadow (and overlay in the dark theme). |
 | `modal` | `boolean` | `false` | Tab trap, scroll lock and `aria-modal`. |
 | `label` | `string` | — | `aria-label` (otherwise the first heading names it). |
-| `onClose` | `(event, reason) => void` | — | Close request; reasons `escapeKeyDown`, `clickaway`, `tabOut`, `action`, `trigger`. |
+| `onClose` | `(event, reason) => void` | — | Close request; reasons `escapeKeyDown`, `clickaway`, `tabOut`, `action` (`trigger` only comes from `usePopover`, when its trigger is clicked again). |
 | `onOpen` | `(anchor) => void` | — | Opened and positioned. |
 | `onExited` | `() => void` | — | The exit transition finished. |
 | `disableAutoFocus` | `boolean` | `false` | Does not move focus on open. |
@@ -184,7 +190,7 @@ const action = useRef<PopoverActions>(null);
 | `close()` | `function` | Closes it (reason `api`). |
 | `toggle(anchor)` | `function` | Toggles the state. |
 
-Options: `usePopover({ id, onOpen(anchor), onClose(reason) })`.
+Options: `usePopover({ id, keepMounted, onOpen(anchor), onClose(reason) })`. The trigger only gets `aria-controls` while the popover is in the DOM (open, or always with `keepMounted`), as in MUI.
 
 ### Callbacks
 

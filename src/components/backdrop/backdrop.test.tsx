@@ -51,7 +51,7 @@ describe('Backdrop', () => {
     );
     const el = screen.getByTestId('bd');
     expect(container.contains(el)).toBe(false);
-    expect(el.parentElement).toBe(document.body);
+    expect(el.parentElement?.hasAttribute("data-mtx-portal-root")).toBe(true);
     expect(el).toHaveClass('mtx-backdrop', 'mtx-backdrop--open');
     expect(el).toHaveAttribute('data-open');
     expect(el).not.toHaveAttribute('aria-hidden');

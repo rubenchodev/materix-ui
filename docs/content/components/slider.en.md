@@ -73,7 +73,7 @@ An array value (`defaultValue={[20, 60]}`) or `range` creates two thumbs, each w
 {{< react-demo "slider/09-range" >}}
 
 {{< callout type="info" title="Form submission" >}}
-A range slider submits two fields: `price-start` and `price-end` for `name="price"`.
+A range slider submits two fields: `price-start` and `price-end` for `name="price"`. `form.reset()` does not restore the slider (same as vanilla and MUI): reset its value from state.
 {{< /callout >}}
 
 ## Track
@@ -198,7 +198,7 @@ With `value` + `onChange` the parent owns the state. `onChange` fires while drag
 ## Accessibility
 
 - Each thumb is a native `<input type="range">`: the browser exposes `role="slider"`, `aria-valuemin`, `aria-valuemax` and `aria-valuenow`. With `valueLabelFormat` or `getAriaValueText` the component also sets `aria-valuetext` ("21 °C").
-- In range mode each thumb gets a translated name: "Price: Minimum" / "Price: Maximum" ("Precio: Mínimo" / "Precio: Máximo" in Spanish).
+- In range mode each thumb gets a translated name: "Price: Minimum" / "Price: Maximum" ("Precio: Mínimo" / "Precio: Máximo" in Spanish). The prefix taken from the `aria-labelledby` element is read once (on mount or when `aria-labelledby` changes); if that text changes later, pass `aria-label` or `getAriaLabel` instead.
 - Vertical sliders set `aria-orientation="vertical"`. The value label and marks are decorative (`aria-hidden`).
 - The focus indicator is the 8px halo around the thumb; animations are disabled with `prefers-reduced-motion`.
 

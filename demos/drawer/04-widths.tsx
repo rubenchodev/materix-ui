@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { Button } from '@rubenchodev/materix-react/components/button';
-import { Drawer } from '@rubenchodev/materix-react/components/drawer';
+import { Drawer, useDrawer } from '@rubenchodev/materix-react/components/drawer';
 import type { DrawerAnchor, DrawerWidth } from '@rubenchodev/materix-react/components/drawer';
 
 export const title = { en: 'Widths', es: 'Anchos' };
@@ -26,27 +25,26 @@ const options: WidthOption[] = [
   { key: 'full', label: 'full · 100vw', width: 'full', title: 'Full screen', text: 'Takes the full width; useful on mobile for complete flows.' },
 ];
 
+/** Disparador y drawer de un ancho (cada uno con su `useDrawer`). */
+function WidthDemo({ option }: { option: WidthOption }) {
+  const drawer = useDrawer();
+  return (
+    <>
+      <Button variant="outlined" {...drawer.getTriggerProps({ action: 'open' })}>
+        {option.label}
+      </Button>
+      <Drawer width={option.width} anchor={option.anchor} title={option.title} padded {...drawer.drawerProps}>
+        <p>{option.text}</p>
+      </Drawer>
+    </>
+  );
+}
+
 export default function Demo() {
-  const [open, setOpen] = useState<string | null>(null);
   return (
     <div className="demo-row">
       {options.map((option) => (
-        <Button key={option.key} variant="outlined" onClick={() => setOpen(option.key)}>
-          {option.label}
-        </Button>
-      ))}
-      {options.map((option) => (
-        <Drawer
-          key={option.key}
-          width={option.width}
-          anchor={option.anchor}
-          title={option.title}
-          padded
-          open={open === option.key}
-          onClose={() => setOpen(null)}
-        >
-          <p>{option.text}</p>
-        </Drawer>
+        <WidthDemo key={option.key} option={option} />
       ))}
     </div>
   );

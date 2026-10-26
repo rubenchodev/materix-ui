@@ -2,8 +2,8 @@
 /**
  * Grupo de botones con bordes unidos (`ButtonGroup` de MUI).
  */
-import { Children, forwardRef, isValidElement, useMemo } from 'react';
-import type { HTMLAttributes, ReactNode } from 'react';
+import { Children, Fragment, cloneElement, forwardRef, isValidElement, useMemo } from 'react';
+import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import '@rubenchodev/materix-ui/components/button.css';
 import '@rubenchodev/materix-ui/components/button-group.css';
 import { cx } from '../../core';
@@ -33,6 +33,23 @@ export interface ButtonGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, '
 }
 
 const VARIANTS = ['contained', 'outlined', 'text'] as const;
+
+/**
+ * Aplana los Fragment y descarta los nodos no válidos para calcular las posiciones.
+ * @param {ReactNode} children Hijos del grupo.
+ * @returns {ReactElement[]} Elementos en orden.
+ */
+function flattenChildren(children: ReactNode): ReactElement[] {
+  const out: ReactElement[] = [];
+  Children.toArray(children).forEach((child) => {
+    if (!isValidElement(child)) return;
+    if (child.type === Fragment) {
+      const nested = flattenChildren((child.props as { children?: ReactNode }).children);
+      nested.forEach((item, i) => out.push(cloneElement(item, { key: `${child.key ?? ''}.${item.key ?? i}` })));
+    } else out.push(child);
+  });
+  return out;
+}
 
 /**
  * Agrupa botones relacionados; variante, tamaño, color, ancho completo y estado deshabilitado se
@@ -69,7 +86,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(function
     [variant, size, color, fullWidth, disableElevation, disabled],
   );
 
-  const items = Children.toArray(children).filter(isValidElement);
+  const items = flattenChildren(children);
   const positionOf = (index: number): string => {
     if (items.length === 1) return 'mtx-button-group__first mtx-button-group__last';
     if (index === 0) return 'mtx-button-group__first';

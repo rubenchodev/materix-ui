@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { Button } from '@rubenchodev/materix-react/components/button';
-import { Drawer } from '@rubenchodev/materix-react/components/drawer';
-import type { DrawerAnchor } from '@rubenchodev/materix-react/components/drawer';
+import { Drawer, useDrawer } from '@rubenchodev/materix-react/components/drawer';
+import type { DrawerAnchor, UseDrawerResult } from '@rubenchodev/materix-react/components/drawer';
 import { List, ListItemButton } from '@rubenchodev/materix-react/components/list';
 
 export const title = { en: 'Anchors', es: 'Anclas' };
@@ -13,16 +12,20 @@ export const description = {
 const icons: Record<DrawerAnchor, string> = { left: 'west', right: 'east', top: 'north', bottom: 'south' };
 
 export default function Demo() {
-  const [open, setOpen] = useState<DrawerAnchor | null>(null);
-  const close = () => setOpen(null);
+  const drawers: Record<DrawerAnchor, UseDrawerResult> = {
+    left: useDrawer(),
+    right: useDrawer(),
+    top: useDrawer(),
+    bottom: useDrawer(),
+  };
   return (
     <div className="demo-row">
       {(Object.keys(icons) as DrawerAnchor[]).map((anchor) => (
-        <Button key={anchor} variant="outlined" startIcon={icons[anchor]} onClick={() => setOpen(anchor)}>
+        <Button key={anchor} variant="outlined" startIcon={icons[anchor]} {...drawers[anchor].getTriggerProps({ action: 'open' })}>
           {anchor}
         </Button>
       ))}
-      <Drawer anchor="left" title="left" open={open === 'left'} onClose={close}>
+      <Drawer anchor="left" title="left" {...drawers.left.drawerProps}>
         <List component="nav" aria-label="Navigation (left)">
           <ListItemButton icon="inbox" selected>
             Inbox
@@ -32,17 +35,17 @@ export default function Demo() {
           <ListItemButton icon="drafts">Drafts</ListItemButton>
         </List>
       </Drawer>
-      <Drawer anchor="right" title="Details" padded open={open === 'right'} onClose={close}>
+      <Drawer anchor="right" title="Details" padded {...drawers.right.drawerProps}>
         <p>Details panel anchored to the right.</p>
         <Button variant="contained" data-mtx-drawer-close>
           OK
         </Button>
       </Drawer>
-      <Drawer anchor="top" title="Notice" padded open={open === 'top'} onClose={close}>
+      <Drawer anchor="top" title="Notice" padded {...drawers.top.drawerProps}>
         <p>Top panel for global notices.</p>
         <Button data-mtx-drawer-close>Got it</Button>
       </Drawer>
-      <Drawer anchor="bottom" title="Share" open={open === 'bottom'} onClose={close}>
+      <Drawer anchor="bottom" title="Share" {...drawers.bottom.drawerProps}>
         <List component="nav" aria-label="Share options">
           <ListItemButton icon="mail">Email</ListItemButton>
           <ListItemButton icon="link">Copy link</ListItemButton>

@@ -186,6 +186,26 @@ describe('SpeedDial', () => {
     expect(button.style.transform).toBe('scale(0)');
   });
 
+  it('hidden cierra el estado con motivo hidden y no reaparece abierto', () => {
+    const onClose = vi.fn();
+    const onOpen = vi.fn();
+    const { rerender } = render(<Basic defaultOpen onClose={onClose} onOpen={onOpen} />);
+    expect(root()).toHaveClass('mtx-speed-dial--open');
+    rerender(<Basic defaultOpen hidden onClose={onClose} onOpen={onOpen} />);
+    expect(onClose).toHaveBeenCalledWith(null, 'hidden');
+    rerender(<Basic defaultOpen onClose={onClose} onOpen={onOpen} />);
+    expect(root()).not.toHaveClass('mtx-speed-dial--open');
+    expect(onOpen).not.toHaveBeenCalled();
+  });
+
+  it('hidden con un dial controlado pide el cierre', () => {
+    const onClose = vi.fn();
+    const { rerender } = render(<Basic open onClose={onClose} />);
+    rerender(<Basic open hidden onClose={onClose} />);
+    expect(onClose).toHaveBeenCalledWith(null, 'hidden');
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
   it('ariaLabel por defecto desde i18n y color del FAB', () => {
     render(
       <SpeedDial color="secondary" data-testid="sd">

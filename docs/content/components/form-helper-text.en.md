@@ -73,7 +73,15 @@ Inside a `FormControl`, the label, the helper text and the controls inherit `err
 
 ### FormLabel props
 
-Native `<div>` attributes; renders `.mtx-form-label` (primary color on focus within, error and disabled colors from `FormControl`).
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `required` | `boolean` | from `FormControl` | Appends an asterisk (` *`, `aria-hidden`). |
+| `error` | `boolean` | from `FormControl` | Error color. |
+| `disabled` | `boolean` | from `FormControl` | Dimmed color. |
+
+Renders `.mtx-form-label` (primary color on focus within). Vanilla has no CSS for the asterisk nor for a standalone label in error/disabled state, so the asterisk is a plain `<span aria-hidden="true">` and the state colors are applied inline with the `--mtx-color-error-text` / `--mtx-color-text-disabled` tokens.
+
+**Differences with MUI:** `FormControl` has no `fullWidth`, `margin`, `variant`, `size` or `focused` props, because vanilla has no CSS for them; use layout utilities around it. The controls of this library stretch their own wrapper when they are `fullWidth`.
 
 ### useFormControl()
 
@@ -105,3 +113,4 @@ Returns `{ error, disabled, required, helperTextIds, registerHelperText } | unde
 - Error state is conveyed with `aria-invalid="true"` on the control, not by color alone: put the reason in the helper text.
 - Disabled helper texts carry `aria-disabled="true"` so their dimmed color is treated as disabled content.
 - Name groups of controls with `FormLabel` + `aria-labelledby` (and `role="group"` on the `FormControl`).
+- A standalone `Radio` inside a `FormControl` inherits `aria-invalid` and the helper texts in `aria-describedby`, like Checkbox and Switch; inside a `RadioGroup` both go on the radiogroup.

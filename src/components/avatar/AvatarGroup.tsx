@@ -22,7 +22,7 @@ export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
   surplusLabel?: string;
   /** Idioma local de los textos (prevalece sobre el proveedor). */
   locale?: string;
-  /** Avatares del grupo. */
+  /** Avatares del grupo; cuenta cada hijo válido (también un Avatar envuelto en Badge o Tooltip), como MUI. */
   children?: ReactNode;
 }
 
@@ -81,12 +81,13 @@ export const AvatarGroup = forwardRef(function AvatarGroup(
       ref={ref}
       className={cx('mtx-avatar-group', className)}
       style={rootStyle}
+      role={rest.role ?? 'group'}
       aria-label={rest['aria-label'] ?? label}
     >
       {/* Los excedentes se ocultan con `hidden`, como en vanilla, para no desmontarlos. */}
       {avatars.map((avatar, index) => (index < visible ? avatar : cloneElement(avatar, { hidden: true })))}
       {surplus > 0 ? (
-        <span className="mtx-avatar mtx-avatar--surplus" aria-label={template.replace('{count}', String(surplus))}>
+        <span className="mtx-avatar mtx-avatar--surplus" role="img" aria-label={template.replace('{count}', String(surplus))}>
           {`+${surplus}`}
         </span>
       ) : null}

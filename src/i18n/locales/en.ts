@@ -13,7 +13,8 @@ const en = {
   },
 
   appBar: {
-    openNavigation: 'Open navigation'
+    openNavigation: 'Open navigation',
+    moreOptions: 'More options'
   },
 
   dateTimePicker: {

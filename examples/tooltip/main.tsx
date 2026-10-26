@@ -1,3 +1,4 @@
+import '@rubenchodev/materix-ui/base.css'; // primero: los CSS de componentes (demos) deben ganar a base.css
 /**
  * Página de ejemplo de Tooltip: monta las demos de demos/tooltip.
  */

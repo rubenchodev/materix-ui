@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { Button } from '@rubenchodev/materix-react/components/button';
-import { Drawer, DrawerContent, DrawerFooter, DrawerHeader } from '@rubenchodev/materix-react/components/drawer';
+import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, useDrawer } from '@rubenchodev/materix-react/components/drawer';
 import { TextField } from '@rubenchodev/materix-react/components/text-field';
 
 export const title = { en: 'Manual BEM composition', es: 'Composición BEM manual' };
@@ -10,15 +9,15 @@ export const description = {
 };
 
 export default function Demo() {
-  const [open, setOpen] = useState(false);
+  const drawer = useDrawer();
   return (
     <>
       <div className="demo-row">
-        <Button variant="outlined" onClick={() => setOpen(true)}>
+        <Button variant="outlined" {...drawer.getTriggerProps({ action: 'open' })}>
           Open BEM drawer
         </Button>
       </div>
-      <Drawer width="wide" open={open} onClose={() => setOpen(false)} aria-labelledby="drawer-bem-title">
+      <Drawer width="wide" {...drawer.drawerProps} aria-labelledby="drawer-bem-title">
         <DrawerHeader>
           <h3 className="mtx-drawer__title" id="drawer-bem-title">
             Edit profile

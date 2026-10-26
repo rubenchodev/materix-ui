@@ -1,3 +1,6 @@
+/**
+ * Texto de Materix UI (`Typography` de MUI): escala h1–overline, colores, alineación y variantes responsive.
+ */
 import { forwardRef } from 'react';
 import type { ComponentPropsWithoutRef, ComponentPropsWithRef, ElementType, ForwardedRef, ReactElement } from 'react';
 import '@rubenchodev/materix-ui/components/typography.css';

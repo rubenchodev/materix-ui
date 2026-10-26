@@ -147,7 +147,7 @@ Con `checked` + `onChange` el estado lo gestiona el padre; `toggle()`, `disable(
 - El input conserva su semántica nativa con `role="switch"`: los lectores anuncian «interruptor, activado/desactivado» a partir del estado nativo (sin `aria-checked` redundante). Los interruptores no controlados son nativos (`defaultChecked`), así que `form.reset()` los restaura.
 - El texto de ayuda queda **fuera** del `<label>` y se enlaza con `aria-describedby`; `error` añade `aria-invalid="true"`.
 - Toda la fila es clicable. Sin `label`, usa `aria-label` o `aria-labelledby`.
-- `readOnly` mantiene el control enfocable y legible sin simular un estado deshabilitado.
+- `readOnly` mantiene el control enfocable y legible sin simular un estado deshabilitado, y añade `aria-readonly="true"`.
 
 | Tecla | Acción |
 | :--- | :--- |

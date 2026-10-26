@@ -147,7 +147,7 @@ With `checked` + `onChange` the parent owns the state; `toggle()`, `disable()` a
 - The input keeps its native semantics with `role="switch"`: screen readers announce "switch, on/off" from the native checked state (no redundant `aria-checked`). Uncontrolled switches are native (`defaultChecked`), so `form.reset()` restores them.
 - The helper text stays **outside** the `<label>` and is linked with `aria-describedby`; `error` adds `aria-invalid="true"`.
 - The whole row is clickable. Without `label`, use `aria-label` or `aria-labelledby`.
-- `readOnly` keeps the control focusable and readable without faking a disabled state.
+- `readOnly` keeps the control focusable and readable without faking a disabled state, and adds `aria-readonly="true"`.
 
 | Key | Action |
 | :--- | :--- |

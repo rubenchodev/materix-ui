@@ -90,6 +90,11 @@ describe('Pagination', () => {
     buttons.forEach((button) => expect(button).toBeDisabled());
   });
 
+  it('count 0 ocultando anterior y siguiente no pinta nada (como vanilla)', () => {
+    const { container } = render(<Pagination count={0} hidePrevButton hideNextButton showFirstButton showLastButton />);
+    expect(container.querySelectorAll('li')).toHaveLength(0);
+  });
+
   it('modo enlaces: href, aria-disabled y navegación cancelable', () => {
     const onChange = vi.fn((event: { preventDefault: () => void }) => event.preventDefault());
     const { container } = render(<Pagination count={5} getItemHref={(p) => `?page=${p}`} onChange={onChange} />);

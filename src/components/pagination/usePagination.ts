@@ -1,12 +1,13 @@
-'use client';
-import { useCallback } from 'react';
-import type { MouseEvent as ReactMouseEvent, SyntheticEvent } from 'react';
-import { useControlled } from '../../core';
-import { getPaginationItems } from '../../utils';
-import type { PaginationNavType } from '../../utils';
+"use client";
+import { useCallback } from "react";
+import type { MouseEvent as ReactMouseEvent, SyntheticEvent } from "react";
+import { useControlled } from "../../core";
+import { getPaginationItems } from "../../utils";
+import type { PaginationNavType } from "../../utils";
 
 /** Tipo de ítem de la paginación (como `usePagination` de MUI). */
-export type UsePaginationItemType = 'page' | PaginationNavType | 'start-ellipsis' | 'end-ellipsis';
+export type UsePaginationItemType =
+  "page" | PaginationNavType | "start-ellipsis" | "end-ellipsis";
 
 /** Ítem calculado por {@link usePagination}. */
 export interface UsePaginationItem {
@@ -64,7 +65,7 @@ export interface UsePaginationResult {
   setPage: (page: number) => void;
 }
 
-const NAV_TYPES: PaginationNavType[] = ['first', 'previous', 'next', 'last'];
+const NAV_TYPES: PaginationNavType[] = ["first", "previous", "next", "last"];
 
 /**
  * Normaliza un entero con mínimo.
@@ -73,7 +74,11 @@ const NAV_TYPES: PaginationNavType[] = ['first', 'previous', 'next', 'last'];
  * @param {number} min Mínimo.
  * @returns {number} Entero válido.
  */
-function toInt(value: number | undefined, fallback: number, min: number): number {
+function toInt(
+  value: number | undefined,
+  fallback: number,
+  min: number,
+): number {
   const n = Math.trunc(Number(value));
   return Number.isFinite(n) ? Math.max(min, n) : fallback;
 }
@@ -83,7 +88,9 @@ function toInt(value: number | undefined, fallback: number, min: number): number
  * @param {UsePaginationProps} [props] Opciones.
  * @returns {UsePaginationResult} Ítems, página actual y acciones.
  */
-export function usePagination(props: UsePaginationProps = {}): UsePaginationResult {
+export function usePagination(
+  props: UsePaginationProps = {},
+): UsePaginationResult {
   const {
     count: countProp = 1,
     page: pageProp,
@@ -96,12 +103,21 @@ export function usePagination(props: UsePaginationProps = {}): UsePaginationResu
     hidePrevButton = false,
     hideNextButton = false,
     disabled = false,
-    componentName = 'usePagination',
+    componentName = "usePagination",
   } = props;
 
   const count = toInt(countProp, 1, 0);
-  const [rawPage, setRawPage] = useControlled({ controlled: pageProp, default: defaultPage, name: componentName, state: 'page' });
-  const clamp = useCallback((value: number) => Math.min(Math.max(1, toInt(value, 1, 1)), Math.max(1, count)), [count]);
+  const [rawPage, setRawPage] = useControlled({
+    controlled: pageProp,
+    default: defaultPage,
+    name: componentName,
+    state: "page",
+  });
+  const clamp = useCallback(
+    (value: number) =>
+      Math.min(Math.max(1, toInt(value, 1, 1)), Math.max(1, count)),
+    [count],
+  );
   const page = clamp(rawPage);
 
   const goTo = (event: SyntheticEvent, target: number): boolean => {
@@ -113,28 +129,41 @@ export function usePagination(props: UsePaginationProps = {}): UsePaginationResu
   };
 
   const targetOf = (type: PaginationNavType): number => {
-    if (type === 'first') return 1;
-    if (type === 'previous') return page - 1;
-    if (type === 'next') return page + 1;
+    if (type === "first") return 1;
+    if (type === "previous") return page - 1;
+    if (type === "next") return page + 1;
     return count;
   };
 
-  const options = { showFirstButton, showLastButton, hidePrevButton, hideNextButton };
+  const options = {
+    showFirstButton,
+    showLastButton,
+    hidePrevButton,
+    hideNextButton,
+  };
   const entries =
     count > 0
-      ? getPaginationItems({ count, page, siblingCount: toInt(siblingCount, 1, 0), boundaryCount: toInt(boundaryCount, 1, 0), ...options })
-      : NAV_TYPES.filter(
-          (type) =>
-            (type === 'first' && showFirstButton) ||
-            (type === 'last' && showLastButton) ||
-            (type === 'previous' && !hidePrevButton) ||
-            (type === 'next' && !hideNextButton),
-        );
+      ? getPaginationItems({
+          count,
+          page,
+          siblingCount: toInt(siblingCount, 1, 0),
+          boundaryCount: toInt(boundaryCount, 1, 0),
+          ...options,
+        })
+      : hidePrevButton && hideNextButton
+        ? []
+        : NAV_TYPES.filter(
+            (type) =>
+              (type === "first" && showFirstButton) ||
+              (type === "last" && showLastButton) ||
+              (type === "previous" && !hidePrevButton) ||
+              (type === "next" && !hideNextButton),
+          );
 
   const items = entries.map<UsePaginationItem>((entry) => {
-    if (typeof entry === 'number') {
+    if (typeof entry === "number") {
       return {
-        type: 'page',
+        type: "page",
         page: entry,
         selected: entry === page,
         disabled,
@@ -143,12 +172,20 @@ export function usePagination(props: UsePaginationProps = {}): UsePaginationResu
         },
       };
     }
-    if (entry === 'start-ellipsis' || entry === 'end-ellipsis') {
-      return { type: entry, page: null, selected: false, disabled, onClick: () => {} };
+    if (entry === "start-ellipsis" || entry === "end-ellipsis") {
+      return {
+        type: entry,
+        page: null,
+        selected: false,
+        disabled,
+        onClick: () => {},
+      };
     }
     const target = targetOf(entry);
     const itemDisabled =
-      disabled || count === 0 || (entry === 'first' || entry === 'previous' ? page <= 1 : page >= count);
+      disabled ||
+      count === 0 ||
+      (entry === "first" || entry === "previous" ? page <= 1 : page >= count);
     return {
       type: entry,
       page: target,
@@ -160,5 +197,11 @@ export function usePagination(props: UsePaginationProps = {}): UsePaginationResu
     };
   });
 
-  return { items, page, count, goTo, setPage: (value: number) => setRawPage(clamp(value)) };
+  return {
+    items,
+    page,
+    count,
+    goTo,
+    setPage: (value: number) => setRawPage(clamp(value)),
+  };
 }

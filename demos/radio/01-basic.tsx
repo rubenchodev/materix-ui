@@ -7,8 +7,9 @@ export const description = {
 };
 
 export default function Demo() {
+  // demo-row: el FormControl conserva su ancho natural (en una columna flex se estiraría).
   return (
-    <div className="demo-stack">
+    <div className="demo-row">
       <RadioGroup label="Plan" defaultValue="basic">
         <Radio value="basic" label="Basic" />
         <Radio value="pro" label="Professional" />

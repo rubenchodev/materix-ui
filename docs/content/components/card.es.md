@@ -106,12 +106,12 @@ Para un control total (el equivalente a la sintaxis BEM de vanilla), compón tú
 | `raised` | `boolean` | `false` | Elevación 8. |
 | `square` | `boolean` | `false` | Sin radio. |
 | `clickable` | `boolean` | `false` | Toda la tarjeta es interactiva (`role="button"`, `tabIndex=0`, ripple, Enter/Espacio). |
-| `disabled` | `boolean` | `false` | `aria-disabled`, `.mtx-card--disabled`, `tabIndex=-1`; bloquea `onClick`. |
+| `disabled` | `boolean` | `false` | `aria-disabled`, `.mtx-card--disabled`, `tabIndex=-1`; con `clickable` también bloquea `onClick`. |
 | `actionsAlign` | `'start' \| 'center' \| 'end' \| 'between'` | `'end'` | Alineación por defecto de sus `CardActions`. |
 | `title` / `subheader` | `ReactNode` | — | Textos del encabezado generado. |
 | `avatar` | `ReactNode` | — | Avatar del encabezado; una cadena se pinta como Avatar primario. |
-| `action` | `ReactNode` | — | Acción del encabezado. |
-| `actionIcon` | `string` | — | Material Icon de un IconButton generado en el encabezado. |
+| `action` | `ReactNode` | — | Acción del encabezado (se ignora sin `title`, `subheader` ni `avatar`, como en vanilla). |
+| `actionIcon` | `string` | — | Material Icon de un IconButton generado en el encabezado (se ignora sin `title`, `subheader` ni `avatar`, como en vanilla). |
 | `actionLabel` | `string` | i18n `card.actions` | `aria-label` de ese IconButton. |
 | `image` | `string` | — | Genera un `CardMedia` con esa imagen. |
 | `imageAlt` | `string` | — | Texto alternativo de la imagen generada (decorativa sin él). |
@@ -129,7 +129,11 @@ Para un control total (el equivalente a la sintaxis BEM de vanilla), compón tú
 | `CardActions` | `align`, `disableSpacing` | `.mtx-card__actions`, alineada a la derecha por defecto. |
 | `CardActionArea` | `href`, `disabled`, `disableRipple`, `component` | Zona interactiva con ripple; `<button>` por defecto, `<a>` con `href`. |
 
-Todos reenvían `ref` a la raíz, concatenan `className` y pasan los atributos nativos.
+Todos reenvían `ref` a la raíz, concatenan `className` y pasan los atributos nativos. `CardHeader` pinta siempre su zona de contenido, aunque solo haya avatar.
+
+### CardContext y useCardContext
+
+`Card` comparte `{ actionsAlign }` con sus partes mediante `CardContext`; `useCardContext()` lo devuelve (o `null` fuera de una tarjeta). Úsalo en tus propias filas de acciones para seguir la alineación de la tarjeta.
 
 ### Callbacks
 
@@ -152,6 +156,21 @@ Card tampoco emite eventos `mtx:*` en vanilla. Usa el `onClick` nativo en `Card 
 ### Clases CSS
 
 Las mismas que la librería vanilla: `.mtx-card`, `--outlined`, `--elevation-{n}`, `--raised`, `--square`, `--clickable`, `--disabled`, `.mtx-card-action-area` (`--disabled`), `.mtx-card__header` (`-avatar`, `-content`, `-action`), `.mtx-card__title`, `.mtx-card__subheader`, `.mtx-card__media`, `.mtx-card__content`, `.mtx-card__actions` (`--start`, `--center`, `--between`, `--disable-spacing`) y `.mtx-card__actions-end`.
+
+### Variables CSS
+
+| Variable | Uso |
+|---|---|
+| `--mtx-color-background-paper` | Fondo de la tarjeta. |
+| `--mtx-color-text-primary` / `--mtx-color-text-secondary` | Título y contenido. |
+| `--mtx-color-text-disabled` / `--mtx-disabled-opacity` | Estado deshabilitado. |
+| `--mtx-color-divider` | Borde de `outlined`. |
+| `--mtx-color-grey-300` | Fondo de la imagen mientras carga. |
+| `--mtx-elevation-*` | Sombras. |
+| `--mtx-overlay-elevation-*` | Capa blanca por elevación en el tema oscuro (`none` en claro). |
+| `--mtx-focus-ring-width` / `--mtx-focus-ring-color` | Anillo de foco. |
+| `--mtx-shape-radius` | Radio. |
+| `--mtx-duration-standard` / `--mtx-duration-shortest` / `--mtx-easing-standard` | Transiciones. |
 
 ## Accesibilidad
 

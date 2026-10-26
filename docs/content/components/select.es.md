@@ -115,6 +115,7 @@ El menú portado se registra como capa superior: la trampa de foco del [Dialog](
 | `size` | `'medium' \| 'small'` | `'medium'` | 56px o 40px. |
 | `color` | `'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success'` | `'primary'` | Color de foco y selección. |
 | `label` | `ReactNode` | — | Label flotante (y muesca en `outlined`). |
+| `hiddenLabel` | `boolean` | `false` | Borde outlined sin muesca (`.mtx-select--hidden-label`); úsalo con `aria-label` cuando no hay label visible. |
 | `options` | `Array<SelectOption \| SelectOptionGroup>` | — | `{ value, label, icon?, image?, secondary?, disabled? }` o `{ label, options, disabled? }`. Se pintan antes que `children`. |
 | `children` | `<option>` / `<optgroup>` | — | Opciones declarativas; se leen `data-icon`, `data-image` y `data-secondary`. |
 | `multiple` | `boolean` | `false` | Selección múltiple con casillas. |
@@ -161,6 +162,7 @@ El menú portado se registra como capa superior: la trampa de foco del [Dialog](
 | `.mtx-select--small` | Altura de 40px. |
 | `.mtx-select--color-{color}` | Color de la paleta (también en el menú como `.mtx-select__menu--color-{color}`). |
 | `.mtx-select--error` / `--open` / `--adorned-start` | Error, menú abierto, icono inicial. |
+| `.mtx-select--hidden-label` | Borde outlined sin muesca (`hiddenLabel`). |
 | `.mtx-select__label` / `__control` / `__display` / `__display-text` / `__chevron` | Label, combobox, valor mostrado y flecha. |
 | `.mtx-select__outline` / `__legend` | Borde con muesca (`outlined`). |
 | `.mtx-select__adornment--start` | Icono inicial. |
@@ -186,6 +188,7 @@ El menú portado se registra como capa superior: la trampa de foco del [Dialog](
 | `data-max-options`, `data-selected-text-format` | `maxOptions`, `selectedTextFormat` |
 | `data-placeholder` / `title` | `placeholder` |
 | `data-helper-text`, `data-error`, `data-readonly`, `disabled` | `helperText`, `error`, `readOnly`, `disabled` |
+| `data-hidden-label` / `mtx-select--hidden-label` | `hiddenLabel` |
 | `instance.value = …` | Actualizar el estado `value` |
 | `open()` / `close()` | `open` + `onOpen` / `onClose` |
 | `disable()` / `enable()` | `disabled` |
@@ -195,16 +198,18 @@ El menú portado se registra como capa superior: la trampa de foco del [Dialog](
 ## Accesibilidad
 
 - Patrón WAI-ARIA *select-only combobox*: el control tiene `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded` y `aria-controls`; el menú contiene un `role="listbox"` con elementos `role="option"` (`aria-selected`, `aria-disabled`) y `role="group"` para los grupos. Con `multiple`, el listbox lleva `aria-multiselectable`.
-- El foco se queda en el combobox y la opción activa se anuncia con `aria-activedescendant`; con `search`, el foco pasa a la caja de búsqueda, que lleva `aria-activedescendant`.
+- El foco se queda en el combobox y la opción activa se anuncia con `aria-activedescendant`; con `search`, el foco pasa a la caja de búsqueda, que lleva `aria-activedescendant`, y no hay opción activa hasta la primera flecha.
+- Con el menú abierto se quita el anillo de foco global del combobox (su borde de 2px ya marca el foco); vuelve al cerrar.
+- Con texto de ayuda propio, `aria-describedby` apunta solo a él y no a los textos del FormControl.
 - El label da nombre al combobox (`aria-labelledby`); sin label usa `aria-label`. `error` añade `aria-invalid`, `required` `aria-required`, `readOnly` `aria-readonly` y `helperText` se enlaza con `aria-describedby`.
 - El `<select>` nativo oculto es `aria-hidden` y queda fuera del orden de tabulación; Escape llega por la pila común de capas (solo se cierra la capa superior).
 
 | Tecla | Acción |
 | :--- | :--- |
 | <kbd>Tab</kbd> | Enfoca el combobox; con el menú abierto, lo cierra y avanza. |
-| <kbd>↓</kbd> / <kbd>↑</kbd> / <kbd>Espacio</kbd> / <kbd>Enter</kbd> | Abre el menú. |
-| <kbd>↓</kbd> / <kbd>↑</kbd> | Mueve la opción activa (de forma circular). |
-| <kbd>Inicio</kbd> / <kbd>Fin</kbd> | Primera / última opción. |
-| Letras | Typeahead: salta a la opción que empieza por lo tecleado. |
-| <kbd>Enter</kbd> / <kbd>Espacio</kbd> | Selecciona la opción activa (la alterna en `multiple`). |
-| <kbd>Esc</kbd> | Cierra el menú y devuelve el foco al combobox. |
+| <kbd>↓</kbd> / <kbd>↑</kbd> / <kbd>Espacio</kbd> / <kbd>Enter</kbd> | Cerrado: abre el menú. |
+| <kbd>Inicio</kbd> / <kbd>Fin</kbd> | Cerrado (selección única): selecciona la primera / última opción. Abierto: activa la primera / última (no en la caja de búsqueda). |
+| Letras | Cerrado (selección única): selecciona la siguiente opción que empieza por lo tecleado. Abierto sin `search`: la activa. Con `search` se escriben en la caja. |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Abierto: mueve la opción activa (de forma circular). |
+| <kbd>Enter</kbd> / <kbd>Espacio</kbd> | Abierto: selecciona la opción activa (la alterna en `multiple`); <kbd>Espacio</kbd> escribe en la búsqueda. |
+| <kbd>Esc</kbd> | Abierto: cierra el menú y devuelve el foco al combobox. |

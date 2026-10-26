@@ -1,5 +1,6 @@
 import { act, render, renderHook, screen } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
+import { hydrateRoot } from 'react-dom/client';
 import type { ReactNode } from 'react';
 import { useT } from '../i18n';
 import {
@@ -230,3 +231,34 @@ describe('MaterixProvider', () => {
     expect(b.container.firstElementChild?.tagName).toBe('P');
   });
 });
+
+describe('hidratación SSR', () => {
+  it('con mode="system" y sistema oscuro no hay transición a light', async () => {
+    const scheme = mockScheme(true);
+    const app = <ThemeProvider mode="system" storageKey={null}><span>x</span></ThemeProvider>;
+    const markup = renderToString(app);
+    new Function(getThemeScript(null, { defaultMode: 'system' }))();
+    expect(html.getAttribute('data-mtx-theme')).toBe('dark');
+
+    const written: string[] = [];
+    const original = html.setAttribute.bind(html);
+    const spy = vi.spyOn(html, 'setAttribute').mockImplementation((name: string, value: string) => {
+      if (name === 'data-mtx-theme') written.push(value);
+      original(name, value);
+    });
+    const container = document.createElement('div');
+    container.innerHTML = markup;
+    document.body.appendChild(container);
+    let root: ReturnType<typeof hydrateRoot> | undefined;
+    await act(async () => {
+      root = hydrateRoot(container, app);
+    });
+    expect(written).not.toContain('light');
+    expect(html.getAttribute('data-mtx-theme')).toBe('dark');
+    spy.mockRestore();
+    act(() => root!.unmount());
+    container.remove();
+    scheme.restore();
+  });
+});
+

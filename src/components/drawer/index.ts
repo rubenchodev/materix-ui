@@ -4,3 +4,5 @@ export { DrawerHeader, DrawerContent, DrawerFooter, DrawerSubmenu } from './Draw
 export type { DrawerHeaderProps, DrawerContentProps, DrawerFooterProps, DrawerSubmenuProps } from './DrawerParts';
 export { useDrawerMode, DRAWER_BREAKPOINTS } from './useDrawerMode';
 export type { DrawerVariant, DrawerMode, DrawerBreakpoint } from './useDrawerMode';
+export { useDrawer } from './useDrawer';
+export type { UseDrawerOptions, UseDrawerResult, DrawerTriggerProps, DrawerTriggerOptions, DrawerStateProps } from './useDrawer';

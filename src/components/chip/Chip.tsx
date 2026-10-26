@@ -39,10 +39,10 @@ export interface ChipProps extends Omit<HTMLAttributes<HTMLElement>, 'color' | '
   icon?: ReactNode;
   /** Avatar inicial (p. ej. un `.mtx-avatar`); recibe la clase `mtx-chip__avatar`. */
   avatar?: ReactNode;
-  /** Hace el chip interactivo (`data-clickable`). Por defecto `true` si hay `onClick`. */
+  /** Hace el chip interactivo (`data-clickable`). Por defecto `true` si hay `onClick` o `href` (como MUI). */
   clickable?: boolean;
   /** Clic o Enter/Espacio en un chip clickable (equivale a `mtx:chip:click`). */
-  onClick?: (event: ChipEvent) => void;
+  onClick?: (event: ReactMouseEvent<HTMLElement>) => void;
   /** Muestra el icono de borrado; se invoca con clic o Delete/Backspace (equivale a `mtx:chip:delete`). */
   onDelete?: (event: ChipEvent) => void;
   /** Icono de borrado personalizado (`data-delete-icon`). */
@@ -116,7 +116,7 @@ export const Chip = forwardRef<HTMLElement, ChipProps>(function Chip(props, ref)
   const t = useT('chip', locale);
   const Root: ElementType = component ?? (href ? 'a' : 'div');
   const nativeInteractive = Root === 'button' || Root === 'a';
-  const clickable = clickableProp ?? Boolean(onClick);
+  const clickable = clickableProp ?? Boolean(onClick || href);
   const deletable = Boolean(onDelete);
   const interactive = clickable || deletable;
 

@@ -140,6 +140,60 @@ describe('Tabs', () => {
     expect(screen.getByRole('tab', { name: 'Contacts' })).toBeInTheDocument();
   });
 
+  it('Tabs controlado dentro de TabContext sincroniza los paneles', async () => {
+    const user = userEvent.setup();
+    const onContextChange = vi.fn();
+    function Synced() {
+      const [value, setValue] = useState<string | number>('b');
+      return (
+        <TabContext onChange={(_, v) => onContextChange(v)}>
+          <Tabs value={value} onChange={(_, v) => setValue(v)} aria-label="S">
+            <Tab value="a" label="A" />
+            <Tab value="b" label="B" />
+          </Tabs>
+          <TabPanel value="a">Panel A</TabPanel>
+          <TabPanel value="b">Panel B</TabPanel>
+        </TabContext>
+      );
+    }
+    render(<Synced />);
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Panel B');
+    await user.click(screen.getByRole('tab', { name: 'A' }));
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Panel A');
+    expect(onContextChange).toHaveBeenCalledWith('a');
+  });
+
+  it('avisa en desarrollo si recibe defaultValue dentro de TabContext', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(
+      <TabContext>
+        <Tabs defaultValue="a" aria-label="W">
+          <Tab value="a" label="A" />
+        </Tabs>
+      </TabContext>,
+    );
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('defaultValue'));
+    warn.mockRestore();
+  });
+
+  it('aplana los Tab dentro de un Fragment', async () => {
+    const user = userEvent.setup();
+    render(
+      <Tabs aria-label="F">
+        <>
+          <Tab label="A" />
+          <Tab label="B" />
+        </>
+      </Tabs>,
+    );
+    const a = screen.getByRole('tab', { name: 'A' });
+    expect(a).toHaveAttribute('tabindex', '0');
+    expect(a).toHaveAttribute('aria-selected', 'true');
+    a.focus();
+    await user.keyboard('{ArrowRight}{Enter}');
+    expect(screen.getByRole('tab', { name: 'B' })).toHaveAttribute('aria-selected', 'true');
+  });
+
   it('RTL invierte las flechas horizontales', async () => {
     const user = userEvent.setup();
     render(

@@ -5,7 +5,7 @@ group: "data-display"
 icon: "format_list_bulleted"
 weight: 50
 example: "list"
-import: "List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar, ListItemSecondaryAction, ListSubheader"
+import: "List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar, ListItemSecondaryAction, ListSubheader, ListSelectionProvider"
 mui: "https://mui.com/material-ui/react-list/"
 ---
 
@@ -69,7 +69,7 @@ Pasa el ratón para ver el hover y usa Tab para el foco. `disabled` deshabilita 
 
 ### Navegación lateral
 
-Con `href` las filas son enlaces; la seleccionada recibe `aria-current="page"`.
+Con `href` las filas son enlaces; la seleccionada recibe `aria-current="page"`. En vanilla el ámbito de selección es el `nav` o Drawer contenedor, así que varias listas comparten una sola selección; en React, envuélvelas en `ListSelectionProvider` (`value`, `defaultValue`, `onSelect`, `selectable`). Sin proveedor cada `List` raíz mantiene su propia selección, y una `List` con `value`, `defaultValue` u `onSelect` propios no se une al proveedor.
 
 {{< react-demo "list/09-use-cases" >}}
 
@@ -104,6 +104,19 @@ Para un control total (el equivalente a la sintaxis BEM de vanilla), compón `Li
 | `defaultValue` | `string \| null` | `null` | Fila seleccionada inicial (no controlado). |
 | `onSelect` | `(detail: { item: HTMLElement; value: string }) => void` | — | Se seleccionó una fila con un clic. |
 | `component` | `ElementType` | `'ul'` | Elemento raíz. |
+
+### ListSelectionProvider
+
+Comparte una sola selección entre varias `List` (el ámbito vanilla de un `nav` o Drawer). Lo usan las listas raíz sin `value`, `defaultValue` ni `onSelect` propios; las anidadas siguen compartiendo el ámbito de su padre.
+
+| Prop | Tipo | Por defecto | Descripción |
+|---|---|---|---|
+| `value` | `string \| null` | — | Fila seleccionada (controlado). |
+| `defaultValue` | `string \| null` | `null` | Fila seleccionada inicial (no controlado). |
+| `onSelect` | `(detail: { item: HTMLElement; value: string }) => void` | — | Se seleccionó una fila de cualquiera de las listas. |
+| `selectable` | `boolean` | `true` | `false`: sin selección al pulsar. |
+
+`useListSelection()` devuelve el ámbito compartido (o `null`).
 
 ### ListItem y ListItemButton
 
@@ -144,7 +157,7 @@ Todos reenvían `ref` a la raíz, concatenan `className` y pasan los atributos n
 
 | Callback | Argumentos | Evento vanilla |
 |---|---|---|
-| `List.onSelect` | `{ item: HTMLElement; value: string }` | `mtx:list:select` (`detail.item`) |
+| `List.onSelect` / `ListSelectionProvider.onSelect` | `{ item: HTMLElement; value: string }` | `mtx:list:select` (`detail.item`) |
 
 ### Equivalencia con vanilla
 
@@ -160,6 +173,7 @@ Todos reenvían `ref` a la raíz, concatenan `className` y pasan los atributos n
 | `data-no-select` | `disableSelect` |
 | `data-inset`, `data-sticky` (subcabecera) | `inset`, `sticky` |
 | `mtx:list:select` | `onSelect` |
+| Ámbito de selección del `nav` / Drawer contenedor | `ListSelectionProvider` |
 | setter `selected`, `disable()` / `enable()` | `value` / `selected`, `disabled` |
 
 ### Clases CSS

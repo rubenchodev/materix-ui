@@ -86,6 +86,8 @@ export const MenuInternalContext = createContext<MenuInternalContextValue | null
 export const MenuListContext = createContext<MenuListContextValue | null>(null);
 export const MenuGroupContext = createContext<MenuGroupContextValue | null>(null);
 export const SubmenuTriggerContext = createContext<SubmenuTriggerContextValue | null>(null);
+/** @internal Indica al `Menu` que lo monta un `Submenu` (no forma parte de la API pública). */
+export const SubmenuFlagContext = createContext(false);
 
 /**
  * Lee el contexto de la lista de menú contenedora.

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createRef, useState } from 'react';
+import { StrictMode, createRef, useState } from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { expectParity, mountVanilla } from '../../../tests/parity';
 import {
@@ -269,7 +269,7 @@ describe('DatePicker', () => {
   it('modal: backdrop en body, aria-modal y trampa de Tab', () => {
     render(<DatePicker label="Date" display="modal" defaultValue="2026-10-20" />);
     fireEvent.click(toggle());
-    const backdrop = q('body > .mtx-picker-backdrop');
+    const backdrop = q('[data-mtx-portal-root] > .mtx-picker-backdrop');
     expect(backdrop.classList.contains('mtx-picker-backdrop--open')).toBe(true);
     const dialog = q('.mtx-picker-dialog', backdrop);
     expect(dialog.getAttribute('aria-modal')).toBe('true');
@@ -379,6 +379,8 @@ describe('Rangos', () => {
     expect((value as DateRange).end!.getDate()).toBe(25);
     expect(detail.isRange).toBe(true);
     expect(detail.value).toBe('07/20/2026 - 07/25/2026');
+    expect(detail.date.getDate()).toBe(25);
+    expect(detail.iso).toBe(detail.endDate.toISOString());
     expect(popover().classList.contains('mtx-picker-popover--open')).toBe(false);
   });
 
@@ -423,5 +425,67 @@ describe('Estático', () => {
     expect(root.getAttribute('aria-disabled')).toBe('true');
     expect(root.hasAttribute('inert')).toBe(true);
     expect(root.classList.contains('mtx-picker-static--disabled')).toBe(true);
+  });
+});
+
+describe('Correcciones de auditoría', () => {
+  it('controlado: si el padre ignora onChange, el campo y el calendario siguen mostrando value', () => {
+    const onChange = vi.fn();
+    render(<DatePicker label="Date" value={new Date(2026, 9, 20)} onChange={onChange} display="modal" locale="en-US" />);
+    expect(input().value).toBe('10/20/2026');
+    fireEvent.click(toggle());
+    fireEvent.click(day('2026-10-22'));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(input().value).toBe('10/20/2026');
+    expect(day('2026-10-20').classList.contains('mtx-date-picker__day--selected')).toBe(true);
+    expect(day('2026-10-22').classList.contains('mtx-date-picker__day--selected')).toBe(false);
+  });
+
+  it('Borrar llama a onChange y onAccept con null', () => {
+    const onChange = vi.fn();
+    const onAccept = vi.fn();
+    render(
+      <DatePicker label="Date" defaultValue="2026-10-20" actions={['clear', 'accept']} onChange={onChange} onAccept={onAccept} />,
+    );
+    fireEvent.click(toggle());
+    fireEvent.click(qa('.mtx-picker-actions .mtx-button').find((b) => b.textContent === 'Clear')!);
+    expect(onChange).toHaveBeenLastCalledWith(null, expect.objectContaining({ value: '' }));
+    expect(onAccept).toHaveBeenCalledWith(null, expect.objectContaining({ value: '', iso: null }));
+    expect(input().value).toBe('');
+  });
+
+  it('modal cerrado: el backdrop es inert hasta abrir y vuelve a serlo tras la salida', () => {
+    vi.useFakeTimers();
+    try {
+      render(<DatePicker label="Date" display="modal" />);
+      const backdrop = q('.mtx-picker-backdrop');
+      expect(backdrop.hasAttribute('inert')).toBe(true);
+      fireEvent.click(toggle());
+      expect(backdrop.hasAttribute('inert')).toBe(false);
+      fireEvent.keyDown(document.activeElement!, { key: 'Escape' });
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
+      expect(backdrop.hasAttribute('inert')).toBe(true);
+      expect(q('.mtx-picker-dialog').childElementCount).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('DateCalendar en StrictMode sin errores de consola', () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      render(
+        <StrictMode>
+          <DateCalendar />
+          <StaticDatePicker />
+        </StrictMode>,
+      );
+      fireEvent.click(qa('.mtx-date-picker__nav-btn')[1]);
+      expect(spy).not.toHaveBeenCalled();
+    } finally {
+      spy.mockRestore();
+    }
   });
 });

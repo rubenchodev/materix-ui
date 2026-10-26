@@ -4,7 +4,7 @@ import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import { useForkRef } from '../../core';
 import { Menu } from './Menu';
 import type { MenuProps } from './Menu';
-import { SubmenuTriggerContext, useMenuListContext } from './MenuContext';
+import { SubmenuFlagContext, SubmenuTriggerContext, useMenuListContext } from './MenuContext';
 import type { SubmenuTriggerContextValue } from './MenuContext';
 import { MenuItem } from './MenuItem';
 import type { MenuItemOwnProps } from './MenuItem';
@@ -21,7 +21,7 @@ export interface SubmenuProps
   /** Ítems del submenú. */
   children?: ReactNode;
   /** Props del `Menu` anidado (id, className, slotProps…). */
-  menuProps?: Partial<Omit<MenuProps, 'open' | 'anchorEl' | 'submenu' | 'children'>>;
+  menuProps?: Partial<Omit<MenuProps, 'open' | 'anchorEl' | 'children'>>;
   /** Clases del disparador. */
   className?: string;
 }
@@ -97,11 +97,11 @@ export const Submenu = forwardRef<HTMLDivElement, SubmenuProps>(function Submenu
         </MenuItem>
       </SubmenuTriggerContext.Provider>
       <SubmenuTriggerContext.Provider value={null}>
+        <SubmenuFlagContext.Provider value>
         <Menu
           {...menuProps}
           ref={childListRef}
           id={menuId}
-          submenu
           open={open}
           anchorEl={triggerEl}
           restoreFocusTo={triggerEl}
@@ -114,6 +114,7 @@ export const Submenu = forwardRef<HTMLDivElement, SubmenuProps>(function Submenu
         >
           {children}
         </Menu>
+        </SubmenuFlagContext.Provider>
       </SubmenuTriggerContext.Provider>
     </>
   );

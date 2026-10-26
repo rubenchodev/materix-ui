@@ -2,7 +2,9 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { onTestFinished } from 'vitest';
 import { useState } from 'react';
 import { expectParity, mountVanilla } from '../../../tests/parity';
-import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerSubmenu, useDrawerMode } from './index';
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
+import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerSubmenu, useDrawer, useDrawerMode } from './index';
 import type { DrawerCloseReason, DrawerProps } from './index';
 
 /** Drawer controlado con disparador que registra los motivos de cierre. */
@@ -95,7 +97,7 @@ describe('Drawer', () => {
       </Drawer>,
     );
     const el = screen.getByTestId('drawer');
-    expect(el.parentElement).toBe(document.body);
+    expect(el.parentElement?.hasAttribute("data-mtx-portal-root")).toBe(true);
     expect(el).toHaveClass('mtx-drawer', 'mtx-drawer--left', 'mtx-drawer--temporary', 'mtx-drawer--open');
     expect(el).toHaveAttribute('aria-hidden', 'false');
     expect(el.querySelector('.mtx-drawer__header .mtx-drawer__title')).toHaveTextContent('Mail');
@@ -445,5 +447,74 @@ describe('Drawer responsive', () => {
     }
     render(<Probe />);
     expect(mode).toBe('persistent');
+  });
+});
+
+describe('Drawer SSR', () => {
+  it('no notifica onModeChange por la corrección tras hidratar; sí en cruces posteriores', async () => {
+    const media = mockMatchMedia(true);
+    const onModeChange = vi.fn();
+    const onClose = vi.fn();
+    const app = (
+      <Drawer variant="responsive" title="Mail" onModeChange={onModeChange} onClose={onClose} data-testid="ssr" disablePortal>
+        <p>Body</p>
+      </Drawer>
+    );
+    const host = document.createElement('div');
+    host.innerHTML = renderToString(app);
+    document.body.appendChild(host);
+    expect(host.querySelector('.mtx-drawer')).toHaveClass('mtx-drawer--temporary');
+    let root: ReturnType<typeof hydrateRoot> | null = null;
+    await act(async () => {
+      root = hydrateRoot(host, app);
+    });
+    expect(host.querySelector('.mtx-drawer')).toHaveClass('mtx-drawer--permanent');
+    expect(onModeChange).not.toHaveBeenCalled();
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 5));
+    });
+    media.set(false);
+    expect(onModeChange).toHaveBeenCalledWith('temporary', 'permanent');
+    expect(onClose).not.toHaveBeenCalled();
+    act(() => root?.unmount());
+    host.remove();
+    media.restore();
+  });
+});
+
+describe('useDrawer', () => {
+  /** Disparador y drawer conectados por el hook. */
+  function HookDemo({ onClose }: { onClose?: (reason: string) => void }) {
+    const drawer = useDrawer({ id: 'hook-drawer', onClose });
+    return (
+      <>
+        <button type="button" {...drawer.getTriggerProps()}>
+          trigger
+        </button>
+        <button type="button" {...drawer.getTriggerProps({ action: 'open' })}>
+          opener
+        </button>
+        <Drawer {...drawer.drawerProps} title="Hook" />
+      </>
+    );
+  }
+
+  it('getTriggerProps da aria-controls/aria-expanded y alterna; drawerProps cierra con el motivo', () => {
+    const onClose = vi.fn();
+    render(<HookDemo onClose={onClose} />);
+    const trigger = screen.getByText('trigger');
+    expect(trigger).toHaveAttribute('aria-controls', 'hook-drawer');
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    fireEvent.click(trigger);
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    expect(document.getElementById('hook-drawer')).toHaveClass('mtx-drawer--open');
+    // El disparador no cuenta como clic fuera.
+    fireEvent.mouseDown(trigger);
+    expect(onClose).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByText('opener'), { bubbles: true });
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(onClose).toHaveBeenLastCalledWith('escapeKeyDown');
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
   });
 });

@@ -64,7 +64,7 @@ Pasa el ratón para ver el cambio de color del borde, pulsa para ver el ripple y
 
 ## Indeterminado
 
-El estado indeterminado indica que solo algunas opciones hijas están marcadas. Como en MUI, `indeterminate` lo controla el padre: el componente mantiene la propiedad DOM `input.indeterminate` y `aria-checked="mixed"` sincronizadas con la prop en cada render.
+El estado indeterminado indica que solo algunas opciones hijas están marcadas. Como en MUI, `indeterminate` lo controla el padre: el componente mantiene la propiedad DOM `input.indeterminate` y `aria-checked="mixed"` sincronizadas con la prop. Un clic del usuario limpia el estado mixto, como hacen el navegador y vanilla, hasta que la prop vuelve a cambiar.
 
 {{< react-demo "checkbox/07-indeterminate" >}}
 

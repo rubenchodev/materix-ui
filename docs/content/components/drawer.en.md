@@ -14,12 +14,21 @@ mui: "https://mui.com/material-ui/react-drawer/"
 ```tsx
 import { Drawer } from '@rubenchodev/materix-react/components/drawer';
 // pieces for manual composition and the responsive hook:
-import { DrawerHeader, DrawerContent, DrawerFooter, DrawerSubmenu, useDrawerMode } from '@rubenchodev/materix-react/components/drawer';
+import { DrawerHeader, DrawerContent, DrawerFooter, DrawerSubmenu, useDrawer, useDrawerMode } from '@rubenchodev/materix-react/components/drawer';
 ```
 
 ## Basic usage
 
 `<Drawer open={…} onClose={…} title="…">` with the content directly inside. `title` generates the header with a title and a close button; the content is wrapped in the scrollable panel `.mtx-drawer__content`, and the temporary drawer adds a [Backdrop](../backdrop/). `open` is controlled: `onClose(event, reason)` asks to close and you update the state.
+
+The `useDrawer()` hook does that wiring for you, like `usePopover` and `useMenu`: it returns `{ open, setOpen, toggle, getTriggerProps(), drawerProps }`. Spread `getTriggerProps()` on the trigger (it adds `aria-controls`, `aria-expanded` and `onClick`; pass `{ action: 'open' }` so it only opens, like `data-mtx-drawer-open`) and `drawerProps` (`id`, `open`, `onClose`) on the Drawer. Thanks to `aria-controls` the trigger is not counted as a click outside.
+
+```tsx
+const drawer = useDrawer();
+
+<Button variant="contained" {...drawer.getTriggerProps({ action: 'open' })}>Open navigation</Button>
+<Drawer {...drawer.drawerProps} title="Mail">…</Drawer>
+```
 
 {{< react-demo id="drawer/01-basic" layout="block" >}}
 
@@ -64,7 +73,7 @@ const [open, setOpen] = useState(false);
 
 ## Variants
 
-- `temporary` (default): modal over a backdrop. It locks the page scroll, traps focus, closes with <kbd>Escape</kbd>, the backdrop or a click outside, and is rendered in a portal on `document.body`.
+- `temporary` (default): modal over a backdrop. It locks the page scroll, traps focus, closes with <kbd>Escape</kbd>, the backdrop or a click outside, and is rendered in a portal (the shared portal root `[data-mtx-portal-root]`; `disablePortal` keeps it in place). The backdrop is the [Backdrop](../backdrop/) component (`.mtx-backdrop`, with its fade), not vanilla's `.mtx-drawer__backdrop`.
 - `persistent`: opens without a backdrop and the page stays usable; move the content yourself to make room for it.
 - `permanent`: always visible, a fixed-width box in a flex row with a sticky panel of window height. It never asks to close.
 - `responsive`: see "Responsive".
@@ -105,7 +114,7 @@ The AppBar spans the full width and the drawer starts below it. On a full page u
 
 ## Responsive
 
-`variant="responsive"` with `breakpoint="sm" | "md" | "lg" | "xl"` (600, 900, 1200, 1536px; default `md`): below it the drawer is temporary and opens with its trigger; from it, permanent. When crossing the breakpoint, classes, ARIA, backdrop and focus are synced without animation, `onModeChange(mode, previousMode)` fires (vanilla `mtx:drawer:mode-change`), and an open temporary drawer asks to close with reason `breakpoint` so it doesn't reappear when going back to mobile. If focus was inside when it becomes temporary, it moves to the visible trigger. The responsive drawer stays mounted and in place (no portal), so its content keeps its state. `headerMode="temporary"` shows the generated header only while it is temporary. Resize the window.
+`variant="responsive"` with `breakpoint="sm" | "md" | "lg" | "xl"` (600, 900, 1200, 1536px; default `md`): below it the drawer is temporary and opens with its trigger; from it, permanent. When crossing the breakpoint, classes, ARIA, backdrop and focus are synced without animation, `onModeChange(mode, previousMode)` fires (vanilla `mtx:drawer:mode-change`), and an open temporary drawer asks to close with reason `breakpoint` so it doesn't reappear when going back to mobile. If focus was inside when it becomes temporary, it moves to the visible trigger. The responsive drawer stays mounted and in place (no portal), so its content keeps its state. With SSR the server doesn't know the viewport and renders the temporary mode; after hydration the drawer switches to the real mode without notifying `onModeChange` (vanilla doesn't emit `mode-change` on init either). That first switch can still cause a jump on desktop: if it matters, render the shell only on the client or reserve the drawer width. `headerMode="temporary"` shows the generated header only while it is temporary. Resize the window.
 
 {{< react-demo id="drawer/09-responsive" layout="block" >}}
 
@@ -123,7 +132,7 @@ A right drawer with `width="wide"` and `padded` containing a form laid out with 
 
 ## Programmatic usage
 
-The equivalent of `open()`, `close(reason)`, `toggle()` and `isOpen` is the `open` prop. `onOpen` and `onClose(event, reason)` are the equivalents of `mtx:drawer:open` and `mtx:drawer:close`. The log shows the real callbacks: also try <kbd>Escape</kbd>, the backdrop and the X.
+The equivalent of `open()`, `close(reason)`, `toggle()` and `isOpen` is the `open` prop, or `setOpen`, `toggle` and `open` from `useDrawer`. `onOpen` and `onClose(event, reason)` are the equivalents of `mtx:drawer:open` and `mtx:drawer:close`. The log shows the real callbacks: also try <kbd>Escape</kbd>, the backdrop and the X.
 
 {{< react-demo id="drawer/12-programmatic" layout="block" >}}
 
@@ -146,7 +155,7 @@ With `DrawerHeader`, `DrawerContent` and `DrawerFooter` as children the drawer g
 | `breakpoint` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Breakpoint of `responsive`. |
 | `onModeChange` | `(mode, previousMode) => void` | — | The effective mode changed (`responsive`). |
 | `anchor` | `'left' \| 'right' \| 'top' \| 'bottom'` | `'left'` | Edge it slides from. |
-| `width` | `'narrow' \| 'wide' \| 'full' \| number \| string` | — | Canonical width or any length. |
+| `width` | `'narrow' \| 'wide' \| 'full' \| 'full-width' \| number \| string` | — | Canonical width or any length. |
 | `elevation` | `number` | — | Shadow `0`–`24`. |
 | `clipped` | `boolean` | `false` | Below the AppBar (`permanent`, `persistent`, `responsive`). |
 | `absolute` | `boolean` | `false` | Contained in the positioned parent (drawer and backdrop). |
@@ -163,8 +172,8 @@ With `DrawerHeader`, `DrawerContent` and `DrawerFooter` as children the drawer g
 | `disableEscapeKeyDown` | `boolean` | `false` | Escape doesn't close it. |
 | `keepMounted` | `boolean` | `false` | Keeps the closed temporary drawer in the DOM (`responsive` always does). |
 | `backdropProps` | `Partial<BackdropProps>` | — | Extra props of the backdrop. |
-| `disablePortal` | `boolean` | `false` | Renders the temporary drawer in place. |
-| `container` | `Element \| ref \| () => Element` | `document.body` | Portal target. |
+| `disablePortal` | `boolean` | `false` | Renders the temporary drawer in place instead of the portal root. |
+| `container` | `Element \| ref \| () => Element` | portal root | Portal target. |
 
 `className` is merged; `ref`, `id`, `role`, `style` and any other attribute go to the root `<div>`. A `padding` in `style` is moved to the panel so the header and footer stay edge to edge.
 
@@ -176,6 +185,7 @@ With `DrawerHeader`, `DrawerContent` and `DrawerFooter` as children the drawer g
 | `DrawerContent` | `.mtx-drawer__content` (`padded`); inside a Drawer it marks the panel. |
 | `DrawerFooter` | `.mtx-drawer__footer` (`column` stacks the content). |
 | `DrawerSubmenu` | Collapsible submenu: `label`, `icon`, `open` / `defaultOpen`, `onToggle(open, event)`, `nested` (`true` or `2`), `id`, `buttonProps`. |
+| `useDrawer({ id?, defaultOpen?, onOpen?, onClose? })` | `{ open, setOpen, toggle, getTriggerProps({ action?, onClick? }), drawerProps }`; `onClose(reason)` also receives `api` when the code or a trigger closes it. |
 | `useDrawerMode(variant, breakpoint)` | Effective mode (`temporary`, `persistent` or `permanent`); listens to `matchMedia` in `responsive`. |
 | `DRAWER_BREAKPOINTS` | `{ xs: 0, sm: 600, md: 900, lg: 1200, xl: 1536 }`. |
 
@@ -246,9 +256,10 @@ With `DrawerHeader`, `DrawerContent` and `DrawerFooter` as children the drawer g
 | `data-header="temporary"` | `headerMode="temporary"` |
 | `data-backdrop="false"` / `data-hide-backdrop` | `hideBackdrop` |
 | `data-disable-backdrop-click`, `data-disable-escape` | `disableBackdropClick`, `disableEscapeKeyDown` |
-| `data-mtx-drawer-open` / `-toggle="id"` | a button that sets the state (with `aria-controls`) |
+| `data-mtx-drawer-open` / `-toggle="id"` | `useDrawer().getTriggerProps({ action: 'open' })` / `getTriggerProps()` |
 | `data-mtx-drawer-close` | same attribute inside the drawer |
 | AppBar `data-drawer="id"` | AppBar `navigationControls`, `navigationExpanded`, `onNavigationClick` |
 | `data-mtx-collapse-trigger` + `.mtx-collapse` | `DrawerSubmenu` |
-| `instance.mode` | `useDrawerMode(variant, breakpoint)` |
+| `instance.mode` | `useDrawer({ id?, defaultOpen?, onOpen?, onClose? })` | `{ open, setOpen, toggle, getTriggerProps({ action?, onClick? }), drawerProps }`; `onClose(reason)` also receives `api` when the code or a trigger closes it. |
+| `useDrawerMode(variant, breakpoint)` |
 | `mtx:drawer:open` / `close` / `mode-change` | `onOpen` / `onClose` / `onModeChange` |

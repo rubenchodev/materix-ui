@@ -1,4 +1,5 @@
 export { Select } from './Select';
+export type { SelectedTextFormat } from '../../utils/text';
 export type {
   SelectProps,
   SelectOption,

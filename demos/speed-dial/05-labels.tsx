@@ -16,7 +16,7 @@ export default function Demo() {
       <div className="demo-group">
         <span className="demo-label">Always visible</span>
         <div className="demo-panel demo-panel--tall">
-          <SpeedDial ariaLabel="Visible labels" defaultOpen className={corner}>
+          <SpeedDial ariaLabel="Visible labels" className={corner}>
             <SpeedDialAction icon="photo_camera" tooltipTitle="Take photo" />
             <SpeedDialAction icon="upload" tooltipTitle="Upload file" />
           </SpeedDial>
@@ -25,7 +25,7 @@ export default function Demo() {
       <div className="demo-group">
         <span className="demo-label">tooltipHover</span>
         <div className="demo-panel demo-panel--tall">
-          <SpeedDial ariaLabel="Labels on hover" tooltipHover defaultOpen className={corner}>
+          <SpeedDial ariaLabel="Labels on hover" tooltipHover className={corner}>
             <SpeedDialAction icon="photo_camera" tooltipTitle="Take photo" />
             <SpeedDialAction icon="upload" tooltipTitle="Upload file" tooltipPlacement="top" />
           </SpeedDial>

@@ -198,12 +198,19 @@ export const Accordion = forwardRef<HTMLElement, AccordionProps>(function Accord
     return group.register(item);
   }, [group, key, change]);
 
-  // Panel cerrado encontrable con Ctrl+F (`hidden="until-found"`) en la forma `div`.
+  // Panel cerrado encontrable con Ctrl+F: solo `hidden="until-found"` (oculta y conserva la búsqueda);
+  // se retiran `visibility: hidden` y `height: 0` de Collapse, que impedirían encontrar el texto.
   useEnhancedEffect(() => {
     const region = regionRef.current;
     if (isDetails || !region || !supportsUntilFound()) return;
-    if (open) region.removeAttribute('hidden');
-    else region.setAttribute('hidden', 'until-found');
+    if (open) {
+      region.removeAttribute('hidden');
+      return;
+    }
+    region.setAttribute('hidden', 'until-found');
+    region.style.visibility = '';
+    region.style.height = '';
+    region.style.minHeight = '';
   }, [open, isDetails]);
 
   useEnhancedEffect(() => {

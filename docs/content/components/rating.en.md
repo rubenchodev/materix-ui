@@ -94,7 +94,7 @@ With `value` + `onChange` the parent owns the value; the vanilla instance member
 | `onChangeActive` | `(event, value: number \| null) => void` | — | The value under the pointer or the focused radio changes (`null` on leave). |
 | `max` | `number` | `5` | Number of icons. |
 | `precision` | `number` | `1` | Minimum step (`0.5`, `0.25`…; must divide 1). |
-| `readOnly` | `boolean` | `false` | No radios, `role="img"` and `aria-label` "Rated X out of N". |
+| `readOnly` | `boolean` | `false` | No radios, `role="img"` and `aria-label` "Rated X out of N" (an explicit `aria-label` or `label` takes precedence). |
 | `disabled` | `boolean` | `false` | Disables the radios and dims the component. |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | 18 / 24 / 30px SVG icons. |
 | `icon` | `string \| ReactNode` | `'star'` | Filled icon. |

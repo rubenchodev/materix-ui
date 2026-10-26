@@ -147,6 +147,20 @@ describe('AvatarGroup', () => {
         <Avatar>D</Avatar>
       </AvatarGroup>,
     );
-    expectParity(root(container), vanilla.firstElementChild, { attributes: ['hidden'] });
+    // Mejora sobre vanilla: role="group" en la raíz y role="img" en +N (vanilla no los pone).
+    expectParity(root(container), vanilla.firstElementChild, { attributes: ['hidden'], ignoreAttributes: ['role'] });
+    expect(root(container)).toHaveAttribute('role', 'group');
+    expect(root(container).querySelector('.mtx-avatar--surplus')).toHaveAttribute('role', 'img');
+  });
+
+  it('cuenta cada hijo válido, también avatares envueltos', () => {
+    const { container } = render(
+      <AvatarGroup max={2}>
+        <span className="wrap"><Avatar>A</Avatar></span>
+        <Avatar>B</Avatar>
+        <Avatar>C</Avatar>
+      </AvatarGroup>,
+    );
+    expect(root(container).querySelector('.mtx-avatar--surplus')).toHaveTextContent('+2');
   });
 });

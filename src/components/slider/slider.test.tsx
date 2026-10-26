@@ -394,6 +394,70 @@ describe('Slider', () => {
     expect(container.querySelector('output')).toHaveTextContent('10,71');
   });
 
+  it('controlado: un padre que ignora el cambio no acumula valores (teclado y arrastre)', () => {
+    const onChange = vi.fn();
+    const onCommit = vi.fn();
+    const { container } = render(<Slider aria-label="C" value={50} onChange={onChange} onChangeCommitted={onCommit} />);
+    const root = container.firstElementChild!;
+    const input = inputs(root)[0];
+    key(input, 'ArrowRight');
+    key(input, 'ArrowRight');
+    key(input, 'ArrowRight');
+    expect(onChange.mock.calls.map((c) => c[1])).toEqual([51, 51, 51]);
+    expect(onCommit).not.toHaveBeenCalled();
+    expect(input.value).toBe('50');
+    mockRail(root);
+    onChange.mockClear();
+    down(root, { clientX: 150 });
+    act(() => {
+      move({ clientX: 160 });
+    });
+    act(() => {
+      up();
+    });
+    expect(onChange.mock.calls.map((c) => c[1])).toEqual([75, 80]);
+    expect(onCommit).not.toHaveBeenCalled();
+    expect(input.value).toBe('50');
+  });
+
+  it('controlado: un padre que limita a 60 confirma el valor recortado', () => {
+    const onChange = vi.fn();
+    const onCommit = vi.fn();
+    function Clamped() {
+      const [value, setValue] = useState<SliderValue>(50);
+      return (
+        <Slider
+          aria-label="C"
+          value={value}
+          onChange={(_, v) => {
+            onChange(v);
+            setValue(Math.min(60, v as number));
+          }}
+          onChangeCommitted={(_, v) => onCommit(v)}
+        />
+      );
+    }
+    const { container } = render(<Clamped />);
+    const root = container.firstElementChild!;
+    const input = inputs(root)[0];
+    key(input, 'End');
+    expect(input.value).toBe('60');
+    expect(onCommit).toHaveBeenLastCalledWith(60);
+    key(input, 'ArrowRight');
+    expect(onChange).toHaveBeenLastCalledWith(61);
+    expect(input.value).toBe('60');
+    expect(onCommit).toHaveBeenCalledTimes(1);
+    mockRail(root);
+    key(input, 'Home');
+    expect(input.value).toBe('0');
+    down(root, { clientX: 180 });
+    act(() => {
+      up();
+    });
+    expect(input.value).toBe('60');
+    expect(onCommit).toHaveBeenLastCalledWith(60);
+  });
+
   it('controlado sin onChange: el valor no cambia', () => {
     const { container } = render(<Slider aria-label="C" value={40} />);
     key(inputs(container)[0], 'End');

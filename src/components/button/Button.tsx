@@ -141,6 +141,7 @@ const ButtonInner = forwardRef<HTMLElement, InnerProps>(function Button(props, r
     tabIndex,
     onClick,
     onKeyDown,
+    onKeyUp,
     onPointerDown,
     onPointerUp,
     onPointerLeave,
@@ -150,7 +151,8 @@ const ButtonInner = forwardRef<HTMLElement, InnerProps>(function Button(props, r
 
   const Component: ElementType = component ?? (href ? 'a' : 'button');
   const isNativeButton = Component === 'button';
-  const isLink = Boolean(href) || Component === 'a';
+  // Enlace real: `href` (nativo, Next.js Link) o `to` (React Router); un <a> sin destino actúa como botón.
+  const isLink = Boolean(href) || Boolean((rest as { to?: unknown }).to);
   const disabled = Boolean(disabledProp || group?.disabled || loading);
   const loadingPosition = LOADING_POSITIONS.includes(loadingPositionProp) ? loadingPositionProp : 'center';
 
@@ -195,14 +197,24 @@ const ButtonInner = forwardRef<HTMLElement, InnerProps>(function Button(props, r
     (onClick as ((e: MouseEvent<HTMLElement>) => void) | undefined)?.(event);
   };
 
-  /** Activa con teclado los elementos sin semántica de botón ni enlace. */
+  const isRoleButton = !isNativeButton && !isLink;
+
+  /** Enter activa en keydown; Espacio solo evita el scroll (se activa en keyup, como el botón nativo). */
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     (onKeyDown as ((e: KeyboardEvent<HTMLElement>) => void) | undefined)?.(event);
-    if (event.defaultPrevented || isNativeButton || isLink || disabled) return;
-    if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) {
+    if (event.defaultPrevented || !isRoleButton || disabled || event.target !== event.currentTarget) return;
+    if (event.key === ' ') event.preventDefault();
+    else if (event.key === 'Enter') {
       event.preventDefault();
       event.currentTarget.click();
     }
+  };
+
+  /** Espacio activa en keyup los elementos con `role="button"`. */
+  const handleKeyUp = (event: KeyboardEvent<HTMLElement>) => {
+    (onKeyUp as ((e: KeyboardEvent<HTMLElement>) => void) | undefined)?.(event);
+    if (event.defaultPrevented || !isRoleButton || disabled || event.target !== event.currentTarget) return;
+    if (event.key === ' ') event.currentTarget.click();
   };
 
   const compose =
@@ -218,12 +230,12 @@ const ButtonInner = forwardRef<HTMLElement, InnerProps>(function Button(props, r
     rootProps.tabIndex = tabIndex;
   } else {
     if (href) rootProps.href = href;
-    if (!isLink) rootProps.role = 'button';
+    if (isRoleButton) rootProps.role = 'button';
     if (disabled) {
       rootProps['aria-disabled'] = true;
       rootProps.tabIndex = -1;
     } else {
-      rootProps.tabIndex = tabIndex ?? (isLink ? undefined : 0);
+      rootProps.tabIndex = tabIndex ?? (isRoleButton ? 0 : undefined);
     }
   }
   if (loading) rootProps['aria-busy'] = true;
@@ -251,6 +263,7 @@ const ButtonInner = forwardRef<HTMLElement, InnerProps>(function Button(props, r
       {...rest}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
       onPointerDown={compose(onPointerDown, ripple.handlers.onPointerDown)}
       onPointerUp={compose(onPointerUp, ripple.handlers.onPointerUp)}
       onPointerLeave={compose(onPointerLeave, ripple.handlers.onPointerLeave)}

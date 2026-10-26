@@ -86,7 +86,7 @@ Como en MUI, las acciones van a la derecha por defecto (`end`). Cámbiala con `a
 
 ## Tamaños
 
-`maxWidth` fija el ancho máximo del panel: `xs` (20rem), `sm` (24rem), `md` (32rem, por defecto), `lg` (48rem), `xl` (64rem) o `false` (sin límite). El panel ocupa el 100% del ancho disponible hasta ese máximo; con `fullWidth={false}` se ajusta a su contenido. `fullScreen` ocupa toda la ventana y quita las esquinas redondeadas, el patrón recomendado en móvil para tareas largas.
+`maxWidth` fija el ancho máximo del panel: `xs` (20rem), `sm` (24rem), `md` (32rem, por defecto), `lg` (48rem), `xl` (64rem) o `false` (sin límite). La escala de anchos sigue la de vanilla, más estrecha que la de MUI (MUI usa 444/600/900/1200/1536px); `xs` es su escalón inferior y, como vanilla no tiene clase para él, se aplica en línea. El panel ocupa el 100% del ancho disponible hasta ese máximo; con `fullWidth={false}` se ajusta a su contenido. `fullScreen` ocupa toda la ventana y quita las esquinas redondeadas, el patrón recomendado en móvil para tareas largas.
 
 {{< react-demo id="dialog/04-sizes" layout="block" >}}
 
@@ -157,7 +157,7 @@ El equivalente de `open()`/`close()` es la prop `open`. `onOpen` y `onClose(even
 
 ## Composición
 
-Para un control total, compón las piezas: `DialogTitle` da nombre al diálogo (`aria-labelledby`) y el primer `DialogContentText` lo describe (`aria-describedby`); los ids se generan a partir del `id` del diálogo (o de un id único). Puedes mezclar ambas formas: `title` y `actions` se siguen añadiendo aunque uses `DialogContent` como hijo.
+Para un control total, compón las piezas: `DialogTitle` da nombre al diálogo (`aria-labelledby`) y el primer `DialogContentText` lo describe (`aria-describedby`); los ids se generan a partir del `id` del diálogo (o de un id único). Puedes mezclar ambas formas: `title`, `description` y `actions` se siguen añadiendo aunque uses `DialogContent` como hijo (la descripción se inserta al inicio del contenido), y también se reconocen los hijos envueltos en Fragments.
 
 {{< react-demo id="dialog/13-composition" layout="block" >}}
 
@@ -185,11 +185,11 @@ Para un control total, compón las piezas: `DialogTitle` da nombre al diálogo (
 | `onOpen` | `() => void` | — | El diálogo se abre (también si se monta abierto). |
 | `onEntered` / `onExited` | `() => void` | — | Terminó la animación de entrada / salida. |
 | `title` | `ReactNode` | — | Genera un `DialogTitle`. |
-| `description` | `ReactNode` | — | Genera un `DialogContentText` al inicio del contenido generado. |
+| `description` | `ReactNode` | — | Genera un `DialogContentText` al inicio del contenido (también de un `DialogContent` hijo que no lo tenga). |
 | `actions` | `ReactNode` | — | Botones envueltos en un `DialogActions`. |
 | `actionsAlign` | `'start' \| 'center' \| 'end' \| 'between'` | `'end'` | Alineación de las acciones sin `align`. |
 | `role` | `'dialog' \| 'alertdialog'` | `'dialog'` | Rol del panel. |
-| `maxWidth` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| false` | `'md'` (32rem) | Ancho máximo del panel. |
+| `maxWidth` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| false` | `'md'` (32rem) | Ancho máximo del panel (escala de vanilla; `xs` = 20rem). |
 | `fullWidth` | `boolean` | `true` | El panel ocupa el ancho hasta `maxWidth`. |
 | `fullScreen` | `boolean` | `false` | Panel a pantalla completa (`.mtx-dialog--full`). |
 | `scroll` | `'paper' \| 'body'` | `'paper'` | Zona que hace scroll. |
@@ -269,6 +269,14 @@ Para un control total, compón las piezas: `DialogTitle` da nombre al diálogo (
 | `Tab` / `Shift+Tab` | Recorre de forma cíclica los controles del panel. |
 
 ## Equivalencia con vanilla
+
+Diferencias con vanilla:
+
+- **Animación:** el panel se anima al entrar y al salir (opacidad y escala, 250 ms) y el fondo hace un fundido (225/195 ms), como en MUI; en vanilla el diálogo aparece y desaparece al instante.
+- **Fondo:** es el componente compartido [Backdrop](../backdrop/) (`.mtx-backdrop.mtx-dialog__backdrop`), no un `div.mtx-dialog__backdrop` suelto.
+- **`maxWidth="xs"`** (20rem) y **`maxWidth={false}`** / **`fullWidth={false}`** no tienen clase en el CSS compartido y se aplican como estilos en línea del panel.
+- Un clic en el fondo que solo cierra un menú o popover abierto dentro del diálogo no cierra el diálogo.
+
 
 | Vanilla | React |
 |---|---|

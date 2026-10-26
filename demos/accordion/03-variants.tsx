@@ -22,7 +22,7 @@ export default function Demo() {
           <Accordion {...props} summary={label}>
             {text}
           </Accordion>
-          <Accordion {...props} summary="Returns">
+          <Accordion {...props} summary={`Returns · ${label}`}>
             30 days to return your order.
           </Accordion>
         </div>

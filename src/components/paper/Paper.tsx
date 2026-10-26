@@ -1,3 +1,6 @@
+/**
+ * Superficie de Materix UI (`Paper` de MUI): elevaciones 0–24, variante outlined y esquinas rectas.
+ */
 import { forwardRef } from 'react';
 import type { ComponentPropsWithoutRef, ComponentPropsWithRef, ElementType, ForwardedRef, ReactElement } from 'react';
 import '@rubenchodev/materix-ui/components/paper.css';

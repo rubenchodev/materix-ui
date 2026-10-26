@@ -15,7 +15,7 @@ export default function Demo() {
           <Accordion summary="Shipping" defaultExpanded>
             Free shipping on orders over $50.
           </Accordion>
-          <Accordion summary="Returns">30 days to return your order.</Accordion>
+          <Accordion summary="Return policy">30 days to return your order.</Accordion>
         </AccordionGroup>
       </Grid>
       <Grid size={{ xs: 12, md: 6 }}>

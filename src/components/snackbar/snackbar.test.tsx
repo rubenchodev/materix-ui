@@ -47,6 +47,9 @@ describe('Snackbar', () => {
     render(
       <Snackbar open message="Hola" action="Ok" role="status" anchorOrigin={{ vertical: 'top', horizontal: 'right' }} data-testid="sb" />,
     );
+    await act(async () => {
+      await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
+    });
     expectParity(screen.getByTestId('sb'), vanilla.firstElementChild);
   });
 
@@ -170,6 +173,41 @@ describe('Snackbar', () => {
     expect(screen.getByTestId('custom')).not.toHaveClass('mtx-snackbar__action');
   });
 
+  it('la región viva se monta vacía y recibe el mensaje un frame después', () => {
+    vi.useFakeTimers();
+    render(<Controlled initial={false} message="Guardado" />);
+    fireEvent.click(screen.getByText('abrir'));
+    const region = screen.getByTestId('sb').querySelector('.mtx-snackbar__message')!;
+    expect(region).toHaveAttribute('role', 'alert');
+    expect(region).toBeEmptyDOMElement();
+    act(() => {
+      vi.advanceTimersByTime(20);
+    });
+    expect(region).toHaveTextContent('Guardado');
+  });
+
+  it('cambiar message o action con open=true reinicia el temporizador', () => {
+    vi.useFakeTimers();
+    const onClose = vi.fn();
+    const { rerender } = render(<Snackbar open message="A" autoHideDuration={1000} onClose={onClose} />);
+    act(() => {
+      vi.advanceTimersByTime(800);
+    });
+    rerender(<Snackbar open message="B" autoHideDuration={1000} onClose={onClose} />);
+    act(() => {
+      vi.advanceTimersByTime(800);
+    });
+    rerender(<Snackbar open message="B" action="Ok" autoHideDuration={1000} onClose={onClose} />);
+    act(() => {
+      vi.advanceTimersByTime(999);
+    });
+    expect(onClose).not.toHaveBeenCalled();
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
+    expect(onClose).toHaveBeenCalledWith(null, 'timeout');
+  });
+
   it('snackbarAnchor valida el anclaje', () => {
     expect(snackbarAnchor({ vertical: 'top', horizontal: 'left' })).toBe('top-left');
     expect(snackbarAnchor({ vertical: 'x' as 'top', horizontal: 'y' as 'left' })).toBe('bottom-center');
@@ -206,8 +244,12 @@ describe('SnackbarProvider / useSnackbar', () => {
       </SnackbarProvider>,
     );
     fireEvent.click(screen.getByText('uno'));
-    const message = screen.getByText('Primero');
-    expect(message).toHaveAttribute('role', 'status');
+    // El texto visible no lleva rol: lo anuncia la región viva estable del proveedor.
+    expect(screen.getByText('Primero', { selector: '.mtx-snackbar__message' })).not.toHaveAttribute('role');
+    act(() => {
+      vi.advanceTimersByTime(20);
+    });
+    expect(screen.getByText('Primero', { selector: '[role="status"]' })).toHaveAttribute('aria-live', 'polite');
     act(() => {
       vi.advanceTimersByTime(4000);
     });
@@ -289,6 +331,34 @@ describe('SnackbarProvider / useSnackbar', () => {
     });
     expect(onClose).toHaveBeenCalledWith('api');
     expect(new Set(apis).size).toBe(1);
+  });
+
+  it('las regiones vivas del proveedor son estables y solo cambia su texto', () => {
+    vi.useFakeTimers();
+    render(
+      <SnackbarProvider>
+        <Trigger />
+      </SnackbarProvider>,
+    );
+    const status = document.querySelector('.mtx-visually-hidden[role="status"]')!;
+    const alert = document.querySelector('.mtx-visually-hidden[role="alert"]')!;
+    expect(status).toBeEmptyDOMElement();
+    expect(alert).toHaveAttribute('aria-live', 'assertive');
+    fireEvent.click(screen.getByText('uno'));
+    act(() => {
+      vi.advanceTimersByTime(20);
+    });
+    expect(status).toHaveTextContent('Primero');
+    fireEvent.click(screen.getByText('dos'));
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    act(() => {
+      vi.advanceTimersByTime(20);
+    });
+    expect(document.querySelector('.mtx-visually-hidden[role="status"]')).toBe(status);
+    expect(status).toHaveTextContent('Segundo');
+    expect(alert).toBeEmptyDOMElement();
   });
 
   it('useSnackbar fuera del proveedor lanza un error', () => {

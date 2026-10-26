@@ -16,3 +16,5 @@ export type {
 export type { ListItemContentProps } from './content';
 export { ListContext, useListContext } from './ListContext';
 export type { ListContextValue, ListSelectDetail, ListSelection } from './ListContext';
+export { ListSelectionProvider, ListSelectionContext, useListSelection } from './ListSelectionProvider';
+export type { ListSelectionProviderProps } from './ListSelectionProvider';

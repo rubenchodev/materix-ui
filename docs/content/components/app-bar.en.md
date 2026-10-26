@@ -129,12 +129,12 @@ If the children include a `Toolbar`, no Toolbar is generated (the equivalent of 
 | `clipped` | `boolean` | `false` | `z-index` above the clipped Drawer. |
 | `title` | `ReactNode` | — | Generated `.mtx-toolbar__title`. |
 | `startIcon` | `ReactNode` | — | Navigation IconButton. |
-| `startIconLabel` | `string` | "Open navigation" (`menu`) / icon name | `aria-label` of the navigation button. |
+| `startIconLabel` | `string` | "Open navigation" (`menu` or node) / icon name | `aria-label` of the navigation button. |
 | `onNavigationClick` | `(event) => void` | — | Click on the navigation button (e.g. to open a Drawer). |
 | `navigationControls` | `string` | — | `aria-controls` of the navigation button. |
 | `navigationExpanded` | `boolean` | `false` | `aria-expanded` of the navigation button (with `navigationControls`). |
 | `endIcon` | `ReactNode` | — | Trailing IconButton (after the children). |
-| `endIconLabel` | `string` | icon name | `aria-label` of the trailing button. |
+| `endIconLabel` | `string` | icon name (node: "More options") | `aria-label` of the trailing button. |
 | `onEndIconClick` | `(event) => void` | — | Click on the trailing button. |
 | `dense` | `boolean` | `false` | 48px Toolbar. |
 | `toolbarVariant` | `'regular' \| 'dense' \| 'prominent'` | `'regular'` | Height of the generated Toolbar. |
@@ -173,7 +173,7 @@ The same as the vanilla library: `mtx-app-bar` (`--fixed`, `--sticky`, `--static
 ## Accessibility
 
 - The root is a `<header>`: it's the `banner` landmark when it sits at the top level of the page.
-- Generated IconButtons always have an `aria-label` (`startIconLabel`/`endIconLabel`, the i18n "Open navigation" or the icon name) and their icons are `aria-hidden`. Set explicit labels for icons whose name isn't meaningful.
+- Generated IconButtons always have an `aria-label` (`startIconLabel`/`endIconLabel`; by default the i18n "Open navigation" for `menu`, `navigationControls` or a node icon, "More options" for a trailing node icon, and otherwise the icon name) and their icons are `aria-hidden`. A node icon without a label logs a warning in development: set explicit labels for icons whose name isn't meaningful.
 - With `navigationControls`, the navigation button exposes `aria-controls` and the `aria-expanded` you pass in `navigationExpanded`.
 - Group navigation links in a `<nav aria-label="…">`. Transitions follow the token durations and are disabled with `prefers-reduced-motion`; with `hideOnScroll` the bar reappears when scrolling up.
 

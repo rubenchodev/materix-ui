@@ -1,5 +1,5 @@
 import { createRef, useState } from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectParity, mountVanilla } from '../../../tests/parity';
 import { FormControl, FormHelperText } from '../form-helper-text';
@@ -150,6 +150,23 @@ describe('NativeSelect', () => {
     const { container } = render(<NativeSelect aria-label="Plain" options={AGE} />);
     expect(container.querySelector('.mtx-native-select')).not.toHaveClass('mtx-native-select--has-label');
     expect(screen.getByRole('combobox', { name: 'Plain' }).id).toBe('');
+  });
+
+  it('encadena onFocus/onBlur con los de inputProps', () => {
+    const order: string[] = [];
+    render(
+      <NativeSelect
+        aria-label="F"
+        options={AGE}
+        onFocus={() => order.push('focus')}
+        onBlur={() => order.push('blur')}
+        inputProps={{ onFocus: () => order.push('inputProps.focus'), onBlur: () => order.push('inputProps.blur') }}
+      />,
+    );
+    const select = screen.getByRole('combobox');
+    act(() => select.focus());
+    act(() => select.blur());
+    expect(order).toEqual(['inputProps.focus', 'focus', 'inputProps.blur', 'blur']);
   });
 
   it('fullWidth estira el contenedor .mtx-form-control con helperText', () => {

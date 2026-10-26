@@ -40,6 +40,9 @@ interface LayerEntry {
   order: number;
   onEscape: ((event: KeyboardEvent) => void) | null;
   nodes: () => Node[];
+  /** Profundidad al abrirse y proveedor de nodos a apilar (se re-evalúa de forma perezosa). */
+  depth: number;
+  stack?: LayerOptions['stack'];
 }
 
 const PRIORITY: Record<LayerKind, number> = { snackbar: 0, modal: 1, popup: 1, tooltip: 2 };
@@ -140,14 +143,7 @@ export function pushLayer(owner: object, { kind = 'popup', onEscape = null, node
   removeLayer(owner);
   pruneDetached();
   const depth = layers.filter((entry) => entry.priority === 1).length;
-  if (depth > 0 && stack && PRIORITY[kind] !== 2) {
-    const list = (typeof stack === 'function' ? stack() : stack) || [];
-    list.forEach((item) => {
-      const node = item && resolveTarget(item.node);
-      if (node) claimZ(owner, node, 2 * depth + (item.offset || 0));
-    });
-  }
-  layers.push({
+  const entry: LayerEntry = {
     owner,
     kind,
     priority: PRIORITY[kind] ?? 1,
@@ -155,8 +151,31 @@ export function pushLayer(owner: object, { kind = 'popup', onEscape = null, node
     order: ++sequence,
     onEscape,
     nodes: toNodeProvider(nodes),
-  });
+    depth,
+    stack,
+  };
+  layers.push(entry);
+  applyStack(entry);
   return depth;
+}
+
+/** Reclama el `z-index` de los nodos de `stack` ya resueltos (idempotente). */
+function applyStack(entry: LayerEntry): void {
+  if (entry.depth <= 0 || !entry.stack || entry.priority === 2) return;
+  const list = (typeof entry.stack === 'function' ? entry.stack() : entry.stack) || [];
+  list.forEach((item) => {
+    const node = item && resolveTarget(item.node);
+    if (node) claimZ(entry.owner, node, 2 * entry.depth + (item.offset || 0));
+  });
+}
+
+/**
+ * Vuelve a reclamar el `z-index` de los nodos de `stack` (p. ej. montados después de abrir la capa).
+ * @param {object} owner Propietario.
+ */
+export function refreshLayerStack(owner: object): void {
+  const entry = find(owner);
+  if (entry) applyStack(entry);
 }
 
 /**
@@ -298,11 +317,25 @@ export function useLayer({ open, kind = 'popup', onEscape, nodes, stack }: UseLa
         return (typeof s === 'function' ? s() : s) || [];
       },
     });
+    // Los nodos de `stack` pueden montarse más tarde (estado, Portal, transición): se re-evalúan.
+    let frame = 0;
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (!cancelled) refreshLayerStack(owner);
+    });
+    if (typeof requestAnimationFrame === 'function') frame = requestAnimationFrame(() => refreshLayerStack(owner));
     return () => {
+      cancelled = true;
+      if (frame && typeof cancelAnimationFrame === 'function') cancelAnimationFrame(frame);
       removeLayer(owner);
       depth.current = 0;
     };
   }, [open, kind, owner]);
+
+  // En cada commit con la capa abierta: reclama el z-index si el nodo de `stack` apareció.
+  useEnhancedEffect(() => {
+    if (open) refreshLayerStack(owner);
+  });
 
   return useMemo(
     () => ({

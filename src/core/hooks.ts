@@ -6,6 +6,19 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import type { Ref, RefCallback } from 'react';
 import { isDev } from './dom';
 
+/**
+ * Serializa un valor para compararlo por contenido; los no serializables (ciclos, funciones) caen a `String`.
+ * @param {unknown} value Valor.
+ * @returns {string} Representación estable.
+ */
+function safeStringify(value: unknown): string {
+  try {
+    return JSON.stringify(value ?? null) ?? String(value);
+  } catch {
+    return String(value);
+  }
+}
+
 /** `useLayoutEffect` en el cliente y `useEffect` en el servidor (sin avisos SSR). */
 export const useEnhancedEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
@@ -88,13 +101,14 @@ export function useControlled<T>({
     }, [state, name, controlled, isControlled]);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-      if (!isControlled && !Object.is(defaultValue, defaultProp)) {
+      // Por contenido (como MUI): un default objeto/array recreado en cada render no es un cambio real.
+      if (!isControlled && !Object.is(defaultValue, defaultProp) && safeStringify(defaultValue) !== safeStringify(defaultProp)) {
         console.error(
           `Materix: A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`,
         );
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(defaultProp ?? null)]);
+    }, [safeStringify(defaultProp)]);
   }
 
   const setValueIfUncontrolled = useCallback(

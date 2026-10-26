@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { Button } from '@rubenchodev/materix-react/components/button';
-import { Drawer, DrawerSubmenu } from '@rubenchodev/materix-react/components/drawer';
+import { Drawer, DrawerSubmenu, useDrawer } from '@rubenchodev/materix-react/components/drawer';
 import { List, ListItemButton } from '@rubenchodev/materix-react/components/list';
 
 export const title = { en: 'Collapsible submenus', es: 'Submenús colapsables' };
@@ -10,15 +9,15 @@ export const description = {
 };
 
 export default function Demo() {
-  const [open, setOpen] = useState(false);
+  const drawer = useDrawer();
   return (
     <>
       <div className="demo-row">
-        <Button variant="contained" onClick={() => setOpen(true)}>
+        <Button variant="contained" {...drawer.getTriggerProps({ action: 'open' })}>
           Open with submenus
         </Button>
       </div>
-      <Drawer open={open} onClose={() => setOpen(false)} title="Projects">
+      <Drawer {...drawer.drawerProps} title="Projects">
         <List component="nav" aria-label="Projects">
           <ListItemButton icon="dashboard" selected>
             Overview

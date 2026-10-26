@@ -1,7 +1,14 @@
-'use client';
-import { createContext, useCallback, useContext, useId, useMemo, useState } from 'react';
-import type { ReactNode, SyntheticEvent } from 'react';
-import { useControlled, useEventCallback } from '../../core';
+"use client";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useId,
+  useMemo,
+  useState,
+} from "react";
+import type { ReactNode, SyntheticEvent } from "react";
+import { useControlled, useEventCallback } from "../../core";
 
 /** Valor de una pestaña (cadena o índice). */
 export type TabValue = string | number;
@@ -16,6 +23,8 @@ export interface TabContextValue {
   setValue: (event: SyntheticEvent | null, value: TabValue) => void;
   /** Fija el valor inicial sin emitir `onChange` (pestaña por defecto elegida por `Tabs`). */
   ensureValue: (value: TabValue) => void;
+  /** Refleja en el contexto el `value` de un `Tabs` controlado (`undefined` lo libera). */
+  syncValue: (value: TabValue | null | undefined) => void;
   /** Valores con `TabPanel` montado (para enlazar `aria-controls` solo si existe el panel). */
   panels: ReadonlySet<string>;
   /** Registra un panel y devuelve su baja. */
@@ -38,7 +47,7 @@ export function useTabContext(): TabContextValue | null {
  * @returns {string} Fragmento seguro para ids.
  */
 export function idSegment(value: TabValue): string {
-  return String(value).replace(/[^\w-]/g, '_');
+  return String(value).replace(/[^\w-]/g, "_");
 }
 
 /** Props de {@link TabContext}. */
@@ -59,23 +68,38 @@ export interface TabContextProps {
  * No renderiza DOM propio.
  */
 export function TabContext(props: TabContextProps) {
-  const { value: valueProp, defaultValue = null, onChange, id, children } = props;
-  const autoId = `mtx-tabs-${useId().replace(/:/g, '')}`;
+  const {
+    value: valueProp,
+    defaultValue = null,
+    onChange,
+    id,
+    children,
+  } = props;
+  const autoId = `mtx-tabs-${useId().replace(/:/g, "")}`;
   const [value, setValueState] = useControlled<TabValue | null>({
     controlled: valueProp,
     default: defaultValue,
-    name: 'TabContext',
-    state: 'value',
+    name: "TabContext",
+    state: "value",
   });
   const [panels, setPanels] = useState<ReadonlySet<string>>(() => new Set());
+  /** Valor impuesto por un `Tabs` controlado dentro del contexto. */
+  const [synced, setSynced] = useState<TabValue | null | undefined>(undefined);
+  const syncValue = useCallback(
+    (next: TabValue | null | undefined) => setSynced(next),
+    [],
+  );
+  const effective = synced !== undefined ? synced : value;
 
-  const setValue = useEventCallback((event: SyntheticEvent | null, next: TabValue) => {
-    setValueState(next);
-    onChange?.(event, next);
-  });
+  const setValue = useEventCallback(
+    (event: SyntheticEvent | null, next: TabValue) => {
+      setValueState(next);
+      onChange?.(event, next);
+    },
+  );
 
   const ensureValue = useEventCallback((next: TabValue) => {
-    if (value == null) setValueState(next);
+    if (effective == null) setValueState(next);
   });
 
   const registerPanel = useCallback((panelValue: TabValue) => {
@@ -91,11 +115,32 @@ export function TabContext(props: TabContextProps) {
   }, []);
 
   const context = useMemo<TabContextValue>(
-    () => ({ value: value ?? null, idPrefix: id ?? autoId, setValue, ensureValue, panels, registerPanel }),
-    [value, id, autoId, setValue, ensureValue, panels, registerPanel],
+    () => ({
+      value: effective ?? null,
+      idPrefix: id ?? autoId,
+      setValue,
+      ensureValue,
+      syncValue,
+      panels,
+      registerPanel,
+    }),
+    [
+      effective,
+      id,
+      autoId,
+      setValue,
+      ensureValue,
+      syncValue,
+      panels,
+      registerPanel,
+    ],
   );
 
-  return <TabContextInternal.Provider value={context}>{children}</TabContextInternal.Provider>;
+  return (
+    <TabContextInternal.Provider value={context}>
+      {children}
+    </TabContextInternal.Provider>
+  );
 }
 
 /** Contexto interno de `Tabs` hacia cada `Tab`. */

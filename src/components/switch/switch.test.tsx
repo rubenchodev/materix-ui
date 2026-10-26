@@ -91,6 +91,7 @@ describe('Switch', () => {
     const onChange = vi.fn();
     render(<Switch label="Managed" defaultChecked readOnly onChange={onChange} />);
     const input = screen.getByRole('switch');
+    expect(input).toHaveAttribute('aria-readonly', 'true');
     await user.click(input);
     expect(input).toBeChecked();
     expect(onChange).not.toHaveBeenCalled();

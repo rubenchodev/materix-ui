@@ -73,7 +73,15 @@ Dentro de un `FormControl`, el rótulo, el texto de ayuda y los controles hereda
 
 ### Props de FormLabel
 
-Atributos nativos de `<div>`; renderiza `.mtx-form-label` (color primario con foco interno; colores de error y deshabilitado según `FormControl`).
+| Prop | Tipo | Por defecto | Descripción |
+| :--- | :--- | :--- | :--- |
+| `required` | `boolean` | de `FormControl` | Añade un asterisco (` *`, `aria-hidden`). |
+| `error` | `boolean` | de `FormControl` | Color de error. |
+| `disabled` | `boolean` | de `FormControl` | Color atenuado. |
+
+Renderiza `.mtx-form-label` (color primario con foco interno). Vanilla no tiene CSS para el asterisco ni para un rótulo suelto en error o deshabilitado, así que el asterisco es un `<span aria-hidden="true">` y los colores de estado se aplican en línea con los tokens `--mtx-color-error-text` / `--mtx-color-text-disabled`.
+
+**Diferencias con MUI:** `FormControl` no tiene las props `fullWidth`, `margin`, `variant`, `size` ni `focused`, porque vanilla no tiene CSS para ellas; usa utilidades de maquetación alrededor. Los controles de la librería estiran su propio contenedor cuando son `fullWidth`.
 
 ### useFormControl()
 
@@ -105,3 +113,4 @@ Devuelve `{ error, disabled, required, helperTextIds, registerHelperText } | und
 - El error se comunica con `aria-invalid="true"` en el control, no solo con color: escribe el motivo en el texto de ayuda.
 - Los textos de ayuda deshabilitados llevan `aria-disabled="true"` para que su color atenuado se trate como contenido deshabilitado.
 - Nombra los grupos de controles con `FormLabel` + `aria-labelledby` (y `role="group"` en el `FormControl`).
+- Un `Radio` suelto dentro de un `FormControl` hereda `aria-invalid` y los textos de ayuda en `aria-describedby`, como Checkbox y Switch; dentro de un `RadioGroup` ambos van en el radiogroup.

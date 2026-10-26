@@ -3,7 +3,7 @@
  * Ruta de navegación (`Breadcrumbs` de MUI): `<nav>` + `<ol>`, separadores ocultos al lector de
  * pantalla, último ítem con `aria-current="page"` y colapso con botón "Mostrar ruta".
  */
-import { Children, cloneElement, forwardRef, isValidElement, useEffect, useRef, useState } from 'react';
+import { Children, Fragment, cloneElement, forwardRef, isValidElement, useEffect, useRef, useState } from 'react';
 import type { HTMLAttributes, MouseEvent, ReactElement, ReactNode } from 'react';
 import '@rubenchodev/materix-ui/components/link.css';
 import '@rubenchodev/materix-ui/components/typography.css';
@@ -64,6 +64,8 @@ export interface BreadcrumbsProps extends HTMLAttributes<HTMLElement> {
   expandText?: string;
   /** Ruta expandida (modo controlado). */
   expanded?: boolean;
+  /** Ruta expandida al montar (modo no controlado); se colapsa de nuevo si cambian los ítems. */
+  defaultExpanded?: boolean;
   /** Se invoca al revelar los ítems colapsados (equivale a `mtx:breadcrumbs:expand`). */
   onExpand?: () => void;
   /**
@@ -196,6 +198,57 @@ function entriesFromItems(items: BreadcrumbItem[]): Entry[] {
   });
 }
 
+/** Hijo aplanado: elemento o texto con una clave única. */
+type FlatChild = ReactElement | string | number;
+
+/**
+ * Aplana los Fragments de `children` y descarta los nodos vacíos.
+ * @param {ReactNode} children Hijos.
+ * @param {string} [prefix=''] Prefijo de clave para los Fragments anidados.
+ * @returns {FlatChild[]} Elementos y textos en orden.
+ */
+function flattenChildren(children: ReactNode, prefix = ''): FlatChild[] {
+  const out: FlatChild[] = [];
+  Children.toArray(children).forEach((child) => {
+    if (isValidElement(child) && child.type === Fragment) {
+      const nested = flattenChildren((child.props as { children?: ReactNode }).children, `${prefix}${String(child.key)}/`);
+      nested.forEach((node) => out.push(node));
+    } else if (isValidElement(child)) {
+      out.push(prefix ? cloneElement(child, { key: `${prefix}${String(child.key)}` }) : child);
+    } else if (typeof child === 'string' || typeof child === 'number') {
+      out.push(child);
+    }
+  });
+  return out;
+}
+
+/**
+ * Texto plano de un nodo (para la firma de la ruta).
+ * @param {ReactNode} node Nodo.
+ * @returns {string} Texto concatenado.
+ */
+function textOf(node: ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join('');
+  if (isValidElement(node)) return textOf((node.props as { children?: ReactNode }).children);
+  return '';
+}
+
+/**
+ * Firma de la ruta en modo `children`: claves, textos y `href` de cada ítem.
+ * @param {ReactNode} children Hijos.
+ * @returns {string} Firma.
+ */
+function childrenSignature(children: ReactNode): string {
+  return flattenChildren(children)
+    .map((child) =>
+      isValidElement(child)
+        ? `${String(child.key)}|${textOf(child)}|${String((child.props as { href?: unknown }).href ?? '')}`
+        : String(child),
+    )
+    .join('|~|');
+}
+
 /**
  * Construye las entradas desde `children`: los `<a>`/`<button>` pasan a ser Link
  * (`color="inherit"`, subrayado en hover) y el resto, texto; `data-icon` añade un icono.
@@ -203,9 +256,7 @@ function entriesFromItems(items: BreadcrumbItem[]): Entry[] {
  * @returns {Entry[]} Entradas.
  */
 function entriesFromChildren(children: ReactNode): Entry[] {
-  const list = Children.toArray(children).filter(
-    (child) => isValidElement(child) || typeof child === 'string' || typeof child === 'number',
-  );
+  const list = flattenChildren(children);
   const hasCurrent = list.some(
     (child) => isValidElement(child) && (child.props as Record<string, unknown>)['aria-current'] !== undefined,
   );
@@ -310,6 +361,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(function Br
     itemsAfterCollapse: afterProp,
     expandText,
     expanded: expandedProp,
+    defaultExpanded = false,
     onExpand,
     onNavigate,
     locale,
@@ -335,8 +387,8 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(function Br
   // El estado expandido se asocia a la ruta: si cambia, se vuelve a colapsar (como `setItems()`).
   const signature = Array.isArray(items)
     ? `i${items.length}:${items.map((item) => `${typeof item?.label === 'string' ? item.label : ''}|${item?.href ?? ''}`).join('\n')}`
-    : `c${entries.length}`;
-  const [expandedFor, setExpandedFor] = useState<string | null>(null);
+    : `c${entries.length}:${childrenSignature(children)}`;
+  const [expandedFor, setExpandedFor] = useState<string | null>(() => (defaultExpanded ? signature : null));
   const expanded = expandedProp ?? expandedFor === signature;
 
   const total = entries.length;

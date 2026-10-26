@@ -146,9 +146,11 @@ export const DateCalendar = forwardRef<HTMLDivElement, DateCalendarProps>(functi
     state: 'view',
   });
   const selected = range ? rangeValue.start || rangeValue.end : value;
+  // Default fijado al montar: `new Date()` cambiaría en cada render.
+  const [initialMonth] = useState(() => new Date(selected ?? referenceDate ?? new Date()));
   const [month, setMonthState] = useControlled<Date>({
     controlled: monthProp,
-    default: new Date(selected ?? referenceDate ?? new Date()),
+    default: initialMonth,
     name: 'DateCalendar',
     state: 'month',
   });

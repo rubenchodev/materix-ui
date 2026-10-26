@@ -129,12 +129,12 @@ Si los hijos incluyen una `Toolbar`, no se genera ninguna (el equivalente de la 
 | `clipped` | `boolean` | `false` | `z-index` por encima del Drawer recortado. |
 | `title` | `ReactNode` | — | `.mtx-toolbar__title` generado. |
 | `startIcon` | `ReactNode` | — | IconButton de navegación. |
-| `startIconLabel` | `string` | "Open navigation" (`menu`) / nombre del icono | `aria-label` del botón de navegación. |
+| `startIconLabel` | `string` | "Open navigation" (`menu` o nodo) / nombre del icono | `aria-label` del botón de navegación. |
 | `onNavigationClick` | `(event) => void` | — | Clic en el botón de navegación (p. ej. abrir un Drawer). |
 | `navigationControls` | `string` | — | `aria-controls` del botón de navegación. |
 | `navigationExpanded` | `boolean` | `false` | `aria-expanded` del botón de navegación (con `navigationControls`). |
 | `endIcon` | `ReactNode` | — | IconButton final (tras los hijos). |
-| `endIconLabel` | `string` | nombre del icono | `aria-label` del botón final. |
+| `endIconLabel` | `string` | nombre del icono (nodo: "More options") | `aria-label` del botón final. |
 | `onEndIconClick` | `(event) => void` | — | Clic en el botón final. |
 | `dense` | `boolean` | `false` | Toolbar de 48px. |
 | `toolbarVariant` | `'regular' \| 'dense' \| 'prominent'` | `'regular'` | Altura de la Toolbar generada. |
@@ -173,7 +173,7 @@ Las mismas que la librería vanilla: `mtx-app-bar` (`--fixed`, `--sticky`, `--st
 ## Accesibilidad
 
 - La raíz es un `<header>`: es el landmark `banner` cuando está en el nivel superior de la página.
-- Los IconButton generados siempre tienen `aria-label` (`startIconLabel`/`endIconLabel`, el "Open navigation" de i18n o el nombre del icono) y sus iconos son `aria-hidden`. Fija etiquetas explícitas para iconos cuyo nombre no sea significativo.
+- Los IconButton generados siempre tienen `aria-label` (`startIconLabel`/`endIconLabel`; por defecto el "Open navigation" de i18n para `menu`, `navigationControls` o un icono-nodo, "More options" para un icono-nodo final y, si no, el nombre del icono) y sus iconos son `aria-hidden`. Un icono-nodo sin etiqueta avisa en desarrollo: fija etiquetas explícitas para iconos cuyo nombre no sea significativo.
 - Con `navigationControls`, el botón de navegación expone `aria-controls` y el `aria-expanded` que pases en `navigationExpanded`.
 - Agrupa los enlaces de navegación en un `<nav aria-label="…">`. Las transiciones siguen las duraciones de los tokens y se desactivan con `prefers-reduced-motion`; con `hideOnScroll` la barra reaparece al subir.
 

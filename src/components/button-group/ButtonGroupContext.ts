@@ -1,6 +1,7 @@
 'use client';
 /**
  * Contextos que ButtonGroup comparte con sus Button hijos.
+ * @internal No forman parte de la API pública.
  */
 import { createContext } from 'react';
 

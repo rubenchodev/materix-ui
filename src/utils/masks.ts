@@ -325,5 +325,8 @@ export function applyMaskInput(value: string, cursor: number, config: MaskConfig
   }
   const slotsBefore = countSlotChars(text.slice(0, pos));
   const formatted = applyPatternMask(text, config.pattern);
-  return { value: formatted, cursor: getCursorIndexFromSlotCount(formatted, slotsBefore) };
+  let next = getCursorIndexFromSlotCount(formatted, slotsBefore);
+  // Si el cursor queda delante de literales (`(300|) 23`), avanza hasta el siguiente slot (`(300) |23`).
+  while (next < formatted.length && !/[0-9a-zA-Z]/.test(formatted[next])) next++;
+  return { value: formatted, cursor: next };
 }

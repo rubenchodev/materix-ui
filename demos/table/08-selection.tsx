@@ -36,6 +36,7 @@ export default function Demo() {
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">
+                <span className="mtx-visually-hidden">Select</span>
                 <Checkbox {...selection.getHeaderCheckboxProps()} />
               </TableCell>
               <TableCell>Name</TableCell>

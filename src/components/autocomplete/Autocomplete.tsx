@@ -36,12 +36,16 @@ import { normalizeText, splitMatch } from '../../utils/text';
 import { Chip } from '../chip';
 import { CircularProgress } from '../progress';
 import { isImageUrl } from '../text-field/TextField';
+import { useFormControl } from '../form-helper-text/FormControlContext';
 
 /** Salto de PageUp/PageDown (igual que `pageSize` de MUI). */
 const PAGE_SIZE = 5;
 
 /** Colores de foco que entiende TextField. */
 const FIELD_COLORS = ['secondary', 'success', 'warning', 'info'];
+
+/** Valor vacío estable de `multiple`. */
+const EMPTY: readonly unknown[] = [];
 
 /** Marca de "ninguna opción activa a propósito" (no aplica `autoHighlight`). */
 const NONE = '\u0000none';
@@ -183,11 +187,11 @@ export interface AutocompleteProps<T, Multiple extends boolean | undefined = fal
   includeInputInList?: boolean;
   /** Muestra el botón abrir/cerrar (`auto`: oculto en `freeSolo`). */
   forcePopupIcon?: boolean | 'auto';
-  /** Deshabilita el componente. */
+  /** Deshabilita el componente (por defecto lo hereda de FormControl). */
   disabled?: boolean;
   /** Muestra el valor sin permitir cambiarlo. */
   readOnly?: boolean;
-  /** Obligatorio (validación nativa mientras no haya valor). */
+  /** Obligatorio (validación nativa mientras no haya valor; por defecto lo hereda de FormControl). */
   required?: boolean;
   /** Indicador de carga (CircularProgress y texto "Loading…" sin opciones). */
   loading?: boolean;
@@ -207,7 +211,7 @@ export interface AutocompleteProps<T, Multiple extends boolean | undefined = fal
   placeholder?: string;
   /** Texto de ayuda (en rojo con `error`). */
   helperText?: ReactNode;
-  /** Estado de error. */
+  /** Estado de error (por defecto lo hereda de FormControl). */
   error?: boolean;
   /** Icono inicial: nombre de Material Icons, URL de imagen o nodo. */
   startIcon?: ReactNode;
@@ -305,9 +309,9 @@ function AutocompleteInner<T, Multiple extends boolean | undefined = false, Free
     autoSelect = false,
     includeInputInList = false,
     forcePopupIcon = 'auto',
-    disabled = false,
+    disabled: disabledProp,
     readOnly = false,
-    required = false,
+    required: requiredProp,
     loading = false,
     loadingText,
     noOptionsText,
@@ -317,7 +321,7 @@ function AutocompleteInner<T, Multiple extends boolean | undefined = false, Free
     label: labelProp,
     placeholder: placeholderProp,
     helperText,
-    error = false,
+    error: errorProp,
     startIcon,
     name,
     form,
@@ -340,6 +344,11 @@ function AutocompleteInner<T, Multiple extends boolean | undefined = false, Free
   } = props;
 
   const multiple = Boolean(multipleProp);
+  // Estados: prop explícita, luego FormControl, luego `false` (como TextField).
+  const formControl = useFormControl();
+  const error = errorProp ?? formControl?.error ?? false;
+  const disabled = disabledProp ?? formControl?.disabled ?? false;
+  const required = requiredProp ?? formControl?.required ?? false;
   const freeSolo = Boolean(freeSoloProp);
   const t = useT('autocomplete', locale);
   const autoId = useId();
@@ -390,7 +399,7 @@ function AutocompleteInner<T, Multiple extends boolean | undefined = false, Free
   // ---------------------------------------------------------------- valor
   const [valueState, setValueState] = useControlled<unknown>({
     controlled: valueProp,
-    default: defaultValue ?? (multiple ? [] : null),
+    default: defaultValue ?? (multiple ? EMPTY : null),
     name: 'Autocomplete',
   });
   const selected = useMemo(() => {
@@ -992,7 +1001,11 @@ function AutocompleteInner<T, Multiple extends boolean | undefined = false, Free
   const label: ReactNode = hasLabelProp ? labelProp : placeholderText !== '' ? placeholderText : null;
   const placeholder = !hasLabelProp || !placeholderProp ? ' ' : placeholderProp;
   const hasHelper = helperText !== undefined && helperText !== null && helperText !== false && helperText !== '';
-  const describedBy = [ariaDescribedBy ?? inputProps?.['aria-describedby'], hasHelper ? helperId : '']
+  const describedBy = [
+    ariaDescribedBy ?? inputProps?.['aria-describedby'],
+    hasHelper ? helperId : '',
+    ...(hasHelper ? [] : (formControl?.helperTextIds ?? [])),
+  ]
     .filter(Boolean)
     .join(' ');
   const fieldHasValue = inputText.trim() !== '' || placeholder.trim() !== '' || (multiple && hasValue);

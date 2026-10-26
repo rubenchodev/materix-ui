@@ -19,7 +19,16 @@ export {
   StaticDateTimePicker,
   StaticDateRangePicker,
 } from './pickers';
-export type { DatePickerProps, TimePickerProps, DateRangePickerProps, StaticDatePickerProps } from './pickers';
+export type {
+  DatePickerProps,
+  TimePickerProps,
+  DateRangePickerProps,
+  DateTimeRangePickerProps,
+  StaticDatePickerProps,
+  StaticTimePickerProps,
+  StaticDateTimePickerProps,
+  StaticDateRangePickerProps,
+} from './pickers';
 export { DateCalendar } from './DateCalendar';
 export type { DateCalendarProps, DateRangeChangeMeta } from './DateCalendar';
 export { TimeView } from './TimeView';

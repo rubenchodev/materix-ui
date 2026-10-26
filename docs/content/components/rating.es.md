@@ -94,7 +94,7 @@ Con `value` + `onChange` el padre es dueño del valor; los miembros de la instan
 | `onChangeActive` | `(event, value: number \| null) => void` | — | Cambia el valor bajo el cursor o el radio enfocado (`null` al salir). |
 | `max` | `number` | `5` | Número de iconos. |
 | `precision` | `number` | `1` | Paso mínimo (`0.5`, `0.25`…; debe dividir 1). |
-| `readOnly` | `boolean` | `false` | Sin radios, `role="img"` y `aria-label` "Valoración: X de N". |
+| `readOnly` | `boolean` | `false` | Sin radios, `role="img"` y `aria-label` "Valoración: X de N" (un `aria-label` o `label` explícito tiene prioridad). |
 | `disabled` | `boolean` | `false` | Deshabilita los radios y atenúa el componente. |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Iconos SVG de 18 / 24 / 30px. |
 | `icon` | `string \| ReactNode` | `'star'` | Icono lleno. |

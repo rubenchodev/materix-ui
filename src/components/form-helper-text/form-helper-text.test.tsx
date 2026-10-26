@@ -103,6 +103,30 @@ describe('FormLabel', () => {
   });
 });
 
+describe('FormLabel · estados', () => {
+  it('required añade un asterisco oculto a lectores; error y disabled colorean', () => {
+    const { rerender } = render(<FormLabel data-testid="l" required error>Plan</FormLabel>);
+    const label = screen.getByTestId('l');
+    expect(label).toHaveTextContent('Plan *');
+    expect(label.querySelector('[aria-hidden="true"]')).toHaveTextContent('*');
+    expect(label.style.color).toBe('var(--mtx-color-error-text)');
+    rerender(<FormLabel data-testid="l" disabled>Plan</FormLabel>);
+    expect(label.style.color).toBe('var(--mtx-color-text-disabled)');
+    expect(label.querySelector('[aria-hidden="true"]')).toBeNull();
+  });
+
+  it('hereda required, error y disabled del FormControl', () => {
+    render(
+      <FormControl required error>
+        <FormLabel data-testid="l">Plan</FormLabel>
+      </FormControl>,
+    );
+    const label = screen.getByTestId('l');
+    expect(label).toHaveTextContent('Plan *');
+    expect(label.style.color).toBe('var(--mtx-color-error-text)');
+  });
+});
+
 describe('FormHelperText · paridad con vanilla', () => {
   it('texto con error', async () => {
     const vanilla = await mountVanilla('<p class="mtx-form-helper-text" data-mtx="form-helper-text" data-error>Required</p>');

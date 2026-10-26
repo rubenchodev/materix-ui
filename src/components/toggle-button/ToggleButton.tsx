@@ -2,10 +2,10 @@
 /**
  * Botón de alternancia (`ToggleButton` de MUI): estado seleccionado expuesto con `aria-pressed`.
  */
-import { forwardRef, isValidElement, useContext, useEffect, useId } from 'react';
+import { forwardRef, useContext, useEffect, useId, useRef } from 'react';
 import type { ButtonHTMLAttributes, MouseEvent, PointerEvent, ReactNode } from 'react';
 import '@rubenchodev/materix-ui/components/toggle-button.css';
-import { cx, isDev, useControlled, useRipple } from '../../core';
+import { cx, isDev, useControlled, useEnhancedEffect, useForkRef, useRipple } from '../../core';
 import { ToggleButtonGroupContext } from './ToggleButtonGroupContext';
 import type { ToggleButtonColor, ToggleButtonSize } from './ToggleButtonGroupContext';
 
@@ -21,7 +21,7 @@ export interface ToggleButtonProps
   selected?: boolean;
   /** Estado seleccionado inicial (modo no controlado, como `data-selected`). */
   defaultSelected?: boolean;
-  /** Se invoca al alternar el botón (equivale a `mtx:toggle-button:change`); dentro de un grupo, antes del `onChange` del grupo. */
+  /** Se invoca al alternar el botón (equivale a `mtx:toggle-button:change`); dentro de un grupo, solo si el grupo aplicó el cambio. */
   onChange?: (event: MouseEvent<HTMLButtonElement>, selected: boolean, value: string) => void;
   /** Icono antes del texto: nombre de Material Icons o un nodo (24px, `aria-hidden`). */
   icon?: ReactNode;
@@ -49,7 +49,11 @@ function renderIcon(icon: ReactNode): ReactNode {
       </span>
     );
   }
-  return isValidElement(icon) ? icon : <span className="mtx-toggle-button__icon" aria-hidden="true">{icon}</span>;
+  return (
+    <span className="mtx-toggle-button__icon" aria-hidden="true">
+      {icon}
+    </span>
+  );
 }
 
 /**
@@ -101,13 +105,22 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(fun
   const color = colorProp ?? group?.color ?? 'standard';
 
   const ripple = useRipple<HTMLButtonElement>({ disabled: disabled || disableRipple });
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const handleRef = useForkRef(buttonRef, ref);
+  const register = group?.register;
+
+  // Se registra en el grupo para que el valor múltiple siga el orden del DOM.
+  useEnhancedEffect(() => {
+    if (!register || !buttonRef.current) return undefined;
+    return register(value, buttonRef.current);
+  }, [register, value]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     if (event.defaultPrevented || disabled) return;
     if (group) {
-      onChange?.(event, !selected, value);
-      group.onButtonClick(event, value);
+      // Solo se notifica al botón si el grupo aplicó el cambio (no lo bloqueó `enforceValueSet`).
+      if (group.onButtonClick(event, value)) onChange?.(event, !selected, value);
       return;
     }
     const next = !selected;
@@ -124,7 +137,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(fun
 
   return (
     <button
-      ref={ref}
+      ref={handleRef}
       type="button"
       className={cx(
         'mtx-toggle-button',
@@ -132,7 +145,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(fun
         COLORS.includes(color) && color !== 'standard' && `mtx-toggle-button--${color}`,
         className,
       )}
-      value={value}
+      value={valueProp}
       disabled={disabled}
       aria-pressed={selected}
       {...rest}

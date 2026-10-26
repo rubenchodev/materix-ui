@@ -263,7 +263,7 @@ En tema oscuro, como en MUI, las superficies elevadas reciben además una capa b
 
 ### Espaciado
 
-Unidad base de 8px. Lo consumen Grid, Stack, Box y las utilidades `mtx-m-*`/`mtx-p-*`.
+Unidad base de 8px. Lo consumen Grid, Stack y las utilidades `mtx-m-*`/`mtx-p-*` (importa `@rubenchodev/materix-ui/utilities.css` para usarlas).
 
 | Token | Valor |
 |---|---|

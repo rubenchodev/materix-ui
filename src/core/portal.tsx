@@ -13,10 +13,25 @@ import { useEnhancedEffect } from './hooks';
 export interface PortalProps {
   /** Contenido a portar. */
   children?: ReactNode;
-  /** Contenedor destino (elemento, ref o función); `document.body` por defecto. */
+  /** Contenedor destino (elemento, ref o función); por defecto `body` si ya es `.mtx-root`, si no un `div.mtx-root` compartido al final de `body`. */
   container?: ElementTarget<Element>;
   /** Renderiza el contenido en su sitio, sin portal. */
   disablePortal?: boolean;
+}
+
+/**
+ * Contenedor compartido de los portales: un `<div class="mtx-root">` al final de `body`, para que
+ * el contenido portado herede la tipografía y los estilos base de Materix aunque `body` no sea `.mtx-root`.
+ * @returns {Element} Contenedor (se crea la primera vez).
+ */
+export function getPortalRoot(): Element {
+  const existing = document.querySelector('body > [data-mtx-portal-root]');
+  if (existing) return existing;
+  const root = document.createElement('div');
+  root.className = 'mtx-root';
+  root.setAttribute('data-mtx-portal-root', '');
+  document.body.appendChild(root);
+  return root;
 }
 
 /**
@@ -29,7 +44,7 @@ export function Portal({ children, container, disablePortal = false }: PortalPro
 
   useEnhancedEffect(() => {
     if (disablePortal) return;
-    setMountNode(resolveTarget(container) || document.body);
+    setMountNode(resolveTarget(container) || (document.body.classList.contains('mtx-root') ? document.body : getPortalRoot()));
   }, [container, disablePortal]);
 
   if (disablePortal) return <>{children}</>;

@@ -116,7 +116,7 @@ The CSS also works with plain markup (static HTML or server templates), without 
 | `disabled` | `boolean` | `false` | Native `disabled`; `aria-disabled` on links. |
 | `disableRipple` | `boolean` | `false` | Turns off the centered ripple. |
 | `href` | `string` | — | Renders an `<a>`. |
-| `component` | `ElementType` | `'button'` / `'a'` | Custom root element (e.g. a router link). |
+| `component` | `ElementType` | `'button'` / `'a'` | Custom root element (e.g. a router link). Without `href`/`to` it gets `role="button"`, `tabIndex=0`, Enter (keydown) and Space (keyup); with `href`/`to` it is treated as a link. |
 | `children` | `ReactNode` | — | Own content (nested icon). |
 | `className`, `style`, `ref`, `aria-*`, `on*`… | — | — | Forwarded to the root; `className` is merged. |
 
@@ -166,3 +166,5 @@ The CSS also works with plain markup (static HTML or server templates), without 
 | `disabled` / `disable()` / `enable()` | `disabled={boolean}` |
 | `<a data-mtx="icon-button" href>` | `href` or `component` |
 | `Materix.getInstance(el)` | `ref` |
+
+React never adds `mtx-icon-button--default` nor `mtx-icon-button--medium` (vanilla adds `--medium` with `data-size="medium"`): neither class has CSS, so there is no visual difference.

@@ -123,7 +123,7 @@ const [formats, setFormats] = useState<ToggleButtonGroupValue>(['bold']);
 | `value` | `string` | texto de `children` | Valor que aporta al grupo; obligatorio dentro de un grupo (si falta: aviso en desarrollo y valor generado). |
 | `selected` | `boolean` | — | Estado seleccionado (controlado; se ignora dentro de un grupo). |
 | `defaultSelected` | `boolean` | `false` | Estado inicial (no controlado). |
-| `onChange` | `(event, selected, value) => void` | — | El usuario alterna el botón; dentro de un grupo se llama antes del `onChange` del grupo. |
+| `onChange` | `(event, selected, value) => void` | — | El usuario alterna el botón; dentro de un grupo, solo si el grupo aplica el cambio. |
 | `icon` | `ReactNode` | — | Nombre de Material Icons o nodo, antes del texto (`aria-hidden`). |
 | `size` | `'small' \| 'medium' \| 'large'` | grupo o `'medium'` | Altura 40 / 48 / 56px. |
 | `color` | `'standard' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success'` | grupo o `'standard'` | Color del estado seleccionado. |
@@ -148,7 +148,7 @@ El resto de props va al `<button>` nativo (`type="button"`); `ref` apunta a él.
 | `label` | `string` | — | Nombre accesible (`aria-label`). |
 | `role` | `string` | `'group'` | Rol de la raíz. |
 
-El resto de props va al `<div>` raíz. Se exporta `ToggleButtonGroupContext` para hijos personalizados.
+El resto de props va al `<div>` raíz; `ref` apunta a él.
 
 ### Clases CSS
 

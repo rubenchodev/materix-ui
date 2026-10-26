@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { useState } from 'react';
 import { expectParity, mountVanilla } from '../../../tests/parity';
+import { pushLayer, removeLayer } from '../../core';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from './index';
 import type { DialogCloseReason, DialogProps } from './index';
 
@@ -237,6 +238,71 @@ describe('Dialog', () => {
     );
     fireEvent.click(screen.getByText('Cerrar'));
     expect(outerClose).not.toHaveBeenCalled();
+  });
+
+  it('description se inserta al inicio de un DialogContent hijo (sin duplicar)', () => {
+    const { rerender } = render(
+      <Dialog open title="T" description="Desc">
+        <DialogContent>
+          <p>Cuerpo</p>
+        </DialogContent>
+      </Dialog>,
+    );
+    const content = document.querySelector('.mtx-dialog__content')!;
+    expect(content.firstElementChild).toHaveClass('mtx-dialog__content-text');
+    expect(content.firstElementChild).toHaveTextContent('Desc');
+    expect(screen.getByRole('dialog')).toHaveAccessibleDescription('Desc');
+    rerender(
+      <Dialog open title="T" description="Desc">
+        <DialogContent>
+          <DialogContentText>Propia</DialogContentText>
+        </DialogContent>
+      </Dialog>,
+    );
+    expect(document.querySelectorAll('.mtx-dialog__content-text')).toHaveLength(1);
+    expect(screen.getByRole('dialog')).toHaveAccessibleDescription('Propia');
+  });
+
+  it('aplana Fragments para detectar DialogTitle y DialogActions', () => {
+    render(
+      <Dialog open title="Prop">
+        <>
+          <DialogTitle>Fragmento</DialogTitle>
+          <p>Texto</p>
+          <>
+            <DialogActions>
+              <button type="button">OK</button>
+            </DialogActions>
+          </>
+        </>
+      </Dialog>,
+    );
+    const paper = screen.getByRole('dialog');
+    expect(Array.from(paper.children).map((el) => el.className)).toEqual([
+      'mtx-dialog__title',
+      'mtx-dialog__content',
+      'mtx-dialog__actions',
+    ]);
+    expect(paper).toHaveAccessibleName('Fragmento');
+    expect(paper.querySelector('.mtx-dialog__content .mtx-dialog__actions')).toBeNull();
+  });
+
+  it('un clic en el fondo que empieza con una capa superior abierta no cierra el diálogo', () => {
+    const onClose = vi.fn();
+    render(<Dialog open title="T" onClose={onClose} />);
+    const backdrop = document.querySelector('.mtx-dialog__backdrop')!;
+    const popup = document.createElement('div');
+    document.body.appendChild(popup);
+    const owner = {};
+    pushLayer(owner, { kind: 'popup', nodes: popup });
+    fireEvent.mouseDown(backdrop);
+    removeLayer(owner); // el menú/popover se cierra con ese mismo mousedown
+    fireEvent.click(backdrop);
+    expect(onClose).not.toHaveBeenCalled();
+    fireEvent.mouseDown(backdrop);
+    fireEvent.click(backdrop);
+    expect(onClose).toHaveBeenCalledWith(expect.anything(), 'backdropClick');
+    popup.remove();
   });
 
   it('paridad de estructura con vanilla (sintaxis simplificada)', async () => {

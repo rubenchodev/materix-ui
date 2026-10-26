@@ -99,7 +99,7 @@ La lista se ajusta en varias líneas dentro de su columna.
 
 | Prop | Tipo | Por defecto | Descripción |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Links, `<a>`, `<button>`, texto u otros elementos; `data-icon` añade un icono. |
+| `children` | `ReactNode` | — | Links, `<a>`, `<button>`, texto u otros elementos (los Fragments se aplanan); `data-icon` añade un icono. |
 | `items` | `BreadcrumbItem[]` | — | Ruta como datos; prevalece sobre `children`. |
 | `separator` | `ReactNode` | `'/'` | Texto, nodo o nombre de icono Material. |
 | `maxItems` | `number` | `8` | Máximo de ítems visibles antes de colapsar; `0` desactiva el colapso. |
@@ -107,6 +107,7 @@ La lista se ajusta en varias líneas dentro de su columna.
 | `itemsAfterCollapse` | `number` | `1` | Ítems después del botón de colapso. |
 | `expandText` | `string` | i18n `breadcrumbs.showPath` | Etiqueta accesible del botón de colapso. |
 | `expanded` | `boolean` | — | Ruta expandida (controlado). |
+| `defaultExpanded` | `boolean` | `false` | Expandida al montar (no controlado); se colapsa de nuevo si cambian los ítems. |
 | `onExpand` | `() => void` | — | Se revelan los ítems colapsados. |
 | `onNavigate` | `(event, detail) => boolean \| void` | — | Se activa un ítem; `false` o `preventDefault()` cancelan la navegación. |
 | `variant` | `TypographyVariant` | `'body1'` | Escala tipográfica de la ruta (`body2` para una compacta). |

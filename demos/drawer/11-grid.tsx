@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { Button } from '@rubenchodev/materix-react/components/button';
 import { Checkbox } from '@rubenchodev/materix-react/components/checkbox';
-import { Drawer } from '@rubenchodev/materix-react/components/drawer';
+import { Drawer, useDrawer } from '@rubenchodev/materix-react/components/drawer';
 import { Grid } from '@rubenchodev/materix-react/components/grid';
 import { TextField } from '@rubenchodev/materix-react/components/text-field';
 
@@ -12,15 +11,15 @@ export const description = {
 };
 
 export default function Demo() {
-  const [open, setOpen] = useState(false);
+  const drawer = useDrawer();
   return (
     <>
       <div className="demo-row">
-        <Button variant="outlined" startIcon="filter_list" onClick={() => setOpen(true)}>
+        <Button variant="outlined" startIcon="filter_list" {...drawer.getTriggerProps({ action: 'open' })}>
           Filters
         </Button>
       </div>
-      <Drawer anchor="right" width="wide" padded title="Filters" open={open} onClose={() => setOpen(false)}>
+      <Drawer anchor="right" width="wide" padded title="Filters" {...drawer.drawerProps}>
         <Grid container spacing={2}>
           <Grid size={12}>
             <TextField

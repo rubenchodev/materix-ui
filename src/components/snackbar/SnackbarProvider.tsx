@@ -4,7 +4,7 @@
  * `SnackbarProvider` pinta un snackbar compartido y `useSnackbar().enqueue()` muestra avisos de uno en uno.
  */
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import type { MouseEvent as ReactMouseEvent, ReactNode, SyntheticEvent } from 'react';
+import type { CSSProperties, MouseEvent as ReactMouseEvent, ReactNode, SyntheticEvent } from 'react';
 import { Snackbar } from './Snackbar';
 import type { SnackbarCloseReason, SnackbarOrigin } from './Snackbar';
 
@@ -54,6 +54,28 @@ interface QueueItem extends SnackbarOptions {
 }
 
 const SnackbarContext = createContext<SnackbarApi | null>(null);
+
+/** Estilos de `.mtx-visually-hidden` en línea, por si la app no carga `utilities.css`. */
+const VISUALLY_HIDDEN: CSSProperties = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
+/**
+ * Indica si el mensaje es texto plano (anunciable desde la región viva estable).
+ * @param {ReactNode} value Mensaje.
+ * @returns {boolean} `true` si es cadena o número no vacío.
+ */
+function isText(value: ReactNode): value is string | number {
+  return (typeof value === 'string' && value !== '') || typeof value === 'number';
+}
 
 /**
  * Proveedor del snackbar compartido: muestra los avisos encolados de uno en uno.
@@ -107,6 +129,26 @@ export function SnackbarProvider({
 
   const api = useMemo<SnackbarApi>(() => ({ enqueue, close }), [enqueue, close]);
 
+  // Regiones vivas estables (siempre montadas): solo cambia su texto en cada aviso.
+  const visibleRole = current?.role ?? role;
+  const announceable = isText(current?.message);
+  const [announcement, setAnnouncement] = useState('');
+  useEffect(() => {
+    if (!open || !current || !isText(current.message)) {
+      setAnnouncement('');
+      return undefined;
+    }
+    // Se vacía y se rellena en el frame siguiente para que se anuncie aunque el texto se repita.
+    setAnnouncement('');
+    const text = String(current.message);
+    if (typeof requestAnimationFrame !== 'function') {
+      setAnnouncement(text);
+      return undefined;
+    }
+    const frame = requestAnimationFrame(() => setAnnouncement(text));
+    return () => cancelAnimationFrame(frame);
+  }, [open, current]);
+
   const handleClose = (_event: Event | SyntheticEvent | null, reason: SnackbarCloseReason) => {
     closedReason.current = reason;
     setOpen(false);
@@ -135,10 +177,16 @@ export function SnackbarProvider({
         closeOnAction={false}
         autoHideDuration={current && current.duration !== undefined ? current.duration : autoHideDuration}
         anchorOrigin={current?.anchorOrigin ?? anchorOrigin}
-        role={current?.role ?? role}
+        role={announceable ? null : visibleRole}
         onClose={handleClose}
         onExited={handleExited}
       />
+      <div className="mtx-visually-hidden" style={VISUALLY_HIDDEN} role="status" aria-live="polite" aria-atomic="true">
+        {visibleRole === 'status' ? announcement : ''}
+      </div>
+      <div className="mtx-visually-hidden" style={VISUALLY_HIDDEN} role="alert" aria-live="assertive" aria-atomic="true">
+        {visibleRole === 'alert' ? announcement : ''}
+      </div>
     </SnackbarContext.Provider>
   );
 }

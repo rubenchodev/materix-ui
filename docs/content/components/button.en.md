@@ -115,7 +115,17 @@ Text is displayed as written. Add `uppercase` to get the uppercase style charact
 
 If the action navigates to another URL, pass `href`: the button renders an `<a>` and keeps link semantics (open in a new tab, copy the address) with the look of a button. Since `<a>` doesn't support `disabled`, a disabled link gets `aria-disabled="true"`, `tabindex="-1"` and its click is blocked.
 
-To use a router link, pass it in `component` (`<Button component={RouterLink} href="/plans">`). Any other element (`component="span"`) receives `role="button"`, `tabindex="0"` and activation with <kbd>Enter</kbd>/<kbd>Space</kbd>.
+To use a router link, pass it in `component` with the prop that router expects: `to` for React Router or `href` for Next.js. With `href` or `to` the button keeps link semantics (no `role` or `tabindex` is forced):
+
+```tsx
+import { Link as RouterLink } from 'react-router-dom';
+import NextLink from 'next/link';
+
+<Button component={RouterLink} to="/plans">See plans</Button>
+<Button component={NextLink} href="/plans">See plans</Button>
+```
+
+Any other element without a destination (`component="span"`, `component="div"` or `component="a"` without `href`) receives `role="button"`, `tabindex="0"` and keyboard activation like a native button: <kbd>Enter</kbd> on key down and <kbd>Space</kbd> on key up.
 
 {{< react-demo "button/11-as-link" >}}
 
@@ -192,7 +202,7 @@ Other props (`id`, `aria-*`, `data-*`, `onClick`…) go to the root element; `cl
 | Vanilla | React |
 | :--- | :--- |
 | `class="mtx-button mtx-button--contained"` | `variant="contained"` |
-| `data-size="small"` | `size="small"` |
+| `data-size="small"` · `data-small` · `data-large` | `size="small"` · `size="small"` · `size="large"` |
 | `data-color="error"` / `mtx-button--error` | `color="error"` |
 | `data-surface="primary"` | `surface="primary"` |
 | `data-start-icon="add"` / `data-end-icon="send"` | `startIcon="add"` / `endIcon="send"` |
@@ -201,6 +211,8 @@ Other props (`id`, `aria-*`, `data-*`, `onClick`…) go to the root element; `cl
 | `data-loading` · `data-loading-position` · `data-loading-indicator` | `loading` · `loadingPosition` · `loadingIndicator` |
 | `<a class="mtx-button" href>` | `href` (or `component`) |
 | `disable()` / `enable()` · `setLoading()` | `disabled` · `loading` props |
+
+There is no "Manual BEM usage" section: in React the component always renders the full BEM structure, so writing it by hand is not needed (for SSR the server output is already that markup).
 
 ## Accessibility
 

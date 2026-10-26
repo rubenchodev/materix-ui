@@ -100,7 +100,11 @@ describe('Accordion', () => {
     expect(onChange).toHaveBeenLastCalledWith(expect.anything(), false);
     expect(root).not.toHaveClass('mtx-accordion--expanded');
     flushTransition();
-    expect((container.querySelector('.mtx-accordion__region') as HTMLElement).style.visibility).toBe('hidden');
+    const region = container.querySelector('.mtx-accordion__region') as HTMLElement;
+    // Con `until-found` (jsdom expone `onbeforematch`) solo queda el hidden nativo, encontrable con Ctrl+F.
+    expect(region).toHaveAttribute('hidden', 'until-found');
+    expect(region.style.visibility).toBe('');
+    expect(region.style.height).toBe('');
   });
 
   it('modo controlado: solo cambia con la prop', () => {

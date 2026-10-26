@@ -151,6 +151,14 @@ Para un control total (el equivalente de la sintaxis BEM vanilla), compón `Acco
 | `AccordionDetails` | — | `.mtx-accordion__details`. |
 | `AccordionActions` | `disableSpacing` | `.mtx-accordion-actions`, colocada tras los detalles. |
 
+### Callbacks
+
+| Callback | Argumentos | Evento vanilla |
+|---|---|---|
+| `Accordion.onChange` | `(event: SyntheticEvent \| null, expanded: boolean)` | `mtx:accordion:change` (`detail.expanded`) |
+
+`onChange` se dispara con el clic, el teclado (Enter/Espacio), la búsqueda en página (`beforematch` o el `toggle` nativo de `<details>`, con `event = null` en `beforematch`), `actionRef` (`event = null`) y cuando un grupo exclusivo cierra el panel porque se abrió otro (con el evento que lo provocó). En modo controlado el estado solo cambia si actualizas `expanded`.
+
 ### Equivalencia con vanilla
 
 | Vanilla | React |

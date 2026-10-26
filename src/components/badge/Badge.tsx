@@ -115,7 +115,7 @@ export const Badge = forwardRef(function Badge(
   const invisible = invisibleProp || (!isDot && isEmptyContent(badgeContent, showZero));
   const hasLabel = typeof label === 'string' && label !== '';
   const labelText = hasLabel && !invisible
-    ? label.replace('{0}', typeof display === 'string' ? display : String(badgeContent ?? ''))
+    ? label.replace('{0}', typeof display === 'string' ? display : '')
     : '';
 
   const classes = cx(

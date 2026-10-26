@@ -89,14 +89,17 @@ El texto, el estado deshabilitado y el resto de props son estado de React; `ref`
 | `color` | `'default' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success'` | `'default'` | Color de la paleta. |
 | `icon` | `ReactNode \| string` | — | Icono inicial. Una cadena genera `<span class="mtx-chip__icon material-icons">`; un nodo recibe `mtx-chip__icon`. |
 | `avatar` | `ReactNode` | — | Avatar inicial; recibe `mtx-chip__avatar`. |
-| `clickable` | `boolean` | `true` si hay `onClick` | Hace el chip interactivo. |
-| `onClick` | `(event) => void` | — | Clic o Enter/Espacio en un chip clicable. |
+| `clickable` | `boolean` | `true` si hay `onClick` o `href` | Hace el chip interactivo (como en MUI, un chip con `href` es clicable; pasa `clickable={false}` para el comportamiento de vanilla). |
+| `onClick` | `(event: MouseEvent) => void` | — | Clic o Enter/Espacio en un chip clicable (el teclado dispara un clic nativo, así que siempre recibe un `MouseEvent`). |
 | `onDelete` | `(event) => void` | — | Muestra el icono de eliminar; se invoca con clic o Supr/Retroceso. |
 | `deleteIcon` | `ReactNode` | X en círculo (SVG) | Icono de eliminar personalizado. |
 | `deleteLabel` | `string` | i18n `chip.delete` | Pista (`title`) del icono de eliminar. |
 | `disabled` | `boolean` | `false` | Deshabilita el chip. |
 | `component` | `ElementType` | `'div'` | Elemento raíz (`'button'`, `'a'`…). |
 | `locale` | `string` | contexto | Idioma de los textos propios. |
+| `href` | `string` | — | Renderiza la raíz como `<a>` (salvo con `component`) y hace el chip clicable. |
+| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` con `component="button"` | Tipo de una raíz `<button>` nativa. |
+| `children` | `ReactNode` | — | Contenido cuando se omite `label`. |
 
 `className` se concatena; `ref`, `style` y cualquier otro atributo (`id`, `aria-*`, `data-*`, manejadores) van al elemento raíz.
 

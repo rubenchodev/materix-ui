@@ -116,7 +116,7 @@ El CSS también funciona con marcado plano (HTML estático o plantillas de servi
 | `disabled` | `boolean` | `false` | `disabled` nativo; `aria-disabled` en enlaces. |
 | `disableRipple` | `boolean` | `false` | Desactiva el ripple centrado. |
 | `href` | `string` | — | Renderiza un `<a>`. |
-| `component` | `ElementType` | `'button'` / `'a'` | Elemento raíz propio (p. ej. un enlace del router). |
+| `component` | `ElementType` | `'button'` / `'a'` | Elemento raíz propio (p. ej. un enlace del router). Sin `href`/`to` recibe `role="button"`, `tabIndex=0`, Enter (keydown) y Espacio (keyup); con `href`/`to` se trata como enlace. |
 | `children` | `ReactNode` | — | Contenido propio (icono anidado). |
 | `className`, `style`, `ref`, `aria-*`, `on*`… | — | — | Se reenvían a la raíz; `className` se concatena. |
 
@@ -166,3 +166,5 @@ El CSS también funciona con marcado plano (HTML estático o plantillas de servi
 | `disabled` / `disable()` / `enable()` | `disabled={boolean}` |
 | `<a data-mtx="icon-button" href>` | `href` o `component` |
 | `Materix.getInstance(el)` | `ref` |
+
+React nunca añade `mtx-icon-button--default` ni `mtx-icon-button--medium` (vanilla añade `--medium` con `data-size="medium"`): ninguna de las dos clases tiene CSS, así que no hay diferencia visual.

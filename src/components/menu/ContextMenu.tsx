@@ -35,7 +35,7 @@ export interface ContextMenuItem {
 /** Props de {@link ContextMenu}. */
 export interface ContextMenuProps
   extends Omit<MenuProps, 'open' | 'anchorEl' | 'anchorPosition' | 'children' | 'autoFocusItem'> {
-  /** Área (o áreas) que abren el menú con clic derecho: elemento, ref o selector CSS. */
+  /** Área que abre el menú con clic derecho: elemento, ref o selector CSS (delegado, admite nodos añadidos después). */
   target: ElementTarget<Element> | string;
   /** Definición de los ítems. */
   items: ContextMenuItem[];
@@ -80,16 +80,34 @@ function renderItems(items: ContextMenuItem[], prefix: string): ReactNode[] {
  */
 export function ContextMenu({ target, items, onClose, ...menuProps }: ContextMenuProps) {
   const context = useContextMenu();
-  const handleContextMenu = useEventCallback((event: MouseEvent) => context.onContextMenu(event));
+  /** Abre el menú si el evento ocurre dentro de un área objetivo. */
+  const handleContextMenu = useEventCallback((event: MouseEvent) => {
+    if (typeof target === 'string') {
+      // Delegación: también sirven los nodos añadidos después que coincidan con el selector.
+      const origin = event.target instanceof Element ? event.target : null;
+      let area: Element | null = null;
+      try {
+        area = origin ? origin.closest(target) : null;
+      } catch {
+        area = null;
+      }
+      if (area) context.openFor(event, area);
+      return;
+    }
+    context.openFor(event, event.currentTarget as Element | null);
+  });
 
   useEffect(() => {
     if (typeof document === 'undefined') return undefined;
-    const nodes: Element[] =
-      typeof target === 'string'
-        ? Array.from(document.querySelectorAll(target))
-        : ([resolveTarget(target)].filter(Boolean) as Element[]);
-    nodes.forEach((node) => node.addEventListener('contextmenu', handleContextMenu as EventListener));
-    return () => nodes.forEach((node) => node.removeEventListener('contextmenu', handleContextMenu as EventListener));
+    const listener = handleContextMenu as EventListener;
+    if (typeof target === 'string') {
+      document.addEventListener('contextmenu', listener);
+      return () => document.removeEventListener('contextmenu', listener);
+    }
+    const node = resolveTarget(target);
+    if (!node) return undefined;
+    node.addEventListener('contextmenu', listener);
+    return () => node.removeEventListener('contextmenu', listener);
   }, [target, handleContextMenu]);
 
   return (

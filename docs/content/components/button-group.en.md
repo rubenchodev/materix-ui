@@ -99,7 +99,7 @@ The group is declarative: change `disabled` or render more children and the posi
 | `label` | `string` | — | Accessible name (`aria-label`). |
 | `role` | `string` | `'group'` | Root role (`toolbar` if you add arrow-key navigation). |
 
-Other props go to the root `<div>`; `className` is merged and `ref` points to it. `ButtonGroupContext` is exported for custom children.
+Other props go to the root `<div>`; `className` is merged and `ref` points to it.
 
 ### CSS classes
 
@@ -123,6 +123,8 @@ Other props go to the root `<div>`; `className` is merged and `ref` points to it
 | `data-label` | `label` |
 | `disable()` / `enable()` · `refresh()` | `disabled` prop · automatic on render |
 | `<button data-open-menu>` + Menu | arrow `<Button>` + Menu (`onClick`) |
+
+There is no "Manual BEM usage" section: the group always renders the full BEM structure and computes the position classes on every render.
 
 ## Accessibility
 

@@ -9,6 +9,7 @@ import type {
   FocusEventHandler,
   HTMLAttributes,
   InputHTMLAttributes,
+  TextareaHTMLAttributes,
   MouseEvent as ReactMouseEvent,
   ReactElement,
   ReactNode,
@@ -180,7 +181,8 @@ export interface TextFieldProps
   /** Ref al control nativo. */
   inputRef?: Ref<TextFieldInputElement> | Ref<HTMLInputElement> | Ref<HTMLTextAreaElement> | Ref<HTMLSelectElement>;
   /** Atributos extra del control nativo. */
-  inputProps?: InputHTMLAttributes<HTMLInputElement> & { [key: `data-${string}`]: string | undefined };
+  inputProps?: InputHTMLAttributes<TextFieldInputElement> &
+    Pick<TextareaHTMLAttributes<HTMLTextAreaElement>, 'cols' | 'wrap'> & { [key: `data-${string}`]: string | undefined };
   /** Foco del control. */
   onFocus?: FocusEventHandler<TextFieldInputElement>;
   /** Pérdida de foco del control. */
@@ -257,6 +259,20 @@ function adjustAutoResize(input: HTMLTextAreaElement, maxRows?: number): void {
   }
   input.style.height = `${scrollHeight}px`;
   input.style.overflowY = 'hidden';
+}
+
+/**
+ * Encadena dos manejadores opcionales (primero el de `inputProps`, luego la prop directa).
+ * @param {Function} [first] Primer manejador.
+ * @param {Function} [second] Segundo manejador.
+ * @returns {Function|undefined} Manejador combinado o `undefined` si no hay ninguno.
+ */
+function chainHandlers<E>(first?: (event: E) => void, second?: (event: E) => void): ((event: E) => void) | undefined {
+  if (!first || !second) return first ?? second;
+  return (event: E) => {
+    first(event);
+    second(event);
+  };
 }
 
 /**
@@ -572,7 +588,7 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(function Tex
       next = result.value;
     }
     setStateValue(next);
-    (inputProps?.onChange as ((e: ChangeEvent<TextFieldInputElement>) => void) | undefined)?.(event);
+    inputProps?.onChange?.(event);
     onChange?.(event, next, { unmaskedValue: unmaskValue(next, mask), isMaskComplete: isMaskComplete(next, mask) });
   };
 
@@ -616,8 +632,8 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(function Tex
     'aria-labelledby': ariaLabelledBy ?? inputProps?.['aria-labelledby'],
     'aria-describedby': describedBy || undefined,
     onChange: handleChange,
-    onFocus: onFocus ?? inputProps?.onFocus,
-    onBlur: onBlur ?? inputProps?.onBlur,
+    onFocus: chainHandlers(inputProps?.onFocus, onFocus),
+    onBlur: chainHandlers(inputProps?.onBlur, onBlur),
     ...valueProps,
   } as Record<string, unknown>;
 

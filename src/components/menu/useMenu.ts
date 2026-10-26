@@ -1,8 +1,9 @@
 'use client';
-import { useCallback, useId, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 import type { MenuAnchorPosition } from './Menu';
 import type { MenuCloseEvent, MenuCloseReason } from './MenuContext';
+import { installModality, isKeyboardModality } from './utils';
 
 /** Opciones de {@link useMenu}. */
 export interface UseMenuOptions {
@@ -108,6 +109,8 @@ export interface UseContextMenuResult {
   closeMenu: () => void;
   /** Manejador para `onContextMenu` del área (o un listener nativo). */
   onContextMenu: (event: MouseEvent | ReactMouseEvent<Element>) => void;
+  /** Abre el menú para un evento `contextmenu` con un área explícita (delegación). */
+  openFor: (event: MouseEvent | ReactMouseEvent<Element>, area: Element | null) => void;
   /** Esparcir en el `Menu`: `open`, `anchorPosition`/`anchorEl`, `onClose` y foco. */
   menuProps: {
     open: boolean;
@@ -131,23 +134,30 @@ export function useContextMenu(): UseContextMenuResult {
     keyboard: boolean;
   }>({ open: false, position: null, element: null, keyboard: false });
 
-  const onContextMenu = useCallback((event: MouseEvent | ReactMouseEvent<Element>) => {
+  useEffect(() => installModality(), []);
+
+  const openFor = useCallback((event: MouseEvent | ReactMouseEvent<Element>, area: Element | null) => {
     event.preventDefault();
-    const target = event.currentTarget as HTMLElement | null;
-    const keyboard = event.button !== 2 && event.clientX === 0 && event.clientY === 0;
+    // Tecla Menú o Mayús+F10: Chromium envía el centro del área, así que se usa la última modalidad.
+    const keyboard = isKeyboardModality() || (event.button !== 2 && event.clientX === 0 && event.clientY === 0);
     setState({
       open: true,
       position: keyboard ? null : { top: event.clientY, left: event.clientX },
-      element: keyboard ? target : null,
+      element: keyboard ? (area as HTMLElement | null) : null,
       keyboard,
     });
   }, []);
+  const onContextMenu = useCallback(
+    (event: MouseEvent | ReactMouseEvent<Element>) => openFor(event, event.currentTarget as Element | null),
+    [openFor],
+  );
   const closeMenu = useCallback(() => setState((prev) => ({ ...prev, open: false })), []);
 
   return {
     open: state.open,
     closeMenu,
     onContextMenu,
+    openFor,
     menuProps: {
       open: state.open,
       anchorPosition: state.position,

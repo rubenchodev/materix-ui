@@ -151,6 +151,14 @@ For full control (the equivalent of the vanilla BEM syntax), compose `AccordionS
 | `AccordionDetails` | — | `.mtx-accordion__details`. |
 | `AccordionActions` | `disableSpacing` | `.mtx-accordion-actions`, placed after the details. |
 
+### Callbacks
+
+| Callback | Arguments | Vanilla event |
+|---|---|---|
+| `Accordion.onChange` | `(event: SyntheticEvent \| null, expanded: boolean)` | `mtx:accordion:change` (`detail.expanded`) |
+
+`onChange` fires on click, keyboard (Enter/Space), find-in-page (`beforematch` or the native `toggle` of `<details>`, with `event = null` for `beforematch`), `actionRef` (`event = null`) and when an exclusive group closes the panel because another one opened (with the event that triggered it). In controlled mode the state only changes if you update `expanded`.
+
 ### Vanilla equivalence
 
 | Vanilla | React |

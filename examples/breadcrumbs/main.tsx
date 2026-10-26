@@ -1,3 +1,4 @@
+import '@rubenchodev/materix-ui/base.css'; // primero: los CSS de componentes (demos) deben ganar a base.css
 /** Página de ejemplo de breadcrumbs: monta las demos de demos/breadcrumbs. */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

@@ -103,7 +103,7 @@ El CSS también funciona con marcado plano (HTML estático o plantillas de servi
 | `disabled` | `boolean` | `false` | `disabled` nativo; `aria-disabled` en enlaces. |
 | `disableRipple` | `boolean` | `false` | Desactiva el ripple. |
 | `href` | `string` | — | Renderiza un `<a>`. |
-| `component` | `ElementType` | `'button'` / `'a'` | Elemento raíz propio. |
+| `component` | `ElementType` | `'button'` / `'a'` | Elemento raíz propio. Sin `href`/`to` recibe `role="button"`, `tabIndex=0`, Enter (keydown) y Espacio (keyup); con `href`/`to` se trata como enlace. |
 | `children` | `ReactNode` | — | Contenido extra tras el icono y el texto. |
 | `className`, `style`, `ref`, `aria-*`, `on*`… | — | — | Se reenvían a la raíz; `className` se concatena. |
 

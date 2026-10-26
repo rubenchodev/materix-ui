@@ -1,5 +1,5 @@
 'use client';
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import type { ChangeEvent, FocusEventHandler, InputHTMLAttributes, LabelHTMLAttributes, ReactNode, Ref } from 'react';
 import '@rubenchodev/materix-ui/components/checkbox.css';
 import '@rubenchodev/materix-ui/components/form-helper-text.css';
@@ -108,13 +108,21 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(function Che
   const handleInputRef = useForkRef(inputRef, inputRefProp);
   const ripple = useToggleRipple(disabled || disableRipple);
 
-  // `indeterminate` solo existe como propiedad DOM: se reaplica tras cada render (el clic nativo la limpia).
+  // Estado mixto efectivo: sigue a la prop, y un clic del usuario lo limpia como hace el navegador
+  // (equivale a `_syncAria` de vanilla); vuelve a activarse cuando la prop cambia.
+  const [mixed, setMixed] = useState(indeterminate);
+  useEffect(() => {
+    setMixed(indeterminate);
+  }, [indeterminate]);
+
+  // `indeterminate` solo existe como propiedad DOM: se reaplica tras cada render.
   useEnhancedEffect(() => {
-    if (inputRef.current) inputRef.current.indeterminate = indeterminate;
+    if (inputRef.current) inputRef.current.indeterminate = mixed;
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const next = event.target.checked;
+    setMixed(false);
     inputProps?.onChange?.(event);
     onChange?.(event, next);
   };
@@ -145,7 +153,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(function Che
         {...checkedAttrs}
         disabled={disabled}
         required={required || undefined}
-        aria-checked={indeterminate ? 'mixed' : undefined}
+        aria-checked={mixed ? 'mixed' : undefined}
         aria-label={ariaLabel ?? inputProps?.['aria-label']}
         aria-labelledby={ariaLabelledBy ?? inputProps?.['aria-labelledby']}
         aria-describedby={ariaDescribedBy}

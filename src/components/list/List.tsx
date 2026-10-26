@@ -4,6 +4,7 @@ import type { ComponentPropsWithoutRef, ComponentPropsWithRef, ElementType, Forw
 import '@rubenchodev/materix-ui/components/list.css';
 import { cx, useControlled, useEventCallback } from '../../core';
 import { ListContext, useListContext } from './ListContext';
+import { useListSelection } from './ListSelectionProvider';
 import type { ListContextValue, ListSelectDetail, ListSelection } from './ListContext';
 
 /** Propiedades propias de {@link List}. */
@@ -20,7 +21,7 @@ export interface ListOwnProps {
   selectable?: boolean;
   /** Valor seleccionado (controlado). `null` = ninguno. */
   value?: string | null;
-  /** Valor seleccionado inicial (no controlado). */
+  /** Valor seleccionado inicial (no controlado). Con valor propio la lista no hereda un `ListSelectionProvider`. */
   defaultValue?: string | null;
   /** Se llama al seleccionar una fila con clic (equivale a `mtx:list:select`). */
   onSelect?: (detail: ListSelectDetail) => void;
@@ -48,7 +49,7 @@ export const List = forwardRef(function List(
     subheader,
     selectable,
     value: valueProp,
-    defaultValue = null,
+    defaultValue: defaultValueProp,
     onSelect,
     className,
     children,
@@ -60,16 +61,20 @@ export const List = forwardRef(function List(
   const parent = useListContext();
   const [value, setValue] = useControlled<string | null>({
     controlled: valueProp,
-    default: defaultValue,
+    default: defaultValueProp ?? null,
     name: 'List',
   });
   const handleSelect = useEventCallback((next: string, item: HTMLElement) => {
     setValue(next);
     onSelect?.({ item, value: next });
   });
-  // Una lista anidada sin estado propio comparte el ámbito de selección del padre (como vanilla).
-  const ownsSelection = !parent || !nested || valueProp !== undefined || onSelect !== undefined;
-  const parentSelection = parent?.selection;
+  const shared = useListSelection();
+  const hasOwnState = valueProp !== undefined || onSelect !== undefined || defaultValueProp !== undefined;
+  // Una lista anidada sin estado propio comparte el ámbito del padre; una raíz, el de ListSelectionProvider.
+  const inheritsParent = Boolean(parent) && Boolean(nested) && !hasOwnState;
+  const inheritsProvider = !parent && Boolean(shared) && !hasOwnState;
+  const ownsSelection = !inheritsParent && !inheritsProvider;
+  const parentSelection = inheritsParent ? parent?.selection : inheritsProvider ? (shared ?? undefined) : undefined;
   const ownSelectable = selectable ?? (ownsSelection ? true : parentSelection?.selectable ?? true);
 
   const selection = useMemo<ListSelection>(() => {

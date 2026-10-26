@@ -185,7 +185,7 @@ En modo enlaces, si un `Link` de router pintado con `renderItem` cancela la nave
 | `data-disabled` / `disable()` / `enable()` | `disabled` |
 | `data-href-template="?page={page}"` | `getItemHref={(p) => '?page=' + p}` |
 | setters `page` / `count`, `goTo()`, `next()`, `previous()` | props `page` / `count` (controlado) |
-| `mtx:pagination:change` `{ page, previousPage, href }` (cancelable en modo enlaces) | `onChange(event, page)`; `event.preventDefault()` en modo enlaces |
+| `mtx:pagination:change` `{ page, previousPage, href }` (cancelable en modo enlaces) | `onChange(event, page)`; `event.preventDefault()` en modo enlaces. No se entregan `previousPage` ni `href`: conserva la página anterior en tu estado (modo controlado) y calcula la URL con tu propio `getItemHref(page)`. |
 | `getPaginationItems()` | `getPaginationItems()` y `usePagination()` |
 
 ## Accesibilidad

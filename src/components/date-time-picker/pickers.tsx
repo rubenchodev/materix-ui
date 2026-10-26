@@ -13,8 +13,18 @@ export type DatePickerProps = Omit<DateTimePickerProps, 'mode' | 'range'>;
 export type TimePickerProps = Omit<DateTimePickerProps, 'mode' | 'range' | 'shouldDisableDate' | 'openTo'>;
 /** Props de los rangos. */
 export type DateRangePickerProps = Omit<DateTimePickerProps, 'mode' | 'range'>;
-/** Props de los pickers estáticos (sin campo ni popover). */
-export type StaticDatePickerProps = Omit<DateTimePickerProps, 'mode' | 'range' | 'displayStatic' | 'display' | 'open' | 'defaultOpen'>;
+/** Props de {@link DateTimeRangePicker}. */
+export type DateTimeRangePickerProps = Omit<DateTimePickerProps, 'mode' | 'range'>;
+/** Props comunes de los pickers estáticos (sin campo ni popover). */
+type StaticBaseProps = Omit<DateTimePickerProps, 'mode' | 'range' | 'displayStatic' | 'display' | 'open' | 'defaultOpen'>;
+/** Props de {@link StaticDatePicker}. */
+export type StaticDatePickerProps = StaticBaseProps;
+/** Props de {@link StaticTimePicker} (sin opciones de calendario). */
+export type StaticTimePickerProps = Omit<StaticBaseProps, 'shouldDisableDate' | 'openTo'>;
+/** Props de {@link StaticDateTimePicker}. */
+export type StaticDateTimePickerProps = StaticBaseProps;
+/** Props de {@link StaticDateRangePicker}. */
+export type StaticDateRangePickerProps = StaticBaseProps;
 
 /** Selector de fecha (`data-mtx="date-picker"`). */
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function DatePicker(props, ref) {
@@ -32,7 +42,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 });
 
 /** Rango de fecha y hora (`data-mtx="datetime-range-picker"`). */
-export const DateTimeRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(function DateTimeRangePicker(props, ref) {
+export const DateTimeRangePicker = forwardRef<HTMLDivElement, DateTimeRangePickerProps>(function DateTimeRangePicker(props, ref) {
   return <DateTimePicker ref={ref} {...props} mode="datetime" range />;
 });
 
@@ -42,16 +52,16 @@ export const StaticDatePicker = forwardRef<HTMLDivElement, StaticDatePickerProps
 });
 
 /** Reloj incrustado (`data-mtx="time-picker" data-static`). */
-export const StaticTimePicker = forwardRef<HTMLDivElement, StaticDatePickerProps>(function StaticTimePicker(props, ref) {
+export const StaticTimePicker = forwardRef<HTMLDivElement, StaticTimePickerProps>(function StaticTimePicker(props, ref) {
   return <DateTimePicker ref={ref} {...props} mode="time" displayStatic />;
 });
 
 /** Fecha y hora incrustadas (`data-mtx="datetime-picker" data-static`). */
-export const StaticDateTimePicker = forwardRef<HTMLDivElement, StaticDatePickerProps>(function StaticDateTimePicker(props, ref) {
+export const StaticDateTimePicker = forwardRef<HTMLDivElement, StaticDateTimePickerProps>(function StaticDateTimePicker(props, ref) {
   return <DateTimePicker ref={ref} {...props} mode="datetime" displayStatic />;
 });
 
 /** Rango incrustado (`data-mtx="date-range-picker" data-static`). */
-export const StaticDateRangePicker = forwardRef<HTMLDivElement, StaticDatePickerProps>(function StaticDateRangePicker(props, ref) {
+export const StaticDateRangePicker = forwardRef<HTMLDivElement, StaticDateRangePickerProps>(function StaticDateRangePicker(props, ref) {
   return <DateTimePicker ref={ref} {...props} mode="date" range displayStatic />;
 });

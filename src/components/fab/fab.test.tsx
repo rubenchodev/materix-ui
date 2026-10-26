@@ -84,6 +84,49 @@ describe('Fab', () => {
   });
 });
 
+describe('Fab — raíz no nativa', () => {
+  it('con component="span" actúa como botón ARIA: role, tabIndex 0, Enter en keydown y Espacio en keyup', () => {
+    const onClick = vi.fn();
+    render(<Fab component="span" icon="add" aria-label="Star" onClick={onClick} />);
+    const el = screen.getByRole('button', { name: 'Star' });
+    expect(el.tagName).toBe('SPAN');
+    expect(el).toHaveAttribute('tabindex', '0');
+    expect(el).not.toHaveAttribute('type');
+    fireEvent.keyDown(el, { key: 'Enter' });
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(fireEvent.keyDown(el, { key: ' ' })).toBe(false);
+    expect(onClick).toHaveBeenCalledTimes(1);
+    fireEvent.keyUp(el, { key: ' ' });
+    expect(onClick).toHaveBeenCalledTimes(2);
+  });
+
+  it('deshabilitado con component="div": aria-disabled, tabIndex -1 y sin activación', () => {
+    const onClick = vi.fn();
+    render(<Fab component="div" icon="add" aria-label="Star" disabled onClick={onClick} />);
+    const el = screen.getByRole('button', { name: 'Star' });
+    expect(el).toHaveAttribute('aria-disabled', 'true');
+    expect(el).toHaveAttribute('tabindex', '-1');
+    fireEvent.keyDown(el, { key: 'Enter' });
+    fireEvent.keyUp(el, { key: ' ' });
+    fireEvent.click(el);
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('un componente propio con `to` se trata como enlace (sin role button)', () => {
+    const RouterLink = ({ to, ...props }: { to: string } & Record<string, unknown>) => <a {...props} href={to} />;
+    render(<Fab component={RouterLink} {...{ to: '/home' }} icon="add" aria-label="Star" />);
+    const link = screen.getByRole('link', { name: 'Star' });
+    expect(link).toHaveAttribute('href', '/home');
+    expect(link).not.toHaveAttribute('role');
+    expect(link).not.toHaveAttribute('tabindex');
+  });
+
+  it('component="a" sin href se comporta como botón', () => {
+    render(<Fab component="a" icon="add" aria-label="Star" />);
+    expect(screen.getByRole('button', { name: 'Star' })).toHaveAttribute('tabindex', '0');
+  });
+});
+
 describe('Fab — paridad con vanilla', () => {
   it('circular con data-icon', async () => {
     const vanilla = await mountVanilla('<button data-mtx="fab" type="button" data-icon="add" aria-label="Create"></button>');

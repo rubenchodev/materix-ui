@@ -12,7 +12,8 @@ const es: LocaleDictionary = {
   },
 
   appBar: {
-    openNavigation: 'Abrir navegación'
+    openNavigation: 'Abrir navegación',
+    moreOptions: 'Más opciones'
   },
 
   dateTimePicker: {

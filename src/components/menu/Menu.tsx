@@ -23,7 +23,7 @@ import {
   usePosition,
 } from '../../core';
 import type { ElementTarget, Placement, PositionAnchor, VirtualElement } from '../../core';
-import { MenuInternalContext } from './MenuContext';
+import { MenuInternalContext, SubmenuFlagContext } from './MenuContext';
 import type { MenuCloseEvent, MenuCloseReason, MenuInternalContextValue, MenuSelectDetail } from './MenuContext';
 import { MenuList } from './MenuList';
 import { focusInitial, installModality, isKeyboardModality } from './utils';
@@ -80,8 +80,6 @@ export interface MenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelec
   container?: ElementTarget<Element>;
   /** Elemento que recibe el foco al cerrar; por defecto el enfocado al abrir o el ancla. */
   restoreFocusTo?: ElementTarget<HTMLElement>;
-  /** Uso interno de `Submenu`: se abre al lado, sin animación, y la selección sube al menú padre. */
-  submenu?: boolean;
   /** Props de `.mtx-menu__popper` y `.mtx-menu__paper`. */
   slotProps?: MenuSlotProps;
   /** Ítems del menú. */
@@ -119,7 +117,6 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu(props, r
     disablePortal = false,
     container,
     restoreFocusTo,
-    submenu = false,
     slotProps,
     id: idProp,
     className,
@@ -127,6 +124,8 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu(props, r
     ...rest
   } = props;
   const parent = useContext(MenuInternalContext);
+  // Un `Submenu` lo indica por contexto: se abre al lado, sin animación, y la selección sube al padre.
+  const submenu = useContext(SubmenuFlagContext);
   const isSubmenu = submenu && parent != null;
   const autoId = useId();
   const id = idProp ?? `mtx-menu-${autoId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
@@ -328,7 +327,7 @@ export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu(props, r
                 {...rest}
                 className={cx(open && 'mtx-menu--open', className)}
               >
-                {children}
+                <SubmenuFlagContext.Provider value={false}>{children}</SubmenuFlagContext.Provider>
               </MenuList>
             </MenuInternalContext.Provider>
           </div>

@@ -90,6 +90,15 @@ export const Radio = forwardRef<HTMLLabelElement, RadioProps>(function Radio(pro
   const formControl = useFormControl();
   const disabled = disabledProp ?? (group?.disabled || formControl?.disabled) ?? false;
   const required = requiredProp ?? formControl?.required ?? false;
+  // Suelto (sin RadioGroup) dentro de un FormControl: hereda error y sus textos de ayuda, como Checkbox.
+  // Dentro de un grupo, el error y la descripción van en el `role="radiogroup"`.
+  const standaloneInControl = !group && formControl !== undefined;
+  const invalid = standaloneInControl && formControl.error;
+  const describedIds = [
+    ...(ariaDescribedBy ?? inputProps?.['aria-describedby'] ?? '').split(/\s+/),
+    ...(standaloneInControl ? formControl.helperTextIds : []),
+  ].filter(Boolean);
+  const describedBy = describedIds.length ? Array.from(new Set(describedIds)).join(' ') : undefined;
   const inputValue = value ?? inputProps?.value;
   const ripple = useToggleRipple(disabled || disableRipple);
 
@@ -120,6 +129,7 @@ export const Radio = forwardRef<HTMLLabelElement, RadioProps>(function Radio(pro
       {...rest}
     >
       <input
+        aria-invalid={invalid ? true : undefined}
         {...inputProps}
         ref={inputRef}
         type="radio"
@@ -134,7 +144,7 @@ export const Radio = forwardRef<HTMLLabelElement, RadioProps>(function Radio(pro
         required={required || undefined}
         aria-label={ariaLabel ?? inputProps?.['aria-label']}
         aria-labelledby={ariaLabelledBy ?? inputProps?.['aria-labelledby']}
-        aria-describedby={ariaDescribedBy ?? inputProps?.['aria-describedby']}
+        aria-describedby={describedBy}
         onChange={handleChange}
         onFocus={onFocus ?? inputProps?.onFocus}
         onBlur={onBlur ?? inputProps?.onBlur}

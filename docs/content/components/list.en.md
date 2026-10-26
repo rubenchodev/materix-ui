@@ -5,7 +5,7 @@ group: "data-display"
 icon: "format_list_bulleted"
 weight: 50
 example: "list"
-import: "List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar, ListItemSecondaryAction, ListSubheader"
+import: "List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar, ListItemSecondaryAction, ListSubheader, ListSelectionProvider"
 mui: "https://mui.com/material-ui/react-list/"
 ---
 
@@ -69,7 +69,7 @@ Hover to see the hover state and use Tab for focus. `disabled` disables the row:
 
 ### Side navigation
 
-With `href` the rows are links; the selected one gets `aria-current="page"`.
+With `href` the rows are links; the selected one gets `aria-current="page"`. In vanilla the selection scope is the containing `nav` or Drawer, so several lists share one selection; in React, wrap them in `ListSelectionProvider` (`value`, `defaultValue`, `onSelect`, `selectable`). Without a provider each root `List` keeps its own selection, and a `List` with its own `value`, `defaultValue` or `onSelect` does not join the provider.
 
 {{< react-demo "list/09-use-cases" >}}
 
@@ -104,6 +104,19 @@ For full control (the equivalent of the vanilla BEM syntax), compose `ListItemIc
 | `defaultValue` | `string \| null` | `null` | Initially selected row (uncontrolled). |
 | `onSelect` | `(detail: { item: HTMLElement; value: string }) => void` | — | A row was selected with a click. |
 | `component` | `ElementType` | `'ul'` | Root element. |
+
+### ListSelectionProvider
+
+Shares one selection across several `List` elements (the vanilla scope of a `nav` or Drawer). Root lists without their own `value`, `defaultValue` or `onSelect` use it; nested lists keep sharing their parent's scope.
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `value` | `string \| null` | — | Selected row (controlled). |
+| `defaultValue` | `string \| null` | `null` | Initially selected row (uncontrolled). |
+| `onSelect` | `(detail: { item: HTMLElement; value: string }) => void` | — | A row of any of the lists was selected. |
+| `selectable` | `boolean` | `true` | `false`: no selection on click. |
+
+`useListSelection()` returns the shared scope (or `null`).
 
 ### ListItem and ListItemButton
 
@@ -144,7 +157,7 @@ All of them forward `ref` to the root, merge `className` and pass native attribu
 
 | Callback | Arguments | Vanilla event |
 |---|---|---|
-| `List.onSelect` | `{ item: HTMLElement; value: string }` | `mtx:list:select` (`detail.item`) |
+| `List.onSelect` / `ListSelectionProvider.onSelect` | `{ item: HTMLElement; value: string }` | `mtx:list:select` (`detail.item`) |
 
 ### Vanilla equivalence
 
@@ -160,6 +173,7 @@ All of them forward `ref` to the root, merge `className` and pass native attribu
 | `data-no-select` | `disableSelect` |
 | `data-inset`, `data-sticky` (subheader) | `inset`, `sticky` |
 | `mtx:list:select` | `onSelect` |
+| Selection scope of the containing `nav` / Drawer | `ListSelectionProvider` |
 | `selected` setter, `disable()` / `enable()` | `value` / `selected`, `disabled` |
 
 ### CSS classes

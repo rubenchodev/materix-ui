@@ -34,7 +34,7 @@ export default function Demo() {
     setLog((lines) => [...lines.slice(-3), `onModeChange: ${previous} → ${next}`]);
 
   return (
-    <div className="demo-stack demo-wide">
+    <div className="demo-stack mtx-w-100">
       <div className="demo-fixed-width">
         <NativeSelect
           label="Breakpoint"

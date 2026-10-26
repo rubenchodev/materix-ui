@@ -86,7 +86,7 @@ As in MUI, actions go on the right by default (`end`). Change it with `align="st
 
 ## Sizes
 
-`maxWidth` sets the panel's maximum width: `xs` (20rem), `sm` (24rem), `md` (32rem, default), `lg` (48rem), `xl` (64rem) or `false` (no limit). The panel takes 100% of the available width up to that maximum; `fullWidth={false}` makes it as wide as its content. `fullScreen` takes the whole window and removes the rounded corners, the recommended pattern on mobile for long tasks.
+`maxWidth` sets the panel's maximum width: `xs` (20rem), `sm` (24rem), `md` (32rem, default), `lg` (48rem), `xl` (64rem) or `false` (no limit). The width scale follows vanilla's, which is narrower than MUI's (MUI uses 444/600/900/1200/1536px); `xs` is its lowest step and, as vanilla has no class for it, it is applied inline. The panel takes 100% of the available width up to that maximum; `fullWidth={false}` makes it as wide as its content. `fullScreen` takes the whole window and removes the rounded corners, the recommended pattern on mobile for long tasks.
 
 {{< react-demo id="dialog/04-sizes" layout="block" >}}
 
@@ -157,7 +157,7 @@ The equivalent of `open()`/`close()` is the `open` prop. `onOpen` and `onClose(e
 
 ## Composition
 
-For full control, compose the parts: `DialogTitle` names the dialog (`aria-labelledby`) and the first `DialogContentText` describes it (`aria-describedby`); the ids are generated from the dialog `id` (or a unique id). You can mix both forms: `title` and `actions` are still added when you use `DialogContent` as a child.
+For full control, compose the parts: `DialogTitle` names the dialog (`aria-labelledby`) and the first `DialogContentText` describes it (`aria-describedby`); the ids are generated from the dialog `id` (or a unique id). You can mix both forms: `title`, `description` and `actions` are still added when you use `DialogContent` as a child (the description is inserted at the start of the content), and children wrapped in Fragments are recognized too.
 
 {{< react-demo id="dialog/13-composition" layout="block" >}}
 
@@ -185,11 +185,11 @@ For full control, compose the parts: `DialogTitle` names the dialog (`aria-label
 | `onOpen` | `() => void` | — | The dialog opens (also if it mounts open). |
 | `onEntered` / `onExited` | `() => void` | — | The enter / exit animation ended. |
 | `title` | `ReactNode` | — | Generates a `DialogTitle`. |
-| `description` | `ReactNode` | — | Generates a `DialogContentText` at the start of the generated content. |
+| `description` | `ReactNode` | — | Generates a `DialogContentText` at the start of the content (also of a `DialogContent` child without one). |
 | `actions` | `ReactNode` | — | Buttons wrapped in a `DialogActions`. |
 | `actionsAlign` | `'start' \| 'center' \| 'end' \| 'between'` | `'end'` | Alignment for the actions without `align`. |
 | `role` | `'dialog' \| 'alertdialog'` | `'dialog'` | Role of the panel. |
-| `maxWidth` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| false` | `'md'` (32rem) | Maximum width of the panel. |
+| `maxWidth` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| false` | `'md'` (32rem) | Maximum width of the panel (vanilla scale; `xs` = 20rem). |
 | `fullWidth` | `boolean` | `true` | The panel fills the width up to `maxWidth`. |
 | `fullScreen` | `boolean` | `false` | Full-screen panel (`.mtx-dialog--full`). |
 | `scroll` | `'paper' \| 'body'` | `'paper'` | Area that scrolls. |
@@ -269,6 +269,14 @@ For full control, compose the parts: `DialogTitle` names the dialog (`aria-label
 | `Tab` / `Shift+Tab` | Moves cyclically through the controls of the panel. |
 
 ## Vanilla equivalence
+
+Differences from vanilla:
+
+- **Animation:** the panel animates on enter and exit (opacity and scale, 250 ms) and the backdrop fades (225/195 ms), as in MUI; in vanilla the dialog appears and disappears instantly.
+- **Backdrop:** the background is the shared [Backdrop](../backdrop/) component (`.mtx-backdrop.mtx-dialog__backdrop`), not a bare `div.mtx-dialog__backdrop`.
+- **`maxWidth="xs"`** (20rem) and **`maxWidth={false}`** / **`fullWidth={false}`** have no class in the shared CSS and are applied as inline styles on the panel.
+- A backdrop click that only closes a menu or popover opened inside the dialog doesn't close the dialog.
+
 
 | Vanilla | React |
 |---|---|

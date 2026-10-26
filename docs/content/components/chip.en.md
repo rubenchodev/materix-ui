@@ -89,14 +89,17 @@ The label, the disabled state and the rest of the props are React state; `ref` p
 | `color` | `'default' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success'` | `'default'` | Palette color. |
 | `icon` | `ReactNode \| string` | — | Start icon. A string renders `<span class="mtx-chip__icon material-icons">`; a node receives `mtx-chip__icon`. |
 | `avatar` | `ReactNode` | — | Start avatar; receives `mtx-chip__avatar`. |
-| `clickable` | `boolean` | `true` if `onClick` | Makes the chip interactive. |
-| `onClick` | `(event) => void` | — | Click or Enter/Space on a clickable chip. |
+| `clickable` | `boolean` | `true` if `onClick` or `href` | Makes the chip interactive (as in MUI, a chip with `href` is clickable; pass `clickable={false}` for the vanilla behavior). |
+| `onClick` | `(event: MouseEvent) => void` | — | Click or Enter/Space on a clickable chip (the keyboard triggers a native click, so it always receives a `MouseEvent`). |
 | `onDelete` | `(event) => void` | — | Shows the delete icon; called on click or Delete/Backspace. |
 | `deleteIcon` | `ReactNode` | circled X (SVG) | Custom delete icon. |
 | `deleteLabel` | `string` | i18n `chip.delete` | Tooltip (`title`) of the delete icon. |
 | `disabled` | `boolean` | `false` | Disables the chip. |
 | `component` | `ElementType` | `'div'` | Root element (`'button'`, `'a'`…). |
 | `locale` | `string` | context | Language of the built-in texts. |
+| `href` | `string` | — | Renders an `<a>` root (unless `component` is given) and makes the chip clickable. |
+| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` with `component="button"` | Type of a native button root. |
+| `children` | `ReactNode` | — | Content used when `label` is omitted. |
 
 `className` is merged; `ref`, `style` and any other attribute (`id`, `aria-*`, `data-*`, handlers) go to the root element.
 

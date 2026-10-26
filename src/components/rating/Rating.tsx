@@ -10,7 +10,7 @@ import type {
   SyntheticEvent,
 } from 'react';
 import '@rubenchodev/materix-ui/components/rating.css';
-import { cx, useControlled } from '../../core';
+import { cx, useControlled, useForkRef } from '../../core';
 import { useIntlLocale, useT } from '../../i18n';
 
 /** Trazados SVG (24×24, Material Icons) de los iconos escalables de vanilla. */
@@ -181,6 +181,22 @@ export const Rating = forwardRef<HTMLSpanElement, RatingProps>(function Rating(p
     if (pointerTimerRef.current) clearTimeout(pointerTimerRef.current);
   }, []);
 
+  const rootRef = useRef<HTMLSpanElement>(null);
+  const handleRef = useForkRef(rootRef, ref);
+  const initialDefaultRef = useRef(defaultValue);
+
+  // form.reset() restaura los radios nativos: el estado no controlado vuelve a defaultValue.
+  useEffect(() => {
+    const form = rootRef.current?.closest('form');
+    if (!form) return undefined;
+    const handleReset = () => {
+      setValue(initialDefaultRef.current);
+      setHover(null);
+    };
+    form.addEventListener('reset', handleReset);
+    return () => form.removeEventListener('reset', handleReset);
+  }, [setValue]);
+
   const format = useMemo(() => {
     let formatter: Intl.NumberFormat | null = null;
     try {
@@ -305,7 +321,7 @@ export const Rating = forwardRef<HTMLSpanElement, RatingProps>(function Rating(p
   const display = hover !== null ? hover : value;
   const hasName = Boolean(label || ariaLabelProp || ariaLabelledBy);
   const ariaLabel = readOnly
-    ? t('readOnly', { value: format(value || 0), max: format(max) }, `Rated ${value || 0} out of ${max}`)
+    ? ariaLabelProp ?? label ?? t('readOnly', { value: format(value || 0), max: format(max) }, `Rated ${value || 0} out of ${max}`)
     : ariaLabelProp ?? (ariaLabelledBy ? undefined : label);
   const role = readOnly ? 'img' : roleProp ?? (hasName ? 'radiogroup' : undefined);
   const inputId = (n: number | null) => `${name}-${n === null ? 'empty' : String(n).replace('.', '_')}`;
@@ -376,7 +392,7 @@ export const Rating = forwardRef<HTMLSpanElement, RatingProps>(function Rating(p
 
   return (
     <span
-      ref={ref}
+      ref={handleRef}
       className={cx(
         'mtx-rating',
         size !== 'medium' && `mtx-rating--${size}`,

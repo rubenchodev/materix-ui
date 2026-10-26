@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { Button } from '@rubenchodev/materix-react/components/button';
-import { Drawer } from '@rubenchodev/materix-react/components/drawer';
+import { Drawer, useDrawer } from '@rubenchodev/materix-react/components/drawer';
 import { List, ListItemButton } from '@rubenchodev/materix-react/components/list';
 
 export const title = { en: 'Basic usage', es: 'Uso básico' };
@@ -10,15 +9,15 @@ export const description = {
 };
 
 export default function Demo() {
-  const [open, setOpen] = useState(false);
+  const drawer = useDrawer();
   return (
     <>
       <div className="demo-row">
-        <Button variant="contained" onClick={() => setOpen(true)}>
+        <Button variant="contained" {...drawer.getTriggerProps({ action: 'open' })}>
           Open navigation
         </Button>
       </div>
-      <Drawer open={open} onClose={() => setOpen(false)} title="Mail">
+      <Drawer {...drawer.drawerProps} title="Mail">
         <List component="nav" aria-label="Main navigation">
           <ListItemButton icon="inbox" href="#inbox" selected>
             Inbox

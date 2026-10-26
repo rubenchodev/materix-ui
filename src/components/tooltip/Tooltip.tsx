@@ -378,9 +378,6 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>(function Tooltip(pr
     });
     setTouch(asTouch);
     setInstantExit(false);
-    hysteresisOpen = true;
-    if (hysteresisTimer) clearTimeout(hysteresisTimer);
-    hysteresisTimer = null;
     if (openRef.current) return;
     setOpenState(true);
     if (openProp === undefined) openRef.current = true;
@@ -395,13 +392,37 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>(function Tooltip(pr
     setInstantExit(immediate);
     setOpenState(false);
     if (openProp === undefined) openRef.current = false;
-    if (hysteresisTimer) clearTimeout(hysteresisTimer);
-    hysteresisTimer = setTimeout(() => {
-      hysteresisOpen = false;
-      hysteresisTimer = null;
-    }, TOOLTIP_DEFAULTS.hysteresis + leaveDelay);
     onClose?.(event);
   });
+
+  // Histéresis según la visibilidad real (en modo controlado el padre puede ignorar la solicitud).
+  const wasOpen = useRef(false);
+  useEnhancedEffect(() => {
+    if (open) {
+      hysteresisOpen = true;
+      if (hysteresisTimer) clearTimeout(hysteresisTimer);
+      hysteresisTimer = null;
+    } else if (wasOpen.current) {
+      if (hysteresisTimer) clearTimeout(hysteresisTimer);
+      hysteresisTimer = setTimeout(() => {
+        hysteresisOpen = false;
+        hysteresisTimer = null;
+      }, TOOLTIP_DEFAULTS.hysteresis + leaveDelay);
+    }
+    wasOpen.current = open;
+  }, [open]);
+  useEffect(
+    () => () => {
+      // Desmontado visible: la histéresis también caduca.
+      if (!wasOpen.current) return;
+      if (hysteresisTimer) clearTimeout(hysteresisTimer);
+      hysteresisTimer = setTimeout(() => {
+        hysteresisOpen = false;
+        hysteresisTimer = null;
+      }, TOOLTIP_DEFAULTS.hysteresis);
+    },
+    [],
+  );
 
   /** Programa la apertura (0 ms si otro tooltip acaba de cerrarse, como MUI). */
   const scheduleOpen = (event: TooltipEvent) => {

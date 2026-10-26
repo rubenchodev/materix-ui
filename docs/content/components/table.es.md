@@ -117,7 +117,7 @@ const selection = useTableSelection(rows, (row) => row.id, { getRowLabel: (row) 
 
 ## Paginación
 
-`TablePagination` pinta el selector nativo de filas por página, el rango mostrado (región viva) y los botones de navegación. Puede ser controlada (`page`, `rowsPerPage`) o no controlada (`defaultPage`, `defaultRowsPerPage`); `-1` en `rowsPerPageOptions` significa "Todas" y `count={-1}` un total desconocido. Corta los datos con `paginateRows(rows, page, rowsPerPage)`.
+`TablePagination` pinta el selector nativo de filas por página, el rango mostrado (región viva) y los botones de navegación. Puede ser controlada (`page`, `rowsPerPage`) o no controlada (`defaultPage`, `defaultRowsPerPage`); `-1` en `rowsPerPageOptions` significa "Todas" y `count={-1}` un total desconocido. Corta los datos con `paginateRows(rows, page, rowsPerPage)`. Cambiar las filas por página devuelve la página a 0 sin llamar a `onPageChange`; en modo controlado resetea `page` en `onRowsPerPageChange`.
 
 {{< react-demo id="table/10-pagination" layout="block" >}}
 
@@ -180,6 +180,17 @@ Una tabla de datos con búsqueda de cliente ([TextField](../text-field/)), borra
 | `component` | `'th' \| 'td'` | `th` en cabecera | Elemento pintado. |
 | `scope` | `string` | `col`/`row` | `col` en `<th>` de cabecera, `row` en `<th>` del cuerpo. |
 
+### Props de TableHead, TableBody, TableFooter y TableCaption
+
+Aceptan todos los atributos nativos de `<thead>`, `<tbody>`, `<tfoot>` y `<caption>` (`className` se concatena y `ref` va al elemento). `TableHead`, `TableBody` y `TableFooter` publican su sección a filas y celdas (las celdas de cabecera pasan a `<th scope="col">` y las del pie reciben el estilo de totales); `TableCaption` genera un `id` si no se le da, para que `TableContainer` lo use como nombre de la región.
+
+| Componente | Elemento | Clase |
+| :--- | :--- | :--- |
+| `TableHead` | `<thead>` | `mtx-table-head` |
+| `TableBody` | `<tbody>` | `mtx-table-body` |
+| `TableFooter` | `<tfoot>` | `mtx-table-footer` |
+| `TableCaption` | `<caption>` | `mtx-table-caption` |
+
 ### Props de TableSortLabel
 
 | Prop | Tipo | Por defecto | Descripción |
@@ -201,7 +212,7 @@ Una tabla de datos con búsqueda de cliente ([TextField](../text-field/)), borra
 | `rowsPerPage` / `defaultRowsPerPage` | `number` | `10` | Filas por página; `-1` muestra todas. |
 | `rowsPerPageOptions` | `number[]` | `[10, 25, 50, 100]` | Opciones del selector. |
 | `onPageChange` | `(event, page, { previousPage, reason }) => void` | — | `mtx:table:page-change`. |
-| `onRowsPerPageChange` | `(event, rowsPerPage, { previousRowsPerPage, page }) => void` | — | `mtx:table:rows-per-page-change`; la página vuelve a 0. |
+| `onRowsPerPageChange` | `(event, rowsPerPage, { previousRowsPerPage, page }) => void` | — | `mtx:table:rows-per-page-change`; la página vuelve a 0 sin `onPageChange` (resetéala aquí si es controlada). |
 | `showFirstButton` / `showLastButton` | `boolean` | `false` | Botones de primera / última página. |
 | `disabled` | `boolean` | `false` | Deshabilita los controles (`aria-disabled`). |
 | `labelRowsPerPage`, `labelAll`, `labelOf`, `labelMoreThan` | `string` | i18n | Textos. |
@@ -228,6 +239,19 @@ Una tabla de datos con búsqueda de cliente ([TextField](../text-field/)), borra
 
 `sortRows(rows, comparator)` (estable), `getComparator(direction, key, locale?)`, `compareValues(a, b, locale?)`, `paginateRows(rows, page, rowsPerPage)` y `useTableSort({ defaultOrderBy, defaultOrder, onSortChange })`.
 
+### Callbacks
+
+| Callback | Evento vanilla | Se dispara cuando |
+| :--- | :--- | :--- |
+| `TableSortLabel` `onSort(event, { direction, active, key })` | `mtx:table:sort` | Se pulsa la etiqueta (o Enter/Espacio); `direction` es la solicitada. |
+| `TablePagination` `onPageChange(event, page, { previousPage, reason })` | `mtx:table:page-change` | Un botón de navegación cambia la página (`reason`: `firstPage`, `previousPage`, `nextPage`, `lastPage`). |
+| `TablePagination` `onRowsPerPageChange(event, rowsPerPage, { previousRowsPerPage, page })` | `mtx:table:rows-per-page-change` | Cambia el selector de filas por página. |
+| `useTableSelection` `onSelectionChange(selected, { selected, rows, count, reason })` | `mtx:table:selection-change` | Cambia la selección por interacción (`'user'`) o por API (`'api'`). |
+
+{{< callout type="info" title="Filas por página y página actual" >}}
+Al cambiar las filas por página, la página vuelve a 0 **sin** llamar a `onPageChange` (igual que vanilla: el detalle del evento lleva `page: 0`). En modo controlado, resetea tú la página en `onRowsPerPageChange`: `onRowsPerPageChange={(e, n) => { setRowsPerPage(n); setPage(0); }}`.
+{{< /callout >}}
+
 ### Clases CSS
 
 | Clase | Descripción |
@@ -240,6 +264,40 @@ Una tabla de datos con búsqueda de cliente ([TextField](../text-field/)), borra
 | `mtx-table-sort-label`, `--active`, `--desc`, `__icon` | Etiqueta de orden. |
 | `mtx-table-pagination`, `__toolbar`, `__select-label`, `__select`, `__displayed-rows`, `__actions`, `__button` | Paginación. |
 | `mtx-table-toolbar`, `--highlight`, `__title`, `__count`, `__actions` | Barra de herramientas. |
+
+## Equivalencia con vanilla
+
+| Vanilla | React |
+| :--- | :--- |
+| `<table data-mtx="table">` con `<thead>`/`<tbody>`/`<tr>`/`<td>` simples (estilizados por descendencia y un `MutationObserver`) | `Table`, `TableHead`, `TableBody`, `TableRow` y `TableCell` (el DOM se pinta con sus clases desde el principio) |
+| `data-size="small"` / `data-dense`, `data-hover`, `data-sticky-header` | `size="small"`, `hover`, `stickyHeader` |
+| `table-container` con `data-max-height`, `data-sticky-header` | `TableContainer` con `maxHeight`, `stickyHeader` |
+| `data-align`, `data-padding` en celdas | `align` / `numeric`, `padding` |
+| `table-row` con `data-selected` / `data-hover` | `TableRow` con `selected` / `hover` |
+| `data-selectable`: la tabla **inyecta** una columna de casillas y lee `data-id`, `data-selected` y `data-no-select` | La columna de casillas **la pintas tú** con `useTableSelection(rows, getId)` y [Checkbox](../checkbox/): `getHeaderCheckboxProps()`, `getRowCheckboxProps(row)`, `getRowProps(row)`; `defaultSelected`, `isRowSelectable` |
+| `data-select-on-click` | `selectOnClick` (hook) + `selectOnClick` (Table, cursor) |
+| getter/setter `selected`, `isSelected()`, `toggleRow()`, `selectAll()`, `clearSelection()`, `getSelectedRows()` | `selected`, `setSelected(ids)`, `isSelected()`, `toggleRow()`, `selectAll()`, `clearSelection()`, `selectedRows` |
+| `table-sort-label` se alterna sola, mantiene una sola columna activa y emite `mtx:table:sort`; `data-disable-auto-toggle` deja el estado a la página | `TableSortLabel` es siempre **controlada** (`active`, `direction`, `onSort`), como vanilla con `data-disable-auto-toggle`; `useTableSort()` da el comportamiento automático (una columna activa, alternancia asc/desc) |
+| `data-key`, `data-direction`, `data-active`, `data-disabled` | `sortKey`, `direction`, `active`, `disabled` |
+| `table-pagination` con `data-table="#id"` oculta las filas de una **tabla del DOM** (paginación local) | Basada en datos: corta las filas con `paginateRows(rows, page, rowsPerPage)` y pasa `count={rows.length}` |
+| `data-count`, `data-page`, `data-rows-per-page`, `data-rows-per-page-options`, `data-show-first-button`, `data-show-last-button` | `count`, `page`/`defaultPage`, `rowsPerPage`/`defaultRowsPerPage`, `rowsPerPageOptions`, `showFirstButton`, `showLastButton` |
+| setters `page`, `rowsPerPage`, `count`, `firstPage()`, `previousPage()`, `nextPage()`, `lastPage()`, `update()` | Props controladas `page`, `rowsPerPage` y `count` (estado del padre) |
+| `disable()` / `enable()`, `data-disabled` | `disabled` |
+| `data-label-rows-per-page`, `data-label-all`, `data-label-of`, `data-label-more-than`, `data-label-first`… | `labelRowsPerPage`, `labelAll`, `labelOf`, `labelMoreThan`, `getItemAriaLabel` |
+| `table-toolbar` con `data-table="#id"` sigue a la tabla mediante `mtx:table:selection-change`; `data-count`, `data-title`, `data-selected-text`, hijos con `data-show="default"` / `"selected"` | `TableToolbar` con `numSelected={selection.numSelected}`, `title`, `selectedText`, `actions` y `selectedActions` |
+| setter `count` de la toolbar | prop `numSelected` |
+| `refresh()`, `destroy()` | No hacen falta: React vuelve a pintar y limpia |
+
+La receta "tabla de datos" de vanilla (filas pintadas desde un array, toolbar vinculada con `data-table`, paginación de la tabla del DOM) queda en React así: guarda `rows` en el estado, deriva la lista filtrada, ordenada (`sortRows`) y paginada (`paginateRows`), pasa las filas visibles a `useTableSelection` y `selection.numSelected` a `TableToolbar`. Mira el [ejemplo real](#ejemplo-real).
+
+## Teclado
+
+| Tecla | Acción |
+| :--- | :--- |
+| <kbd>Tab</kbd> / <kbd>Mayús</kbd>+<kbd>Tab</kbd> | Recorre la región con scroll (si desplaza), las etiquetas de orden, las casillas de selección, los controles de las filas, el selector de filas por página y los botones de paginación. |
+| <kbd>Enter</kbd> / <kbd>Espacio</kbd> | En un `TableSortLabel`, pide el orden siguiente. |
+| <kbd>Espacio</kbd> | En una casilla, alterna la fila (o todas desde la cabecera). |
+| <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | Con la región enfocada, desplaza la tabla; en el selector de filas por página, cambia la opción. |
 
 ## Accesibilidad
 

@@ -243,6 +243,48 @@ describe('Breadcrumbs', () => {
     expect(screen.getByRole('button', { name: 'More' })).toBeInTheDocument();
   });
 
+  it('aplana los Fragments: un <li> por ítem y sin warnings', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    render(
+      <Breadcrumbs>
+        <>
+          <a href="/">Home</a>
+          <a href="/docs">Docs</a>
+        </>
+        <span>Here</span>
+      </Breadcrumbs>,
+    );
+    expect(document.querySelectorAll('.mtx-breadcrumbs__li')).toHaveLength(3);
+    expect(document.querySelectorAll('.mtx-breadcrumbs__separator')).toHaveLength(2);
+    expect(screen.getByRole('link', { name: 'Docs' })).toHaveClass('mtx-breadcrumbs__link');
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
+  });
+
+  it('children: vuelve a colapsar si cambian los hijos con la misma cantidad', async () => {
+    const trail = (last: string) => (
+      <Breadcrumbs maxItems={2}>
+        <a href="/">Home</a>
+        <a href="/a">A</a>
+        <a href="/b">B</a>
+        {last}
+      </Breadcrumbs>
+    );
+    const { rerender } = render(trail('One'));
+    await userEvent.click(screen.getByRole('button', { name: 'Show path' }));
+    expect(document.querySelectorAll('.mtx-breadcrumbs__li')).toHaveLength(4);
+    rerender(trail('One'));
+    expect(document.querySelectorAll('.mtx-breadcrumbs__li')).toHaveLength(4);
+    rerender(trail('Two'));
+    expect(document.querySelectorAll('.mtx-breadcrumbs__li')).toHaveLength(2);
+  });
+
+  it('defaultExpanded muestra la ruta completa al montar', () => {
+    render(<Breadcrumbs maxItems={2} defaultExpanded>{(LONG.props as { children: React.ReactNode }).children}</Breadcrumbs>);
+    expect(document.querySelectorAll('.mtx-breadcrumbs__li')).toHaveLength(5);
+    expect(document.querySelector('.mtx-breadcrumbs__collapse-button')).toBeNull();
+  });
+
   it('paridad con vanilla (separador de icono, iconos y colapso)', async () => {
     const vanilla = await mountVanilla(`
       <ol data-mtx="breadcrumbs" data-separator="navigate_next" data-max-items="3">

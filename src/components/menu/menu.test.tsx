@@ -71,7 +71,7 @@ describe('Menu', () => {
     expect(menu.parentElement).toHaveAttribute('role', 'presentation');
     const popper = menu.parentElement!.parentElement!;
     expect(popper).toHaveClass('mtx-menu__popper');
-    expect(popper.parentElement).toBe(document.body);
+    expect(popper.parentElement?.hasAttribute("data-mtx-portal-root")).toBe(true);
     expect(popper.style.position).toBe('fixed');
     expect(popper).toHaveAttribute('dir', 'ltr');
     expect(document.activeElement).toBe(menu);
@@ -462,6 +462,7 @@ describe('ContextMenu', () => {
       />,
     );
     expect(screen.queryByRole('menu')).toBeNull();
+    fireEvent.pointerDown(area, { button: 2 });
     fireEvent.contextMenu(area, { clientX: 50, clientY: 60, button: 2 });
     const menu = screen.getByRole('menu');
     const popper = menu.parentElement!.parentElement!;
@@ -473,5 +474,39 @@ describe('ContextMenu', () => {
     expect(action).toHaveBeenCalledTimes(1);
     expect(screen.queryByRole('menu')).toBeNull();
     area.remove();
+  });
+
+  it('Mayús+F10 (coordenadas del centro, como Chromium) ancla al área y enfoca el primer ítem', () => {
+    const area = document.createElement('div');
+    area.className = 'ctx-kbd';
+    area.tabIndex = 0;
+    document.body.appendChild(area);
+    area.getBoundingClientRect = () =>
+      ({ top: 100, left: 100, right: 300, bottom: 200, width: 200, height: 100, x: 100, y: 100 }) as DOMRect;
+    render(<ContextMenu target=".ctx-kbd" items={[{ label: 'Copy' }, { label: 'Paste' }]} />);
+    area.focus();
+    fireEvent.keyDown(area, { key: 'F10', shiftKey: true });
+    fireEvent.contextMenu(area, { clientX: 200, clientY: 150, button: 0 });
+    const popper = screen.getByRole('menu').parentElement!.parentElement!;
+    expect(popper.style.left).toBe('100px');
+    expect(popper.style.top).toBe('204px');
+    expect(document.activeElement).toHaveTextContent('Copy');
+    fireEvent.keyDown(document.activeElement!, { key: 'Escape' });
+    expect(document.activeElement).toBe(area);
+    area.remove();
+  });
+
+  it('un selector se delega: sirve para áreas añadidas después del montaje', () => {
+    render(<ContextMenu target=".late-area" items={[{ label: 'Copy' }]} />);
+    const late = document.createElement('div');
+    late.className = 'late-area';
+    late.innerHTML = '<span>child</span>';
+    document.body.appendChild(late);
+    fireEvent.pointerDown(late);
+    fireEvent.mouseDown(late);
+    fireEvent.contextMenu(late.firstElementChild!, { clientX: 30, clientY: 40, button: 2 });
+    const popper = screen.getByRole('menu').parentElement!.parentElement!;
+    expect(popper.style.left).toBe('30px');
+    late.remove();
   });
 });

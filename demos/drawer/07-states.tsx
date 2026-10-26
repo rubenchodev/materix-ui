@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@rubenchodev/materix-react/components/button';
-import { Drawer } from '@rubenchodev/materix-react/components/drawer';
-import type { DrawerCloseReason } from '@rubenchodev/materix-react/components/drawer';
+import { Drawer, useDrawer } from '@rubenchodev/materix-react/components/drawer';
 
 export const title = { en: 'States', es: 'Estados' };
 export const description = {
@@ -10,28 +9,19 @@ export const description = {
 };
 
 export default function Demo() {
-  const [locked, setLocked] = useState(false);
-  const [plain, setPlain] = useState(false);
-  const [last, setLast] = useState<string>('—');
-  const close = (reason: DrawerCloseReason | 'button') => {
-    setLast(reason);
-    setPlain(false);
-  };
+  const [last, setLast] = useState('—');
+  const locked = useDrawer({ onClose: setLast });
+  const plain = useDrawer({ onClose: setLast });
   return (
     <div className="demo-stack">
       <div className="demo-row">
-        <Button variant="outlined" onClick={() => setLocked(true)}>
+        <Button variant="outlined" {...locked.getTriggerProps({ action: 'open' })}>
           Explicit close only
         </Button>
-        <Button variant="outlined" onClick={() => setPlain(true)}>
+        <Button variant="outlined" {...plain.getTriggerProps({ action: 'open' })}>
           No backdrop
         </Button>
-        <Button
-          variant="outlined"
-          aria-controls="drawer-states-nobackdrop"
-          aria-expanded={plain}
-          onClick={() => setPlain((value) => !value)}
-        >
+        <Button variant="outlined" {...plain.getTriggerProps()}>
           Toggle without backdrop
         </Button>
       </div>
@@ -40,16 +30,12 @@ export default function Demo() {
       </p>
 
       <Drawer
-        open={locked}
+        {...locked.drawerProps}
         title="Unsaved changes"
         disableBackdropClick
         disableEscapeKeyDown
         closeButton={false}
         padded
-        onClose={(_event, reason) => {
-          setLast(reason);
-          setLocked(false);
-        }}
       >
         <p>Neither Escape nor the backdrop closes this panel. Use the buttons.</p>
         <div className="demo-row">
@@ -60,15 +46,7 @@ export default function Demo() {
         </div>
       </Drawer>
 
-      <Drawer
-        id="drawer-states-nobackdrop"
-        open={plain}
-        anchor="right"
-        hideBackdrop
-        title="No backdrop"
-        padded
-        onClose={(_event, reason) => close(reason)}
-      >
+      <Drawer {...plain.drawerProps} anchor="right" hideBackdrop title="No backdrop" padded>
         <p>No dark overlay; a click outside the panel still closes it.</p>
       </Drawer>
     </div>

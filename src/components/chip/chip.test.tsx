@@ -191,10 +191,11 @@ describe('Chip', () => {
   });
 
   it('href sin component renderiza un <a> sin role ni tabindex', () => {
-    const { container } = render(<Chip label="Link" href="/x" onClick={() => {}} />);
+    const { container } = render(<Chip label="Link" href="/x" />);
     const root = container.firstElementChild!;
     expect(root.tagName).toBe('A');
     expect(root).toHaveAttribute('href', '/x');
+    expect(root).toHaveClass('mtx-chip--clickable');
     expect(root).not.toHaveAttribute('role');
     expect(root).not.toHaveAttribute('tabindex');
   });

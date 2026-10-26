@@ -112,6 +112,40 @@ describe('Button', () => {
     expect(link).toHaveClass('mtx-button');
   });
 
+  it('component con `to` (React Router) conserva la semántica de enlace', () => {
+    const RouterLink = forwardRef<HTMLAnchorElement, AnchorHTMLAttributes<HTMLAnchorElement> & { to: string }>(
+      ({ to, ...props }, ref) => <a ref={ref} href={to} {...props} />,
+    );
+    render(<Button component={RouterLink} to="/x">Go</Button>);
+    const link = screen.getByRole('link', { name: 'Go' });
+    expect(link).toHaveAttribute('href', '/x');
+    expect(link).not.toHaveAttribute('role');
+    expect(link).not.toHaveAttribute('tabindex');
+  });
+
+  it('component="a" sin href actúa como botón enfocable con teclado', async () => {
+    const onClick = vi.fn();
+    render(<Button component="a" onClick={onClick}>Act</Button>);
+    const el = screen.getByRole('button', { name: 'Act' });
+    expect(el.tagName).toBe('A');
+    expect(el).toHaveAttribute('tabindex', '0');
+    el.focus();
+    expect(el).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('component="div": Espacio activa en keyup, no en keydown', () => {
+    const onClick = vi.fn();
+    render(<Button component="div" onClick={onClick}>Div</Button>);
+    const el = screen.getByRole('button', { name: 'Div' });
+    const down = fireEvent.keyDown(el, { key: ' ' });
+    expect(down).toBe(false);
+    expect(onClick).not.toHaveBeenCalled();
+    fireEvent.keyUp(el, { key: ' ' });
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
   it('ref y className concatenado', () => {
     const ref = createRef<HTMLElement>();
     render(<Button ref={ref} className="extra" variant="contained">A</Button>);

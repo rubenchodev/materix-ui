@@ -71,7 +71,7 @@ Medium 56px (default) and small 40px with `size="small"`, the same heights as Te
 
 ## States
 
-`helperText`, `error`, `disabled`, `readOnly` (shows the value; it neither opens nor deletes), `required` (native validation while there is no value), `loading` (CircularProgress in the field and "Loading…" in the list) and the "No options" message (customizable with `noOptionsText`).
+`helperText`, `error`, `disabled`, `readOnly` (shows the value; it neither opens nor deletes), `required` (native validation while there is no value), `loading` (CircularProgress in the field and "Loading…" in the list) and the "No options" message (customizable with `noOptionsText`). Inside a [FormControl](../form-helper-text/) it inherits `error`, `disabled` and `required`, and its `FormHelperText` is linked with `aria-describedby`.
 
 {{< react-demo id="autocomplete/06-states" layout="block" >}}
 
@@ -93,6 +93,10 @@ Medium 56px (default) and small 40px with `size="small"`, the same heights as Te
 
 {{< react-demo id="autocomplete/09-free-solo" layout="block" >}}
 
+{{< callout type="info" title="Difference with MUI" >}}
+In single selection with `freeSolo`, the typed text **becomes the value when the field loses focus** (`onChange` with `reason: 'createOption'`), as in vanilla. MUI only creates the value with <kbd>Enter</kbd> (or `autoSelect`) and keeps the text as `inputValue` on blur.
+{{< /callout >}}
+
 ## Behavior options
 
 <kbd>↓</kbd>/<kbd>↑</kbd> open and move, <kbd>Page Up</kbd>/<kbd>Page Down</kbd> jump 5, <kbd>Home</kbd>/<kbd>End</kbd> go to the ends, <kbd>Enter</kbd> selects and <kbd>Esc</kbd> closes (and, closed, clears with `clearOnEscape`). Options: `autoHighlight` (highlights the first one), `autoSelect` (<kbd>Tab</kbd> or blur accept the highlighted one), `clearOnEscape`, `openOnFocus`, `disableClearable`, `matchFrom="start"` and `includeInputInList` (the arrows go back to the field at the ends).
@@ -106,8 +110,13 @@ Listen to `onInputChange` (with `debounce={300}` the `input` reason waits until 
 {{< react-demo "autocomplete/11-async" >}}
 
 ```tsx
-const [options, setOptions] = useState([]);
+import { useRef, useState } from 'react';
+import { Autocomplete } from '@rubenchodev/materix-react';
+import type { AutocompleteOption } from '@rubenchodev/materix-react';
+
+const [options, setOptions] = useState<AutocompleteOption[]>([]);
 const [loading, setLoading] = useState(false);
+const lastQuery = useRef('');
 
 <Autocomplete
   label="Repository"
@@ -117,8 +126,11 @@ const [loading, setLoading] = useState(false);
   loading={loading}
   onInputChange={async (_event, text, reason) => {
     if (reason !== 'input') return;
+    lastQuery.current = text;
     setLoading(true);
-    setOptions(await searchRepos(text)); // [{ value, label, description }]
+    const results = await searchRepos(text); // [{ value, label, description }]
+    if (lastQuery.current !== text) return; // stale response: a newer search is running
+    setOptions(results);
     setLoading(false);
   }}
 />
@@ -157,7 +169,7 @@ With `value` + `onChange`, `inputValue` + `onInputChange` and `open` + `onOpen`/
 | `getOptionDisabled` | `(option) => boolean` | `option.disabled` | Disabled option. |
 | `groupBy` | `(option) => string` | `option.group` | Group of the option (consecutive). |
 | `renderOption` | `(option, state) => ReactNode` | — | Own content of each option (`state`: `index`, `selected`, `inputValue`). |
-| `filterOptions` | `(options, state) => T[] \| false` | accent-insensitive filter | Own filter; `false` does not filter nor highlight (server filtering). |
+| `filterOptions` | `((options, state) => T[]) \| false` | accent-insensitive filter | Own filter; `false` does not filter nor highlight (server filtering). |
 | `matchFrom` | `'any' \| 'start'` | `'any'` | Match anywhere or at the beginning. |
 | `multiple` | `boolean` | `false` | Multiple selection with chips. |
 | `freeSolo` | `boolean` | `false` | Accepts values outside the list. |
@@ -179,14 +191,17 @@ With `value` + `onChange`, `inputValue` + `onInputChange` and `open` + `onOpen`/
 | `autoSelect` | `boolean` | `false` | <kbd>Tab</kbd>/blur accept the highlighted option. |
 | `includeInputInList` | `boolean` | `false` | Arrows return to the field at the ends. |
 | `forcePopupIcon` | `boolean \| 'auto'` | `'auto'` | Open button (`auto`: hidden in `freeSolo`). |
-| `disabled` / `readOnly` / `required` | `boolean` | `false` | States. |
+| `disabled` | `boolean` | from `FormControl` | Disables the field. |
+| `readOnly` | `boolean` | `false` | Shows the value without allowing changes. |
+| `required` | `boolean` | from `FormControl` | Native validation while there is no value. |
 | `loading` | `boolean` | `false` | CircularProgress and "Loading…". |
 | `loadingText` / `noOptionsText` | `ReactNode` | i18n | Status texts. |
 | `variant` | `'outlined' \| 'filled' \| 'standard'` | `'outlined'` | Field variant. |
 | `size` | `'medium' \| 'small'` | `'medium'` | 56px or 40px. |
 | `color` | `'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success'` | `'primary'` | Focus and selection color. |
 | `label` / `placeholder` | `ReactNode` / `string` | — | Floating label; without `label` the placeholder is used as label. |
-| `helperText` / `error` | `ReactNode` / `boolean` | — | Helper text and error state (`aria-invalid`). |
+| `helperText` | `ReactNode` | — | Helper text (linked with `aria-describedby`; without it, the `FormHelperText` of a `FormControl` is linked). |
+| `error` | `boolean` | from `FormControl` | Error state (`aria-invalid`). |
 | `startIcon` | `ReactNode` | — | Start icon. |
 | `name` / `form` | `string` | — | Hidden inputs. |
 | `valueFormat` / `separator` | `'multiple' \| 'csv'` / `string` | `'multiple'` / `','` | Submission of multiple values. |

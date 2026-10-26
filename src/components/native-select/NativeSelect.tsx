@@ -214,8 +214,14 @@ export const NativeSelect = forwardRef<HTMLDivElement, NativeSelectProps>(functi
         aria-labelledby={ariaLabelledBy ?? inputProps?.['aria-labelledby']}
         aria-describedby={ariaDescribedBy}
         onChange={handleChange}
-        onFocus={onFocus ?? inputProps?.onFocus}
-        onBlur={onBlur ?? inputProps?.onBlur}
+        onFocus={(event) => {
+          inputProps?.onFocus?.(event);
+          onFocus?.(event);
+        }}
+        onBlur={(event) => {
+          inputProps?.onBlur?.(event);
+          onBlur?.(event);
+        }}
       >
         {options ? renderOptions(options) : null}
         {children}

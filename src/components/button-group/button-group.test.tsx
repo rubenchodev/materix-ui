@@ -114,6 +114,28 @@ describe('ButtonGroup', () => {
     expect(b).toHaveClass('mtx-button-group__last');
   });
 
+  it('aplana los Fragment para calcular first, middle y last', () => {
+    render(
+      <ButtonGroup>
+        <Button>A</Button>
+        <>
+          <Button>B</Button>
+          <Button>C</Button>
+        </>
+      </ButtonGroup>,
+    );
+    const [a, b, c] = screen.getAllByRole('button');
+    expect(a).toHaveClass('mtx-button-group__first');
+    expect(b).toHaveClass('mtx-button-group__middle');
+    expect(c).toHaveClass('mtx-button-group__last');
+  });
+
+  it('no expone los contextos internos en el índice público', async () => {
+    const mod = (await import('./index')) as Record<string, unknown>;
+    expect(mod.ButtonGroupContext).toBeUndefined();
+    expect(mod.ButtonGroupButtonContext).toBeUndefined();
+  });
+
   it.each([
     [
       '<div data-mtx="button-group" data-variant="contained" data-label="Basic"><button>One</button><button>Two</button><button>Three</button></div>',

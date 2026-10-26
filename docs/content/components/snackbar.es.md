@@ -37,7 +37,7 @@ Una `action` de texto genera el botón `.mtx-snackbar__action` a la derecha; `on
 
 ## Duración
 
-Sin `autoHideDuration` (o con `null`) el snackbar no se cierra solo. El temporizador se pausa mientras el puntero o el foco están sobre él y se reinicia con la duración completa al salir.
+Sin `autoHideDuration` (o con `null`) el snackbar no se cierra solo. El temporizador se pausa mientras el puntero o el foco están sobre él y se reinicia con la duración completa al salir. Cambiar el texto de `message` o `action` con el snackbar abierto también lo reinicia, como `open()` en vanilla.
 
 {{< react-demo id="snackbar/04-duration" layout="block" >}}
 
@@ -96,14 +96,14 @@ El equivalente de `open()`/`close()` es la prop `open`; `setMessage()`/`setActio
 | Prop | Tipo | Por defecto | Descripción |
 |---|---|---|---|
 | `open` | `boolean` | — | Muestra el snackbar (controlado). |
-| `onClose` | `(event, reason) => void` | — | Solicitud de cierre; `reason` es `timeout`, `clickaway`, `escapeKeyDown` o `action` (`api` queda reservado a `useSnackbar().close()`). |
+| `onClose` | `(event, reason) => void` | — | Solicitud de cierre; `reason` es `timeout`, `clickaway`, `escapeKeyDown` o `action` (`api` queda reservado a `useSnackbar().close()`; el `programmatic` de vanilla no tiene equivalente porque cerrar con `open={false}` no llama a `onClose`). |
 | `message` | `ReactNode` | — | Mensaje (`.mtx-snackbar__message`). |
-| `action` | `ReactNode` | — | Texto → botón `.mtx-snackbar__action`; nodo → se pinta tal cual. |
+| `action` | `ReactNode` | — | Texto → botón `.mtx-snackbar__action`; nodo → se pinta tal cual (no dispara `onAction` ni `closeOnAction`: gestiona su propio `onClick`). |
 | `onAction` | `(event) => void` | — | Clic en la acción generada. |
 | `closeOnAction` | `boolean` | `false` | La acción generada cierra el snackbar (motivo `action`). |
 | `autoHideDuration` | `number \| null` | `null` | Auto-cierre en ms; `null` lo desactiva. |
 | `anchorOrigin` | `{ vertical, horizontal }` | `{ vertical: 'bottom', horizontal: 'center' }` | Posición. |
-| `role` | `'alert' \| 'status'` | `'alert'` | Rol vivo del mensaje. |
+| `role` | `'alert' \| 'status' \| null` | `'alert'` | Rol vivo del mensaje; `null` lo quita. |
 | `disableClickAway` | `boolean` | `false` | Un clic fuera no solicita el cierre. |
 | `onOpen` | `() => void` | — | `open` pasa de `false` a `true`. |
 | `onExited` | `() => void` | — | Terminó la transición de salida (el nodo se desmonta). |
@@ -163,7 +163,8 @@ El equivalente de `open()`/`close()` es la prop `open`; `setMessage()`/`setActio
 
 ## Accesibilidad
 
-- El mensaje lleva `role="alert"` (urgente, se anuncia de inmediato) o `role="status"` para avisos no urgentes; el snackbar compartido de `SnackbarProvider` usa `status`.
+- El mensaje lleva `role="alert"` (urgente, se anuncia de inmediato) o `role="status"` para avisos no urgentes. Su contenedor se monta vacío y el texto llega un frame después, porque los lectores de pantalla no suelen anunciar una región viva insertada ya con contenido.
+- `SnackbarProvider` mantiene montadas dos regiones vivas ocultas (`.mtx-visually-hidden`, `role="status"`/`aria-live="polite"` y `role="alert"`/`aria-live="assertive"`) y solo cambia su texto en cada aviso de texto; el mensaje visible queda sin rol para no anunciarse dos veces. Los avisos cuyo `message` es un nodo usan el rol del mensaje visible.
 - La acción generada es un `<button type="button">` nativo; el temporizador se pausa mientras tiene el foco para que los usuarios de teclado tengan tiempo de usarla.
 - Evita información esencial que desaparece: usa un `autoHideDuration` largo (o ninguno) cuando el aviso tiene una acción.
 
@@ -187,3 +188,4 @@ El equivalente de `open()`/`close()` es la prop `open`; `setMessage()`/`setActio
 | `open({ message, action, onAction, duration })` | props, o `enqueue({ … })` |
 | `Materix.snackbar.show()` / `showSnackbar()` | `SnackbarProvider` + `useSnackbar().enqueue()` |
 | `mtx:snackbar:open` / `:action` / `:close` | `onOpen` / `onAction` / `onClose` |
+| `close('programmatic')` | `open={false}` (sin `onClose`); `useSnackbar().close()` notifica `api` |

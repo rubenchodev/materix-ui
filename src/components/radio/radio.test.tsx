@@ -2,6 +2,7 @@ import { createRef, useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectParity, loadVanilla, mountVanilla } from '../../../tests/parity';
+import { FormControl, FormHelperText } from '../form-helper-text';
 import { Radio, RadioGroup } from './index';
 
 describe('Radio', () => {
@@ -35,6 +36,28 @@ describe('Radio', () => {
     await user.click(screen.getByRole('radio', { name: 'B' }));
     expect(screen.getByRole('radio', { name: 'B' })).toBeChecked();
     expect(screen.getByRole('radio', { name: 'A' })).not.toBeChecked();
+  });
+
+  it('suelto dentro de FormControl: hereda aria-invalid y aria-describedby', () => {
+    render(
+      <FormControl error>
+        <Radio name="s" value="a" label="A" />
+        <FormHelperText>Pick one</FormHelperText>
+      </FormControl>,
+    );
+    const radio = screen.getByRole('radio', { name: 'A' });
+    expect(radio).toHaveAttribute('aria-invalid', 'true');
+    expect(radio).toHaveAccessibleDescription('Pick one');
+  });
+
+  it('dentro de un RadioGroup el error va en el grupo, no en cada radio', () => {
+    render(
+      <RadioGroup label="G" error helperText="Err">
+        <Radio value="a" label="A" />
+      </RadioGroup>,
+    );
+    expect(screen.getByRole('radio')).not.toHaveAttribute('aria-invalid');
+    expect(screen.getByRole('radio')).not.toHaveAttribute('aria-describedby');
   });
 
   it('ref al label', () => {

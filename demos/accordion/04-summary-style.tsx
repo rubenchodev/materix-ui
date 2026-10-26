@@ -28,19 +28,19 @@ export default function Demo() {
       <div className="demo-group">
         <p className="demo-label">summaryStyle=&quot;plain&quot;</p>
         <AccordionGroup summaryStyle="plain" exclusive={false}>
-          <Accordion summary="Billing" defaultExpanded>
+          <Accordion summary="Billing · Plain" defaultExpanded>
             Invoices are issued on the 1st of every month.
           </Accordion>
-          <Accordion summary="Payment methods">Card, bank transfer and direct debit.</Accordion>
+          <Accordion summary="Payment methods · Plain">Card, bank transfer and direct debit.</Accordion>
         </AccordionGroup>
       </div>
       <div className="demo-group">
         <p className="demo-label">Highlighted outlined</p>
         <div>
-          <Accordion variant="outlined" summary="Billing" defaultExpanded>
+          <Accordion variant="outlined" summary="Billing · Outlined" defaultExpanded>
             Invoices are issued on the 1st of every month.
           </Accordion>
-          <Accordion variant="outlined" summary="Payment methods">
+          <Accordion variant="outlined" summary="Payment methods · Outlined">
             Card, bank transfer and direct debit.
           </Accordion>
         </div>
@@ -48,10 +48,10 @@ export default function Demo() {
       <div className="demo-group">
         <p className="demo-label">Custom variables</p>
         <div style={brand}>
-          <Accordion summary="Billing" defaultExpanded>
+          <Accordion summary="Billing · Custom" defaultExpanded>
             Invoices are issued on the 1st of every month.
           </Accordion>
-          <Accordion summary="Payment methods">Card, bank transfer and direct debit.</Accordion>
+          <Accordion summary="Payment methods · Custom">Card, bank transfer and direct debit.</Accordion>
         </div>
       </div>
     </div>

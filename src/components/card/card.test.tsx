@@ -160,6 +160,19 @@ describe('CardHeader', () => {
     expect(header.querySelector('.mtx-card__subheader')).toHaveTextContent('Sub');
   });
 
+  it('con solo avatar pinta igualmente la zona de contenido (paridad con data-avatar)', async () => {
+    const vanilla = await mountVanilla('<div data-mtx="card" data-avatar="R"></div>');
+    const { container } = render(<Card avatar="R" />);
+    expect(container.querySelector('.mtx-card__header-content')).not.toBeNull();
+    expectParity(container.firstElementChild, vanilla.firstElementChild);
+  });
+
+  it('action y actionIcon se ignoran sin title, subheader ni avatar (como vanilla)', () => {
+    const { container } = render(<Card actionIcon="more_vert" action={<button type="button">x</button>} />);
+    expect(container.querySelector('.mtx-card__header')).toBeNull();
+    expect(screen.queryByRole('button')).toBeNull();
+  });
+
   it('paridad con la sintaxis BEM de vanilla', async () => {
     const vanilla = await mountVanilla(
       '<header class="mtx-card__header" data-mtx="card-header"><div class="mtx-card__header-content"><span class="mtx-card__title">T</span><span class="mtx-card__subheader">S</span></div></header>',

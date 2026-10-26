@@ -201,6 +201,33 @@ describe('ToggleButtonGroup', () => {
     expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'true');
   });
 
+  it('no llama al onChange del botón si enforceValueSet bloquea el cambio', async () => {
+    const own = vi.fn();
+    render(
+      <ToggleButtonGroup exclusive enforceValueSet defaultValue="a" label="G">
+        <ToggleButton value="a" onChange={own}>A</ToggleButton>
+      </ToggleButtonGroup>,
+    );
+    await userEvent.click(screen.getByRole('button'));
+    expect(own).not.toHaveBeenCalled();
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('icono como elemento: envuelto con aria-hidden y clase; value solo si es explícito', () => {
+    render(
+      <>
+        <ToggleButton icon={<svg data-testid="svg" />} aria-label="Svg" />
+        <ToggleButton value="x">X</ToggleButton>
+        <ToggleButton>Y</ToggleButton>
+      </>,
+    );
+    const wrapper = screen.getByTestId('svg').parentElement!;
+    expect(wrapper).toHaveClass('mtx-toggle-button__icon');
+    expect(wrapper).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getByRole('button', { name: 'X' })).toHaveAttribute('value', 'x');
+    expect(screen.getByRole('button', { name: 'Y' })).not.toHaveAttribute('value');
+  });
+
   it('botones de solo icono sin value: aviso y valor único seleccionable', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const onChange = vi.fn();
@@ -212,11 +239,14 @@ describe('ToggleButtonGroup', () => {
     );
     expect(warn).toHaveBeenCalled();
     const [bold, italic] = screen.getAllByRole('button');
-    expect(bold.getAttribute('value')).not.toBe(italic.getAttribute('value'));
+    expect(bold).not.toHaveAttribute('value');
     await userEvent.click(bold);
     expect(bold).toHaveAttribute('aria-pressed', 'true');
     expect(italic).toHaveAttribute('aria-pressed', 'false');
-    expect(onChange.mock.calls[0][1]).toBe(bold.getAttribute('value'));
+    await userEvent.click(italic);
+    expect(italic).toHaveAttribute('aria-pressed', 'true');
+    expect(bold).toHaveAttribute('aria-pressed', 'false');
+    expect(onChange.mock.calls[0][1]).not.toBe(onChange.mock.calls[1][1]);
     warn.mockRestore();
   });
 

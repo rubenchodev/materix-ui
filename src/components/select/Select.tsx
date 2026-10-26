@@ -93,6 +93,8 @@ export interface SelectProps
   color?: SelectColor;
   /** Label flotante (`data-label`). */
   label?: ReactNode;
+  /** Borde outlined sin muesca (`data-hidden-label`); útil con `aria-label` y sin label visible. */
+  hiddenLabel?: boolean;
   /** Opciones como datos; alternativa a `<option>`/`<optgroup>` como children. */
   options?: ReadonlyArray<SelectOption | SelectOptionGroup>;
   /** Selección múltiple con casillas; el menú permanece abierto. */
@@ -351,6 +353,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
     size = 'medium',
     color: colorProp,
     label,
+    hiddenLabel = false,
     options,
     multiple = false,
     value: valueProp,
@@ -499,7 +502,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
     setSearchInput('');
     setTerm('');
     if (controlRef.current) setRtl(isRtl(controlRef.current));
-    setActiveValue(initialActive());
+    // Con búsqueda no hay opción activa hasta la primera flecha.
+    setActiveValue(search ? null : initialActive());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
@@ -521,7 +525,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
   // Al filtrar, la opción activa pasa a la primera visible si la anterior desaparece.
   useEffect(() => {
     if (!isOpen) return;
-    if (!activeItem) setActiveValue(initialActive());
+    if (!activeItem) setActiveValue(search ? null : initialActive());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [term]);
 
@@ -700,7 +704,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
    * Typeahead: salta a la opción cuyo texto empieza por lo tecleado.
    * @param {string} char Carácter pulsado.
    */
-  const runTypeahead = (char: string) => {
+  const runTypeahead = (char: string, event: SelectEvent, closed = false) => {
     const state = typeahead.current;
     if (state.timer) clearTimeout(state.timer);
     state.buffer += normalizeText(char);
@@ -708,12 +712,17 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
       state.buffer = '';
       state.timer = null;
     }, TYPEAHEAD_TIMEOUT);
-    if (!navigable.length) return;
-    const start = activeItem ? navigable.indexOf(activeItem) + (state.buffer.length === 1 ? 1 : 0) : 0;
-    for (let offset = 0; offset < navigable.length; offset += 1) {
-      const item = navigable[(start + offset) % navigable.length];
+    // Cerrado (selección única) recorre todas las opciones y selecciona la coincidencia.
+    const list = closed ? items.filter((item) => !item.disabled) : navigable;
+    const current = closed ? (list.find((item) => item.value === valueState) ?? null) : activeItem;
+    if (!list.length) return;
+    const start = current ? list.indexOf(current) + (state.buffer.length === 1 ? 1 : 0) : 0;
+    for (let offset = 0; offset < list.length; offset += 1) {
+      const item = list[(start + offset) % list.length];
       if (normalizeText(item.label).startsWith(state.buffer)) {
-        setActiveValue(item.value);
+        if (closed) {
+          if (item.value !== valueState) commit(item.value, event);
+        } else setActiveValue(item.value);
         return;
       }
     }
@@ -741,7 +750,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
       if (fromSearch) controlRef.current?.focus();
       setOpen(false, event);
     } else if (!fromSearch && key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
-      runTypeahead(key);
+      runTypeahead(key, event);
     }
   };
 
@@ -751,6 +760,21 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
       if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === ' ' || event.key === 'Enter') {
         event.preventDefault();
         setOpen(true, event);
+      } else if (!multiple && (event.key === 'Home' || event.key === 'End')) {
+        // Patrón select-only: con el menú cerrado Home/End seleccionan la primera/última opción.
+        event.preventDefault();
+        const enabled = items.filter((item) => !item.disabled);
+        const target = event.key === 'Home' ? enabled[0] : enabled[enabled.length - 1];
+        if (target && target.value !== valueState) commit(target.value, event);
+      } else if (
+        !multiple &&
+        event.key.length === 1 &&
+        event.key !== ' ' &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey
+      ) {
+        runTypeahead(event.key, event, true);
       }
       return;
     }
@@ -819,7 +843,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
   const hasStart = startIcon !== undefined && startIcon !== null && startIcon !== false && startIcon !== '';
   const describedBy = Array.from(
     new Set(
-      [...(ariaDescribedByProp ?? '').split(/\s+/), hasHelper ? helperId : '', ...(formControl?.helperTextIds ?? [])].filter(
+      [...(ariaDescribedByProp ?? '').split(/\s+/), hasHelper ? helperId : '', ...(hasHelper ? [] : (formControl?.helperTextIds ?? []))].filter(
         Boolean,
       ),
     ),
@@ -997,6 +1021,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
           colorProp && color !== 'primary' && color !== 'error' && `mtx-select--${color}`,
           error && 'mtx-select--error',
           size === 'small' && 'mtx-select--small',
+          hiddenLabel && 'mtx-select--hidden-label',
           hasStart && 'mtx-select--adorned-start',
           isOpen && 'mtx-select--open',
         )}
@@ -1025,6 +1050,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
           aria-invalid={error ? 'true' : undefined}
           aria-describedby={describedBy || undefined}
           tabIndex={disabled ? -1 : 0}
+          // Con el menú abierto el borde de 2px ya marca el foco: sin anillo global duplicado.
+          style={isOpen ? { outline: 'none' } : undefined}
           onClick={handleControlClick}
           onKeyDown={handleControlKeyDown}
           onFocus={onFocus}
@@ -1065,7 +1092,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(pr
           <Chevron />
           {variant === 'outlined' ? (
             <fieldset className="mtx-select__outline" aria-hidden="true">
-              {hasLabel ? (
+              {hasLabel && !hiddenLabel ? (
                 <legend className="mtx-select__legend">
                   <span>{label}</span>
                 </legend>

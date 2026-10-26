@@ -120,6 +120,12 @@ const action = useRef<PopoverActions>(null);
 </Popover>
 ```
 
+## Disparador manual
+
+El equivalente del uso BEM manual de vanilla: puedes prescindir de `usePopover` y conectar el disparador a mano con `aria-controls`, `aria-haspopup="dialog"` y `aria-expanded`, dando al popover un `id` y nombrándolo con `aria-labelledby`. Un clic en un elemento cuyo `aria-controls` apunta al popover nunca se trata como "fuera".
+
+{{< react-demo id="popover/14-manual-trigger" layout="block" >}}
+
 ## Reutilización en otros componentes
 
 `Popover` está pensado como base flotante de otras superficies. Estas son las props en las que se apoyan:
@@ -159,7 +165,7 @@ También se exportan `resolveOrigin()` (origen MUI a píxeles) y las constantes 
 | `elevation` | `0`–`8`, `12`, `16`, `24` | `8` | Sombra (y capa de elevación en tema oscuro). |
 | `modal` | `boolean` | `false` | Tab atrapado, scroll bloqueado y `aria-modal`. |
 | `label` | `string` | — | `aria-label` (si no, lo nombra el primer encabezado). |
-| `onClose` | `(event, reason) => void` | — | Solicitud de cierre; motivos `escapeKeyDown`, `clickaway`, `tabOut`, `action`, `trigger`. |
+| `onClose` | `(event, reason) => void` | — | Solicitud de cierre; motivos `escapeKeyDown`, `clickaway`, `tabOut`, `action` (`trigger` solo lo emite `usePopover`, al pulsar de nuevo su disparador). |
 | `onOpen` | `(anchor) => void` | — | Abierto y posicionado. |
 | `onExited` | `() => void` | — | Terminó la transición de salida. |
 | `disableAutoFocus` | `boolean` | `false` | No mueve el foco al abrir. |
@@ -184,7 +190,7 @@ También se exportan `resolveOrigin()` (origen MUI a píxeles) y las constantes 
 | `close()` | `function` | Lo cierra (motivo `api`). |
 | `toggle(anchor)` | `function` | Alterna el estado. |
 
-Opciones: `usePopover({ id, onOpen(anchor), onClose(reason) })`.
+Opciones: `usePopover({ id, keepMounted, onOpen(anchor), onClose(reason) })`. El disparador solo recibe `aria-controls` mientras el popover está en el DOM (abierto, o siempre con `keepMounted`), como en MUI.
 
 ### Callbacks
 

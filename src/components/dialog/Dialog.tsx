@@ -2,11 +2,24 @@
 /**
  * Diálogo modal de Materix UI (patrón `Dialog` de MUI): portal, fondo, foco atrapado, Escape y pila de capas.
  */
-import { Children, forwardRef, isValidElement, useCallback, useId, useMemo, useRef, useState } from 'react';
+import {
+  Children,
+  Fragment,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type {
   CSSProperties,
   HTMLAttributes,
   MouseEvent as ReactMouseEvent,
+  ReactElement,
   ReactNode,
   Ref,
 } from 'react';
@@ -44,7 +57,7 @@ export const DIALOG_TRANSITION_DURATION = 250;
 /** Estado inicial de la animación del panel (mismo valor que `.mtx-dialog__paper` en vanilla). */
 const PAPER_HIDDEN_STYLE: CSSProperties = { opacity: 0, transform: 'scale(0.9) translateY(10px)' };
 
-/** Anchos sin clase en el CSS compartido (vanilla solo define sm–xl). */
+/** Anchos sin clase en el CSS compartido (vanilla solo define sm–xl); `xs` es el escalón inferior (20rem). */
 const INLINE_MAX_WIDTH: Partial<Record<string, string>> = { xs: '20rem', false: 'none' };
 const MAX_WIDTHS = ['xs', 'sm', 'md', 'lg', 'xl'];
 
@@ -57,6 +70,21 @@ const MAX_WIDTHS = ['xs', 'sm', 'md', 'lg', 'xl'];
 function removeOnce(list: string[], id: string): string[] {
   const index = list.indexOf(id);
   return index < 0 ? list : [...list.slice(0, index), ...list.slice(index + 1)];
+}
+
+/**
+ * Aplana hijos y Fragments en una lista con claves estables.
+ * @param {ReactNode} children Hijos.
+ * @returns {ReactNode[]} Nodos aplanados.
+ */
+function flattenChildren(children: ReactNode): ReactNode[] {
+  return Children.toArray(children).flatMap((node) =>
+    isValidElement<{ children?: ReactNode }>(node) && node.type === Fragment
+      ? flattenChildren(node.props.children).map((child) =>
+          isValidElement(child) ? cloneElement(child, { key: `${String(node.key)}.${String(child.key)}` }) : child,
+        )
+      : [node],
+  );
 }
 
 /** Props del panel (`.mtx-dialog__paper`). */
@@ -84,7 +112,7 @@ export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title
   actions?: ReactNode;
   /** Alineación heredada por las acciones sin `align` (equivale a `data-actions-align`). */
   actionsAlign?: DialogActionsAlign;
-  /** Ancho máximo: `xs`, `sm` (24rem), `md` (32rem, por defecto), `lg` (48rem), `xl` (64rem) o `false`. */
+  /** Ancho máximo: `xs` (20rem), `sm` (24rem), `md` (32rem, por defecto), `lg` (48rem), `xl` (64rem) o `false`. */
   maxWidth?: DialogMaxWidth;
   /** El panel ocupa el ancho disponible hasta `maxWidth` (por defecto `true`, como vanilla). */
   fullWidth?: boolean;
@@ -253,20 +281,48 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(pr
     if (closer && event.currentTarget.contains(closer)) requestClose(event, 'closeButtonClick');
   };
 
+  // Un clic en el fondo solo cierra si el diálogo era la capa superior al pulsar (no si cerró un menú/popover).
+  const pressOnTop = useRef<boolean | null>(null);
+  useEffect(() => {
+    if (!ready || !rootNode) return undefined;
+    const win = rootNode.ownerDocument.defaultView;
+    if (!win) return undefined;
+    const onPress = (event: Event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const backdrop = target?.closest('.mtx-dialog__backdrop');
+      pressOnTop.current = backdrop && backdrop.parentElement === rootNode ? layer.isTopLayer() : null;
+    };
+    win.addEventListener('mousedown', onPress, true);
+    win.addEventListener('touchstart', onPress, true);
+    return () => {
+      win.removeEventListener('mousedown', onPress, true);
+      win.removeEventListener('touchstart', onPress, true);
+    };
+  }, [ready, rootNode, layer]);
+
   const handleBackdropClick = (event: ReactMouseEvent<HTMLDivElement>) => {
     backdropProps?.onClick?.(event);
-    if (!open || event.defaultPrevented || disableBackdropClose) return;
+    const startedOnTop = pressOnTop.current !== false;
+    pressOnTop.current = null;
+    if (!open || event.defaultPrevented || disableBackdropClose || !startedOnTop) return;
     requestClose(event, 'backdropClick');
   };
 
   // Sintaxis simplificada: título y acciones conservan su sitio; el resto va a DialogContent.
-  const items = Children.toArray(children);
-  const isPart = (node: ReactNode, type: unknown) => isValidElement(node) && node.type === type;
+  const items = flattenChildren(children);
+  const isPart = (node: ReactNode, type: unknown): node is ReactElement<{ children?: ReactNode }> =>
+    isValidElement(node) && node.type === type;
   const hasTitle = items.some((node) => isPart(node, DialogTitle));
-  const hasContent = items.some((node) => isPart(node, DialogContent));
+  const contentIndex = items.findIndex((node) => isPart(node, DialogContent));
   let body: ReactNode;
-  if (hasContent) {
-    body = children;
+  if (contentIndex >= 0) {
+    // Como vanilla: `description` se inserta al inicio del contenido si aún no tiene texto descriptivo.
+    body = items.map((node, index) => {
+      if (index !== contentIndex || description == null || !isPart(node, DialogContent)) return node;
+      const inner = flattenChildren(node.props.children);
+      if (inner.some((child) => isPart(child, DialogContentText))) return node;
+      return cloneElement(node, undefined, <DialogContentText key="mtx-description">{description}</DialogContentText>, ...inner);
+    });
   } else {
     const titles = items.filter((node) => isPart(node, DialogTitle));
     const actionItems = items.filter((node) => isPart(node, DialogActions));

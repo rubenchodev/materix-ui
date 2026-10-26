@@ -1,3 +1,4 @@
+import '@rubenchodev/materix-ui/base.css'; // primero: los CSS de componentes (demos) deben ganar a base.css
 /** Página de ejemplo de Radio: monta todas las demos de demos/radio. */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

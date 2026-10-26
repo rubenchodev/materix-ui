@@ -15,6 +15,8 @@ interface StepperSnapshot {
   length: number;
   finished: boolean;
   maxStep: number;
+  /** `false` hasta enlazar un stepper (SSR/antes de montar): estado desconocido. */
+  linked: boolean;
 }
 
 /** Controlador devuelto por {@link useStepper}. */
@@ -37,7 +39,7 @@ export interface StepperController extends StepperSnapshot {
   isCompleted: (index: number) => boolean;
 }
 
-const EMPTY: StepperSnapshot = { activeStep: 0, length: 0, finished: false, maxStep: 0 };
+const EMPTY: StepperSnapshot = { activeStep: 0, length: 0, finished: false, maxStep: 0, linked: false };
 
 /**
  * Enlaza un Stepper o MobileStepper (vía `apiRef`) y expone su estado y acciones para botones y paneles externos.
@@ -55,12 +57,14 @@ export function useStepper(): StepperController {
       length: api.length,
       finished: api.finished,
       maxStep: api.maxStep,
+      linked: true,
     };
     setSnapshot((prev) =>
       prev.activeStep === next.activeStep &&
       prev.length === next.length &&
       prev.finished === next.finished &&
-      prev.maxStep === next.maxStep
+      prev.maxStep === next.maxStep &&
+      prev.linked
         ? prev
         : next,
     );
@@ -115,7 +119,8 @@ export const StepperButton = forwardRef<HTMLElement, StepperButtonProps>(functio
   const context = useStepperContext();
   const target = stepper ?? (context ? { api: context.api, activeStep: context.activeStep, maxStep: context.length } : null);
   let auto = false;
-  if (!keepEnabled && target) {
+  // Sin stepper enlazado (HTML de servidor) el estado es desconocido: no se deshabilita.
+  if (!keepEnabled && target && !(stepper && !stepper.linked)) {
     if (action === 'back') auto = target.activeStep <= 0;
     if (action === 'next') auto = target.activeStep >= target.maxStep;
   }

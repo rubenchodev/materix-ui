@@ -157,6 +157,15 @@ describe('AppBar', () => {
     expect(nav).toHaveAttribute('aria-expanded', 'true');
   });
 
+  it('iconos-nodo sin etiqueta reciben un aria-label por defecto y avisan en desarrollo', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(<AppBar startIcon={<svg data-testid="nav" />} endIcon={<svg data-testid="end" />} />);
+    expect(screen.getByRole('button', { name: 'Open navigation' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'More options' })).toBeInTheDocument();
+    expect(warn).toHaveBeenCalledTimes(2);
+    warn.mockRestore();
+  });
+
   it('con una Toolbar propia no genera otra (sintaxis completa)', () => {
     const { container } = render(
       <AppBar position="static">

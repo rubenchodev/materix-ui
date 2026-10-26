@@ -64,7 +64,7 @@ Hover to see the border change color, press to see the ripple, and use <kbd>Tab<
 
 ## Indeterminate
 
-The indeterminate state shows that only some child options are checked. As in MUI, `indeterminate` is controlled by the parent: the component keeps the DOM property `input.indeterminate` and `aria-checked="mixed"` in sync with the prop on every render.
+The indeterminate state shows that only some child options are checked. As in MUI, `indeterminate` is controlled by the parent: the component keeps the DOM property `input.indeterminate` and `aria-checked="mixed"` in sync with the prop. A user click clears the mixed state, as the browser and vanilla do, until the prop changes again.
 
 {{< react-demo "checkbox/07-indeterminate" >}}
 

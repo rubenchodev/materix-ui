@@ -36,7 +36,7 @@ describe('Tooltip', () => {
     const tip = screen.getByRole('tooltip');
     expect(tip).toHaveClass('mtx-tooltip', 'mtx-tooltip--open');
     expect(tip.querySelector('.mtx-tooltip__label')).toHaveTextContent('Eliminar');
-    expect(tip.parentElement).toBe(document.body);
+    expect(tip.parentElement?.hasAttribute("data-mtx-portal-root")).toBe(true);
     fireEvent.pointerLeave(button, mouse);
     expect(tip).not.toHaveClass('mtx-tooltip--open');
     tick(150);
@@ -211,6 +211,27 @@ describe('Tooltip', () => {
     fireEvent.pointerEnter(screen.getByRole('button'), mouse);
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(screen.getByRole('tooltip')).toBeInTheDocument();
+  });
+
+  it('controlado sin abrir de verdad no activa la histéresis (enterDelay normal)', () => {
+    tick(2000);
+    render(
+      <>
+        <Tooltip title="Uno" open={false} enterDelay={0}>
+          <button type="button">1</button>
+        </Tooltip>
+        <Tooltip title="Dos" enterDelay={500}>
+          <button type="button">2</button>
+        </Tooltip>
+      </>,
+    );
+    fireEvent.pointerEnter(screen.getByText('1'), mouse);
+    fireEvent.pointerLeave(screen.getByText('1'), mouse);
+    fireEvent.pointerEnter(screen.getByText('2'), mouse);
+    tick(499);
+    expect(screen.queryByRole('tooltip')).toBeNull();
+    tick(1);
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Dos');
   });
 
   it('solo un tooltip visible a la vez y enterNextDelay tras cerrar otro', () => {

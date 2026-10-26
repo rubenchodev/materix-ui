@@ -99,7 +99,7 @@ The list wraps inside its grid column.
 
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `children` | `ReactNode` | — | Links, `<a>`, `<button>`, text or other elements; `data-icon` adds an icon. |
+| `children` | `ReactNode` | — | Links, `<a>`, `<button>`, text or other elements (Fragments are flattened); `data-icon` adds an icon. |
 | `items` | `BreadcrumbItem[]` | — | Trail as data; takes precedence over `children`. |
 | `separator` | `ReactNode` | `'/'` | Text, node or Material icon name. |
 | `maxItems` | `number` | `8` | Maximum visible items before collapsing; `0` disables collapsing. |
@@ -107,6 +107,7 @@ The list wraps inside its grid column.
 | `itemsAfterCollapse` | `number` | `1` | Items after the collapse button. |
 | `expandText` | `string` | i18n `breadcrumbs.showPath` | Accessible label of the collapse button. |
 | `expanded` | `boolean` | — | Expanded trail (controlled). |
+| `defaultExpanded` | `boolean` | `false` | Expanded on mount (uncontrolled); collapses again when the items change. |
 | `onExpand` | `() => void` | — | The collapsed items are revealed. |
 | `onNavigate` | `(event, detail) => boolean \| void` | — | An item is activated; `false` or `preventDefault()` cancels the navigation. |
 | `variant` | `TypographyVariant` | `'body1'` | Typography scale of the trail (`body2` for a compact one). |

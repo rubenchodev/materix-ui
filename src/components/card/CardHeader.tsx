@@ -33,16 +33,14 @@ export const CardHeader = forwardRef(function CardHeader(
   ref: ForwardedRef<Element>,
 ) {
   const Root: ElementType = component ?? 'div';
-  const hasContent = title != null || subheader != null;
   return (
     <Root ref={ref} className={cx('mtx-card__header', className)} {...rest}>
       {avatar != null && <div className="mtx-card__header-avatar">{avatar}</div>}
-      {hasContent && (
-        <div className="mtx-card__header-content">
-          {title != null && <span className="mtx-card__title">{title}</span>}
-          {subheader != null && <span className="mtx-card__subheader">{subheader}</span>}
-        </div>
-      )}
+      {/* Como en vanilla, la zona de contenido existe siempre (ocupa el espacio flexible). */}
+      <div className="mtx-card__header-content">
+        {title != null && <span className="mtx-card__title">{title}</span>}
+        {subheader != null && <span className="mtx-card__subheader">{subheader}</span>}
+      </div>
       {children}
       {action != null && <div className="mtx-card__header-action">{action}</div>}
     </Root>

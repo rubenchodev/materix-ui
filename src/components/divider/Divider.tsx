@@ -1,3 +1,6 @@
+/**
+ * Línea divisoria de Materix UI (`Divider` de MUI): orientación, variantes, texto y uso en listas.
+ */
 import { forwardRef } from 'react';
 import type { ComponentPropsWithoutRef, ComponentPropsWithRef, ElementType, ForwardedRef, ReactElement, ReactNode } from 'react';
 import '@rubenchodev/materix-ui/components/divider.css';

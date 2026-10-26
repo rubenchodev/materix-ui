@@ -85,7 +85,7 @@ describe('Popover', () => {
     fireEvent.click(screen.getByText('Open'));
     const el = getPopover()!;
     expect(container.contains(el)).toBe(false);
-    expect(el.parentElement).toBe(document.body);
+    expect(el.parentElement?.hasAttribute("data-mtx-portal-root")).toBe(true);
     expect(el).toHaveAttribute('role', 'dialog');
     expect(el).toHaveAttribute('tabindex', '-1');
     expect(el).toHaveAttribute('aria-label', 'Basic popover');
@@ -100,6 +100,7 @@ describe('Popover', () => {
     const trigger = screen.getByText('Open');
     expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(trigger).not.toHaveAttribute('aria-controls');
     fireEvent.click(trigger);
     const el = getPopover()!;
     expect(trigger).toHaveAttribute('aria-controls', el.id);
@@ -142,6 +143,26 @@ describe('Popover', () => {
     fireEvent.click(trigger);
     fireEvent.mouseDown(screen.getByText('Outside'));
     expect(reasons).toEqual(['trigger', 'clickaway']);
+  });
+
+  it('usePopover({ keepMounted }): aria-controls también cerrado y apunta al nodo montado', () => {
+    function Kept() {
+      const popover = usePopover({ keepMounted: true });
+      return (
+        <>
+          <button type="button" {...popover.getTriggerProps()}>
+            Open
+          </button>
+          <Popover {...popover.popoverProps} keepMounted label="Kept">
+            x
+          </Popover>
+        </>
+      );
+    }
+    render(<Kept />);
+    const el = getPopover()!;
+    expect(el).toHaveAttribute('hidden');
+    expect(screen.getByText('Open')).toHaveAttribute('aria-controls', el.id);
   });
 
   it('[data-mtx-popover-close] cierra con motivo action', () => {

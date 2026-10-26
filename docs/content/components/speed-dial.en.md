@@ -90,7 +90,7 @@ Photo gallery: the SpeedDial is controlled, so each action performs its task and
 
 ## Hidden and position
 
-`hidden` shrinks the primary FAB with a scale transition and closes the actions (for example while scrolling). `position="fixed-br"` and `"fixed-bl"` pin it 24px from the bottom-right or bottom-left corner of the viewport, above the content (`z-index` 1050).
+`hidden` shrinks the primary FAB with a scale transition and closes the actions (for example while scrolling): if it was open, `onClose(null, 'hidden')` is called and it reappears closed. `position="fixed-br"` and `"fixed-bl"` pin it 24px from the bottom-right or bottom-left corner of the viewport, above the content (`z-index` 1050).
 
 {{< react-demo id="speed-dial/09-hidden" layout="block" >}}
 
@@ -119,7 +119,7 @@ const [open, setOpen] = useState(false);
   ariaLabel="Actions"
   open={open}
   onOpen={(event, reason) => setOpen(true)}   // 'toggle' | 'mouseEnter'
-  onClose={(event, reason) => setOpen(false)} // 'toggle' | 'mouseLeave' | 'escapeKeyDown' | 'clickaway'
+  onClose={(event, reason) => setOpen(false)} // 'toggle' | 'mouseLeave' | 'escapeKeyDown' | 'clickaway' | 'hidden'
 >
   …
 </SpeedDial>
@@ -144,11 +144,11 @@ The CSS also works with plain markup (static HTML or server templates). Without 
 | `open` | `boolean` | — | Controlled state. |
 | `defaultOpen` | `boolean` | `false` | Initial uncontrolled state. |
 | `onOpen` | `(event, reason) => void` | — | Open request (`'toggle' \| 'mouseEnter'`). |
-| `onClose` | `(event, reason) => void` | — | Close request (`'toggle' \| 'mouseLeave' \| 'escapeKeyDown' \| 'clickaway'`). |
+| `onClose` | `(event, reason) => void` | — | Close request (`'toggle' \| 'mouseLeave' \| 'escapeKeyDown' \| 'clickaway' \| 'hidden'`); `event` is `null` with `'hidden'`. |
 | `event` | `'click' \| 'hover'` | `'click'` | With `hover` it also opens when the mouse enters and closes when it leaves. |
 | `tooltipHover` | `boolean` | `false` | Replaces the persistent labels with one Tooltip per action. |
 | `color` | Fab colors | `'primary'` | Color of the primary FAB. |
-| `hidden` | `boolean` | `false` | Hides the primary FAB with a scale transition and closes the actions. |
+| `hidden` | `boolean` | `false` | Hides the primary FAB with a scale transition; if it was open, it closes and calls `onClose(null, 'hidden')`, so it does not reappear open. |
 | `position` | `'fixed-br' \| 'fixed-bl'` | — | Pinned to a corner of the viewport. |
 | `FabProps` | `Partial<FabProps>` | — | Extra props for the primary FAB. |
 | `locale` | `string` | — | Language of the default `ariaLabel`. |
@@ -179,7 +179,7 @@ The CSS also works with plain markup (static HTML or server templates). Without 
 | Callback | Vanilla event | Fired when |
 |---|---|---|
 | `onOpen(event, reason)` | `mtx:speed-dial:open` | It opens (click or hover). |
-| `onClose(event, reason)` | `mtx:speed-dial:close` | It closes (click, click away, <kbd>Escape</kbd> or the pointer leaving). |
+| `onClose(event, reason)` | `mtx:speed-dial:close` | It closes (click, click away, <kbd>Escape</kbd>, the pointer leaving or `hidden`). |
 
 ### CSS classes
 
@@ -193,9 +193,9 @@ The CSS also works with plain markup (static HTML or server templates). Without 
 | `mtx-speed-dial__fab` | Primary FAB. |
 | `mtx-speed-dial__actions` | Actions container (12px gap). |
 | `mtx-speed-dial__action` | Small FAB for each action. |
-| `mtx-speed-dial__action-wrapper` | Action + label wrapper, with a staggered animation (30 ms per action). |
+| `mtx-speed-dial__action-wrapper` | Action + label wrapper, with a staggered animation (30 ms per action). Actions without `tooltipTitle` have no wrapper, so they do not animate or get the extra delay beyond the fifth. |
 | `mtx-speed-dial__tooltip` | Persistent action label (`aria-hidden`). |
-| `mtx-speed-dial__icon` | `SpeedDialIcon` with `openIcon` (`--open` while open). |
+| `mtx-speed-dial__icon` | `SpeedDialIcon` whose `icon` is a node or that has `openIcon` (`--open` while open with `openIcon`). |
 
 ### CSS variables
 

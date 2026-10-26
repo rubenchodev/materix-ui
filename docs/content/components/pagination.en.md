@@ -185,7 +185,7 @@ In link mode, if a router `Link` rendered through `renderItem` cancels the navig
 | `data-disabled` / `disable()` / `enable()` | `disabled` |
 | `data-href-template="?page={page}"` | `getItemHref={(p) => '?page=' + p}` |
 | `page` / `count` setters, `goTo()`, `next()`, `previous()` | `page` / `count` props (controlled) |
-| `mtx:pagination:change` `{ page, previousPage, href }` (cancelable in link mode) | `onChange(event, page)`; `event.preventDefault()` in link mode |
+| `mtx:pagination:change` `{ page, previousPage, href }` (cancelable in link mode) | `onChange(event, page)`; `event.preventDefault()` in link mode. `previousPage` and `href` are not passed: keep the previous page in your state (controlled mode) and compute the URL with your own `getItemHref(page)`. |
 | `getPaginationItems()` | `getPaginationItems()` and `usePagination()` |
 
 ## Accessibility

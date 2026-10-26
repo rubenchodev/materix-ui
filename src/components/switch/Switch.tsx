@@ -151,6 +151,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
         {...checkedAttrs}
         disabled={disabled}
         readOnly={readOnly || undefined}
+        aria-readonly={readOnly || undefined}
         required={required || undefined}
         aria-label={ariaLabel ?? inputProps?.['aria-label']}
         aria-labelledby={ariaLabelledBy ?? inputProps?.['aria-labelledby']}

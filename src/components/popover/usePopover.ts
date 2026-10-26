@@ -12,6 +12,8 @@ import type { PopoverCloseReason } from './Popover';
 export interface UsePopoverOptions {
   /** Id del popover (por defecto uno generado). */
   id?: string;
+  /** El Popover usa `keepMounted`: `aria-controls` se mantiene también cerrado. */
+  keepMounted?: boolean;
   /** Al abrirse (con el ancla usada). */
   onOpen?: (anchor: PositionAnchor) => void;
   /** Al cerrarse, con el motivo. */
@@ -21,7 +23,8 @@ export interface UsePopoverOptions {
 /** Props para el disparador (botón). */
 export interface PopoverTriggerProps {
   'aria-haspopup': 'dialog';
-  'aria-controls': string;
+  /** Solo mientras el popover existe en el DOM (abierto o `keepMounted`). */
+  'aria-controls'?: string;
   'aria-expanded': boolean;
   onClick: (event: ReactMouseEvent<HTMLElement>) => void;
 }
@@ -79,7 +82,7 @@ interface PopoverHookState {
  * @returns {UsePopoverResult} Estado, acciones y props.
  */
 export function usePopover(options: UsePopoverOptions = {}): UsePopoverResult {
-  const { onOpen, onClose } = options;
+  const { onOpen, onClose, keepMounted = false } = options;
   const autoId = useId();
   const id = options.id || `mtx-popover-${autoId.replace(/:/g, '')}`;
   const [state, setState] = useState<PopoverHookState>({ open: false, anchor: null, key: null });
@@ -114,7 +117,7 @@ export function usePopover(options: UsePopoverOptions = {}): UsePopoverResult {
   const getTriggerProps = useCallback(
     ({ key = 'default', onClick }: PopoverTriggerOptions = {}): PopoverTriggerProps => ({
       'aria-haspopup': 'dialog',
-      'aria-controls': id,
+      'aria-controls': state.open || keepMounted ? id : undefined,
       'aria-expanded': state.open && state.key === key,
       onClick: (event) => {
         onClick?.(event);
@@ -124,7 +127,7 @@ export function usePopover(options: UsePopoverOptions = {}): UsePopoverResult {
         else show(trigger, key);
       },
     }),
-    [id, state, closeWith, show],
+    [id, keepMounted, state, closeWith, show],
   );
 
   const popoverProps = useMemo<PopoverStateProps>(

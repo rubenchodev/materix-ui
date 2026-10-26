@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { Button } from '@rubenchodev/materix-react/components/button';
-import { Drawer } from '@rubenchodev/materix-react/components/drawer';
+import { Drawer, useDrawer } from '@rubenchodev/materix-react/components/drawer';
 import { List, ListItemButton } from '@rubenchodev/materix-react/components/list';
 import { Typography } from '@rubenchodev/materix-react/components/typography';
 
@@ -39,20 +38,20 @@ function Frame({ label, children }: { label: string; children: ReactNode }) {
 }
 
 export default function Demo() {
-  const [temporary, setTemporary] = useState(false);
-  const [persistent, setPersistent] = useState(false);
+  const temporary = useDrawer();
+  const persistent = useDrawer();
   return (
-    <div className="demo-grid-3 demo-wide">
+    <div className="demo-grid-3 mtx-w-100">
       <Frame label="temporary · absolute">
         <div className="mtx-flex-1 mtx-min-w-0 mtx-p-2">
-          <Button variant="outlined" onClick={() => setTemporary(true)}>
+          <Button variant="outlined" {...temporary.getTriggerProps({ action: 'open' })}>
             Open
           </Button>
           <Typography variant="body2" color="text-secondary" className="mtx-mt-1">
             Semi-transparent backdrop; click outside or press Escape to close.
           </Typography>
         </div>
-        <Drawer absolute width="narrow" title="Temporary" open={temporary} onClose={() => setTemporary(false)}>
+        <Drawer absolute width="narrow" title="Temporary" {...temporary.drawerProps}>
           <Nav label="Temporary navigation" />
         </Drawer>
       </Frame>
@@ -62,13 +61,12 @@ export default function Demo() {
           absolute
           width="narrow"
           title="Persistent"
-          open={persistent}
-          onClose={() => setPersistent(false)}
+          {...persistent.drawerProps}
         >
           <Nav label="Persistent navigation" />
         </Drawer>
         <div className="mtx-flex-1 mtx-min-w-0 mtx-p-2 mtx-d-flex mtx-flex-column mtx-align-items-end">
-          <Button variant="outlined" aria-expanded={persistent} onClick={() => setPersistent((value) => !value)}>
+          <Button variant="outlined" {...persistent.getTriggerProps()}>
             Toggle
           </Button>
           <Typography variant="body2" color="text-secondary" align="right" className="mtx-mt-1">

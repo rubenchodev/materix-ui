@@ -103,6 +103,19 @@ const actions = useRef<TooltipActions>(null);
 </Tooltip>;
 ```
 
+## Advanced usage
+
+Equivalent of the vanilla `data-mtx="tooltip"` wrapper: a `<span>` wraps the trigger and several options are combined (`placement`, `arrow`, `enterDelay`, `leaveDelay`, `describeChild`). ARIA attributes go to the first focusable element inside the wrapper. The generated surface, portaled to `<body>`, is:
+
+{{< react-demo id="tooltip/14-advanced" layout="block" >}}
+
+```html
+<div class="mtx-tooltip mtx-tooltip--open mtx-tooltip--arrow" role="tooltip" id="mtx-tooltip-…" data-side="right">
+  <span class="mtx-tooltip__label">Export to CSV</span>
+  <span class="mtx-tooltip__arrow" aria-hidden="true"></span>
+</div>
+```
+
 ## API reference
 
 ### Tooltip props

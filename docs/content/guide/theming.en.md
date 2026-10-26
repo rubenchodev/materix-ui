@@ -263,7 +263,7 @@ In the dark theme, as in MUI, elevated surfaces also get a white overlay that ma
 
 ### Spacing
 
-8px base unit. Consumed by Grid, Stack, Box and the `mtx-m-*`/`mtx-p-*` utilities.
+8px base unit. Consumed by Grid, Stack and the `mtx-m-*`/`mtx-p-*` utilities (import `@rubenchodev/materix-ui/utilities.css` to use them).
 
 | Token | Value |
 |---|---|

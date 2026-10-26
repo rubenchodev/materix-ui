@@ -26,6 +26,7 @@ import {
   valueFromRatio,
 } from '../../utils/slider';
 import type { SliderSnapOptions } from '../../utils/slider';
+import { flushSync } from 'react-dom';
 
 /** Colores de la paleta. */
 export type SliderColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
@@ -252,6 +253,7 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(function Slider(p
   const handleFirstInputRef = useForkRef<HTMLInputElement>(setFirstInput, inputRefProp);
 
   // Valores más recientes para los manejadores del arrastre (antes de que React re-renderice).
+  const controlled = valueProp !== undefined;
   const valuesRef = useRef(values);
   valuesRef.current = values;
   const draggingRef = useRef(-1);
@@ -288,7 +290,8 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(function Slider(p
     });
     const changed = !sameValues(result.values, current);
     const active = result.activeThumb;
-    valuesRef.current = result.values;
+    // Controlado: el valor mostrado lo deciden las props (el padre puede rechazarlo o recortarlo).
+    if (!controlled) valuesRef.current = result.values;
     if (active !== index) {
       if (draggingRef.current >= 0) {
         draggingRef.current = active;
@@ -384,7 +387,10 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(function Slider(p
     if (next === null) return;
     event.preventDefault();
     const before = valuesRef.current.slice();
-    setFromUser(event.nativeEvent, index, next, true);
+    // flushSync: el padre controlado re-renderiza antes de comparar y confirmar.
+    flushSync(() => {
+      setFromUser(event.nativeEvent, index, next, true);
+    });
     if (!sameValues(before, valuesRef.current)) onChangeCommitted?.(event.nativeEvent, publicValue(valuesRef.current));
   };
 
@@ -395,7 +401,9 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(function Slider(p
     const raw = parseFloat(event.target.value);
     if (!Number.isFinite(raw)) return;
     const before = valuesRef.current.slice();
-    setFromUser(event.nativeEvent, index, raw, true, true);
+    flushSync(() => {
+      setFromUser(event.nativeEvent, index, raw, true, true);
+    });
     if (!sameValues(before, valuesRef.current)) onChangeCommitted?.(event.nativeEvent, publicValue(valuesRef.current));
   };
 

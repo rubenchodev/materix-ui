@@ -37,7 +37,7 @@ A text `action` renders the `.mtx-snackbar__action` button on the right; `onActi
 
 ## Duration
 
-Without `autoHideDuration` (or with `null`) the snackbar does not close by itself. The timer pauses while the pointer or focus is on it and restarts with the full duration when they leave.
+Without `autoHideDuration` (or with `null`) the snackbar does not close by itself. The timer pauses while the pointer or focus is on it and restarts with the full duration when they leave. Changing the text of `message` or `action` while it is open also restarts it, like `open()` in vanilla.
 
 {{< react-demo id="snackbar/04-duration" layout="block" >}}
 
@@ -96,14 +96,14 @@ The equivalent of `open()`/`close()` is the `open` prop; `setMessage()`/`setActi
 | Prop | Type | Default | Description |
 |---|---|---|---|
 | `open` | `boolean` | — | Shows the snackbar (controlled). |
-| `onClose` | `(event, reason) => void` | — | Close request; `reason` is `timeout`, `clickaway`, `escapeKeyDown` or `action` (`api` is reserved for `useSnackbar().close()`). |
+| `onClose` | `(event, reason) => void` | — | Close request; `reason` is `timeout`, `clickaway`, `escapeKeyDown` or `action` (`api` is reserved for `useSnackbar().close()`; vanilla's `programmatic` has no equivalent because closing with `open={false}` doesn't call `onClose`). |
 | `message` | `ReactNode` | — | Message (`.mtx-snackbar__message`). |
-| `action` | `ReactNode` | — | Text → `.mtx-snackbar__action` button; node → rendered as is. |
+| `action` | `ReactNode` | — | Text → `.mtx-snackbar__action` button; node → rendered as is (it doesn't fire `onAction` nor `closeOnAction`: handle its own `onClick`). |
 | `onAction` | `(event) => void` | — | Click on the generated action. |
 | `closeOnAction` | `boolean` | `false` | The generated action closes the snackbar (reason `action`). |
 | `autoHideDuration` | `number \| null` | `null` | Auto-close in ms; `null` disables it. |
 | `anchorOrigin` | `{ vertical, horizontal }` | `{ vertical: 'bottom', horizontal: 'center' }` | Position. |
-| `role` | `'alert' \| 'status'` | `'alert'` | Live role of the message. |
+| `role` | `'alert' \| 'status' \| null` | `'alert'` | Live role of the message; `null` removes it. |
 | `disableClickAway` | `boolean` | `false` | A click outside doesn't ask to close. |
 | `onOpen` | `() => void` | — | `open` goes from `false` to `true`. |
 | `onExited` | `() => void` | — | The exit transition finished (the node is unmounted). |
@@ -163,7 +163,8 @@ The equivalent of `open()`/`close()` is the `open` prop; `setMessage()`/`setActi
 
 ## Accessibility
 
-- The message has `role="alert"` (urgent, announced immediately) or `role="status"` for non-urgent notices; the shared snackbar of `SnackbarProvider` uses `status`.
+- The message has `role="alert"` (urgent, announced immediately) or `role="status"` for non-urgent notices. Its container is mounted empty and the text arrives one frame later, because screen readers rarely announce a live region inserted with its content already in it.
+- `SnackbarProvider` keeps two visually hidden live regions (`.mtx-visually-hidden`, `role="status"`/`aria-live="polite"` and `role="alert"`/`aria-live="assertive"`) always mounted and only changes their text for each text notice; the visible message then has no role, so it isn't announced twice. Notices whose `message` is a node fall back to the role of the visible message.
 - The generated action is a native `<button type="button">`; the timer pauses while it has focus so keyboard users have time to use it.
 - Avoid essential information that disappears: use a long `autoHideDuration` (or none) when the notice has an action.
 
@@ -187,3 +188,4 @@ The equivalent of `open()`/`close()` is the `open` prop; `setMessage()`/`setActi
 | `open({ message, action, onAction, duration })` | props, or `enqueue({ … })` |
 | `Materix.snackbar.show()` / `showSnackbar()` | `SnackbarProvider` + `useSnackbar().enqueue()` |
 | `mtx:snackbar:open` / `:action` / `:close` | `onOpen` / `onAction` / `onClose` |
+| `close('programmatic')` | `open={false}` (no `onClose`); `useSnackbar().close()` reports `api` |

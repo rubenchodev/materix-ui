@@ -132,6 +132,14 @@ describe('cursor', () => {
     expect(applyMaskInput('(3009) 123', 5, phone)).toEqual({ value: '(300) 912-3', cursor: 7 });
   });
 
+  it('applyMaskInput salta los literales que quedan delante del cursor', () => {
+    const phone = resolveMask('phone');
+    // "(300) 1|23-4567" + Retroceso → "(300) 23-4567" con el cursor en 6, no en 4.
+    expect(applyMaskInput('(300) 23-4567', 6, phone, { previousValue: '(300) 123-4567', inputType: 'deleteContentBackward' }))
+      .toEqual({ value: '(300) 234-567', cursor: 6 });
+    expect(applyMaskInput('300', 3, phone)).toEqual({ value: '(300) ', cursor: 6 });
+  });
+
   it('applyMaskInput monetario deja el cursor antes del sufijo', () => {
     const config = resolveMask('currency', { suffix: ' USD' });
     expect(applyMaskInput('1234', 4, config)).toEqual({ value: '$ 12.34 USD', cursor: 7 });

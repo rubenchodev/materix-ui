@@ -4,7 +4,7 @@
  * sus versiones de rango. Campo TextField con máscara y botón de apertura; calendario (DateCalendar)
  * y reloj MD2 (TimeView) en popover, diálogo modal o modo estático (patrón WAI-ARIA Date Picker Dialog).
  */
-import { forwardRef, useEffect, useId, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type {
   ClipboardEvent as ReactClipboardEvent,
@@ -202,6 +202,17 @@ const EXIT_DELAY = 200;
 let activePicker: { owner: object; close: () => void } | null = null;
 
 /**
+ * Pone o quita el atributo `inert` (compatible con React 18 y 19).
+ * @param {HTMLElement|null} el Elemento.
+ * @param {boolean} on Activar.
+ */
+function setInert(el: HTMLElement | null, on: boolean): void {
+  if (!el) return;
+  if (on) el.setAttribute('inert', '');
+  else el.removeAttribute('inert');
+}
+
+/**
  * Hora de una fecha (o el valor por defecto).
  * @param {Date|null} date Fecha.
  * @param {number} hour Hora por defecto.
@@ -322,6 +333,8 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
     return formatSel(committed) || (typeof initial === 'string' ? initial : '');
   });
   const lastKey = useRef(committedKey);
+  /** Clave emitida en modo controlado pendiente de que el padre la acepte. */
+  const pendingKey = useRef<string | null>(null);
 
   // Valor controlado cambiado desde fuera: se resincronizan borrador y texto.
   useEnhancedEffect(() => {
@@ -330,6 +343,17 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
     setDraft(toDraft(committed));
     setInputText(formatSel(committed));
   }, [committedKey]);
+
+  // Controlado: si el padre ignora `onChange`, se vuelve a mostrar `value` (como MUI).
+  useEnhancedEffect(() => {
+    const pending = pendingKey.current;
+    if (pending === null) return;
+    pendingKey.current = null;
+    if (pending !== committedKey) {
+      setDraft(toDraft(committed));
+      setInputText(formatSel(committed));
+    }
+  });
 
   // Formato o locale cambiados: se reformatea el texto.
   const formatKey = `${format}|${rangeSeparator}`;
@@ -377,16 +401,20 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
         if (d.start) d.start = withTime(d.start, { ...d.startTime, second: 0 });
         if (d.end) d.end = withTime(d.end, { ...d.endTime, second: 0 });
       }
-      d.date = d.start || d.end;
+      // Como vanilla: con el rango completo la fecha de referencia es el fin.
+      d.date = d.end || d.start;
     } else if (!d.date) {
       d.date = withTime(new Date(), d.time);
     }
     const sel: Selection = { date: d.date, start: d.start, end: d.end };
     const text = formatSel(sel);
-    lastKey.current = selKey(sel);
+    if (isControlled) pendingKey.current = selKey(sel);
+    else {
+      lastKey.current = selKey(sel);
+      setUncontrolled(sel);
+    }
     setDraft(d);
     if (!options.keepText) setInputText(text);
-    if (!isControlled) setUncontrolled(sel);
     const result: [DateTimePickerValue, DateTimePickerChangeDetail] = [toValue(sel), buildDetail(sel, d, text)];
     onChange?.(...result);
     return result;
@@ -395,11 +423,19 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
   /** Limpia la selección (`clear()`). */
   const clear = useEventCallback(() => {
     const d = { ...draft, ...EMPTY };
-    lastKey.current = selKey(EMPTY);
+    if (isControlled) pendingKey.current = selKey(EMPTY);
+    else {
+      lastKey.current = selKey(EMPTY);
+      setUncontrolled(EMPTY);
+    }
     setDraft(d);
     setInputText('');
-    if (!isControlled) setUncontrolled(EMPTY);
-    onChange?.(range ? { start: null, end: null } : null, buildDetail(EMPTY, null, ''));
+    const result: [DateTimePickerValue, DateTimePickerChangeDetail] = [
+      range ? { start: null, end: null } : null,
+      buildDetail(EMPTY, null, ''),
+    ];
+    onChange?.(...result);
+    return result;
   });
 
   // ------------------------------------------------------------- Apertura
@@ -429,6 +465,12 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
   const containerRef = useRef<HTMLDivElement | null>(null);
   const handleStaticRef = useForkRef<HTMLDivElement>(handleRootRef, containerRef);
   const backdropRef = useRef<HTMLDivElement | null>(null);
+  /** Modal cerrado y sin contenido: fuera del árbol de accesibilidad (`inert`). */
+  const modalHiddenRef = useRef(true);
+  const handleBackdropRef = useCallback((el: HTMLDivElement | null) => {
+    backdropRef.current = el;
+    setInert(el, modalHiddenRef.current);
+  }, []);
   const mobileBackdropRef = useRef<HTMLDivElement | null>(null);
   const returnFocusEl = useRef<HTMLElement | null>(null);
   const focusOnOpen = useRef(true);
@@ -596,7 +638,9 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
       open: (options) => requestOpen(options),
       close: (focusInput = false) => requestClose(focusInput, 'api'),
       toggle: () => (isOpen ? requestClose(true, 'toggle') : requestOpen()),
-      clear,
+      clear: () => {
+        clear();
+      },
     }),
     [isOpen, requestOpen, requestClose, clear],
   );
@@ -713,7 +757,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
       return;
     }
     if (act === 'clear') {
-      clear();
+      onAccept?.(...clear());
       requestClose(true, 'accept');
       return;
     }
@@ -898,6 +942,13 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
     </>
   ) : null;
 
+  // `inert` por atributo (React 18 no admite la prop): estático deshabilitado y modal cerrado.
+  modalHiddenRef.current = !isOpen && !contentMounted;
+  useEnhancedEffect(() => {
+    if (displayStatic) setInert(containerRef.current, disabled);
+    else setInert(backdropRef.current, modalHiddenRef.current);
+  });
+
   // ------------------------------------------------------------- Estático
   if (displayStatic) {
     const staticLocked = disabled;
@@ -909,7 +960,6 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
         aria-label={ariaLabelledBy ? ariaLabel : ariaLabel ?? dialogLabel}
         aria-labelledby={ariaLabelledBy}
         aria-disabled={staticLocked ? true : undefined}
-        inert={staticLocked ? true : undefined}
         className={cx('mtx-picker-static', staticLocked && 'mtx-picker-static--disabled', className)}
         style={style}
       >
@@ -996,7 +1046,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(fu
       ) : (
         <Portal>
           <div
-            ref={backdropRef}
+            ref={handleBackdropRef}
             className={cx('mtx-picker-backdrop', isOpen && 'mtx-picker-backdrop--open')}
             onClick={(event) => {
               if (event.target === event.currentTarget) requestClose(true, 'backdropClick');

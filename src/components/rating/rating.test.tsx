@@ -184,6 +184,27 @@ describe('Rating', () => {
     expect(onChangeActive).toHaveBeenLastCalledWith(expect.anything(), null);
   });
 
+  it('form.reset() restaura defaultValue en modo no controlado', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <form>
+        <Rating defaultValue={3} name="r" aria-label="R" />
+      </form>,
+    );
+    await user.click(container.querySelector('input[value="5"]')!);
+    expect(container.querySelectorAll('.mtx-rating__label--filled')).toHaveLength(5);
+    act(() => container.querySelector('form')!.reset());
+    expect(container.querySelectorAll('.mtx-rating__label--filled')).toHaveLength(3);
+    expect(container.querySelector<HTMLInputElement>('input[value="3"]')!.checked).toBe(true);
+    expect(container.querySelector<HTMLInputElement>('input[value="5"]')!.checked).toBe(false);
+  });
+
+  it('read-only respeta el aria-label explícito', () => {
+    const { container } = render(<Rating value={4} readOnly aria-label="Average: 4 stars" />);
+    expect(container.firstElementChild).toHaveAttribute('aria-label', 'Average: 4 stars');
+    expect(container.firstElementChild).toHaveAttribute('role', 'img');
+  });
+
   it('roundRatingValue: redondea, acota y 0 vacía', () => {
     expect(roundRatingValue(9, 1, 5)).toBe(5);
     expect(roundRatingValue(2.4, 1, 5)).toBe(2);

@@ -85,7 +85,7 @@ describe('Select', () => {
     expect(getControl()).toHaveAttribute('aria-expanded', 'true');
     expect(container.firstElementChild).toHaveClass('mtx-select--open');
     const menu = getMenu();
-    expect(menu.parentElement).toBe(document.body);
+    expect(menu.parentElement?.hasAttribute("data-mtx-portal-root")).toBe(true);
     expect(screen.getByRole('listbox')).toBeInTheDocument();
     await user.click(optionByValue('gdl'));
     expect(onChange).toHaveBeenLastCalledWith(expect.anything(), 'gdl');
@@ -476,6 +476,69 @@ describe('Select', () => {
     });
     expect(getControl()).toHaveAttribute('aria-expanded', 'false');
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('paridad DOM con vanilla: hiddenLabel (outlined sin muesca)', async () => {
+    const vanilla = await mountVanilla(
+      '<select class="mtx-select--hidden-label" data-mtx="select" data-label="Orden">'
+        + '<option value="a">A</option><option value="b">B</option></select>',
+    );
+    const { container } = render(<Select hiddenLabel label="Orden" options={[{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }]} />);
+    // Vanilla deja además la clase en el <select> nativo oculto (artefacto de la sintaxis simplificada).
+    expectParity(container.firstElementChild, vanilla.firstElementChild, {
+      ignoreSelectors: ['.mtx-select__menu', '.mtx-select__native'],
+    });
+    expect(container.firstElementChild).toHaveClass('mtx-select--hidden-label');
+    expect(container.querySelector('.mtx-select__outline')).not.toBeNull();
+    expect(container.querySelector('.mtx-select__legend')).toBeNull();
+  });
+
+  it('helperText propio excluye los helperTextIds del FormControl', () => {
+    render(
+      <FormControl>
+        <Select label="Moneda" helperText="Propio" options={ABC} />
+        <span id="fc-help" />
+      </FormControl>,
+    );
+    const helper = document.querySelector('.mtx-select__helper-text')!;
+    expect(getControl().getAttribute('aria-describedby')).toBe(helper.id);
+  });
+
+  it('menú cerrado: Home/End y typeahead seleccionan en modo único', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    render(<Select label="Ciudad" options={CITIES} onChange={onChange} />);
+    getControl().focus();
+    await user.keyboard('{End}');
+    expect(onChange).toHaveBeenLastCalledWith(expect.anything(), 'mty');
+    await user.keyboard('{Home}');
+    expect(onChange).toHaveBeenLastCalledWith(expect.anything(), 'mdx');
+    await user.keyboard('g');
+    expect(onChange).toHaveBeenLastCalledWith(expect.anything(), 'gdl');
+    expect(getControl()).toHaveAttribute('aria-expanded', 'false');
+    expect(document.querySelector('.mtx-select__display-text')).toHaveTextContent('Guadalajara');
+  });
+
+  it('con search no hay opción activa hasta la primera flecha', async () => {
+    const user = userEvent.setup();
+    render(<Select search options={CITIES} aria-label="Ciudad" defaultValue="gdl" />);
+    await user.click(getControl());
+    const input = document.querySelector('.mtx-select__search') as HTMLInputElement;
+    await waitFor(() => expect(input).toHaveFocus());
+    expect(input).not.toHaveAttribute('aria-activedescendant');
+    expect(document.querySelector('.mtx-select__option--focused')).toBeNull();
+    await user.keyboard('{ArrowDown}');
+    expect(document.getElementById(input.getAttribute('aria-activedescendant')!)).toHaveAttribute('data-value', 'mdx');
+  });
+
+  it('sin outline global en el combobox mientras el menú está abierto', async () => {
+    const user = userEvent.setup();
+    render(<Select options={CITIES} aria-label="Ciudad" />);
+    expect(getControl().style.outline).toBe('');
+    await user.click(getControl());
+    expect(getControl().style.outline).toBe('none');
+    await user.keyboard('{Escape}');
+    expect(getControl().style.outline).toBe('');
   });
 
   it('refs: raíz, control e input nativo', () => {

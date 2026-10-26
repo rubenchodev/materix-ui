@@ -98,7 +98,7 @@ Con muchas opciones el contenido se desplaza dentro del paper. Escribe una letra
 
 ## Menú contextual
 
-`<ContextMenu target items>` equivale a `Materix.Menu.createContextMenu(selector, items)`: `target` es un elemento, una ref o un selector CSS; cada ítem acepta `label`, `icon`, `image`, `shortcut`, `disabled`, `divider`, `action` y `submenu`. Se abre con clic derecho en la posición del puntero (`anchorPosition`); con la tecla <kbd>Menú</kbd> o <kbd>Mayús</kbd>+<kbd>F10</kbd> se ancla al área y enfoca la primera opción. Para un marcado propio, `useContextMenu()` devuelve `onContextMenu` y las props de un `Menu`.
+`<ContextMenu target items>` equivale a `Materix.Menu.createContextMenu(selector, items)`: `target` es un elemento, una ref o un selector CSS (delegado en `document`, así que también sirven las áreas añadidas después); cada ítem acepta `label`, `icon`, `image`, `shortcut`, `disabled`, `divider`, `action` y `submenu`. Se abre con clic derecho en la posición del puntero (`anchorPosition`); con la tecla <kbd>Menú</kbd> o <kbd>Mayús</kbd>+<kbd>F10</kbd> se ancla al área y enfoca la primera opción. Para un marcado propio, `useContextMenu()` devuelve `onContextMenu` y las props de un `Menu`.
 
 {{< react-demo id="menu/12-context-menu" layout="block" >}}
 
@@ -137,6 +137,12 @@ El equivalente de `open()`/`close()` es la prop `open`. `onOpen`, `onSelect(deta
 `Menu` se compone de un portal, una transición Grow, el paper y una `MenuList`. `MenuList` sola (dentro de un [Paper](../paper/)) conserva la navegación por teclado para menús siempre visibles. El botón dividido de [Button Group](../button-group/) ancla un `Menu` a todo el grupo con `matchWidth` y devuelve el foco a la flecha.
 
 {{< react-demo "menu/16-menu-list" >}}
+
+## Composición completa
+
+Equivale al *uso manual BEM* de vanilla: en React no se escribe el marcado a mano, pero cada pieza es sustituible. Los ítems pueden ser `<button>` nativos (`component="button"`), los iconos cualquier nodo (un SVG en línea) y las opciones marcadas muestran su `.mtx-menu-item__check`; el DOM resultante es la misma estructura BEM.
+
+{{< react-demo "menu/17-composition" >}}
 
 ## Referencia de la API
 
@@ -195,7 +201,7 @@ El equivalente de `open()`/`close()` es la prop `open`. `onOpen`, `onSelect(deta
 | `Submenu` | `label`, `children` (ítems), props de ítem para el disparador y `menuProps` para el `Menu` anidado. |
 | `ContextMenu` | `target` (elemento, ref o selector) e `items`; el resto de props van al `Menu`. |
 | `useMenu({ id?, defaultOpen? })` | `{ open, openMenu, closeMenu, toggleMenu, triggerProps, menuProps }`. |
-| `useContextMenu()` | `{ open, closeMenu, onContextMenu, menuProps }`. |
+| `useContextMenu()` | `{ open, closeMenu, onContextMenu, openFor(event, area), menuProps }`. |
 
 ### Callbacks
 

@@ -13,15 +13,15 @@ export default function Demo() {
       <TabsContainer className="demo-wide">
         <Stack direction="row">
           <Tabs orientation="vertical" aria-label="Settings">
-            <Tab value="account" label="Account" />
-            <Tab value="security" label="Security" />
-            <Tab value="notifications" label="Notifications" />
-            <Tab value="billing" label="Billing" disabled />
+            <Tab value="account" icon="person" label="Account" />
+            <Tab value="security" icon="lock" label="Security" />
+            <Tab value="notifications" icon="notifications" label="Notifications" />
+            <Tab value="billing" icon="credit_card" label="Billing" disabled />
           </Tabs>
-          <TabPanel value="account">Account details.</TabPanel>
+          <TabPanel value="account">Account details and contact email.</TabPanel>
           <TabPanel value="security">Password and two-step verification.</TabPanel>
           <TabPanel value="notifications">Email, push and weekly digest.</TabPanel>
-          <TabPanel value="billing">Billing.</TabPanel>
+          <TabPanel value="billing">Not available.</TabPanel>
         </Stack>
       </TabsContainer>
     </TabContext>

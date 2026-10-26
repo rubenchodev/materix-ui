@@ -49,7 +49,8 @@ export default function Demo() {
             open={open}
             onClose={() => setOpen(false)}
           >
-            <List component="nav" aria-label="Sections" subheader={<ListSubheader component="div">Store</ListSubheader>}>
+            <ListSubheader component="div">Store</ListSubheader>
+            <List component="nav" aria-label="Sections">
               {sections.map((section) => (
                 <ListItemButton
                   key={section.label}

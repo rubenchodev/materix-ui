@@ -42,13 +42,13 @@ export function ExampleTopBar({ homeHref, slug }: ExampleTopBarProps) {
         <span className="demo-topbar__tag">React</span>
       </a>
       <nav className="demo-topbar__nav" aria-label="Examples">
-        <a className="demo-topbar__link" href={homeHref}>
+        <a className="demo-topbar__link" href={homeHref} aria-label="All components" title="All components">
           <span className="material-icons" aria-hidden="true">
             apps
           </span>
           <span className="demo-topbar__link-text">All components</span>
         </a>
-        <a className="demo-topbar__link" href={vanillaHref} target="_blank" rel="noopener noreferrer">
+        <a className="demo-topbar__link" href={vanillaHref} target="_blank" rel="noopener noreferrer" aria-label="Vanilla example (opens in a new tab)" title="Vanilla example">
           <span className="material-icons" aria-hidden="true">
             open_in_new
           </span>

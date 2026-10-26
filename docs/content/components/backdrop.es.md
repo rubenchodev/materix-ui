@@ -57,13 +57,13 @@ Guardar un formulario: el backdrop cubre la página mientras dura la petición y
 
 ## Maquetación en grilla
 
-La capa se renderiza en un portal sobre `document.body` y no participa en la maquetación; aquí una grilla de disparadores abre el mismo backdrop con mensajes distintos.
+La capa se renderiza en un portal (el contenedor compartido `[data-mtx-portal-root]` al final de `<body>`) y no participa en la maquetación; aquí una grilla de disparadores abre el mismo backdrop con mensajes distintos.
 
 {{< react-demo id="backdrop/07-grid" layout="block" >}}
 
 ## Uso programático
 
-El equivalente de `open()`/`close()`/`toggle()` es la prop `open`. `onOpen` y `onClose(event, reason)` equivalen a `mtx:backdrop:open` y `mtx:backdrop:close`; `onExited` se llama al terminar el fundido de salida.
+El equivalente de `open()`/`close()` es la prop `open`. No hay `toggle()`: el estado vive en tu componente, así que alternar es `setOpen((value) => !value)`. `onOpen` y `onClose(event, reason)` equivalen a `mtx:backdrop:open` y `mtx:backdrop:close`; `onExited` se llama al terminar el fundido de salida.
 
 {{< react-demo id="backdrop/08-programmatic" layout="block" >}}
 
@@ -99,8 +99,8 @@ El equivalente de `open()`/`close()`/`toggle()` es la prop `open`. `onOpen` y `o
 | `onOpen` | `() => void` | — | `open` pasa de `false` a `true`. |
 | `onExited` | `() => void` | — | Terminó el fundido de salida. |
 | `transitionDuration` | `number \| { enter?, exit? }` | `{ enter: 225, exit: 195 }` | Duración del fundido en ms. |
-| `disablePortal` | `boolean` | `false` | Renderiza en su sitio en lugar de en `document.body`. |
-| `container` | `Element \| ref \| () => Element` | `document.body` | Destino del portal. |
+| `disablePortal` | `boolean` | `false` | Renderiza en su sitio en lugar de en la raíz de portales. |
+| `container` | `Element \| ref \| () => Element` | `[data-mtx-portal-root]` en `<body>` | Destino del portal. |
 | `keepMounted` | `boolean` | `false` | Mantiene el nodo (con `hidden`) mientras está cerrado. |
 
 `className` se combina; `ref`, `style` (por ejemplo un `zIndex` propio) y cualquier otro atributo van al `<div>` raíz.
@@ -131,6 +131,8 @@ El equivalente de `open()`/`close()`/`toggle()` es la prop `open`. `onOpen` y `o
 
 ## Accesibilidad
 
+- Por defecto la capa se porta al final de `<body>`, fuera de tus landmarks. Si debe quedarse dentro de `<main>` (por ejemplo, para que su contenido pertenezca a ese landmark o herede su ámbito de tema), usa `disablePortal`; es `position: fixed`, así que sigue cubriendo el viewport.
+
 - El backdrop no tiene rol ni mueve el foco: es un indicador visual. Da un nombre accesible al indicador (`CircularProgress label="Cargando"`).
 - Cerrado o durante el fundido de salida lleva `aria-hidden="true"`.
 - Para que los usuarios de teclado y lector de pantalla no interactúen con la página mientras está ocupada, usa `inertOthers`. Para mensajes o decisiones usa un [Dialog](../dialog/), que atrapa el foco.
@@ -144,7 +146,8 @@ El equivalente de `open()`/`close()`/`toggle()` es la prop `open`. `onOpen` y `o
 
 | Vanilla | React |
 |---|---|
-| `data-mtx="backdrop"` + `open()` / `close()` / `toggle()` | `<Backdrop open={…}>` |
+| `data-mtx="backdrop"` + `open()` / `close()` | `<Backdrop open={…}>` |
+| `toggle()` | `setOpen((value) => !value)` |
 | `data-open` | `open={true}` inicial |
 | `data-invisible` | `invisible` |
 | `data-close-on-click`, `data-close-on-escape` | `closeOnClick`, `closeOnEscape` |

@@ -31,7 +31,7 @@ export type SpeedDialPosition = 'fixed-br' | 'fixed-bl';
 export type SpeedDialOpenReason = 'toggle' | 'mouseEnter';
 
 /** Motivo de cierre. */
-export type SpeedDialCloseReason = 'toggle' | 'mouseLeave' | 'escapeKeyDown' | 'clickaway';
+export type SpeedDialCloseReason = 'toggle' | 'mouseLeave' | 'escapeKeyDown' | 'clickaway' | 'hidden';
 
 /** Evento que origina el cambio. */
 export type SpeedDialChangeEvent = SyntheticEvent | Event;
@@ -52,8 +52,8 @@ export interface SpeedDialProps extends Omit<HTMLAttributes<HTMLDivElement>, 'co
   defaultOpen?: boolean;
   /** Solicitud de apertura (equivale a `mtx:speed-dial:open`). */
   onOpen?: (event: SpeedDialChangeEvent, reason: SpeedDialOpenReason) => void;
-  /** Solicitud de cierre (equivale a `mtx:speed-dial:close`). */
-  onClose?: (event: SpeedDialChangeEvent, reason: SpeedDialCloseReason) => void;
+  /** Solicitud de cierre (equivale a `mtx:speed-dial:close`); `event` es `null` con el motivo `hidden`. */
+  onClose?: (event: SpeedDialChangeEvent | null, reason: SpeedDialCloseReason) => void;
   /** `hover` abre al entrar el puntero y cierra al salir; el clic sigue alternando. */
   event?: SpeedDialEvent;
   /** Etiquetas como Tooltip en hover/foco en lugar de persistentes (`data-tooltip-hover`). */
@@ -149,6 +149,16 @@ export const SpeedDial = forwardRef<HTMLDivElement, SpeedDialProps>(function Spe
   });
 
   useClickAway([rootRef], (event) => requestClose(event, 'clickaway'), { enabled: open });
+
+  // Al ocultarse abierto, cierra el estado (motivo `hidden`) para no reaparecer abierto.
+  const closeOnHidden = useEventCallback(() => {
+    if (!openState) return;
+    setOpenState(false);
+    onClose?.(null, 'hidden');
+  });
+  useEffect(() => {
+    if (hidden) closeOnHidden();
+  }, [hidden, closeOnHidden]);
 
   // Acciones cerradas: inert + aria-hidden; al cerrar con el foco dentro, vuelve al FAB.
   useEffect(() => {

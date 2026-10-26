@@ -134,6 +134,37 @@ describe('Stepper', () => {
     expect(mobile.current!.activeStep).toBe(0);
   });
 
+  it('inert se aplica por DOM y se retira al expandir', () => {
+    const api = createRef<StepperApi>();
+    const { container } = render(
+      <Stepper apiRef={api} orientation="vertical">
+        <Step label="A">Uno</Step>
+        <Step label="B">Dos</Step>
+      </Stepper>,
+    );
+    const [a, b] = Array.from(container.querySelectorAll('.mtx-step__content'));
+    expect(a).not.toHaveAttribute('inert');
+    expect(b).toHaveAttribute('inert', '');
+    act(() => {
+      api.current!.next();
+    });
+    expect(a).toHaveAttribute('inert', '');
+    expect(b).not.toHaveAttribute('inert');
+  });
+
+  it('StepperButton con controlador sin enlazar no se deshabilita (SSR)', async () => {
+    const { renderToString } = await import('react-dom/server');
+    function Unlinked() {
+      const stepper = useStepper();
+      return (
+        <StepperButton action="next" stepper={stepper}>
+          Next
+        </StepperButton>
+      );
+    }
+    expect(renderToString(<Unlinked />)).not.toContain('disabled');
+  });
+
   it('optional, error con mensaje y disabled', () => {
     const { container } = render(
       <Stepper nonLinear>

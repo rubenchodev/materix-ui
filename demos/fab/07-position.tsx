@@ -1,4 +1,12 @@
+import type { CSSProperties } from 'react';
 import { Fab } from '@rubenchodev/materix-react/components/fab';
+
+/** Como en vanilla: FAB primary cuyas variables locales toman el color secondary para contrastar con la barra. */
+const onBar = {
+  '--mtx-fab-bg': 'var(--mtx-color-secondary)',
+  '--mtx-fab-fg': 'var(--mtx-color-secondary-contrast)',
+  '--mtx-fab-hover': 'var(--mtx-color-secondary-dark)',
+} as CSSProperties;
 
 export const title = { en: 'Position', es: 'Posición' };
 export const description = {
@@ -14,7 +22,7 @@ export default function Demo() {
         <p className="mtx-m-0 mtx-p-2">Screen content. The FAB stays centered and sits on top of the bar.</p>
         {/* Barra inferior simulada (decorativa): 56px como un BottomAppBar de MUI. */}
         <div className="mtx-position-absolute mtx-start-0 mtx-end-0 mtx-bottom-0 mtx-bg-primary" style={{ height: 56 }}>
-          <Fab icon="add" color="secondary" position="absolute-center" aria-label="Create post" />
+          <Fab icon="add" position="absolute-center" aria-label="Create post" style={onBar} />
         </div>
       </div>
     </div>

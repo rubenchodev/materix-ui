@@ -1,5 +1,7 @@
 'use client';
-
+/**
+ * Enlace de Materix UI (`Link` de MUI): colores, subrayado, deshabilitado y `component` polimórfico.
+ */
 import { forwardRef } from 'react';
 import type {
   ComponentPropsWithoutRef,

@@ -1,3 +1,4 @@
+import '@rubenchodev/materix-ui/base.css'; // primero: los CSS de componentes (demos) deben ganar a base.css
 /**
  * PLANTILLA de página de ejemplo. Cómo usarla:
  *   1. Copiar la carpeta:   cp -r examples/_template examples/{slug}

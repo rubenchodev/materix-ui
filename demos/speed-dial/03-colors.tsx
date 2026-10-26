@@ -16,7 +16,7 @@ export default function Demo() {
       <div className="demo-group">
         <span className="demo-label">Defaults · primary + secondary</span>
         <div className="demo-panel demo-panel--tall">
-          <SpeedDial ariaLabel="Create" defaultOpen className={corner}>
+          <SpeedDial ariaLabel="Create" className={corner}>
             <SpeedDialAction icon="mail" tooltipTitle="Email" />
             <SpeedDialAction icon="event" tooltipTitle="Event" />
           </SpeedDial>
@@ -25,7 +25,7 @@ export default function Demo() {
       <div className="demo-group">
         <span className="demo-label">secondary + error · success · info</span>
         <div className="demo-panel demo-panel--tall">
-          <SpeedDial ariaLabel="Edit" icon="edit" color="secondary" defaultOpen className={corner}>
+          <SpeedDial ariaLabel="Edit" icon="edit" color="secondary" className={corner}>
             <SpeedDialAction icon="delete" color="error" tooltipTitle="Delete" />
             <SpeedDialAction icon="save" color="success" tooltipTitle="Save" />
             <SpeedDialAction icon="info" color="info" tooltipTitle="Details" />

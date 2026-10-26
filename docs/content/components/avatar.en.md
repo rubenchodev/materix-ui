@@ -55,7 +55,7 @@ Avatar is not interactive: its states are about content. Without an image or ico
 
 ## Grouping
 
-`AvatarGroup` overlaps its avatars. `max` (5 by default, minimum 2) also counts the `+N` indicator; `total` counts users that are not rendered; `spacing` sets the overlap (`medium` = 8px, `small` = 16px, or pixels). Overflowing avatars stay mounted with `hidden`. The `+N` indicator has a translated `aria-label` (`{count} more`) that `surplusLabel` replaces.
+`AvatarGroup` overlaps its avatars. `max` (5 by default, minimum 2) also counts the `+N` indicator; `total` counts users that are not rendered; `spacing` sets the overlap (`medium` = 8px, `small` = 16px, or pixels). Overflowing avatars stay mounted with `hidden`. Every valid child counts as one item (an Avatar wrapped in a Badge or Tooltip too), as in MUI; vanilla only counts `.mtx-avatar` children. The `+N` indicator has a translated `aria-label` (`{count} more`) that `surplusLabel` replaces.
 
 {{< react-demo id="avatar/07-grouping" layout="block" >}}
 
@@ -129,6 +129,7 @@ Avatar and AvatarGroup emit no events (use `imgProps.onError` to know when an im
 
 - With an image, `alt` describes the person; use `alt=""` when the name is already next to it.
 - Icon avatars that convey meaning need `role="img"` and an `aria-label`; the generated icon is `aria-hidden`.
+- `AvatarGroup` renders `role="group"` and the `+N` indicator `role="img"`, so their `aria-label` is valid (an improvement over vanilla, which has no roles).
 - Give `AvatarGroup` a `label` and keep the `+N` `aria-label` meaningful (`surplusLabel`).
 - The default background meets AA contrast (4.6:1).
 

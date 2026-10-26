@@ -17,13 +17,13 @@ export default function Demo() {
         <Accordion summary="Third">Collapsed panel.</Accordion>
       </div>
       <div>
-        <Accordion disableGutters summary="First">
+        <Accordion disableGutters summary="First · no gutters">
           Collapsed panel.
         </Accordion>
-        <Accordion disableGutters summary="Second (expanded)" defaultExpanded>
+        <Accordion disableGutters summary="Second (expanded) · no gutters" defaultExpanded>
           No margin and no height change.
         </Accordion>
-        <Accordion disableGutters summary="Third">
+        <Accordion disableGutters summary="Third · no gutters">
           Collapsed panel.
         </Accordion>
       </div>

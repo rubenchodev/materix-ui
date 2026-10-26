@@ -79,7 +79,7 @@ The time view opens in keyboard mode by default (editable hour and minute cards,
 ## Popover, modal and static
 
 - **Popover** (default): drops down below the field (inside the TextField, as in vanilla), anchors to the right or opens upward if there's not enough room. On screens 600px wide or less it's shown centered over a dark backdrop, with `aria-modal` and a focus trap.
-- **Modal** (`display="modal"`): a centered dialog with an MD2 colored header on any screen size. Picking a day does not close it; use OK.
+- **Modal** (`display="modal"`): a centered dialog with an MD2 colored header on any screen size. Picking a day applies it at once (`onChange`) but keeps the dialog open; OK closes it.
 - **Static** (`displayStatic` or the `Static*` aliases): a calendar or clock embedded in the page, with no field and no OK/Cancel buttons; each choice calls `onChange`.
 
 {{< react-demo id="date-time-picker/09-presentation" layout="block" >}}
@@ -168,7 +168,13 @@ Besides these, the TextField props go to the field (`label`, `variant`, `size`, 
 
 ### onChange detail
 
-`{ value, date, dateTime, time, iso, isRange, startDate, endDate, range: { start, end } }`, the same as vanilla's `detail` (without `picker`). `onChange` fires once per applied selection: a day in date mode, the range end, each time change, Today, OK, typing a complete valid value, or clearing.
+`{ value, date, dateTime, time, iso, isRange, startDate, endDate, range: { start, end } }`, the same as vanilla's `detail` (without `picker`). `onChange` fires once per applied selection: a day in date mode, the range end, each time change, Today, OK, typing a complete valid value, or clearing. In a complete range, `date`, `dateTime` and `iso` refer to the range end, as in vanilla.
+
+{{< callout type="warning" >}}
+**Cancel closes without reverting changes already emitted.** As in vanilla, every applied change calls `onChange` immediately (a day in the modal, each hour or minute), so Cancel only discards what was not applied yet (for example the day picked in `DateTimePicker` before choosing the time). Clear calls `onChange` and `onAccept` with `null`.
+{{< /callout >}}
+
+In controlled mode the field always shows `value`: if the parent ignores `onChange`, the field and the calendar go back to `value`.
 
 ### DateCalendar props
 
@@ -191,6 +197,7 @@ Besides these, the TextField props go to the field (`label`, `variant`, `size`, 
 | `mtx-picker-static` / `--disabled` | Embedded picker. |
 | `mtx-picker-header` (`__year`, `__date`) | Colored header (modal and static). |
 | `mtx-picker-tabs` / `mtx-picker-tab` / `--active` | Date/Time tabs (or Dates/Start/End). |
+| `mtx-picker-tabs--range`, `mtx-picker-tab__text`, `mtx-picker-tab__time`, `mtx-picker-tab__paren` | **React only** (`picker-tabs.css`): range tabs. On screens ≤ 600px the time moves to a second line so the three tabs fit without horizontal scroll (in vanilla the End tab is clipped at 390px). A justified CSS divergence; the rest of the CSS comes unchanged from `@rubenchodev/materix-ui`. |
 | `mtx-picker-content`, `mtx-picker-actions`, `mtx-picker-icon-btn` | View area, button bar and keyboard/clock toggle. |
 | `mtx-date-picker` (`__nav`, `__title`, `__nav-btn`, `__grid`, `__weekday`, `__week`, `__day-cell`, `__day`) | Calendar. |
 | `mtx-date-picker__day--today` / `--selected` / `--outside` / `--disabled` | Day states. |
@@ -235,14 +242,15 @@ No variables of its own: it uses the global tokens `--mtx-color-primary`, `--mtx
 | `data-static` | `displayStatic` / `Static*` |
 | `data-display="modal"` | `display="modal"` |
 | `data-format`, `data-mask`, `data-ampm`, `data-locale` | `format`, `mask`, `ampm`, `locale` |
-| `data-min`, `data-max` | `minDate`, `maxDate` (+ `shouldDisableDate`) |
+| `data-min`, `data-max`, `min`/`max` of the input | `minDate`, `maxDate` (+ `shouldDisableDate`) |
 | `data-value`, `data-default-value` | `defaultValue` (or `value`) |
-| `data-time-view` | `timeView` |
+| `data-time-view`, `data-time-mode` | `timeView` |
 | `data-range-separator` | `rangeSeparator` |
 | `data-today-text`, `data-cancel-text`, `data-ok-text` | `todayText`, `cancelText`, `okText` |
 | `data-end-icon` | `endIcon` |
 | `setDate()`, `setDateTime()`, `setTime()`, `setRange()`, `setValue()` | `value` (controlled) |
 | `getDate()`, `getTime()`, `getRange()`, `getISOString()` | `onChange(value, detail)` (`detail.value`, `.time`, `.range`, `.iso`) |
 | `open()`, `close()`, `toggle()`, `clear()` | `action.current.*` or `open` |
+| `DateTimePicker.closeAll()` | Not needed: opening a picker closes the one already open (only one at a time); close a specific one with `open={false}` or `action.current.close()`. |
 | `disable()` / `enable()` | `disabled` |
 | `mtx:date-time-picker:change` / `:open` / `:close` | `onChange` / `onOpen` / `onClose` (+ `onAccept`) |

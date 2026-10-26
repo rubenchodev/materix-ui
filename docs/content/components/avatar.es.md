@@ -55,7 +55,7 @@ Avatar no es interactivo: sus estados son de contenido. Sin imagen ni icono est�
 
 ## Agrupación
 
-`AvatarGroup` solapa sus avatares. `max` (5 por defecto, mínimo 2) cuenta también el indicador `+N`; `total` cuenta usuarios que no se renderizan; `spacing` fija el solapamiento (`medium` = 8px, `small` = 16px, o píxeles). Los avatares excedentes siguen montados con `hidden`. El indicador `+N` tiene un `aria-label` traducido (`{count} más`) que `surplusLabel` sustituye.
+`AvatarGroup` solapa sus avatares. `max` (5 por defecto, mínimo 2) cuenta también el indicador `+N`; `total` cuenta usuarios que no se renderizan; `spacing` fija el solapamiento (`medium` = 8px, `small` = 16px, o píxeles). Los avatares excedentes siguen montados con `hidden`. Cada hijo válido cuenta como un elemento (también un Avatar envuelto en Badge o Tooltip), como en MUI; vanilla solo cuenta los hijos `.mtx-avatar`. El indicador `+N` tiene un `aria-label` traducido (`{count} más`) que `surplusLabel` sustituye.
 
 {{< react-demo id="avatar/07-grouping" layout="block" >}}
 
@@ -129,6 +129,7 @@ Avatar y AvatarGroup no emiten eventos (usa `imgProps.onError` para saber cuánd
 
 - Con imagen, `alt` describe a la persona; usa `alt=""` cuando el nombre ya aparece al lado.
 - Los avatares de icono con significado necesitan `role="img"` y un `aria-label`; el icono generado es `aria-hidden`.
+- `AvatarGroup` renderiza `role="group"` y el indicador `+N` `role="img"`, para que su `aria-label` sea válido (mejora sobre vanilla, que no tiene roles).
 - Da un `label` a `AvatarGroup` y mantén significativo el `aria-label` de `+N` (`surplusLabel`).
 - El fondo por defecto cumple contraste AA (4.6:1).
 

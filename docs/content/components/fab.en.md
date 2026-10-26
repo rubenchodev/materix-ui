@@ -103,7 +103,7 @@ The CSS also works with plain markup (static HTML or server templates), without 
 | `disabled` | `boolean` | `false` | Native `disabled`; `aria-disabled` on links. |
 | `disableRipple` | `boolean` | `false` | Turns off the ripple. |
 | `href` | `string` | — | Renders an `<a>`. |
-| `component` | `ElementType` | `'button'` / `'a'` | Custom root element. |
+| `component` | `ElementType` | `'button'` / `'a'` | Custom root element. Without `href`/`to` it gets `role="button"`, `tabIndex=0`, Enter (keydown) and Space (keyup); with `href`/`to` it is treated as a link. |
 | `children` | `ReactNode` | — | Extra content after the icon and the label. |
 | `className`, `style`, `ref`, `aria-*`, `on*`… | — | — | Forwarded to the root; `className` is merged. |
 

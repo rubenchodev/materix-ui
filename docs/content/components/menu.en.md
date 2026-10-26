@@ -98,7 +98,7 @@ With many options the content scrolls inside the paper. Type a letter to jump to
 
 ## Context menu
 
-`<ContextMenu target items>` is the equivalent of `Materix.Menu.createContextMenu(selector, items)`: `target` is an element, a ref or a CSS selector; each item accepts `label`, `icon`, `image`, `shortcut`, `disabled`, `divider`, `action` and `submenu`. It opens on right-click at the pointer position (`anchorPosition`); with the <kbd>Menu</kbd> key or <kbd>Shift</kbd>+<kbd>F10</kbd> it anchors to the area and focuses the first option. For your own markup, `useContextMenu()` returns `onContextMenu` and the props of a `Menu`.
+`<ContextMenu target items>` is the equivalent of `Materix.Menu.createContextMenu(selector, items)`: `target` is an element, a ref or a CSS selector (delegated on `document`, so areas added later also work); each item accepts `label`, `icon`, `image`, `shortcut`, `disabled`, `divider`, `action` and `submenu`. It opens on right-click at the pointer position (`anchorPosition`); with the <kbd>Menu</kbd> key or <kbd>Shift</kbd>+<kbd>F10</kbd> it anchors to the area and focuses the first option. For your own markup, `useContextMenu()` returns `onContextMenu` and the props of a `Menu`.
 
 {{< react-demo id="menu/12-context-menu" layout="block" >}}
 
@@ -137,6 +137,12 @@ The equivalent of `open()`/`close()` is the `open` prop. `onOpen`, `onSelect(det
 `Menu` is made of a portal, a Grow transition, the paper and a `MenuList`. `MenuList` on its own (inside a [Paper](../paper/)) keeps the keyboard navigation for always-visible menus. The split button of [Button Group](../button-group/) anchors a `Menu` to the whole group with `matchWidth` and returns focus to the arrow.
 
 {{< react-demo "menu/16-menu-list" >}}
+
+## Full composition
+
+The equivalent of vanilla's *Manual BEM usage*: there is no hand-written markup in React, but every part can be replaced. Items can be native `<button>` elements (`component="button"`), icons can be any node (an inline SVG) and checked options show their `.mtx-menu-item__check`; the resulting DOM is the same BEM structure.
+
+{{< react-demo "menu/17-composition" >}}
 
 ## API reference
 
@@ -195,7 +201,7 @@ The equivalent of `open()`/`close()` is the `open` prop. `onOpen`, `onSelect(det
 | `Submenu` | `label`, `children` (items), item props for the trigger and `menuProps` for the nested `Menu`. |
 | `ContextMenu` | `target` (element, ref or selector) and `items`; other props go to the `Menu`. |
 | `useMenu({ id?, defaultOpen? })` | `{ open, openMenu, closeMenu, toggleMenu, triggerProps, menuProps }`. |
-| `useContextMenu()` | `{ open, closeMenu, onContextMenu, menuProps }`. |
+| `useContextMenu()` | `{ open, closeMenu, onContextMenu, openFor(event, area), menuProps }`. |
 
 ### Callbacks
 

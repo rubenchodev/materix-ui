@@ -5,8 +5,8 @@ import type { DialogMaxWidth } from '@rubenchodev/materix-react/components/dialo
 
 export const title = { en: 'Sizes', es: 'Tamaños' };
 export const description = {
-  en: '`maxWidth` sets the maximum width: `xs` (20rem), `sm` (24rem), `md` (32rem, default), `lg` (48rem), `xl` (64rem) or `false`. `fullWidth={false}` fits the content and `fullScreen` takes the whole window without rounded corners.',
-  es: '`maxWidth` fija el ancho máximo: `xs` (20rem), `sm` (24rem), `md` (32rem, por defecto), `lg` (48rem), `xl` (64rem) o `false`. `fullWidth={false}` se ajusta al contenido y `fullScreen` ocupa toda la ventana sin esquinas redondeadas.',
+  en: '`maxWidth` sets the maximum width: `xs` (20rem, the lowest step), `sm` (24rem), `md` (32rem, default), `lg` (48rem), `xl` (64rem) or `false`. `fullWidth={false}` fits the content and `fullScreen` takes the whole window without rounded corners.',
+  es: '`maxWidth` fija el ancho máximo: `xs` (20rem, el escalón inferior), `sm` (24rem), `md` (32rem, por defecto), `lg` (48rem), `xl` (64rem) o `false`. `fullWidth={false}` se ajusta al contenido y `fullScreen` ocupa toda la ventana sin esquinas redondeadas.',
 };
 
 interface SizeOption {
@@ -18,7 +18,7 @@ interface SizeOption {
 }
 
 const SIZES: SizeOption[] = [
-  { key: 'xs', maxWidth: 'xs', label: 'XS · 20rem', title: 'XS size', text: 'Max width of 20rem, for very short messages.' },
+  { key: 'xs', maxWidth: 'xs', label: 'XS · 20rem', title: 'XS size', text: 'Max width of 20rem, the lowest step of the scale.' },
   { key: 'sm', maxWidth: 'sm', label: 'SM · 24rem', title: 'SM size', text: 'Max width of 24rem, ideal for short confirmations.' },
   { key: 'md', maxWidth: 'md', label: 'MD · 32rem', title: 'MD size', text: 'Max width of 32rem; this is the default value.' },
   { key: 'lg', maxWidth: 'lg', label: 'LG · 48rem', title: 'LG size', text: 'Max width of 48rem, useful for two-column forms.' },

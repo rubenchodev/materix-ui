@@ -436,6 +436,22 @@ describe('TextField', () => {
     expect(onChange).toHaveBeenLastCalledWith(expect.anything(), 'es', expect.anything());
   });
 
+  it('encadena onFocus/onBlur de inputProps y de las props directas', () => {
+    const calls: string[] = [];
+    render(
+      <TextField
+        label="F"
+        inputProps={{ onFocus: () => calls.push('inputProps focus'), onBlur: () => calls.push('inputProps blur') }}
+        onFocus={() => calls.push('focus')}
+        onBlur={() => calls.push('blur')}
+      />,
+    );
+    const input = screen.getByLabelText('F');
+    fireEvent.focus(input);
+    fireEvent.blur(input);
+    expect(calls).toEqual(['inputProps focus', 'focus', 'inputProps blur', 'blur']);
+  });
+
   it('ref a la raíz, inputRef, inputProps y props nativas', () => {
     const ref = createRef<HTMLDivElement>();
     const inputRef = createRef<HTMLInputElement>();
